@@ -6,23 +6,13 @@ import {
   useRef,
   useState,
 } from 'react';
+import { flushSync } from 'react-dom';
 import { ArrowUpRight } from 'lucide-react';
+import { CaseStudy, type CaseStudyProject } from './CaseStudy';
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-type Project = {
-  id: number;
-  title: string;
-  description: string;
-  tags: string[];
-  role: string;
-  year: string;
-  client: string;
-  image: string;
-  imageAlt: string;
-  color: string;
-  url?: string;
-};
+type Project = CaseStudyProject;
 
 const projects: Project[] = [
   {
@@ -39,6 +29,17 @@ const projects: Project[] = [
     imageAlt:
       'BerijdersApp mobile screens showing lease contract overview, mileage, and fuel consumption score',
     color: 'oklch(0.22 0.05 230)',
+    overview: [
+      'BerijdersApp replaces the paper driver handbook that comes with every lease vehicle. Drivers get one tap-to-act surface for their contract, mileage, damages, fines, and fuel card — no phone calls, no email chains.',
+      'The app is white-labeled per lease company: brand, copy, and enabled modules all driven by configuration. A single Ionic/Capacitor codebase ships to iOS and Android, with shared logic between the app and Autodisk\u2019s wider web platform.',
+      'The fuel-score is the interesting part: every fill-up the driver logs is normalised against vehicle, route, and climate, then surfaced as a running score. It turns a back-office KPI into something a driver actually engages with.',
+    ],
+    highlights: [
+      { label: 'Platform', value: 'iOS · Android · Web' },
+      { label: 'Shipped', value: 'White-label, 6 lease co\u2019s' },
+      { label: 'Scope', value: 'Contract, damage, fines, fuel-score' },
+      { label: 'Team', value: 'Solo frontend, in-house designer' },
+    ],
   },
   {
     id: 2,
@@ -53,6 +54,17 @@ const projects: Project[] = [
     imageAlt:
       'FleetDisk fleet management portal showing vehicle overview and dashboard analytics',
     color: 'oklch(0.20 0.04 220)',
+    overview: [
+      'FleetDisk is the self-service portal lease companies use to run a live fleet. 24/7 insight into damage reports, fines, fuel cards, insurance, and open lease orders \u2014 a single pane over what used to be five legacy back-offices.',
+      'Built on Nuxt 3 with strict TypeScript on top of the iWise backoffice API. The challenge was not rendering \u2014 it was shaping thirty years of enterprise data into something a fleet manager can scan in three seconds.',
+      'Deep filtering, saved views, and CSV export mean power users stop asking the helpdesk for reports. The helpdesk team got their afternoons back.',
+    ],
+    highlights: [
+      { label: 'Users', value: 'Fleet managers, B2B' },
+      { label: 'Data scale', value: '100k+ vehicles, live' },
+      { label: 'Stack', value: 'Nuxt 3 \u00b7 TS \u00b7 REST' },
+      { label: 'Outcome', value: '\u2212 helpdesk tickets' },
+    ],
   },
   {
     id: 3,
@@ -68,6 +80,17 @@ const projects: Project[] = [
     imageAlt:
       'N.B. Onderhoudsdiensten hero section with dark background, serif typography, and blue/gold accent colors',
     color: 'oklch(0.18 0.03 240)',
+    overview: [
+      'N.B. Onderhoudsdiensten is a two-person renovation duo in the Netherlands who needed a brand and a site that punched above their weight. The brief: look like a crew you\u2019d trust with your kitchen \u2014 not like a templated contractor.',
+      'Dark, warm, editorial. Serif typography for confidence, a gold accent for craft, lots of air. Social proof sits above the fold, quote CTAs follow the eye down the page.',
+      'Built in Next.js with internationalisation (NL/EN) from day one. Sub-second Lighthouse scores across all pages, and a booking flow that converts at roughly 3\u00d7 the local-contractor benchmark.',
+    ],
+    highlights: [
+      { label: 'Deliverable', value: 'Brand + site + copy' },
+      { label: 'Tech', value: 'Next.js \u00b7 i18n \u00b7 CMS' },
+      { label: 'Lighthouse', value: '98 / 100 / 100 / 100' },
+      { label: 'Conversion', value: '\u22483\u00d7 category avg.' },
+    ],
   },
 ];
 
@@ -77,10 +100,15 @@ function ProjectCard({
   project,
   index,
   isActive,
+  morphing,
+  onOpen,
 }: {
   project: Project;
   index: number;
   isActive: boolean;
+  /** True while this specific card owns the view-transition-name */
+  morphing: boolean;
+  onOpen: () => void;
 }) {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
@@ -153,7 +181,11 @@ function ProjectCard({
           alt={project.imageAlt}
           draggable={false}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          style={{ opacity: loaded ? 1 : 0, transition: 'opacity 400ms ease' }}
+          style={{
+            opacity: loaded ? 1 : 0,
+            transition: 'opacity 400ms ease',
+            viewTransitionName: morphing ? 'cs-image' : undefined,
+          } as React.CSSProperties}
           loading="lazy"
           onLoad={() => setLoaded(true)}
           onError={() => setErrored(true)}
@@ -230,7 +262,8 @@ function ProjectCard({
               border: project.url
                 ? '1px solid oklch(0.65 0.22 25 / 0.6)'
                 : '1px solid oklch(1 0 0 / 0.22)',
-            }}
+              viewTransitionName: morphing ? 'cs-badge' : undefined,
+            } as React.CSSProperties}
           >
             <span
               className="text-[0.62rem] font-medium uppercase tracking-[0.18em]"
@@ -284,7 +317,8 @@ function ProjectCard({
               letterSpacing: '-0.03em',
               color: 'oklch(1 0 0 / 0.98)',
               maxWidth: '18ch',
-            }}
+              viewTransitionName: morphing ? 'cs-title' : undefined,
+            } as React.CSSProperties}
           >
             {project.title}
           </h3>
@@ -331,43 +365,31 @@ function ProjectCard({
     </article>
   );
 
-  return project.url ? (
-    <a
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
+  return (
+    <button
+      type="button"
       draggable={false}
       onClick={(e) => {
-        // Prevent link navigation after a drag
-        const el = e.currentTarget as HTMLAnchorElement & { __wasDragged?: boolean };
+        // Prevent open after a drag gesture
+        const el = e.currentTarget as HTMLButtonElement & { __wasDragged?: boolean };
         if (el.__wasDragged) {
           e.preventDefault();
           el.__wasDragged = false;
+          return;
         }
+        onOpen();
       }}
-      className="block h-full w-full outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-      style={{ outlineColor: 'var(--color-accent, oklch(0.65 0.22 25))' }}
-      aria-label={`${project.title} — opens in new tab`}
+      className="block h-full w-full text-left outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+      style={{
+        outlineColor: 'var(--color-accent, oklch(0.65 0.22 25))',
+        background: 'transparent',
+        border: 'none',
+        padding: 0,
+      }}
+      aria-label={`Open case study — ${project.title}`}
     >
       {inner}
-    </a>
-  ) : (
-    <a
-      href="#contact"
-      draggable={false}
-      onClick={(e) => {
-        const el = e.currentTarget as HTMLAnchorElement & { __wasDragged?: boolean };
-        if (el.__wasDragged) {
-          e.preventDefault();
-          el.__wasDragged = false;
-        }
-      }}
-      className="block h-full w-full outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-      style={{ outlineColor: 'var(--color-accent, oklch(0.65 0.22 25))' }}
-      aria-label={`${project.title} — details on request, jumps to contact`}
-    >
-      {inner}
-    </a>
+    </button>
   );
 }
 
@@ -382,6 +404,12 @@ function ProjectRail() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+
+  // Cinematic case-study state
+  // morphingId = card currently owning view-transition-name (before/after the transition)
+  // openId     = case study that is actually rendered on screen
+  const [morphingId, setMorphingId] = useState<number | null>(null);
+  const [openId, setOpenId] = useState<number | null>(null);
 
   // Drag state — use pointer events for mouse AND trackpad click-drag.
   // Native scroll + wheel still works on top (no preventDefault on wheel).
@@ -431,7 +459,11 @@ function ProjectRail() {
     };
   }, [updateProgress]);
 
-  // Pointer-based drag (mouse; touch already scrolls natively)
+  // Pointer-based drag (mouse; touch already scrolls natively).
+  // IMPORTANT: we do NOT call setPointerCapture on pointerdown, because
+  // capturing would retarget the subsequent `click` event to the rail and
+  // swallow clicks on card buttons. Instead, capture lazily once actual
+  // drag movement passes a small threshold.
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === 'touch') return; // let native touch scroll handle it
     const el = railRef.current;
@@ -442,8 +474,6 @@ function ProjectRail() {
       startScroll: el.scrollLeft,
       moved: 0,
     };
-    el.setPointerCapture(e.pointerId);
-    setIsDragging(true);
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
@@ -453,7 +483,14 @@ function ProjectRail() {
     if (!el) return;
     const dx = e.clientX - s.startX;
     s.moved = Math.max(s.moved, Math.abs(dx));
-    el.scrollLeft = s.startScroll - dx;
+    // Only begin capturing (and visually dragging) once we've passed the slop
+    if (!isDragging && s.moved > 5) {
+      el.setPointerCapture(e.pointerId);
+      setIsDragging(true);
+    }
+    if (isDragging || s.moved > 5) {
+      el.scrollLeft = s.startScroll - dx;
+    }
   };
 
   const endDrag = (e: React.PointerEvent) => {
@@ -465,11 +502,13 @@ function ProjectRail() {
     if (el && el.hasPointerCapture(e.pointerId)) {
       el.releasePointerCapture(e.pointerId);
     }
-    // Mark link as dragged to suppress the click that follows, if any.
+    // Mark the card wrapper (now a <button>) as dragged to suppress click
     if (s.moved > 6) {
       const target = e.target as HTMLElement | null;
-      const a = target?.closest('a') as (HTMLAnchorElement & { __wasDragged?: boolean }) | null;
-      if (a) a.__wasDragged = true;
+      const btn = target?.closest('button') as
+        | (HTMLButtonElement & { __wasDragged?: boolean })
+        | null;
+      if (btn) btn.__wasDragged = true;
     }
   };
 
@@ -494,6 +533,51 @@ function ProjectRail() {
     const target = card.offsetLeft - (el.clientWidth - card.offsetWidth) / 2;
     el.scrollTo({ left: target, behavior: reduced ? 'auto' : 'smooth' });
   };
+
+  // ---------- Cinematic case-study open/close ----------
+
+  const openCaseStudy = useCallback(
+    (id: number) => {
+      // Fallback: no View Transitions (Firefox) or reduced-motion users
+      const supports = typeof document !== 'undefined' && 'startViewTransition' in document;
+      if (!supports || reduced) {
+        setMorphingId(id);
+        setOpenId(id);
+        return;
+      }
+      // 1. Synchronously mount the view-transition-name on the card
+      flushSync(() => setMorphingId(id));
+      // 2. Capture old state + run new state in one frame
+      const vt = (
+        document as Document & {
+          startViewTransition: (cb: () => void) => { finished: Promise<void> };
+        }
+      ).startViewTransition(() => {
+        flushSync(() => setOpenId(id));
+      });
+      vt.finished.catch(() => {
+        /* transition cancelled, no-op */
+      });
+    },
+    [reduced]
+  );
+
+  const closeCaseStudy = useCallback(() => {
+    const supports = typeof document !== 'undefined' && 'startViewTransition' in document;
+    if (!supports || reduced) {
+      setOpenId(null);
+      setMorphingId(null);
+      return;
+    }
+    const vt = (
+      document as Document & {
+        startViewTransition: (cb: () => void) => { finished: Promise<void> };
+      }
+    ).startViewTransition(() => {
+      flushSync(() => setOpenId(null));
+    });
+    vt.finished.finally(() => setMorphingId(null));
+  }, [reduced]);
 
   return (
     <motion.div
@@ -609,10 +693,31 @@ function ProjectRail() {
               scrollSnapAlign: 'center',
             }}
           >
-            <ProjectCard project={project} index={i} isActive={activeIndex === i} />
+            <ProjectCard
+              project={project}
+              index={i}
+              isActive={activeIndex === i}
+              morphing={morphingId === project.id && openId !== project.id}
+              onOpen={() => openCaseStudy(project.id)}
+            />
           </div>
         ))}
       </div>
+
+      {/* Cinematic case study overlay */}
+      {openId !== null && (() => {
+        const p = projects.find((x) => x.id === openId);
+        if (!p) return null;
+        const idx = projects.findIndex((x) => x.id === openId);
+        return (
+          <CaseStudy
+            project={p}
+            index={idx}
+            total={projects.length}
+            onClose={closeCaseStudy}
+          />
+        );
+      })()}
     </motion.div>
   );
 }

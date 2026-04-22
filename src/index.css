@@ -177,3 +177,67 @@ button {
   background: radial-gradient(ellipse at center, transparent 35%, oklch(0.97 0.006 50 / 0.65) 100%);
 }
 
+/* ===================================================================
+   CINEMATIC CASE STUDY — View Transitions morph timing
+   =================================================================== */
+
+/* Root transition: fade backdrop/overlay cleanly */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Shared element morphs: image, title, badge */
+::view-transition-group(cs-image),
+::view-transition-group(cs-title),
+::view-transition-group(cs-badge) {
+  animation-duration: 620ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Cross-fade the captured images during the morph so content pops in smoothly */
+::view-transition-old(cs-image),
+::view-transition-new(cs-image) {
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  mix-blend-mode: normal;
+}
+::view-transition-old(cs-title),
+::view-transition-new(cs-title) {
+  animation-duration: 560ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Prevent the grain overlay from being captured as a shared element —
+   it's fixed position with z-index:100 and would otherwise ghost-shift. */
+.grain::after {
+  view-transition-name: none;
+}
+
+/* Close button pulse affordance */
+.cs-close {
+  transition:
+    background-color 200ms ease,
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cs-close:hover {
+  background-color: oklch(0 0 0 / 0.72) !important;
+  transform: scale(1.04);
+}
+.cs-close:active {
+  transform: scale(0.96);
+}
+
+/* Reduced motion: no morph, just a fast fade */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(cs-image),
+  ::view-transition-group(cs-title),
+  ::view-transition-group(cs-badge) {
+    animation-duration: 180ms !important;
+    animation-timing-function: ease-out !important;
+  }
+}
+
