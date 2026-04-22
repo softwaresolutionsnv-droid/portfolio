@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+/* ===================================================================
+   THEME SYSTEM — OKLCH palette, warm-tinted neutrals
+   Accent: warm vermillion-orange. Both themes are first-class.
+   =================================================================== */
+
+@theme {
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, sans-serif;
+
+  --color-accent: oklch(0.65 0.22 25);
+  --color-accent-hover: oklch(0.58 0.22 25);
+  --color-accent-subtle: oklch(0.65 0.08 25);
+}
+
+:root {
+  /* Dark theme (default) */
+  --bg: oklch(0.12 0.008 50);
+  --bg-surface: oklch(0.16 0.008 50);
+  --bg-elevated: oklch(0.20 0.008 50);
+  --text-primary: oklch(0.93 0.008 50);
+  --text-secondary: oklch(0.65 0.01 50);
+  --text-muted: oklch(0.45 0.008 50);
+  --border: oklch(0.25 0.008 50);
+  --border-subtle: oklch(0.20 0.006 50);
+
+  font-family: "Figtree", system-ui, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--text-primary);
+  background-color: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Light theme overrides — crisp, editorial */
+[data-theme="light"] {
+  --bg: oklch(0.97 0.006 50);
+  --bg-surface: oklch(0.93 0.007 50);
+  --bg-elevated: oklch(0.89 0.008 50);
+  --text-primary: oklch(0.17 0.010 50);
+  --text-secondary: oklch(0.38 0.012 50);
+  --text-muted: oklch(0.56 0.008 50);
+  --border: oklch(0.82 0.007 50);
+  --border-subtle: oklch(0.88 0.006 50);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--bg);
+  color: var(--text-primary);
+}
+
+a {
+  font-weight: 500;
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ===================================================================
+   TYPOGRAPHY SCALE — fluid display + fixed body
+   =================================================================== */
+
+.font-display {
+  font-family: "Bricolage Grotesque", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+/* ===================================================================
+   TRANSITION HELPERS
+   =================================================================== */
+
+.theme-transition {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ===================================================================
+   REDUCED MOTION
+   =================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===================================================================
+   SELECTION
+   =================================================================== */
+
+::selection {
+  background: oklch(0.65 0.22 25 / 0.3);
+  color: var(--text-primary);
+}
+
+/* ===================================================================
+   SUBTLE GRAIN TEXTURE (dark mode only)
+   =================================================================== */
+
+/* ===================================================================
+   SHIMMER SKELETON — loading placeholder for images
+   =================================================================== */
+
+.shimmer-skeleton {
+  background: linear-gradient(
+    90deg,
+    oklch(0.5 0 0 / 0) 0%,
+    oklch(0.5 0 0 / 0.06) 50%,
+    oklch(0.5 0 0 / 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ===================================================================
+   PROJECT IMAGE HOVER SHADOW
+   =================================================================== */
+
+.group:hover .project-image-wrap {
+  box-shadow: 0 20px 60px -12px oklch(0 0 0 / 0.3);
+}
+
+/* ===================================================================
+   HORIZONTAL RAIL — hide native scrollbar (HUD bar replaces it)
+   =================================================================== */
+
+.rail-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+}
+.rail-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* AnimatedBackground vignette — adapts to theme */
+.animated-bg-vignette {
+  background: radial-gradient(ellipse at center, transparent 35%, oklch(0.12 0.008 50 / 0.55) 100%);
+}
+
+[data-theme="light"] .animated-bg-vignette {
+  background: radial-gradient(ellipse at center, transparent 35%, oklch(0.97 0.006 50 / 0.65) 100%);
+}
+
