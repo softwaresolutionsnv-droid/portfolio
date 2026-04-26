@@ -30,7 +30,7 @@ const projects: Project[] = [
       'BerijdersApp mobile screens showing lease contract overview, mileage, and fuel consumption score',
     color: 'oklch(0.22 0.05 230)',
     overview: [
-      'BerijdersApp replaces the paper driver handbook that comes with every lease vehicle. Drivers get one tap-to-act surface for their contract, mileage, damages, fines, and fuel card — no phone calls, no email chains.',
+      'BerijdersApp replaces the paper driver handbook that comes with every lease vehicle. Drivers get one tap-to-act surface for their contract, mileage, damages, fines, and fuel card. No phone calls, no email chains.',
       'The app is white-labeled per lease company: brand, copy, and enabled modules all driven by configuration. A single Ionic/Capacitor codebase ships to iOS and Android, with shared logic between the app and Autodisk\u2019s wider web platform.',
       'The fuel-score is the interesting part: every fill-up the driver logs is normalised against vehicle, route, and climate, then surfaced as a running score. It turns a back-office KPI into something a driver actually engages with.',
     ],
@@ -45,7 +45,7 @@ const projects: Project[] = [
     id: 2,
     title: 'FleetDisk',
     description:
-      'Self-service fleet management portal for lease companies. 24/7 insight into damages, fines, fuel cards, insurance, and lease orders — built on the iWise backoffice API.',
+      'Self-service fleet management portal for lease companies. 24/7 insight into damages, fines, fuel cards, insurance, and lease orders, built on the iWise backoffice API.',
     tags: ['Nuxt.js', 'Vue.js', 'TypeScript', 'Bootstrap'],
     role: 'Frontend Developer',
     year: '2024',
@@ -55,8 +55,8 @@ const projects: Project[] = [
       'FleetDisk fleet management portal showing vehicle overview and dashboard analytics',
     color: 'oklch(0.20 0.04 220)',
     overview: [
-      'FleetDisk is the self-service portal lease companies use to run a live fleet. 24/7 insight into damage reports, fines, fuel cards, insurance, and open lease orders \u2014 a single pane over what used to be five legacy back-offices.',
-      'Built on Nuxt 3 with strict TypeScript on top of the iWise backoffice API. The challenge was not rendering \u2014 it was shaping thirty years of enterprise data into something a fleet manager can scan in three seconds.',
+      'FleetDisk is the self-service portal lease companies use to run a live fleet. 24/7 insight into damage reports, fines, fuel cards, insurance, and open lease orders: a single pane over what used to be five legacy back-offices.',
+      'Built on Nuxt 3 with strict TypeScript on top of the iWise backoffice API. The challenge was not rendering. It was shaping thirty years of enterprise data into something a fleet manager can scan in three seconds.',
       'Deep filtering, saved views, and CSV export mean power users stop asking the helpdesk for reports. The helpdesk team got their afternoons back.',
     ],
     highlights: [
@@ -70,7 +70,7 @@ const projects: Project[] = [
     id: 3,
     title: 'N.B. Onderhoudsdiensten',
     description:
-      'Brand identity and marketing site for a Dutch renovation duo. Warm, premium aesthetic built to convert local homeowners — trust-first, social-proof-forward.',
+      'Brand identity and marketing site for a Dutch renovation duo. Warm, premium aesthetic built to convert local homeowners. Trust-first, social-proof-forward.',
     tags: ['React', 'TypeScript', 'Tailwind CSS'],
     role: 'Designer',
     year: '2025',
@@ -81,7 +81,7 @@ const projects: Project[] = [
       'N.B. Onderhoudsdiensten hero section with dark background, serif typography, and blue/gold accent colors',
     color: 'oklch(0.18 0.03 240)',
     overview: [
-      'N.B. Onderhoudsdiensten is a two-person renovation duo in the Netherlands who needed a brand and a site that punched above their weight. The brief: look like a crew you\u2019d trust with your kitchen \u2014 not like a templated contractor.',
+      'N.B. Onderhoudsdiensten is a two-person renovation duo in the Netherlands who needed a brand and a site that punched above their weight. The brief: look like a crew you\u2019d trust with your kitchen, not like a templated contractor.',
       'Dark, warm, editorial. Serif typography for confidence, a gold accent for craft, lots of air. Social proof sits above the fold, quote CTAs follow the eye down the page.',
       'Built in Next.js with internationalisation (NL/EN) from day one. Sub-second Lighthouse scores across all pages, and a booking flow that converts at roughly 3\u00d7 the local-contractor benchmark.',
     ],
@@ -112,7 +112,6 @@ function ProjectCard({
 }) {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
-  const isAutodisk = project.client === 'Autodisk';
 
   const inner = (
     <article
@@ -253,27 +252,35 @@ function ProjectCard({
           </div>
 
           <div
-            className="flex items-center gap-1.5 px-2.5 py-1 shrink-0"
+            className="flex items-center gap-1.5 shrink-0"
             style={{
-              backgroundColor: project.url
-                ? 'var(--color-accent, oklch(0.65 0.22 25))'
-                : 'oklch(1 0 0 / 0.12)',
-              borderRadius: '2px',
-              border: project.url
-                ? '1px solid oklch(0.65 0.22 25 / 0.6)'
-                : '1px solid oklch(1 0 0 / 0.22)',
               viewTransitionName: morphing ? 'cs-badge' : undefined,
             } as React.CSSProperties}
           >
             <span
-              className="text-[0.62rem] font-medium uppercase tracking-[0.18em]"
-              style={{ color: 'oklch(1 0 0 / 0.95)' }}
+              aria-hidden="true"
+              className="inline-block"
+              style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '9999px',
+                backgroundColor: project.url
+                  ? 'var(--color-accent, oklch(0.65 0.22 25))'
+                  : 'oklch(1 0 0 / 0.45)',
+              }}
+            />
+            <span
+              className="text-[0.72rem] font-medium"
+              style={{
+                color: 'oklch(1 0 0 / 0.85)',
+                letterSpacing: '0.02em',
+              }}
             >
               {project.url ? 'Live' : 'On request'}
             </span>
             <ArrowUpRight
               className="w-3 h-3"
-              style={{ color: 'oklch(1 0 0 / 0.95)' }}
+              style={{ color: 'oklch(1 0 0 / 0.6)' }}
               aria-hidden="true"
             />
           </div>
@@ -286,18 +293,10 @@ function ProjectCard({
         <div className="flex flex-col" style={{ rowGap: 'clamp(0.875rem, 1.4vw, 1.25rem)' }}>
           {/* Meta line */}
           <div
-            className="text-[0.68rem] font-medium uppercase tracking-[0.18em] leading-[1.6]"
-            style={{ color: 'oklch(1 0 0 / 0.65)' }}
+            className="text-sm font-medium leading-[1.6]"
+            style={{ color: 'oklch(1 0 0 / 0.7)', letterSpacing: '0.02em' }}
           >
-            <span
-              style={{
-                color: isAutodisk
-                  ? 'var(--color-accent, oklch(0.72 0.22 25))'
-                  : 'oklch(1 0 0 / 0.8)',
-              }}
-            >
-              {project.client}
-            </span>
+            <span style={{ color: 'oklch(1 0 0 / 0.92)' }}>{project.client}</span>
             <span className="mx-2" style={{ color: 'oklch(1 0 0 / 0.28)' }}>
               ·
             </span>
@@ -386,7 +385,7 @@ function ProjectCard({
         border: 'none',
         padding: 0,
       }}
-      aria-label={`Open case study — ${project.title}`}
+      aria-label={`Open case study: ${project.title}`}
     >
       {inner}
     </button>
@@ -598,10 +597,10 @@ function ProjectRail() {
               style={{ backgroundColor: 'var(--color-accent, oklch(0.65 0.22 25))' }}
             />
             <span
-              className="text-[0.68rem] font-medium uppercase tracking-[0.22em]"
-              style={{ color: 'var(--text-muted)' }}
+              className="text-sm font-medium"
+              style={{ color: 'var(--text-muted)', letterSpacing: '0.02em' }}
             >
-              Drag · Scroll · Arrow keys · 1–3
+              Drag, scroll, arrow keys, 1–3
             </span>
           </div>
 
@@ -663,7 +662,7 @@ function ProjectRail() {
         ref={railRef}
         tabIndex={0}
         role="region"
-        aria-label="Selected work — horizontal gallery. Use arrow keys to navigate."
+        aria-label="Selected work: horizontal gallery. Use arrow keys to navigate."
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
@@ -673,9 +672,9 @@ function ProjectRail() {
         style={{
           cursor: isDragging ? 'grabbing' : 'grab',
           scrollSnapType: 'x mandatory',
-          scrollPaddingLeft: 'clamp(20px, 6vw, 80px)',
-          paddingLeft: 'clamp(20px, 6vw, 80px)',
-          paddingRight: 'clamp(20px, 6vw, 80px)',
+          scrollPaddingLeft: 'clamp(16px, 4vw, 48px)',
+          paddingLeft: 'clamp(16px, 4vw, 48px)',
+          paddingRight: 'clamp(16px, 4vw, 48px)',
           scrollBehavior: isDragging ? 'auto' : undefined,
           outlineColor: 'var(--color-accent, oklch(0.65 0.22 25))',
         }}
@@ -688,9 +687,10 @@ function ProjectRail() {
             }}
             className="shrink-0"
             style={{
-              width: 'clamp(280px, 62vw, 720px)',
-              height: 'clamp(380px, 70vh, 620px)',
+              width: 'min(92vw, 1100px)',
+              height: 'clamp(440px, 78vh, 720px)',
               scrollSnapAlign: 'center',
+              scrollSnapStop: 'always',
             }}
           >
             <ProjectCard
@@ -743,7 +743,7 @@ export function Projects() {
                 className="block text-xs font-medium uppercase tracking-[0.18em] mb-3"
                 style={{ color: 'var(--text-muted)' }}
               >
-                Archive / 2024 — 2025
+                Archive · 2024 / 2025
               </span>
               <h2
                 className="font-display"

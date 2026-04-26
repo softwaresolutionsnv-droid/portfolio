@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-04-24T00:00:00Z",
+  "title": "Design System: Nils Vogt — Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "ember": {
+        "role": "primary",
+        "displayName": "Ember",
+        "canonical": "oklch(0.65 0.22 25)",
+        "tonalRamp": [
+          "oklch(0.25 0.18 25)",
+          "oklch(0.35 0.20 25)",
+          "oklch(0.45 0.22 25)",
+          "oklch(0.55 0.22 25)",
+          "oklch(0.65 0.22 25)",
+          "oklch(0.75 0.18 25)",
+          "oklch(0.85 0.12 25)",
+          "oklch(0.95 0.05 25)"
+        ]
+      },
+      "ember-deep": {
+        "role": "primary-hover",
+        "displayName": "Ember Deep",
+        "canonical": "oklch(0.58 0.22 25)",
+        "tonalRamp": []
+      },
+      "ember-subtle": {
+        "role": "primary-subtle",
+        "displayName": "Ember Subtle",
+        "canonical": "oklch(0.65 0.08 25)",
+        "tonalRamp": []
+      },
+      "graphite-bg": {
+        "role": "neutral",
+        "displayName": "Graphite Warm — BG",
+        "canonical": "oklch(0.12 0.008 50)",
+        "tonalRamp": [
+          "oklch(0.08 0.008 50)",
+          "oklch(0.12 0.008 50)",
+          "oklch(0.16 0.008 50)",
+          "oklch(0.20 0.008 50)",
+          "oklch(0.25 0.008 50)",
+          "oklch(0.45 0.008 50)",
+          "oklch(0.65 0.010 50)",
+          "oklch(0.93 0.008 50)"
+        ]
+      },
+      "graphite-surface": {
+        "role": "neutral",
+        "displayName": "Graphite Warm — Surface",
+        "canonical": "oklch(0.16 0.008 50)",
+        "tonalRamp": []
+      },
+      "graphite-elevated": {
+        "role": "neutral",
+        "displayName": "Graphite Warm — Elevated",
+        "canonical": "oklch(0.20 0.008 50)",
+        "tonalRamp": []
+      },
+      "graphite-text": {
+        "role": "text-primary",
+        "displayName": "Graphite Text",
+        "canonical": "oklch(0.93 0.008 50)",
+        "tonalRamp": []
+      },
+      "graphite-text-secondary": {
+        "role": "text-secondary",
+        "displayName": "Graphite Text Secondary",
+        "canonical": "oklch(0.65 0.01 50)",
+        "tonalRamp": []
+      },
+      "graphite-text-muted": {
+        "role": "text-muted",
+        "displayName": "Graphite Text Muted",
+        "canonical": "oklch(0.45 0.008 50)",
+        "tonalRamp": []
+      },
+      "graphite-border": {
+        "role": "border",
+        "displayName": "Graphite Border",
+        "canonical": "oklch(0.25 0.008 50)",
+        "tonalRamp": []
+      },
+      "graphite-border-subtle": {
+        "role": "border-subtle",
+        "displayName": "Graphite Border Subtle",
+        "canonical": "oklch(0.20 0.006 50)",
+        "tonalRamp": []
+      },
+      "paper-bg": {
+        "role": "neutral",
+        "displayName": "Paper — BG",
+        "canonical": "oklch(0.97 0.006 50)",
+        "tonalRamp": [
+          "oklch(0.17 0.010 50)",
+          "oklch(0.38 0.012 50)",
+          "oklch(0.56 0.008 50)",
+          "oklch(0.82 0.007 50)",
+          "oklch(0.88 0.006 50)",
+          "oklch(0.89 0.008 50)",
+          "oklch(0.93 0.007 50)",
+          "oklch(0.97 0.006 50)"
+        ]
+      },
+      "paper-surface": {
+        "role": "neutral",
+        "displayName": "Paper — Surface",
+        "canonical": "oklch(0.93 0.007 50)",
+        "tonalRamp": []
+      },
+      "paper-elevated": {
+        "role": "neutral",
+        "displayName": "Paper — Elevated",
+        "canonical": "oklch(0.89 0.008 50)",
+        "tonalRamp": []
+      },
+      "paper-text": {
+        "role": "text-primary",
+        "displayName": "Paper Text",
+        "canonical": "oklch(0.17 0.010 50)",
+        "tonalRamp": []
+      },
+      "paper-text-secondary": {
+        "role": "text-secondary",
+        "displayName": "Paper Text Secondary",
+        "canonical": "oklch(0.38 0.012 50)",
+        "tonalRamp": []
+      },
+      "paper-text-muted": {
+        "role": "text-muted",
+        "displayName": "Paper Text Muted",
+        "canonical": "oklch(0.56 0.008 50)",
+        "tonalRamp": []
+      },
+      "paper-border": {
+        "role": "border",
+        "displayName": "Paper Border",
+        "canonical": "oklch(0.82 0.007 50)",
+        "tonalRamp": []
+      },
+      "paper-border-subtle": {
+        "role": "border-subtle",
+        "displayName": "Paper Border Subtle",
+        "canonical": "oklch(0.88 0.006 50)",
+        "tonalRamp": []
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headline only. One per page." },
+      "headline": { "displayName": "Headline", "purpose": "Section openers." },
+      "title": { "displayName": "Title", "purpose": "Project titles, case-study subheads." },
+      "body": { "displayName": "Body", "purpose": "Long-form paragraphs; capped at 52–65ch." },
+      "body-compact": { "displayName": "Body Compact", "purpose": "Dense contexts like highlights and footer." },
+      "label": { "displayName": "Label", "purpose": "Buttons, nav, tags. Natural case." },
+      "eyebrow": { "displayName": "Eyebrow", "purpose": "Small uppercase line above a headline. The only sanctioned uppercase." }
+    },
+    "shadows": [
+      {
+        "name": "project-image-hover",
+        "value": "0 20px 60px -12px oklch(0 0 0 / 0.3)",
+        "purpose": "Soft low shadow under project images on hover. Signals affordance, not elevation."
+      },
+      {
+        "name": "nav-scrolled-blur",
+        "value": "backdrop-filter: blur(16px) saturate(1.2); background: oklch(from var(--bg) l c h / 0.7)",
+        "purpose": "The single sanctioned backdrop blur in the system. Nav bar only, after 40px scroll."
+      }
+    ],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Signature curve. All entrances, transitions, scaleX sweeps." },
+      { "name": "ease-out-quart", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "View-transition morphs on case-study open/close." },
+      { "name": "duration-reveal", "value": "800ms", "purpose": "Hero line reveal duration." },
+      { "name": "duration-transition", "value": "200ms", "purpose": "Hover color and transform transitions." },
+      { "name": "duration-rule-sweep", "value": "900ms", "purpose": "Horizontal hairline scaleX entrance." },
+      { "name": "spring-nav-indicator", "value": "{ type: 'spring', stiffness: 380, damping: 30 }", "purpose": "Nav active-underline layoutId spring. Only spring in the system." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "container-max", "value": "72rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Sharp-edged vermillion CTA. The primary action affordance. Rare — one per section at most.",
+      "html": "<a href=\"#\" class=\"ds-btn-primary\">View Selected Work</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; font-family: 'Figtree', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.02em; line-height: 1.4; color: #ffffff; background: oklch(0.65 0.22 25); border: none; border-radius: 0; text-decoration: none; transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary:hover { background: oklch(0.58 0.22 25); } .ds-btn-primary:focus-visible { outline: 2px solid oklch(0.65 0.22 25); outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Ghost companion to the primary CTA. Transparent fill, 1px border.",
+      "html": "<a href=\"#\" class=\"ds-btn-secondary\">About</a>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; font-family: 'Figtree', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.02em; line-height: 1.4; color: oklch(0.93 0.008 50); background: transparent; border: 1px solid oklch(0.25 0.008 50); border-radius: 0; text-decoration: none; transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-secondary:hover { background: oklch(0.16 0.008 50); } .ds-btn-secondary:focus-visible { outline: 2px solid oklch(0.65 0.22 25); outline-offset: 2px; }"
+    },
+    {
+      "name": "Link Action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Inline CTA with trailing external-link arrow. Used for email, social, case-study opens.",
+      "html": "<a href=\"mailto:nils@example.com\" class=\"ds-link-action\">nils@example.com <svg class=\"ds-link-arrow\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><line x1=\"7\" y1=\"17\" x2=\"17\" y2=\"7\"></line><polyline points=\"7 7 17 7 17 17\"></polyline></svg></a>",
+      "css": ".ds-link-action { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; font-family: 'Figtree', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.02em; color: #ffffff; background: oklch(0.65 0.22 25); text-decoration: none; transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-link-action:hover { background: oklch(0.58 0.22 25); } .ds-link-arrow { flex-shrink: 0; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Top-nav link. Active state carries the Ember underline via Framer Motion layoutId.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#work\" class=\"ds-nav-link ds-nav-link--active\">Work<span class=\"ds-nav-indicator\"></span></a><a href=\"#about\" class=\"ds-nav-link\">About</a><a href=\"#contact\" class=\"ds-nav-link\">Contact</a></nav>",
+      "css": ".ds-nav { display: inline-flex; align-items: center; gap: 4px; } .ds-nav-link { position: relative; padding: 6px 12px; font-family: 'Figtree', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.02em; color: oklch(0.65 0.01 50); background: transparent; border-radius: 6px; text-decoration: none; transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1), color 200ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-nav-link:hover { background: oklch(0.16 0.008 50); } .ds-nav-link--active { color: oklch(0.93 0.008 50); } .ds-nav-indicator { position: absolute; left: 4px; right: 4px; bottom: -2px; height: 2px; border-radius: 9999px; background: oklch(0.65 0.22 25); }"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Metadata pill. Not interactive. Graphite Surface fill.",
+      "html": "<span class=\"ds-tag\">TypeScript</span>",
+      "css": ".ds-tag { display: inline-flex; align-items: center; padding: 4px 10px; font-family: 'Figtree', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.02em; color: oklch(0.65 0.01 50); background: oklch(0.16 0.008 50); border-radius: 9999px; }"
+    },
+    {
+      "name": "Eyebrow",
+      "kind": "custom",
+      "refersTo": "button-primary",
+      "description": "The only sanctioned uppercase text in the system. Sits above a hero headline.",
+      "html": "<p class=\"ds-eyebrow\">Freelance Developer & Designer — Amsterdam</p>",
+      "css": ".ds-eyebrow { margin: 0 0 24px; font-family: 'Figtree', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; line-height: 1.4; letter-spacing: 0.04em; text-transform: uppercase; color: oklch(0.45 0.008 50); }"
+    },
+    {
+      "name": "Display Headline",
+      "kind": "custom",
+      "refersTo": "button-primary",
+      "description": "Hero headline with reveal mask and Ember-accented emphasis word.",
+      "html": "<h1 class=\"ds-display\"><span class=\"ds-display-line\"><span>I build digital</span></span><span class=\"ds-display-line\"><span>products that</span></span><span class=\"ds-display-line\"><span class=\"ds-display-accent\">work.</span></span></h1>",
+      "css": ".ds-display { margin: 0; max-width: 18ch; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: clamp(2.8rem, 8vw, 7rem); font-weight: 700; line-height: 0.95; letter-spacing: -0.02em; color: oklch(0.93 0.008 50); } .ds-display-line { display: block; overflow: hidden; } .ds-display-line > span { display: block; } .ds-display-accent { color: oklch(0.65 0.22 25); }"
+    },
+    {
+      "name": "Horizontal Rule",
+      "kind": "custom",
+      "refersTo": "button-primary",
+      "description": "The signature 1px hairline that sweeps scaleX on entrance. Used between hero copy blocks.",
+      "html": "<div class=\"ds-rule\" role=\"separator\"></div>",
+      "css": ".ds-rule { height: 1px; width: 100%; background: oklch(0.25 0.008 50); transform-origin: left; }"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "tag",
+      "description": "Unboxed project entry. No container chrome — hierarchy carried by type. Image lifts on hover.",
+      "html": "<article class=\"ds-project\"><div class=\"ds-project-meta\"><span class=\"ds-project-year\">2025</span><span class=\"ds-project-role\">Frontend Developer</span></div><h3 class=\"ds-project-title\">BerijdersApp</h3><div class=\"ds-project-image-wrap\"><div class=\"ds-project-image\"></div></div><p class=\"ds-project-description\">White-label mobile app for lease drivers. One overview for contract, mileage, damage reports, fines, and a fuel-score derived from every fill-up.</p><div class=\"ds-project-tags\"><span class=\"ds-tag\">Vue.js</span><span class=\"ds-tag\">TypeScript</span><span class=\"ds-tag\">Ionic</span></div></article>",
+      "css": ".ds-project { display: flex; flex-direction: column; gap: 16px; color: oklch(0.93 0.008 50); } .ds-project-meta { display: inline-flex; gap: 16px; font-family: 'Figtree', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: oklch(0.45 0.008 50); } .ds-project-title { margin: 0; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 1.5rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.015em; transition: color 200ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-project-image-wrap { overflow: hidden; transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-project-image { aspect-ratio: 16 / 10; background: linear-gradient(135deg, oklch(0.22 0.05 230), oklch(0.16 0.008 50)); } .ds-project-description { margin: 0; max-width: 52ch; font-family: 'Figtree', system-ui, sans-serif; font-size: 1rem; font-weight: 400; line-height: 1.6; color: oklch(0.65 0.01 50); } .ds-project-tags { display: inline-flex; flex-wrap: wrap; gap: 8px; } .ds-project:hover .ds-project-title { color: oklch(0.65 0.22 25); } .ds-project:hover .ds-project-image-wrap { transform: translateY(-4px); box-shadow: 0 20px 60px -12px oklch(0 0 0 / 0.3); } .ds-tag { display: inline-flex; align-items: center; padding: 4px 10px; font-family: 'Figtree', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.02em; color: oklch(0.65 0.01 50); background: oklch(0.16 0.008 50); border-radius: 9999px; text-transform: none; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Signal Fire",
+    "overview": "A warm-tinted neutral ground, almost black at rest, with a single vermillion beacon that appears only where it matters most. The portfolio is built on the idea that confidence is quiet by default and loud on purpose. Surfaces are flat and editorial; the accent is rare, not generic.\n\nThe system rejects the visual vocabulary of contemporary portfolio templates. No gradient text, no glassmorphism cards, no Awwwards-bait cursor effects, no SaaS-landing hero metrics, no identical project grids. The personality is bold, precise, memorable and the interface earns that by committing to a small set of strong choices, not by accumulating decoration.\n\nBoth themes are first-class. Dark is the default — a warm graphite canvas meant to sit behind work. Light is crisp and editorial, like good magazine paper. Neither is a retrofit.",
+    "keyCharacteristics": [
+      "Warm-tinted OKLCH neutrals (hue 50, chroma ~0.008) — never pure #000 or #fff",
+      "A single accent: vermillion Ember, used on roughly 5–10% of any screen",
+      "Large fluid display type with tight leading; long-form body capped at ~52ch",
+      "Sharp-edged primary actions; nothing is uncommittedly rounded",
+      "Flat surfaces with one purposeful shadow role and one purposeful blur role",
+      "Framer Motion ease-out-expo for entrances, layoutId springs for continuity"
+    ],
+    "rules": [
+      { "name": "The One Beacon Rule", "body": "Ember appears on at most one surface per viewport at rest. The primary CTA. The active nav underline. A single emphasized word. Never two at once. Its rarity is what gives it weight.", "section": "colors" },
+      { "name": "The Tinted Neutrals Rule", "body": "No neutral is hue 0. Every greyscale value carries hue 50 at chroma 0.006–0.012. Pure #000 and #fff are banned.", "section": "colors" },
+      { "name": "The OKLCH Source of Truth Rule", "body": "OKLCH values ship directly in the frontmatter and CSS variables. Hex approximations are not maintained in parallel. If a tool needs hex, it converts from OKLCH.", "section": "colors" },
+      { "name": "The One Display Rule", "body": "Every page gets exactly one Display-scale element — the hero headline. Secondary pages use Headline instead. Two Displays on one screen is the SaaS landing cliché and is banned.", "section": "typography" },
+      { "name": "The Measure Rule", "body": "Body paragraphs cap at 52–65ch. Never full-width body on a wide viewport.", "section": "typography" },
+      { "name": "The Uppercase-Is-Eyebrow Rule", "body": "The only uppercase text in the system is the eyebrow above a headline. Buttons, nav, and labels keep their natural case. No UPPERCASE CTAs.", "section": "typography" },
+      { "name": "The Flat-Until-State Rule", "body": "Resting surfaces are flat. Shadows are a response — to hover, to scroll, to a control that must float over content. Never decoration.", "section": "elevation" },
+      { "name": "The One Blur Rule", "body": "Backdrop blur is allowed exactly once: the nav bar during scroll. Cards do not blur. Modals do not blur. Glassmorphism as an aesthetic is banned.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use OKLCH values directly in CSS. Every neutral carries hue 50, chroma ≈0.008.",
+      "Do reserve Ember for the primary CTA, the active nav underline, one emphasized word, and focus rings. Nothing else.",
+      "Do ship dark and light as first-class peers. Test every new screen in both themes before committing.",
+      "Do honor prefers-reduced-motion: motion is cut to ≤180ms fades, and hero slide-ups skip to their resting state.",
+      "Do cap body line length at 52–65ch. Respect the measure.",
+      "Do use sharp-edged primary buttons (border-radius: 0). This is a committed brand choice.",
+      "Do use Framer Motion ease-out-expo ([0.16, 1, 0.3, 1]) for entrances. It's the system's signature curve.",
+      "Do use layoutId for continuity (nav indicator, case-study morphs).",
+      "Do extract only a component's distinctive CSS when building new components. No reset bloat."
+    ],
+    "donts": [
+      "Don't use #000 or #fff. Every neutral is tinted — hue 50 at low chroma.",
+      "Don't use gradient text or background-clip: text for decoration. One solid color; emphasis via weight, size, or the Ember accent.",
+      "Don't use glassmorphism as an aesthetic. The nav's backdrop-blur is the only sanctioned use in the whole system.",
+      "Don't build identical project-card grids — icon + heading + text, repeated. Project cards vary; they are not clones.",
+      "Don't build a hero-metric template (big number + small label + supporting stats). It's the SaaS cliché PRODUCT.md explicitly rejects.",
+      "Don't add a testimonials carousel, a gradient mesh background, or a cursor trail. All are template-shaped.",
+      "Don't use em dashes in UI copy. Commas, colons, semicolons, parentheses, periods.",
+      "Don't use border-left or border-right greater than 1px as a colored stripe. Side-stripe borders are banned.",
+      "Don't round primary buttons. Radius 0 is the commitment.",
+      "Don't UPPERCASE buttons, nav links, or body labels. Uppercase is reserved for the Eyebrow role.",
+      "Don't animate CSS layout properties (width, height, top, left). Transform and opacity only.",
+      "Don't ship two Display-scale elements on the same page. One hero headline per page, never more.",
+      "Don't retrofit light mode. Design each theme natively or the design fails."
+    ]
+  }
+}

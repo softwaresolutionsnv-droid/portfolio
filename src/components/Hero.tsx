@@ -39,9 +39,9 @@ export function Hero() {
         <RevealLine delay={0.15}>
           <p
             className="text-sm sm:text-base mb-6 tracking-wide uppercase"
-            style={{ color: 'var(--text-muted)' }}
+            style={{ color: 'var(--text-muted)', letterSpacing: '0.04em' }}
           >
-            Freelance Developer & Designer — Amsterdam
+            Freelance Developer & Designer · Amsterdam
           </p>
         </RevealLine>
 
@@ -89,12 +89,12 @@ export function Hero() {
             style={{ color: 'var(--text-secondary)', lineHeight: 1.7 }}
           >
             I turn hard product problems into clean, fast software.
-            No agency overhead, no handoffs — one person responsible
+            No agency overhead, no handoffs. One person responsible
             for the whole thing, from first commit to launch day.
           </p>
         </RevealLine>
 
-        {/* CTAs */}
+        {/* CTAs — both ghost. The loudest Ember on the page now lives in Contact. */}
         <motion.div
           className="flex flex-col sm:flex-row gap-4"
           initial={reduced ? false : { opacity: 0, y: 20 }}
@@ -103,23 +103,22 @@ export function Hero() {
         >
           <a
             href="#projects"
-            className="inline-flex items-center justify-center px-7 py-3.5 text-sm font-medium tracking-wide transition-colors"
+            className="inline-flex items-center justify-center px-7 py-3.5 text-sm font-medium tracking-wide border transition-colors hover:bg-[var(--bg-surface)]"
             style={{
-              backgroundColor: 'var(--color-accent, oklch(0.65 0.22 25))',
-              color: 'white',
+              borderColor: 'var(--text-primary)',
+              color: 'var(--text-primary)',
             }}
           >
             View Selected Work
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center justify-center px-7 py-3.5 text-sm font-medium tracking-wide border transition-colors hover:bg-[var(--bg-surface)]"
+            className="inline-flex items-center justify-center px-7 py-3.5 text-sm font-medium tracking-wide transition-colors hover:opacity-70"
             style={{
-              borderColor: 'var(--border)',
-              color: 'var(--text-primary)',
+              color: 'var(--text-secondary)',
             }}
           >
-            Start a Conversation
+            Start a conversation →
           </a>
         </motion.div>
       </div>

@@ -5,7 +5,7 @@ const details = [
   { label: 'Based in', value: 'Amsterdam, NL' },
   { label: 'Experience', value: '4+ years' },
   { label: 'Focus', value: 'Web & Mobile' },
-  { label: 'Status', value: 'Available for projects' },
+  { label: 'Status', value: 'Available for projects', accent: true as const },
 ];
 
 export function About() {
@@ -34,7 +34,7 @@ export function About() {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.15 }}
               >
-                I've been building web and mobile products for over four years —
+                I've been building web and mobile products for over four years,
                 mostly for founders and companies who want clean code, real accountability,
                 and a developer who treats their product like it actually matters.
               </motion.p>
@@ -46,7 +46,7 @@ export function About() {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.25 }}
               >
-                My stack spans Vue, Nuxt, React, Angular, Ionic, Node.js, and C++ —
+                My stack spans Vue, Nuxt, React, Angular, Ionic, Node.js, and C++.
                 I reach for whatever the problem actually needs. What stays constant
                 is the architecture: accessible, maintainable, and ready for the next
                 person who opens the codebase.
@@ -62,12 +62,30 @@ export function About() {
               {details.map((item) => (
                 <div key={item.label}>
                   <p
-                    className="text-xs uppercase tracking-widest mb-1"
-                    style={{ color: 'var(--text-muted)' }}
+                    className="text-sm font-medium mb-1"
+                    style={{
+                      color: 'var(--text-muted)',
+                      letterSpacing: '0.02em',
+                    }}
                   >
                     {item.label}
                   </p>
-                  <p className="text-base" style={{ color: 'var(--text-primary)' }}>
+                  <p
+                    className="text-base inline-flex items-center gap-2"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    {('accent' in item && item.accent) && (
+                      <span
+                        aria-hidden="true"
+                        className="inline-block animate-pulse"
+                        style={{
+                          width: '8px',
+                          height: '8px',
+                          borderRadius: '9999px',
+                          backgroundColor: 'var(--color-accent, oklch(0.65 0.22 25))',
+                        }}
+                      />
+                    )}
                     {item.value}
                   </p>
                 </div>

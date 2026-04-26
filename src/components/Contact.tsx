@@ -42,14 +42,14 @@ export function Contact() {
             transition={{ duration: 0.6, delay: 0.25 }}
           >
             <a
-              href="mailto:nils@example.com"
-              className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium tracking-wide transition-colors"
+              href="mailto:hello@nilsvogt.com"
+              className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium tracking-wide transition-colors hover:bg-[var(--color-accent-hover,oklch(0.58_0.22_25))]"
               style={{
                 backgroundColor: 'var(--color-accent, oklch(0.65 0.22 25))',
                 color: 'white',
               }}
             >
-              nils@example.com
+              hello@nilsvogt.com
               <ArrowUpRight className="w-4 h-4" />
             </a>
 
