@@ -1,14 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, X } from 'lucide-react';
+import { getLenis } from '../lib/smoothScroll';
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export type CaseStudyProject = {
   id: number;
   title: string;
+  /** Card-level summary. Used on the rail card. */
   description: string;
+  /**
+   * Optional editorial lead used inside the case-study modal. When omitted,
+   * the modal promotes the first overview paragraph to lead and hides it from
+   * the body, so we never repeat the card description verbatim at Display scale.
+   */
+  lede?: string;
   tags: string[];
   role: string;
   year: string;
@@ -26,6 +34,10 @@ type Props = {
   index: number;
   total: number;
   onClose: () => void;
+  /** Optional: navigate to previous case study (in-place swap). */
+  onPrev?: () => void;
+  /** Optional: navigate to next case study (in-place swap). */
+  onNext?: () => void;
 };
 
 /**
@@ -33,17 +45,38 @@ type Props = {
  * View Transitions API (see Projects.tsx). Mobile-first: swipe-down to
  * dismiss, safe-area padded, native-feeling.
  */
-export function CaseStudy({ project, index, total, onClose }: Props) {
+export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Props) {
   const reduced = useReducedMotion();
   const scrollRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
+  // DOM ref for the scroll-progress bar — updated imperatively to avoid
+  // re-rendering the whole modal on every scroll tick.
+  const progressBarRef = useRef<HTMLDivElement>(null);
 
-  // Swipe-down-to-close gesture state
-  const [dragY, setDragY] = useState(0);
-  const drag = useRef({ active: false, startY: 0, startT: 0, lastY: 0 });
-  const isAutodisk = project.client === 'Autodisk';
+  // Latest-callback refs so the mount-only keydown listener always invokes
+  // the fresh prev/next/close passed by the parent (callbacks are recreated
+  // each render, so a closure over props would go stale on prop swap).
+  const onCloseRef = useRef(onClose);
+  const onPrevRef = useRef(onPrev);
+  const onNextRef = useRef(onNext);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+    onPrevRef.current = onPrev;
+    onNextRef.current = onNext;
+  });
 
-  // Lock body scroll, focus close button, wire Escape
+  // Promote overview[0] to lead when no explicit lede is provided. This
+  // prevents the rail card description from being repeated at Display scale.
+  const lead = project.lede ?? project.overview[0] ?? project.description;
+  const bodyOverview = project.lede
+    ? project.overview
+    : project.overview.slice(1);
+
+  // Root ref for focus trap (queries focusable descendants on demand).
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  // Lock body scroll, mark page background as inert, focus close button,
+  // wire Escape + arrow nav, and trap Tab inside the dialog.
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     const prevPad = document.body.style.paddingRight;
@@ -51,142 +84,171 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
     document.body.style.overflow = 'hidden';
     if (scrollbar > 0) document.body.style.paddingRight = `${scrollbar}px`;
 
+    // Lenis intercepts wheel events globally — pause it so the modal's
+    // overflow-y-auto container can receive them directly.
+    const lenis = getLenis();
+    lenis?.stop();
+
+    // Mark every direct child of <body> outside the dialog as `inert` so
+    // assistive tech and keyboard tabbing skip them. Restore on unmount.
+    const root = rootRef.current;
+    const inerted: HTMLElement[] = [];
+    if (root) {
+      Array.from(document.body.children).forEach((node) => {
+        if (node === root) return;
+        const el = node as HTMLElement;
+        if (el.hasAttribute('inert')) return;
+        el.setAttribute('inert', '');
+        el.setAttribute('aria-hidden', 'true');
+        inerted.push(el);
+      });
+    }
+
+    const FOCUSABLE =
+      'a[href], area[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable="true"]';
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault();
-        onClose();
+        onCloseRef.current();
+        return;
+      }
+      // Trap Tab within the dialog
+      if (e.key === 'Tab' && rootRef.current) {
+        const nodes = Array.from(
+          rootRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)
+        ).filter((n) => !n.hasAttribute('disabled') && n.offsetParent !== null);
+        if (nodes.length === 0) {
+          e.preventDefault();
+          return;
+        }
+        const first = nodes[0];
+        const last = nodes[nodes.length - 1];
+        const active = document.activeElement as HTMLElement | null;
+        if (e.shiftKey && (active === first || !rootRef.current.contains(active))) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && active === last) {
+          e.preventDefault();
+          first.focus();
+        }
+        return;
+      }
+      // Don't hijack arrows while the user is typing or focused in a control.
+      const target = e.target as HTMLElement | null;
+      if (target && target.closest('input, textarea, select, [contenteditable="true"]')) return;
+      if (e.key === 'ArrowLeft' && onPrevRef.current) {
+        e.preventDefault();
+        onPrevRef.current();
+      } else if (e.key === 'ArrowRight' && onNextRef.current) {
+        e.preventDefault();
+        onNextRef.current();
       }
     };
     window.addEventListener('keydown', onKey);
 
-    // Delay focus slightly so view transition completes cleanly
-    const t = window.setTimeout(() => closeBtnRef.current?.focus(), 300);
+    // Focus on the next animation frame — view transitions paint synchronously,
+    // so this is enough without racing the 300ms timeout we used to use.
+    const raf = requestAnimationFrame(() => closeBtnRef.current?.focus());
 
     return () => {
       document.body.style.overflow = prevOverflow;
       document.body.style.paddingRight = prevPad;
       window.removeEventListener('keydown', onKey);
-      window.clearTimeout(t);
+      cancelAnimationFrame(raf);
+      inerted.forEach((el) => {
+        el.removeAttribute('inert');
+        el.removeAttribute('aria-hidden');
+      });
+      lenis?.start();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Swipe-down close (pointer events — works for touch + mouse).
-  // IMPORTANT: do NOT capture pointer events on interactive targets
-  // (buttons, links), or we'd swallow their click. Also defer capture
-  // until real downward movement passes a small threshold.
-  const onPointerDown = (e: React.PointerEvent) => {
+  // Swipe-down-to-close gesture removed — it was intercepting normal
+  // scroll on touch devices. Use the close button or Esc key to dismiss.
+
+  // When the project swaps in-place (prev/next), reset scroll position so
+  // the new case study starts at its hero, not mid-article.
+  useEffect(() => {
     const el = scrollRef.current;
-    if (!el) return;
-    const target = e.target as HTMLElement;
-    // Never start a swipe gesture when the touch starts on an interactive
-    // element — let the tap go through.
-    if (target.closest('button, a, [role="button"], input, textarea, select')) {
-      return;
-    }
-    const fromHandle = target.closest('[data-drag-handle]');
-    if (!fromHandle && el.scrollTop > 0) return;
-    drag.current = {
-      active: true,
-      startY: e.clientY,
-      startT: performance.now(),
-      lastY: e.clientY,
+    if (el) el.scrollTop = 0;
+    if (progressBarRef.current) progressBarRef.current.style.transform = 'scaleX(0)';
+  }, [project.id]);
+
+  // Wire the scroll-progress bar imperatively — no state update, no re-render.
+  useEffect(() => {
+    const el = scrollRef.current;
+    const bar = progressBarRef.current;
+    if (!el || !bar) return;
+    const onScroll = () => {
+      const max = el.scrollHeight - el.clientHeight;
+      const progress = max > 0 ? Math.min(1, Math.max(0, el.scrollTop / max)) : 0;
+      bar.style.transform = `scaleX(${progress})`;
     };
-    // Capture lazily in onPointerMove once we pass the movement threshold.
-  };
-
-  const onPointerMove = (e: React.PointerEvent) => {
-    const s = drag.current;
-    if (!s.active) return;
-    const dy = e.clientY - s.startY;
-    if (dy <= 0) {
-      setDragY(0);
-      return;
-    }
-    s.lastY = e.clientY;
-    // Lazy pointer capture once we're clearly dragging
-    if (dy > 6) {
-      const host = e.currentTarget as HTMLElement;
-      if (!host.hasPointerCapture(e.pointerId)) {
-        host.setPointerCapture(e.pointerId);
-      }
-    }
-    // Rubber-band: resistance as you pull further
-    const resisted = dy < 200 ? dy : 200 + (dy - 200) * 0.4;
-    setDragY(resisted);
-  };
-
-  const endDrag = (e: React.PointerEvent) => {
-    const s = drag.current;
-    if (!s.active) return;
-    s.active = false;
-    const el = e.currentTarget as HTMLElement;
-    if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
-    const dy = e.clientY - s.startY;
-    const dt = Math.max(1, performance.now() - s.startT);
-    const velocity = dy / dt; // px/ms
-    if (dy > 140 || velocity > 0.7) {
-      onClose();
-    } else {
-      setDragY(0);
-    }
-  };
-
-  // Progress of the swipe (0..1) to fade the backdrop
-  const swipeProgress = Math.min(1, dragY / 260);
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => el.removeEventListener('scroll', onScroll);
+    // Re-attach when the scroll container is ready; project.id causes the
+    // container to remount (portal stays, but content flushes) — no-op safe.
+  }, []);
 
   return createPortal(
     <div
+      ref={rootRef}
       className="fixed inset-0 z-[200] cs-root"
       role="dialog"
       aria-modal="true"
-      aria-label={`${project.title} — case study`}
+      aria-label={`${project.title}: case study`}
       style={{
-        // Backdrop fades as you swipe down
-        backgroundColor: `oklch(0 0 0 / ${0.72 - swipeProgress * 0.5})`,
-        transition: drag.current.active ? 'none' : 'background-color 280ms ease',
+        backgroundColor: 'var(--scrim-strong)',
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
+      {/* Scroll-progress beacon — 2px tinted-neutral bar at the top of the
+          modal. The One Beacon Rule reserves Ember for the CTA on this
+          surface; this is mechanical chrome, not a goal indicator. */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 2,
+          zIndex: 30,
+          pointerEvents: 'none',
+          backgroundColor: 'transparent',
+        }}
+      >
+        <div
+          ref={progressBarRef}
+          style={{
+            height: '100%',
+            width: '100%',
+            transform: 'scaleX(0)',
+            transformOrigin: '0% 50%',
+            backgroundColor: 'var(--ink-on-image-muted)',
+            transition: 'transform 120ms linear',
+          }}
+        />
+      </div>
+
       <motion.div
         ref={scrollRef}
         initial={reduced ? { opacity: 0 } : false}
         animate={reduced ? { opacity: 1 } : {}}
         transition={{ duration: 0.2 }}
         className="cs-surface absolute inset-0 overflow-y-auto overflow-x-hidden"
+        data-lenis-prevent
         style={{
           backgroundColor: 'var(--bg)',
-          transform: `translate3d(0, ${dragY}px, 0) scale(${1 - swipeProgress * 0.03})`,
-          transformOrigin: '50% 0%',
-          transition: drag.current.active
-            ? 'none'
-            : 'transform 420ms cubic-bezier(0.16, 1, 0.3, 1)',
           overscrollBehavior: 'contain',
+          WebkitOverflowScrolling: 'touch',
+          touchAction: 'pan-y',
         }}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
       >
-        {/* Drag handle — visible on mobile, subtle on desktop */}
-        <div
-          data-drag-handle
-          className="sticky top-0 z-10 flex justify-center pt-2 pb-1 cs-handle-wrap"
-          aria-hidden="true"
-          style={{ paddingTop: 'max(0.5rem, env(safe-area-inset-top))' }}
-        >
-          <div
-            className="h-1 rounded-full"
-            style={{
-              width: 42,
-              backgroundColor: 'var(--text-muted)',
-              opacity: 0.35,
-            }}
-          />
-        </div>
-
         {/* CLOSE BUTTON — floats over hero, always visible */}
         <button
           ref={closeBtnRef}
@@ -199,12 +261,12 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
             width: 44,
             height: 44,
             borderRadius: 999,
-            backgroundColor: 'oklch(0 0 0 / 0.55)',
-            color: 'oklch(1 0 0 / 0.95)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            border: '1px solid oklch(1 0 0 / 0.14)',
-            outlineColor: 'var(--color-accent, oklch(0.65 0.22 25))',
+            // Solid disk per DESIGN.md §4 "Case-study close button". The One
+            // Blur Rule reserves backdrop-filter for the nav scroll state only.
+            backgroundColor: 'var(--disk-on-image)',
+            color: 'var(--ink-on-image)',
+            border: '1px solid var(--hairline-on-image)',
+            outlineColor: 'var(--color-accent)',
           }}
         >
           <X className="w-5 h-5" strokeWidth={2} />
@@ -225,12 +287,13 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
             className="absolute inset-0 w-full h-full object-cover"
             style={{ viewTransitionName: 'cs-image' } as React.CSSProperties}
           />
-          {/* Scrim for readable hero text */}
+          {/* Scrim for readable hero text — tinted graphite so warmth
+              survives over imagery in either theme. */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                'linear-gradient(to top, oklch(0 0 0 / 0.82) 0%, oklch(0 0 0 / 0.50) 30%, oklch(0 0 0 / 0.10) 60%, oklch(0 0 0 / 0) 78%)',
+                'linear-gradient(to top, oklch(0.08 0.012 50 / 0.82) 0%, oklch(0.08 0.012 50 / 0.50) 30%, oklch(0.08 0.012 50 / 0.10) 60%, oklch(0.08 0.012 50 / 0) 78%)',
             }}
           />
 
@@ -250,27 +313,25 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
                     className="font-display tabular-nums"
                     style={{
                       fontSize: 'clamp(0.85rem, 1.1vw, 1rem)',
-                      color: 'oklch(1 0 0 / 0.7)',
+                      color: 'var(--ink-on-image-muted)',
                       letterSpacing: '0.08em',
                     }}
                   >
                     {String(index + 1).padStart(2, '0')}
-                    <span style={{ color: 'oklch(1 0 0 / 0.35)' }}>
+                    <span style={{ color: 'var(--ink-on-image-subtle)' }}>
                       {' '}
                       / {String(total).padStart(2, '0')}
                     </span>
                   </span>
                   <span
                     className="h-px flex-1 max-w-[120px]"
-                    style={{ backgroundColor: 'oklch(1 0 0 / 0.22)' }}
+                    style={{ backgroundColor: 'var(--hairline-on-image)' }}
                     aria-hidden="true"
                   />
                   <span
                     className="text-[0.68rem] font-medium uppercase tracking-[0.22em]"
                     style={{
-                      color: isAutodisk
-                        ? 'var(--color-accent, oklch(0.72 0.22 25))'
-                        : 'oklch(1 0 0 / 0.8)',
+                      color: 'var(--ink-on-image-muted)',
                     }}
                   >
                     {project.client} · {project.year}
@@ -282,7 +343,7 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
                     fontSize: 'clamp(2.25rem, 7vw, 5.5rem)',
                     lineHeight: 0.98,
                     letterSpacing: '-0.035em',
-                    color: 'oklch(1 0 0 / 0.99)',
+                    color: 'var(--ink-on-image)',
                     viewTransitionName: 'cs-title',
                   } as React.CSSProperties}
                 >
@@ -290,7 +351,9 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
                 </h1>
               </div>
 
-              {/* CTA — morphs from the card's "Live" badge */}
+              {/* CTA — morphs from the card's "Live" badge.
+                  This is the One Beacon on this surface. Focus ring is
+                  text-tinted so it doesn't disappear into the Ember fill. */}
               {project.url ? (
                 <a
                   href={project.url}
@@ -298,12 +361,12 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
                   rel="noopener noreferrer"
                   className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 shrink-0 cs-cta outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
                   style={{
-                    backgroundColor: 'var(--color-accent, oklch(0.65 0.22 25))',
-                    color: 'oklch(1 0 0 / 0.98)',
-                    borderRadius: 2,
-                    border: '1px solid oklch(0.65 0.22 25 / 0.6)',
+                    backgroundColor: 'var(--color-accent)',
+                    color: 'var(--ink-on-image)',
+                    borderRadius: 0,
+                    border: '1px solid var(--color-accent-hover)',
                     viewTransitionName: 'cs-badge',
-                    outlineColor: 'var(--color-accent)',
+                    outlineColor: 'var(--ink-on-image)',
                   } as React.CSSProperties}
                 >
                   <span className="text-[0.72rem] font-medium uppercase tracking-[0.18em]">
@@ -315,10 +378,10 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
                 <span
                   className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 shrink-0"
                   style={{
-                    backgroundColor: 'oklch(1 0 0 / 0.12)',
-                    color: 'oklch(1 0 0 / 0.95)',
-                    borderRadius: 2,
-                    border: '1px solid oklch(1 0 0 / 0.22)',
+                    backgroundColor: 'var(--hairline-on-image)',
+                    color: 'var(--ink-on-image)',
+                    borderRadius: 0,
+                    border: '1px solid var(--hairline-on-image)',
                     viewTransitionName: 'cs-badge',
                   } as React.CSSProperties}
                 >
@@ -340,29 +403,31 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
             paddingBottom: 'max(clamp(3rem, 6vw, 5rem), env(safe-area-inset-bottom))',
           }}
         >
-          {/* Lead paragraph — larger, editorial */}
+          {/* Lead paragraph — larger, editorial. Uses `lede` when provided,
+              otherwise promotes the first overview paragraph so we don't
+              repeat the rail card description verbatim. */}
           <motion.p
             initial={reduced ? false : { opacity: 0, y: 14 }}
             animate={reduced ? {} : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: EASE_OUT_EXPO }}
+            transition={{ duration: 0.6, delay: 0.10, ease: EASE_OUT_EXPO }}
             className="font-display"
             style={{
               fontSize: 'clamp(1.35rem, 2.4vw, 1.9rem)',
               lineHeight: 1.3,
               letterSpacing: '-0.015em',
               color: 'var(--text-primary)',
-              maxWidth: '32ch',
+              maxWidth: '38ch',
               fontWeight: 600,
             }}
           >
-            {project.description}
+            {lead}
           </motion.p>
 
           {/* Meta grid */}
           <motion.dl
             initial={reduced ? false : { opacity: 0, y: 14 }}
             animate={reduced ? {} : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.22, ease: EASE_OUT_EXPO }}
+            transition={{ duration: 0.6, delay: 0.16, ease: EASE_OUT_EXPO }}
             className="grid cs-meta-grid"
             style={{
               marginTop: 'clamp(2rem, 4vw, 3rem)',
@@ -470,7 +535,7 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
             >
               Overview
             </motion.h2>
-            {project.overview.map((para, i) => (
+            {bodyOverview.map((para, i) => (
               <motion.p
                 key={i}
                 initial={reduced ? false : { opacity: 0, y: 14 }}
@@ -492,71 +557,63 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
             ))}
           </div>
 
-          {/* Highlights */}
+          {/* Highlights — rendered as an inline definition list, not a
+              metric grid. The hero-metric template (label/value tiles in a
+              tidy auto-fit grid) is a SaaS cliché the brand explicitly
+              rejects; an editorial dl reads as journalism, not pricing. */}
           {project.highlights.length > 0 && (
-            <motion.div
+            <motion.dl
               initial={reduced ? false : { opacity: 0, y: 20 }}
               whileInView={reduced ? {} : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
-              style={{ marginTop: 'clamp(3rem, 6vw, 5rem)' }}
+              style={{
+                marginTop: 'clamp(3rem, 6vw, 5rem)',
+                maxWidth: '60ch',
+                display: 'grid',
+                rowGap: '0.5rem',
+                columnGap: '2rem',
+                gridTemplateColumns: 'minmax(7rem, max-content) 1fr',
+              }}
             >
-              <h2
-                className="font-display mb-6"
-                style={{
-                  fontSize: 'clamp(0.72rem, 1vw, 0.8rem)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.22em',
-                  fontWeight: 500,
-                  color: 'var(--text-muted)',
-                }}
-              >
-                Highlights
-              </h2>
-              <ul
-                className="grid"
-                style={{
-                  gap: 'clamp(1.25rem, 2.5vw, 2rem)',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-                }}
-              >
-                {project.highlights.map((h, i) => (
-                  <motion.li
-                    key={h.label}
-                    initial={reduced ? false : { opacity: 0, y: 18 }}
-                    whileInView={reduced ? {} : { opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-40px' }}
-                    transition={{
-                      duration: 0.6,
-                      delay: 0.07 * i,
-                      ease: EASE_OUT_EXPO,
-                    }}
+              {project.highlights.map((h, i) => (
+                <motion.div
+                  key={h.label}
+                  initial={reduced ? false : { opacity: 0, y: 14 }}
+                  whileInView={reduced ? {} : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.05 * i,
+                    ease: EASE_OUT_EXPO,
+                  }}
+                  style={{ display: 'contents' }}
+                >
+                  <dt
+                    className="text-[0.62rem] font-medium uppercase tracking-[0.22em]"
                     style={{
-                      paddingTop: '1rem',
-                      borderTop: '1px solid var(--border-subtle)',
+                      color: 'var(--text-muted)',
+                      paddingTop: '0.5rem',
+                      borderTop: i === 0 ? 'none' : '1px solid var(--border-subtle)',
                     }}
                   >
-                    <div
-                      className="text-[0.62rem] font-medium uppercase tracking-[0.22em] mb-2"
-                      style={{ color: 'var(--text-muted)' }}
-                    >
-                      {h.label}
-                    </div>
-                    <div
-                      className="font-display"
-                      style={{
-                        fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)',
-                        lineHeight: 1.25,
-                        letterSpacing: '-0.015em',
-                        color: 'var(--text-primary)',
-                      }}
-                    >
-                      {h.value}
-                    </div>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+                    {h.label}
+                  </dt>
+                  <dd
+                    style={{
+                      fontSize: '1rem',
+                      lineHeight: 1.55,
+                      color: 'var(--text-primary)',
+                      paddingTop: '0.5rem',
+                      borderTop: i === 0 ? 'none' : '1px solid var(--border-subtle)',
+                      margin: 0,
+                    }}
+                  >
+                    {h.value}
+                  </dd>
+                </motion.div>
+              ))}
+            </motion.dl>
           )}
 
           {/* Mobile CTA (desktop has it in hero) */}
@@ -571,9 +628,9 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-3 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
                 style={{
-                  backgroundColor: 'var(--color-accent, oklch(0.65 0.22 25))',
-                  color: 'oklch(1 0 0 / 0.98)',
-                  borderRadius: 2,
+                  backgroundColor: 'var(--color-accent)',
+                  color: 'var(--ink-on-image)',
+                  borderRadius: 0,
                   outlineColor: 'var(--color-accent)',
                 }}
               >
@@ -585,9 +642,10 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
             </div>
           )}
 
-          {/* Footer nav — close cue */}
+          {/* Footer nav — close cue + prev/next between case studies.
+              Keyboard: ← prev, → next, Esc close. */}
           <div
-            className="flex items-center justify-between mt-16 pt-6"
+            className="flex items-center justify-between gap-4 mt-16 pt-6"
             style={{ borderTop: '1px solid var(--border-subtle)' }}
           >
             <button
@@ -600,12 +658,50 @@ export function CaseStudy({ project, index, total, onClose }: Props) {
             >
               <span aria-hidden="true">←</span> Back to archive
             </button>
-            <span
-              className="text-[0.62rem] font-medium uppercase tracking-[0.22em] tabular-nums"
-              style={{ color: 'var(--text-muted)' }}
-            >
-              {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-            </span>
+            <div className="flex items-center gap-2">
+              {onPrev && (
+                <button
+                  type="button"
+                  onClick={onPrev}
+                  aria-label="Previous case study"
+                  className="grid place-items-center outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+                  style={{
+                    width: 44,
+                    height: 44,
+                    color: 'var(--text-secondary)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 0,
+                    outlineColor: 'var(--color-accent)',
+                  }}
+                >
+                  <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+                </button>
+              )}
+              <span
+                className="text-[0.62rem] font-medium uppercase tracking-[0.22em] tabular-nums px-2"
+                style={{ color: 'var(--text-muted)' }}
+              >
+                {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+              </span>
+              {onNext && (
+                <button
+                  type="button"
+                  onClick={onNext}
+                  aria-label="Next case study"
+                  className="grid place-items-center outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+                  style={{
+                    width: 44,
+                    height: 44,
+                    color: 'var(--text-secondary)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 0,
+                    outlineColor: 'var(--color-accent)',
+                  }}
+                >
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </button>
+              )}
+            </div>
           </div>
         </article>
       </motion.div>

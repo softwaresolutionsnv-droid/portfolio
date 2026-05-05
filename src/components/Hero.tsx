@@ -41,7 +41,7 @@ export function Hero() {
             className="text-sm sm:text-base mb-6 tracking-wide uppercase"
             style={{ color: 'var(--text-muted)', letterSpacing: '0.04em' }}
           >
-            Freelance Developer & Designer · Amsterdam
+            Freelance Developer & Designer · Amsterdam · Available
           </p>
         </RevealLine>
 
@@ -50,8 +50,8 @@ export function Hero() {
           className="font-display text-[clamp(2.8rem,8vw,7rem)] leading-[0.95] mb-8 max-w-[18ch]"
           style={{ color: 'var(--text-primary)' }}
         >
-          <RevealLine delay={0.3}>I build digital</RevealLine>
-          <RevealLine delay={0.4}>products that</RevealLine>
+          <RevealLine delay={0.3}>I build products</RevealLine>
+          <RevealLine delay={0.4}>with the thinking</RevealLine>
           <RevealLine delay={0.5} className="inline-flex">
             <motion.span
               style={{ color: 'var(--color-accent, oklch(0.65 0.22 25))' }}
@@ -64,7 +64,7 @@ export function Hero() {
                 times: [0, 0.5, 1],
               }}
             >
-              work.
+              behind them.
             </motion.span>
           </RevealLine>
         </h1>
@@ -88,9 +88,10 @@ export function Hero() {
             className="text-lg sm:text-xl max-w-[52ch] mb-10"
             style={{ color: 'var(--text-secondary)', lineHeight: 1.7 }}
           >
-            I turn hard product problems into clean, fast software.
-            No agency overhead, no handoffs. One person responsible
-            for the whole thing, from first commit to launch day.
+            Fluent in product, design, and code — and in the AI tools
+            that let one person move at team speed. No agency overhead,
+            no handoffs. Direct communication and full ownership,
+            from the first conversation to launch day.
           </p>
         </RevealLine>
 

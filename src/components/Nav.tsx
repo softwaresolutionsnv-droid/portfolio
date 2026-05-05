@@ -49,6 +49,7 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
 
   const scrollTo = useCallback((e: React.MouseEvent, id: string) => {
     e.preventDefault();
+    e.stopPropagation();
     const el = document.getElementById(id);
     if (!el) return;
     smoothScrollTo(el, { offset: -NAV_HEIGHT });
@@ -78,7 +79,7 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
             setActiveId(null);
           }}
         >
-          Nils Vogt
+          Nils Vogelaar
         </a>
 
         <div className="relative flex items-center gap-1 sm:gap-2">

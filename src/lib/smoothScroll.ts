@@ -26,7 +26,6 @@ export function smoothScrollTo(
     lenis.scrollTo(target, {
       offset,
       immediate: options?.immediate,
-      lock: true,
     });
     return;
   }

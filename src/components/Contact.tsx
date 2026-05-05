@@ -3,8 +3,8 @@ import { useRef } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 
 const socials = [
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/nilsvogt' },
-  { label: 'GitHub', href: 'https://github.com/nilsvogt' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nils-v-342b55176/' },
+  { label: 'GitHub', href: 'https://github.com/softwaresolutionsnv-droid' },
 ];
 
 export function Contact() {
@@ -31,8 +31,8 @@ export function Contact() {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
             transition={{ duration: 0.6, delay: 0.15 }}
           >
-            Have a project in mind? I'm currently available for freelance work.
-            Tell me what you're building and I'll tell you how I can help.
+            Scaling something and need a developer who thinks alongside you?
+            Tell me what you're building — I'll tell you what it actually takes.
           </motion.p>
 
           <motion.div
@@ -42,14 +42,14 @@ export function Contact() {
             transition={{ duration: 0.6, delay: 0.25 }}
           >
             <a
-              href="mailto:hello@nilsvogt.com"
+              href="mailto:softwaresolutions.nv@gmail.com"
               className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium tracking-wide transition-colors hover:bg-[var(--color-accent-hover,oklch(0.58_0.22_25))]"
               style={{
                 backgroundColor: 'var(--color-accent, oklch(0.65 0.22 25))',
                 color: 'white',
               }}
             >
-              hello@nilsvogt.com
+              softwaresolutions.nv@gmail.com
               <ArrowUpRight className="w-4 h-4" />
             </a>
 
@@ -76,7 +76,7 @@ export function Contact() {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-              &copy; {new Date().getFullYear()} Nils Vogt
+              &copy; {new Date().getFullYear()} Nils Vogelaar
             </p>
             <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
               Built with React, Tailwind CSS & Framer Motion

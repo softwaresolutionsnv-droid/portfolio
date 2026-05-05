@@ -25,6 +25,19 @@
   --border: oklch(0.25 0.008 50);
   --border-subtle: oklch(0.20 0.006 50);
 
+  /* On-image vocabulary — hue 50 tinted, never hue 0.
+     Scrims layered over photography; ink colors used for text/chrome
+     that sits on top of those scrims. */
+  --scrim-strong: oklch(0.08 0.012 50 / 0.82);
+  --scrim-mid: oklch(0.08 0.012 50 / 0.55);
+  --scrim-soft: oklch(0.08 0.012 50 / 0.35);
+  --ink-on-image: oklch(0.98 0.006 50 / 0.98);
+  --ink-on-image-muted: oklch(0.98 0.006 50 / 0.78);
+  --ink-on-image-subtle: oklch(0.98 0.006 50 / 0.5);
+  --hairline-on-image: oklch(0.98 0.006 50 / 0.18);
+  --hairline-on-image-faint: oklch(0.98 0.006 50 / 0.08);
+  --disk-on-image: oklch(0.08 0.012 50 / 0.72);
+
   font-family: "Figtree", system-ui, sans-serif;
   line-height: 1.6;
   font-weight: 400;
@@ -230,7 +243,7 @@ section[id] {
     transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .cs-close:hover {
-  background-color: oklch(0 0 0 / 0.72) !important;
+  background-color: var(--disk-on-image) !important;
   transform: scale(1.04);
 }
 .cs-close:active {

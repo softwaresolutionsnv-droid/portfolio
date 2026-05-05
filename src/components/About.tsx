@@ -34,9 +34,10 @@ export function About() {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.15 }}
               >
-                I've been building web and mobile products for over four years,
-                mostly for founders and companies who want clean code, real accountability,
-                and a developer who treats their product like it actually matters.
+                Four years building web and mobile products — mostly for scale-ups
+                and founders who need a developer that thinks like a product person.
+                At Autodisk I took FleetDisk from an unfinished internal tool to a
+                polished platform now running live fleets for companies like Van Mossel.
               </motion.p>
 
               <motion.p
@@ -47,9 +48,9 @@ export function About() {
                 transition={{ duration: 0.6, delay: 0.25 }}
               >
                 My stack spans Vue, Nuxt, React, Angular, Ionic, Node.js, and C++.
-                I reach for whatever the problem actually needs. What stays constant
-                is the architecture: accessible, maintainable, and ready for the next
-                person who opens the codebase.
+                I'm deeply fluent in AI tools and build them into every project
+                to move faster without cutting corners. What stays constant is how
+                I work: directly, communicatively, and like the product is mine.
               </motion.p>
             </div>
 

@@ -1,5 +1,5 @@
 ---
-name: Nils Vogt — Portfolio
+name: Nils Vogelaar — Portfolio
 description: Freelance developer and designer portfolio; warm-tinted OKLCH system with a single vermillion beacon.
 colors:
   ember: "oklch(0.65 0.22 25)"

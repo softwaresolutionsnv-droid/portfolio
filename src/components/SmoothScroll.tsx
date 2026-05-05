@@ -56,7 +56,7 @@ export function SmoothScroll() {
       if (!el) return;
       e.preventDefault();
       // Offset matches the fixed nav height (64px).
-      lenis.scrollTo(el, { offset: -64, lock: true });
+      lenis.scrollTo(el, { offset: -64 });
     };
     document.addEventListener('click', onClick);
 
