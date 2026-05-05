@@ -3,20 +3,21 @@ import { createPortal } from 'react-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ArrowUpRight, X } from 'lucide-react';
 import { getLenis } from '../lib/smoothScroll';
+import { webpSrcSet } from '../lib/responsiveImage';
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export type CaseStudyProject = {
   id: number;
   title: string;
-  /** Card-level summary. Used on the rail card. */
+  /** Card-level summary. Used on the rail card only. */
   description: string;
   /**
-   * Optional editorial lead used inside the case-study modal. When omitted,
-   * the modal promotes the first overview paragraph to lead and hides it from
-   * the body, so we never repeat the card description verbatim at Display scale.
+   * Editorial lead used inside the case-study modal. Required: the modal
+   * must never repeat the rail card description verbatim at Display scale.
+   * Write a sentence that only earns its place inside the case study.
    */
-  lede?: string;
+  lede: string;
   tags: string[];
   role: string;
   year: string;
@@ -33,6 +34,8 @@ type Props = {
   project: CaseStudyProject;
   index: number;
   total: number;
+  /** Title of the next case study, shown in the footer as anticipation. */
+  nextTitle?: string;
   onClose: () => void;
   /** Optional: navigate to previous case study (in-place swap). */
   onPrev?: () => void;
@@ -45,7 +48,7 @@ type Props = {
  * View Transitions API (see Projects.tsx). Mobile-first: swipe-down to
  * dismiss, safe-area padded, native-feeling.
  */
-export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Props) {
+export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, onNext }: Props) {
   const reduced = useReducedMotion();
   const scrollRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
@@ -65,12 +68,9 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
     onNextRef.current = onNext;
   });
 
-  // Promote overview[0] to lead when no explicit lede is provided. This
-  // prevents the rail card description from being repeated at Display scale.
-  const lead = project.lede ?? project.overview[0] ?? project.description;
-  const bodyOverview = project.lede
-    ? project.overview
-    : project.overview.slice(1);
+  // Lede is required by the data contract; the body shows the full overview.
+  const lead = project.lede;
+  const bodyOverview = project.overview;
 
   // Root ref for focus trap (queries focusable descendants on demand).
   const rootRef = useRef<HTMLDivElement>(null);
@@ -206,9 +206,12 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      {/* Scroll-progress beacon — 2px tinted-neutral bar at the top of the
-          modal. The One Beacon Rule reserves Ember for the CTA on this
-          surface; this is mechanical chrome, not a goal indicator. */}
+      {/* Scroll-progress beacon — a 2px Ember strip at the top of the modal.
+          This is the One Beacon on this surface: a sales artifact whose
+          north star is The Signal Fire should not render a beaconless
+          viewport, even when the project has no live URL. The bar updates
+          imperatively from rAF-cadence scroll events; no CSS transition
+          needed (the easing was lagging real scroll position by ~120ms). */}
       <div
         aria-hidden="true"
         style={{
@@ -229,8 +232,7 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
             width: '100%',
             transform: 'scaleX(0)',
             transformOrigin: '0% 50%',
-            backgroundColor: 'var(--ink-on-image-muted)',
-            transition: 'transform 120ms linear',
+            backgroundColor: 'var(--color-accent)',
           }}
         />
       </div>
@@ -249,15 +251,19 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
           touchAction: 'pan-y',
         }}
       >
-        {/* CLOSE BUTTON — floats over hero, always visible */}
+        {/* CLOSE BUTTON — floats over hero, always visible.
+            The offset tracks the same fluid scale as the hero chrome and
+            article body (clamp 1.25rem → 3rem) so the disk sits on the
+            same optical gutter as the title and meta, not jammed against
+            the viewport edge at wide viewports. */}
         <button
           ref={closeBtnRef}
           onClick={onClose}
           aria-label="Close case study"
           className="fixed z-20 grid place-items-center outline-none focus-visible:outline-2 focus-visible:outline-offset-4 cs-close"
           style={{
-            top: 'calc(env(safe-area-inset-top) + 1rem)',
-            right: 'calc(env(safe-area-inset-right) + 1rem)',
+            top: 'calc(env(safe-area-inset-top) + clamp(1rem, 3vw, 2rem))',
+            right: 'calc(env(safe-area-inset-right) + clamp(1rem, 4vw, 3rem))',
             width: 44,
             height: 44,
             borderRadius: 999,
@@ -280,13 +286,22 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
             height: 'clamp(360px, 62vh, 640px)',
           }}
         >
-          <img
-            src={project.image}
-            alt={project.imageAlt}
-            draggable={false}
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ viewTransitionName: 'cs-image' } as React.CSSProperties}
-          />
+          <picture>
+            <source
+              type="image/webp"
+              srcSet={webpSrcSet(project.image)}
+              sizes="100vw"
+            />
+            <img
+              src={project.image}
+              alt={project.imageAlt}
+              draggable={false}
+              decoding="async"
+              fetchPriority="high"
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ viewTransitionName: 'cs-image' } as React.CSSProperties}
+            />
+          </picture>
           {/* Scrim for readable hero text — tinted graphite so warmth
               survives over imagery in either theme. */}
           <div
@@ -353,7 +368,9 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
 
               {/* CTA — morphs from the card's "Live" badge.
                   This is the One Beacon on this surface. Focus ring is
-                  text-tinted so it doesn't disappear into the Ember fill. */}
+                  text-tinted so it doesn't disappear into the Ember fill.
+                  When the project has no public URL, route the beacon to
+                  the contact section instead of rendering a dead pill. */}
               {project.url ? (
                 <a
                   href={project.url}
@@ -369,26 +386,26 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
                     outlineColor: 'var(--ink-on-image)',
                   } as React.CSSProperties}
                 >
-                  <span className="text-[0.72rem] font-medium uppercase tracking-[0.18em]">
-                    Visit live site
-                  </span>
+                  <span className="text-sm font-medium">Visit live site</span>
                   <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </a>
               ) : (
-                <span
-                  className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 shrink-0"
+                <a
+                  href="#contact"
+                  onClick={() => onClose()}
+                  className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 shrink-0 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
                   style={{
-                    backgroundColor: 'var(--hairline-on-image)',
-                    color: 'var(--ink-on-image)',
+                    backgroundColor: 'transparent',
+                    color: 'var(--color-accent)',
                     borderRadius: 0,
-                    border: '1px solid var(--hairline-on-image)',
+                    border: '1px solid var(--color-accent)',
                     viewTransitionName: 'cs-badge',
+                    outlineColor: 'var(--color-accent)',
                   } as React.CSSProperties}
                 >
-                  <span className="text-[0.72rem] font-medium uppercase tracking-[0.18em]">
-                    On request
-                  </span>
-                </span>
+                  <span className="text-sm font-medium">Request access</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                </a>
               )}
             </div>
           </div>
@@ -403,9 +420,8 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
             paddingBottom: 'max(clamp(3rem, 6vw, 5rem), env(safe-area-inset-bottom))',
           }}
         >
-          {/* Lead paragraph — larger, editorial. Uses `lede` when provided,
-              otherwise promotes the first overview paragraph so we don't
-              repeat the rail card description verbatim. */}
+          {/* Lead paragraph — larger, editorial. Required by the data
+              contract so it is never the rail card description repeated. */}
           <motion.p
             initial={reduced ? false : { opacity: 0, y: 14 }}
             animate={reduced ? {} : { opacity: 1, y: 0 }}
@@ -413,7 +429,7 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
             className="font-display"
             style={{
               fontSize: 'clamp(1.35rem, 2.4vw, 1.9rem)',
-              lineHeight: 1.3,
+              lineHeight: 1.4,
               letterSpacing: '-0.015em',
               color: 'var(--text-primary)',
               maxWidth: '38ch',
@@ -423,91 +439,10 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
             {lead}
           </motion.p>
 
-          {/* Meta grid */}
-          <motion.dl
-            initial={reduced ? false : { opacity: 0, y: 14 }}
-            animate={reduced ? {} : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.16, ease: EASE_OUT_EXPO }}
-            className="grid cs-meta-grid"
-            style={{
-              marginTop: 'clamp(2rem, 4vw, 3rem)',
-              paddingTop: 'clamp(1.5rem, 2.5vw, 2rem)',
-              paddingBottom: 'clamp(1.5rem, 2.5vw, 2rem)',
-              borderTop: '1px solid var(--border)',
-              borderBottom: '1px solid var(--border)',
-              gap: 'clamp(1.25rem, 2.5vw, 2rem)',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-            }}
-          >
-            <div>
-              <dt
-                className="text-[0.62rem] font-medium uppercase tracking-[0.22em] mb-2"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                Role
-              </dt>
-              <dd
-                className="font-display"
-                style={{
-                  fontSize: '1rem',
-                  letterSpacing: '-0.01em',
-                  color: 'var(--text-primary)',
-                }}
-              >
-                {project.role}
-              </dd>
-            </div>
-            <div>
-              <dt
-                className="text-[0.62rem] font-medium uppercase tracking-[0.22em] mb-2"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                Client
-              </dt>
-              <dd
-                className="font-display"
-                style={{
-                  fontSize: '1rem',
-                  letterSpacing: '-0.01em',
-                  color: 'var(--text-primary)',
-                }}
-              >
-                {project.client}
-              </dd>
-            </div>
-            <div>
-              <dt
-                className="text-[0.62rem] font-medium uppercase tracking-[0.22em] mb-2"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                Year
-              </dt>
-              <dd
-                className="font-display tabular-nums"
-                style={{
-                  fontSize: '1rem',
-                  letterSpacing: '-0.01em',
-                  color: 'var(--text-primary)',
-                }}
-              >
-                {project.year}
-              </dd>
-            </div>
-            <div>
-              <dt
-                className="text-[0.62rem] font-medium uppercase tracking-[0.22em] mb-2"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                Stack
-              </dt>
-              <dd
-                className="text-sm"
-                style={{ color: 'var(--text-primary)', lineHeight: 1.6 }}
-              >
-                {project.tags.join(', ')}
-              </dd>
-            </div>
-          </motion.dl>
+          {/* Meta dl removed: client+year already live in the hero eyebrow,
+              role lives next to the title, and stack is carried as a row of
+              the highlights list below. Three repetitions of the same facts
+              was the SaaS "credits row" the brand explicitly rejects. */}
 
           {/* Overview paragraphs */}
           <div
@@ -526,11 +461,10 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
               transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
               className="font-display"
               style={{
-                fontSize: 'clamp(0.72rem, 1vw, 0.8rem)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.22em',
+                fontSize: '0.875rem',
                 fontWeight: 500,
                 color: 'var(--text-muted)',
+                letterSpacing: '0.02em',
               }}
             >
               Overview
@@ -590,7 +524,7 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
                   style={{ display: 'contents' }}
                 >
                   <dt
-                    className="text-[0.62rem] font-medium uppercase tracking-[0.22em]"
+                    className="text-sm font-medium"
                     style={{
                       color: 'var(--text-muted)',
                       paddingTop: '0.5rem',
@@ -616,12 +550,13 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
             </motion.dl>
           )}
 
-          {/* Mobile CTA (desktop has it in hero) */}
-          {project.url && (
-            <div
-              className="sm:hidden"
-              style={{ marginTop: 'clamp(2.5rem, 6vw, 3.5rem)' }}
-            >
+          {/* Mobile CTA (desktop has it in hero). Mirrors the URL/no-URL
+              branch so URL-less projects still expose a beacon on phones. */}
+          <div
+            className="sm:hidden"
+            style={{ marginTop: 'clamp(2.5rem, 6vw, 3.5rem)' }}
+          >
+            {project.url ? (
               <a
                 href={project.url}
                 target="_blank"
@@ -634,15 +569,32 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
                   outlineColor: 'var(--color-accent)',
                 }}
               >
-                <span className="text-[0.72rem] font-medium uppercase tracking-[0.18em]">
-                  Visit live site
-                </span>
+                <span className="text-sm font-medium">Visit live site</span>
                 <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
               </a>
-            </div>
-          )}
+            ) : (
+              <a
+                href="#contact"
+                onClick={() => onClose()}
+                className="inline-flex items-center gap-2 px-5 py-3 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+                style={{
+                  backgroundColor: 'transparent',
+                  color: 'var(--color-accent)',
+                  borderRadius: 0,
+                  border: '1px solid var(--color-accent)',
+                  outlineColor: 'var(--color-accent)',
+                }}
+              >
+                <span className="text-sm font-medium">Request access</span>
+                <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+              </a>
+            )}
+          </div>
 
-          {/* Footer nav — close cue + prev/next between case studies.
+          {/* Footer nav — close cue + prev/next teaser between case studies.
+              The footer index used to repeat the hero's "02 / 03"; we now
+              promote the next project's title so navigation reads as
+              anticipation, not chrome talking to itself.
               Keyboard: ← prev, → next, Esc close. */}
           <div
             className="flex items-center justify-between gap-4 mt-16 pt-6"
@@ -658,7 +610,7 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
             >
               <span aria-hidden="true">←</span> Back to archive
             </button>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               {onPrev && (
                 <button
                   type="button"
@@ -670,31 +622,54 @@ export function CaseStudy({ project, index, total, onClose, onPrev, onNext }: Pr
                     height: 44,
                     color: 'var(--text-secondary)',
                     border: '1px solid var(--border)',
-                    borderRadius: 0,
+                    borderRadius: 999,
                     outlineColor: 'var(--color-accent)',
                   }}
                 >
                   <ArrowLeft className="w-4 h-4" aria-hidden="true" />
                 </button>
               )}
-              <span
-                className="text-[0.62rem] font-medium uppercase tracking-[0.22em] tabular-nums px-2"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-              </span>
               {onNext && (
                 <button
                   type="button"
                   onClick={onNext}
-                  aria-label="Next case study"
-                  className="grid place-items-center outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+                  className="hidden sm:inline-flex items-center gap-3 pl-3 pr-2 py-2 text-sm outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+                  style={{
+                    color: 'var(--text-primary)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 999,
+                    outlineColor: 'var(--color-accent)',
+                  }}
+                >
+                  <span style={{ color: 'var(--text-muted)' }}>Next</span>
+                  <span className="font-medium">{nextTitle}</span>
+                  <span
+                    aria-hidden="true"
+                    className="grid place-items-center"
+                    style={{
+                      width: 28,
+                      height: 28,
+                      borderRadius: 999,
+                      backgroundColor: 'var(--color-accent)',
+                      color: 'var(--ink-on-image)',
+                    }}
+                  >
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </button>
+              )}
+              {onNext && (
+                <button
+                  type="button"
+                  onClick={onNext}
+                  aria-label={nextTitle ? `Next case study: ${nextTitle}` : 'Next case study'}
+                  className="sm:hidden grid place-items-center outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
                   style={{
                     width: 44,
                     height: 44,
                     color: 'var(--text-secondary)',
                     border: '1px solid var(--border)',
-                    borderRadius: 0,
+                    borderRadius: 999,
                     outlineColor: 'var(--color-accent)',
                   }}
                 >

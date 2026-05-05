@@ -71,7 +71,7 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
       <nav className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
         <a
           href="#"
-          className="font-display text-lg tracking-tight"
+          className="flex items-center gap-2.5 font-display text-lg tracking-tight"
           style={{ color: 'var(--text-primary)' }}
           onClick={(e) => {
             e.preventDefault();
@@ -79,6 +79,15 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
             setActiveId(null);
           }}
         >
+          {/* Logomark — theme-aware brand icon */}
+          <img
+            src={theme === 'dark' ? '/icons/nils-primary-dark.svg' : '/icons/nils-primary-light.svg'}
+            alt=""
+            aria-hidden="true"
+            width="28"
+            height="28"
+            className="shrink-0"
+          />
           Nils Vogelaar
         </a>
 

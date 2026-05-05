@@ -9,6 +9,7 @@ import {
 import { flushSync } from 'react-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { CaseStudy, type CaseStudyProject } from './CaseStudy';
+import { webpSrcSet } from '../lib/responsiveImage';
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -26,6 +27,8 @@ const projects: Project[] = [
     title: 'BerijdersApp',
     description:
       'White-label mobile app for lease drivers. One overview for contract, mileage, damage reports, fines, and a fuel-score derived from every fill-up. Replaces the paper driver handbook with a tap-to-act digital version.',
+    lede:
+      'A driver handbook reduced to taps. Fines, mileage, fuel, damages: every annoyance of leasing collapses into one screen.',
     tags: ['Vue.js', 'TypeScript', 'Ionic', 'Capacitor'],
     role: 'Frontend Developer',
     year: '2025',
@@ -51,7 +54,8 @@ const projects: Project[] = [
     title: 'FleetDisk',
     description:
       'Self-service fleet management portal for lease companies. 24/7 insight into damages, fines, fuel cards, insurance, and lease orders: one pane over what used to be five separate back-offices.',
-
+    lede:
+      'Thirty years of enterprise fleet data, made scannable in three seconds. The control surface five back-offices used to need.',
     tags: ['Nuxt.js', 'Vue.js', 'TypeScript', 'Bootstrap'],
     role: 'Frontend Developer',
     year: '2024',
@@ -79,7 +83,8 @@ const projects: Project[] = [
     title: 'N.B. Onderhoudsdiensten',
     description:
       'Brand identity and marketing site for a Dutch renovation duo. Warm, premium aesthetic built to convert local homeowners. Social proof above the fold, quote CTAs at every decision point.',
-
+    lede:
+      'A two-person renovation crew, dressed to look like the firm you would actually trust with your kitchen.',
     tags: ['Next.js', 'TypeScript', 'Tailwind CSS'],
     role: 'Designer',
     year: '2025',
@@ -167,22 +172,30 @@ function ProjectCard({
             </span>
           </div>
         ) : (
-          <motion.img
-            src={project.image}
-            alt={project.imageAlt}
-            draggable={false}
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-            style={{
-              opacity: loaded ? 1 : 0,
-              transition: 'opacity 400ms ease',
-              viewTransitionName: morphing ? 'cs-image' : undefined,
-            } as React.CSSProperties}
-            loading="lazy"
-            onLoad={() => setLoaded(true)}
-            onError={() => setErrored(true)}
-            animate={{ scale: isActive ? 1.04 : 1 }}
-            transition={{ duration: 1.2, ease: EASE_OUT_EXPO }}
-          />
+          <picture>
+            <source type="image/webp" srcSet={webpSrcSet(project.image)} sizes="(min-width: 1024px) 50vw, 100vw" />
+            <motion.img
+              src={project.image}
+              alt={project.imageAlt}
+              draggable={false}
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              style={{
+                opacity: loaded ? 1 : 0,
+                transition: 'opacity 400ms ease',
+                viewTransitionName: morphing ? 'cs-image' : undefined,
+              } as React.CSSProperties}
+              // Active card carries LCP weight; load it eagerly with high
+              // priority so the rail's hero image isn't gated behind lazy
+              // observation. Inactive cards stay lazy.
+              loading={isActive ? 'eager' : 'lazy'}
+              fetchPriority={isActive ? 'high' : 'auto'}
+              decoding="async"
+              onLoad={() => setLoaded(true)}
+              onError={() => setErrored(true)}
+              animate={{ scale: isActive ? 1.04 : 1 }}
+              transition={{ duration: 1.2, ease: EASE_OUT_EXPO }}
+            />
+          </picture>
         )}
 
         {/* ---------- LAYER 2: scrim for legibility (tinted graphite) ---------- */}
@@ -762,6 +775,7 @@ function ProjectRail() {
             project={p}
             index={idx}
             total={projects.length}
+            nextTitle={projects.length > 1 ? next.title : undefined}
             onClose={closeCaseStudy}
             onPrev={projects.length > 1 ? () => swap(prev.id) : undefined}
             onNext={projects.length > 1 ? () => swap(next.id) : undefined}
