@@ -81,12 +81,24 @@ export function FluidCanvas() {
   const mountRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(false);
+  // Gate WebGL on devices that can actually drive the shader: a fine pointer
+  // that supports hover. Touch devices fall back to the static radial gradient.
+  const [canRenderShader, setCanRenderShader] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
+    const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const update = () => setCanRenderShader(mq.matches);
+    update();
+    mq.addEventListener?.('change', update);
+    return () => mq.removeEventListener?.('change', update);
+  }, []);
 
   useEffect(() => {
     setIsVisible(true);
-    
-    // Only mount if there's a container and no reduced motion
-    if (!mountRef.current || reducedMotion) return;
+
+    // Only mount on hover-capable devices, with a container, and no reduced motion
+    if (!mountRef.current || reducedMotion || !canRenderShader) return;
 
     const container = mountRef.current;
     
@@ -192,9 +204,9 @@ export function FluidCanvas() {
       material.dispose();
       renderer.dispose();
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, canRenderShader]);
 
-  if (reducedMotion) {
+  if (reducedMotion || !canRenderShader) {
     // Static elegant fallback
     return (
       <div 
@@ -210,8 +222,8 @@ export function FluidCanvas() {
   return (
     <div 
       ref={containerRef}
-      className={`absolute inset-0 pointer-events-none bg-black overflow-hidden transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-      style={{ zIndex: -1 }} // place it strictly behind the text
+      className={`absolute inset-0 pointer-events-none overflow-hidden transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      style={{ backgroundColor: 'var(--bg)', zIndex: -1 }}
     >
       <div ref={mountRef} className="w-full h-full" />
     </div>

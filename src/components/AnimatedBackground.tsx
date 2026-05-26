@@ -36,6 +36,12 @@ export function AnimatedBackground() {
   const smoothMouseY = useSpring(mouseY, { stiffness: 40, damping: 25 });
 
   useEffect(() => {
+    // Skip the mousemove parallax on touch devices: the listener never fires
+    // there, and we avoid attaching it at all.
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
+    const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
+    if (!mq.matches) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set((e.clientX - window.innerWidth / 2) / window.innerWidth);
       mouseY.set((e.clientY - window.innerHeight / 2) / window.innerHeight);

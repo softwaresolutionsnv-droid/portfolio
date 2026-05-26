@@ -633,16 +633,16 @@ function ProjectRail() {
           className="flex items-end justify-between gap-4 mb-3"
         >
           <span
-            className="text-sm font-medium"
+            className="hidden sm:inline text-sm font-medium whitespace-nowrap"
             style={{ color: 'var(--text-muted)', letterSpacing: '0.02em' }}
             aria-hidden="true"
           >
-            Drag, scroll, arrow keys, 1–3
+            Drag, scroll, arrow keys: 1 to 3
           </span>
 
           <span
             key={activeIndex}
-            className="font-medium tabular-nums truncate max-w-[60%] text-right"
+            className="font-medium tabular-nums truncate ml-auto max-w-full sm:max-w-[60%] text-right"
             style={{
               fontSize: '0.78rem',
               letterSpacing: '0.08em',

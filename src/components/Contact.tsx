@@ -32,7 +32,7 @@ export function Contact() {
             transition={{ duration: 0.6, delay: 0.15 }}
           >
             Scaling something and need a developer who thinks alongside you?
-            Tell me what you're building — I'll tell you what it actually takes.
+            Tell me what you're building. I'll tell you what it actually takes.
           </motion.p>
 
           <motion.div

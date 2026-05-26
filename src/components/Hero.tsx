@@ -88,7 +88,7 @@ export function Hero() {
             className="text-lg sm:text-xl max-w-[52ch] mb-10"
             style={{ color: 'var(--text-secondary)', lineHeight: 1.7 }}
           >
-            Fluent in product, design, and code — and in the AI tools
+            Fluent in product, design, and code. And in the AI tools
             that let one person move at team speed. No agency overhead,
             no handoffs. Direct communication and full ownership,
             from the first conversation to launch day.
