@@ -26,6 +26,8 @@ export type CaseStudyProject = {
   imageAlt: string;
   color: string;
   url?: string;
+  /** Show the live-site / request-access CTA inside the case study. Off by default. */
+  showCta?: boolean;
   overview: string[];
   highlights: { label: string; value: string }[];
 };
@@ -371,7 +373,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                   text-tinted so it doesn't disappear into the Ember fill.
                   When the project has no public URL, route the beacon to
                   the contact section instead of rendering a dead pill. */}
-              {project.url ? (
+              {project.showCta && (project.url ? (
                 <a
                   href={project.url}
                   target="_blank"
@@ -406,7 +408,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                   <span className="text-sm font-medium">Request access</span>
                   <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </a>
-              )}
+              ))}
             </div>
           </div>
         </header>
@@ -556,7 +558,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
             className="sm:hidden"
             style={{ marginTop: 'clamp(2.5rem, 6vw, 3.5rem)' }}
           >
-            {project.url ? (
+            {project.showCta && (project.url ? (
               <a
                 href={project.url}
                 target="_blank"
@@ -588,7 +590,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                 <span className="text-sm font-medium">Request access</span>
                 <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
               </a>
-            )}
+            ))}
           </div>
 
           {/* Footer nav — close cue + prev/next teaser between case studies.

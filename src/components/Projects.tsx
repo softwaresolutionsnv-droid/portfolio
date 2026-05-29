@@ -19,6 +19,8 @@ type Project = CaseStudyProject & {
   /** Used by the 'stat-led' variant: the headline number that replaces
       the description block on the rail. Falls back to first highlight. */
   pullStat?: { value: string; label: string };
+  /** Show the Live / On request status badge on the card. */
+  showBadge?: boolean;
 };
 
 const projects: Project[] = [
@@ -44,7 +46,7 @@ const projects: Project[] = [
       'The fuel-score is the interesting part: every fill-up the driver logs is normalised against vehicle, route, and climate, then surfaced as a running score. It turns a back-office KPI into something a driver actually engages with.',
     ],    cardVariant: 'standard',    highlights: [
       { label: 'Platform', value: 'iOS · Android · Web' },
-      { label: 'Shipped', value: 'White-label, 6 lease co\u2019s' },
+      { label: 'Shipped', value: 'White-label, 6 lease companies' },
       { label: 'Scope', value: 'Contract, damage, fines, fuel-score' },
       { label: 'Team', value: 'Solo frontend, in-house designer' },
     ],
@@ -72,8 +74,8 @@ const projects: Project[] = [
     highlights: [
       { label: 'Users', value: 'Fleet managers, B2B' },
       { label: 'Data scale', value: '100k+ vehicles, live' },
-      { label: 'Stack', value: 'Nuxt 3 \u00b7 TS \u00b7 REST' },
-      { label: 'Outcome', value: 'Helpdesk tickets down' },
+      { label: 'Stack', value: 'Nuxt 3 · TypeScript · REST API' },
+      { label: 'Outcome', value: 'Fewer helpdesk tickets' },
     ],
     cardVariant: 'stat-led',
     pullStat: { value: '100k+', label: 'Vehicles, live' },
@@ -98,11 +100,14 @@ const projects: Project[] = [
       'N.B. Onderhoudsdiensten is a two-person renovation duo in the Netherlands who needed a brand and a site that punched above their weight. The brief: look like a crew you\u2019d trust with your kitchen, not like a templated contractor.',
       'Dark, warm, editorial. Serif typography for confidence, a gold accent for craft, lots of air. Social proof sits above the fold, quote CTAs follow the eye down the page.',
       'Built in Next.js with internationalisation (NL/EN) from day one. Sub-second Lighthouse scores across all pages, and a booking flow built to convert.',
-    ],    cardVariant: 'image-bleed',    highlights: [
+    ],    cardVariant: 'image-bleed',
+    showBadge: true,
+    showCta: true,
+    highlights: [
       { label: 'Deliverable', value: 'Brand + site + copy' },
-      { label: 'Tech', value: 'Next.js \u00b7 i18n \u00b7 CMS' },
+      { label: 'Stack', value: 'Next.js \u00b7 NL/EN \u00b7 CMS' },
       { label: 'Lighthouse', value: '98 / 100 / 100 / 100' },
-      { label: 'Conversion', value: '\u22483\u00d7 category avg.' },
+      { label: 'Conversion', value: '~3\u00d7 category average' },
     ],
   },
 ];
@@ -250,6 +255,7 @@ function ProjectCard({
               </span>
             </span>
 
+            {project.showBadge && (
             <div
               className="flex items-center gap-1.5 shrink-0"
               style={{
@@ -283,6 +289,7 @@ function ProjectCard({
                 aria-hidden="true"
               />
             </div>
+            )}
           </header>
 
           {/* ROW 2 — flexible spacer */}
@@ -637,7 +644,7 @@ function ProjectRail() {
             style={{ color: 'var(--text-muted)', letterSpacing: '0.02em' }}
             aria-hidden="true"
           >
-            Drag, scroll, arrow keys: 1 to 3
+            Drag, scroll, or press 1–3
           </span>
 
           <span

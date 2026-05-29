@@ -22,3 +22,17 @@ Nils is a freelance designer/developer whose portfolio is itself a demonstration
 3. **First impression is a promise** — the above-the-fold experience must immediately communicate quality and capability.
 4. **Earn every motion** — animations should improve comprehension or delight, never distract or slow the user.
 5. **Both themes are first-class** — dark mode and light mode should each feel native and complete, not like one is an afterthought.
+
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked in GitHub Issues (`softwaresolutionsnv-droid/portfolio`) via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Canonical triage roles map 1:1 to their default label strings. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context layout — one `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
