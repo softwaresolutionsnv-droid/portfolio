@@ -19,11 +19,12 @@ function NotConfigured() {
         <h1 className="font-display text-2xl">CMS is nog niet geconfigureerd</h1>
         <p className="text-sm leading-relaxed text-muted-foreground">
           De omgevingsvariabelen <code>VITE_SUPABASE_URL</code> en{' '}
-          <code>VITE_SUPABASE_ANON_KEY</code> ontbreken. Volg de stappen in{' '}
-          <code>docs/cms-setup.md</code> om het Supabase-project aan te maken en
-          de variabelen lokaal (<code>.env.local</code>) en op Vercel in te
-          stellen. De portfolio zelf werkt gewoon door op de meegeleverde
-          content.
+          <code>VITE_SUPABASE_ANON_KEY</code> (of{' '}
+          <code>VITE_SUPABASE_PUBLISHABLE_KEY</code>) ontbreken. Lokaal horen ze
+          in <code>.env.local</code> (herstart daarna de dev-server); op Vercel
+          onder Environment Variables, gevolgd door een redeploy. Zie{' '}
+          <code>docs/cms-setup.md</code>. De portfolio zelf werkt gewoon door op
+          de meegeleverde content.
         </p>
       </div>
     </div>
