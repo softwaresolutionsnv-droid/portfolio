@@ -23,7 +23,9 @@ Het CMS draait op [Supabase](https://supabase.com) (database, foto-opslag en log
 
 ### 4. Environment-variabelen instellen
 
-Vind onder **Project Settings → API** de *Project URL* en de *anon public key*.
+Vind onder **Project Settings → API** de *Project URL* en een publieke key (de nieuwe *publishable key* `sb_publishable_…` of de legacy *anon key* — beide werken).
+
+> **Let op:** gebruik het `VITE_`-prefix — dit is een Vite-project; het `NEXT_PUBLIC_`-prefix dat Supabase in voorbeelden toont werkt hier niet. De key-variabele mag `VITE_SUPABASE_ANON_KEY` of `VITE_SUPABASE_PUBLISHABLE_KEY` heten. En omdat de waarden tijdens de build worden ingebakken: na het toevoegen of wijzigen in Vercel altijd **redeployen**. Vercel-variabelen gelden alleen voor deployments — lokaal gebruik je `.env.local` en herstart je daarna `npm run dev`.
 
 - **Lokaal**: kopieer `.env.example` naar `.env.local` en vul beide waarden in.
 - **Vercel**: zet `VITE_SUPABASE_URL` en `VITE_SUPABASE_ANON_KEY` onder Project → Settings → Environment Variables (alle environments).

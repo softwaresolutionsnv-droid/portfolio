@@ -1,7 +1,10 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+// Supabase's nieuwe "publishable key" en de legacy "anon key" zijn beide
+// prima — accepteer beide variabelenamen.
+const anonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY ||
+  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY) as string | undefined;
 
 /** Null when the CMS env vars are missing — AdminApp shows setup help. */
 export const supabase: SupabaseClient | null =
