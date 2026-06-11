@@ -1,5 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { KineticHeading } from './KineticHeading';
+import { ProgressParagraph } from './ProgressParagraph';
 
 const details = [
   { label: 'Based in', value: 'Amsterdam, NL' },
@@ -17,28 +19,24 @@ export function About() {
       <div className="max-w-6xl mx-auto w-full">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl mb-14 sm:mb-20">
-            About
-          </h2>
+          <KineticHeading
+            as="h2"
+            lines={['About']}
+            className="font-display text-3xl sm:text-4xl md:text-5xl mb-14 sm:mb-20"
+          />
 
           <div className="grid lg:grid-cols-[1fr_280px] gap-12 lg:gap-20">
             <div>
-              <motion.p
+              {/* Kinetic signature: words brighten as the visitor reads down */}
+              <ProgressParagraph
                 className="text-lg sm:text-xl leading-relaxed mb-6"
-                style={{ color: 'var(--text-secondary)', maxWidth: '58ch' }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6, delay: 0.15 }}
-              >
-                Four years building web and mobile products — mostly for scale-ups
-                and founders who need a developer that thinks like a product person.
-                At Autodisk I took FleetDisk from an unfinished internal tool to a
-                polished platform now running live fleets for companies like Van Mossel.
-              </motion.p>
+                style={{ color: 'var(--text-primary)', maxWidth: '58ch' }}
+                text="Four years building web and mobile products, mostly for scale-ups and founders who need a developer that thinks like a product person. At Autodisk I took FleetDisk from an unfinished internal tool to a polished platform now running live fleets for companies like Van Mossel."
+              />
 
               <motion.p
                 className="text-lg sm:text-xl leading-relaxed"

@@ -164,7 +164,6 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
       });
       lenis?.start();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Swipe-down-to-close gesture removed — it was intercepting normal

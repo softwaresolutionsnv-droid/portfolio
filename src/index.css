@@ -104,6 +104,17 @@ section[id] {
 }
 
 /* ===================================================================
+   CUSTOM CURSOR — when the contextual cursor is mounted (mouse + fine
+   pointer only), the native cursor yields everywhere. The dot + verb
+   disk carry all affordance.
+   =================================================================== */
+
+[data-custom-cursor],
+[data-custom-cursor] * {
+  cursor: none !important;
+}
+
+/* ===================================================================
    TRANSITION HELPERS
    =================================================================== */
 

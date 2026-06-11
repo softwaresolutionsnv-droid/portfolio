@@ -9,11 +9,16 @@ import {
 import { flushSync } from 'react-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { CaseStudy, type CaseStudyProject } from './CaseStudy';
+import { KineticHeading } from './KineticHeading';
 import { webpSrcSet } from '../lib/responsiveImage';
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
+const BASE_TITLE = 'Nils Vogelaar — Developer & Designer';
+
 type Project = CaseStudyProject & {
+  /** URL slug for the case study deep link (/work/:slug). */
+  slug: string;
   /** Visual treatment for the rail card. Three projects, three layouts. */
   cardVariant?: 'standard' | 'stat-led' | 'image-bleed';
   /** Used by the 'stat-led' variant: the headline number that replaces
@@ -26,6 +31,7 @@ type Project = CaseStudyProject & {
 const projects: Project[] = [
   {
     id: 1,
+    slug: 'berijdersapp',
     title: 'BerijdersApp',
     description:
       'White-label mobile app for lease drivers. One overview for contract, mileage, damage reports, fines, and a fuel-score derived from every fill-up. Replaces the paper driver handbook with a tap-to-act digital version.',
@@ -53,6 +59,7 @@ const projects: Project[] = [
   },
   {
     id: 2,
+    slug: 'fleetdisk',
     title: 'FleetDisk',
     description:
       'Self-service fleet management portal for lease companies. 24/7 insight into damages, fines, fuel cards, insurance, and lease orders: one pane over what used to be five separate back-offices.',
@@ -82,6 +89,7 @@ const projects: Project[] = [
   },
   {
     id: 3,
+    slug: 'nb-onderhoudsdiensten',
     title: 'N.B. Onderhoudsdiensten',
     description:
       'Brand identity and marketing site for a Dutch renovation duo. Warm, premium aesthetic built to convert local homeowners. Social proof above the fold, quote CTAs at every decision point.',
@@ -111,6 +119,27 @@ const projects: Project[] = [
     ],
   },
 ];
+
+/* ------------------------------------------------------------------
+   Case-study deep links — /work/:slug without a router. The overlay
+   state is mirrored into history so projects are shareable URLs and
+   browser back/forward behaves like navigation.
+   ------------------------------------------------------------------ */
+
+const slugToId = new Map(projects.map((p) => [p.slug, p.id]));
+const idToSlug = new Map(projects.map((p) => [p.id, p.slug]));
+
+function parseWorkPath(pathname: string): string | null {
+  const m = pathname.match(/^\/work\/([a-z0-9-]+)\/?$/i);
+  return m ? m[1].toLowerCase() : null;
+}
+
+/** Case study to open on first paint when loaded via /work/:slug. */
+function initialCaseStudyId(): number | null {
+  if (typeof window === 'undefined') return null;
+  const slug = parseWorkPath(window.location.pathname);
+  return slug ? (slugToId.get(slug) ?? null) : null;
+}
 
 /* ------------------------------------------------------------------ */
 
@@ -415,6 +444,7 @@ function ProjectCard({
           }
           onOpen();
         }}
+        data-cursor="view"
         className="absolute inset-0 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
         style={{
           outlineColor: 'var(--color-accent)',
@@ -445,8 +475,10 @@ function ProjectRail() {
   // Cinematic case-study state
   // morphingId = card currently owning view-transition-name (before/after the transition)
   // openId     = case study that is actually rendered on screen
-  const [morphingId, setMorphingId] = useState<number | null>(null);
-  const [openId, setOpenId] = useState<number | null>(null);
+  // Both seed from the URL so /work/:slug deep links open over the rail
+  // with no morph (there is no source card on screen yet).
+  const [morphingId, setMorphingId] = useState<number | null>(initialCaseStudyId);
+  const [openId, setOpenId] = useState<number | null>(initialCaseStudyId);
 
   // Drag state — use pointer events for mouse AND trackpad click-drag.
   // Native scroll + wheel still works on top (no preventDefault on wheel).
@@ -490,7 +522,10 @@ function ProjectRail() {
   }, []);
 
   useLayoutEffect(() => {
-    updateProgress();
+    // Scheduled (not called inline) because updateProgress sets activeIndex;
+    // rAF still lands before the next paint.
+    const raf = requestAnimationFrame(updateProgress);
+    return () => cancelAnimationFrame(raf);
   }, [updateProgress]);
 
   useEffect(() => {
@@ -583,7 +618,13 @@ function ProjectRail() {
   // ---------- Cinematic case-study open/close ----------
 
   const openCaseStudy = useCallback(
-    (id: number) => {
+    (id: number, push = true) => {
+      if (push) {
+        const slug = idToSlug.get(id);
+        if (slug && window.location.pathname !== `/work/${slug}`) {
+          window.history.pushState({ cs: slug }, '', `/work/${slug}`);
+        }
+      }
       // Fallback: no View Transitions (Firefox) or reduced-motion users
       const supports = typeof document !== 'undefined' && 'startViewTransition' in document;
       if (!supports || reduced) {
@@ -608,7 +649,12 @@ function ProjectRail() {
     [reduced]
   );
 
-  const closeCaseStudy = useCallback(() => {
+  // `push` may receive a DOM event when used directly as an event handler;
+  // any truthy value means "record this close in history".
+  const closeCaseStudy = useCallback((push: unknown = true) => {
+    if (push && window.location.pathname !== '/') {
+      window.history.pushState({}, '', '/');
+    }
     const supports = typeof document !== 'undefined' && 'startViewTransition' in document;
     if (!supports || reduced) {
       setOpenId(null);
@@ -624,6 +670,34 @@ function ProjectRail() {
     });
     vt.finished.finally(() => setMorphingId(null));
   }, [reduced]);
+
+  // Unknown /work/:slug deep links fall back to the root URL.
+  useEffect(() => {
+    const slug = parseWorkPath(window.location.pathname);
+    if (slug && !slugToId.has(slug)) window.history.replaceState({}, '', '/');
+  }, []);
+
+  // Browser back/forward drives the overlay.
+  useEffect(() => {
+    const onPop = () => {
+      const slug = parseWorkPath(window.location.pathname);
+      const id = slug ? slugToId.get(slug) : undefined;
+      if (id != null) openCaseStudy(id, false);
+      else closeCaseStudy(false);
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, [openCaseStudy, closeCaseStudy]);
+
+  // Document title mirrors the open case study.
+  useEffect(() => {
+    if (openId == null) {
+      document.title = BASE_TITLE;
+      return;
+    }
+    const p = projects.find((x) => x.id === openId);
+    if (p) document.title = `${p.title} · Nils Vogelaar`;
+  }, [openId]);
 
   return (
     <motion.div
@@ -714,6 +788,7 @@ function ProjectRail() {
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
         onKeyDown={onKeyDown}
+        data-cursor="drag"
         className="rail-scroll flex gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden pb-4 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
         style={{
           cursor: isDragging ? 'grabbing' : 'grab',
@@ -758,6 +833,9 @@ function ProjectRail() {
         const prev = projects[(idx - 1 + projects.length) % projects.length];
         const next = projects[(idx + 1) % projects.length];
         const swap = (id: number) => {
+          // In-place swap replaces the history entry, so Back still closes.
+          const slug = idToSlug.get(id);
+          if (slug) window.history.replaceState({ cs: slug }, '', `/work/${slug}`);
           const supports =
             typeof document !== 'undefined' && 'startViewTransition' in document;
           if (!supports || reduced) {
@@ -800,8 +878,8 @@ export function Projects() {
     <section id="projects" className="py-20 sm:py-32 overflow-hidden">
       <div className="max-w-6xl mx-auto w-full px-5 sm:px-8 mb-8 sm:mb-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
           viewport={{ once: true }}
         >
@@ -816,16 +894,16 @@ export function Projects() {
               >
                 Archive · 2024 / 2025
               </span>
-              <h2
+              <KineticHeading
+                as="h2"
+                lines={['Selected Work.']}
                 className="font-display"
                 style={{
                   fontSize: 'clamp(2.25rem, 5.5vw, 4.5rem)',
                   lineHeight: 1,
                   letterSpacing: '-0.035em',
                 }}
-              >
-                Selected Work.
-              </h2>
+              />
             </div>
             <span
               className="font-display text-sm tabular-nums hidden sm:block pb-2"
