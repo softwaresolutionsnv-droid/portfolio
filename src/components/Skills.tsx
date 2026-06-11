@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { KineticHeading } from './KineticHeading';
 
 /**
  * "What for what" — not a tool list, an editorial point of view on the stack.
@@ -41,13 +42,15 @@ export function Skills() {
       <div className="max-w-6xl mx-auto w-full">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl mb-4">
-            How I pick the stack.
-          </h2>
+          <KineticHeading
+            as="h2"
+            lines={['How I pick', 'the stack.']}
+            className="font-display text-3xl sm:text-4xl md:text-5xl mb-4"
+          />
           <p
             className="text-base sm:text-lg max-w-[58ch] mb-14 sm:mb-20"
             style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}

@@ -122,7 +122,9 @@ components:
 
 A warm-tinted neutral ground, almost black at rest, with a single vermillion beacon that appears only where it matters most. The portfolio is built on the idea that confidence is quiet by default and loud on purpose. Surfaces are flat and editorial; the accent is rare, not generic.
 
-The system rejects the visual vocabulary of contemporary portfolio templates. No gradient text, no glassmorphism cards, no Awwwards-bait cursor effects, no SaaS-landing hero metrics, no identical project grids. The personality is *bold, precise, memorable* and the interface earns that by committing to a small set of strong choices, not by accumulating decoration.
+The system rejects the visual vocabulary of contemporary portfolio templates. No gradient text, no glassmorphism cards, no decorative cursor trails, no SaaS-landing hero metrics, no identical project grids. The personality is *bold, precise, memorable* and the interface earns that by committing to a small set of strong choices, not by accumulating decoration.
+
+The site's one sanctioned spectacle is **kinetic typography**: type that responds to scroll momentum and paces reading. Every other award-site convention it adopts (preloader, contextual cursor, footer finale, live time) is functional chrome in service of that signature, specified in §5a. Anything outside that list remains banned.
 
 Both themes are first-class. Dark is the default — a warm graphite canvas meant to sit behind work. Light is crisp and editorial, like good magazine paper. Neither is a retrofit.
 
@@ -188,7 +190,7 @@ A two-family palette — warm graphite and warm paper — plus one vermillion ac
 
 ### Named Rules
 
-**The One Display Rule.** Every page gets exactly one Display-scale element — the hero headline. Secondary pages use Headline instead. Two Displays on one screen is the SaaS landing cliché and is banned.
+**The One Display Rule.** A page gets exactly two Display-scale moments, a full page apart: the hero headline that opens it and the footer finale ("Let's work together.") that closes it. Nothing between them reaches Display scale, and two Displays in one viewport remains banned. Secondary pages use Headline instead.
 
 **The Measure Rule.** Body paragraphs cap at 52–65ch. Never full-width body on a wide viewport.
 
@@ -244,6 +246,36 @@ The system is flat by default. Depth is carried by tonal layering — Graphite B
 ### Signature: The Hero Reveal
 - Each visual line of the hero headline lives inside an `overflow-hidden` mask and slides up from `y: 110% opacity: 0` to `y: 0 opacity: 1`. Staggered by 100ms. Ease-out-expo over 800ms.
 - The accented word (`work.`) gets a subtle scale pulse `[1, 1.06, 1]` 300ms after the line settles. This pulse is unique to the hero; do not reuse it.
+- The reveal holds until the preloader veil starts lifting, so the visitor always sees it play (never half-finished behind the veil).
+- On exit (scrolling away), the hero lines shear apart horizontally (max ±7%) while the block fades. Transform/opacity only.
+
+## 5a. Kinetic Type & Sanctioned Award Chrome
+
+The site's signature is kinetic typography. These patterns are the complete sanctioned list; each exists to pace comprehension, signal affordance, or close the sale, never as free-floating decoration.
+
+### Velocity Skew (`useVelocitySkew`)
+Display and Headline type shears with scroll momentum: max ±1.4° for section headings, ±1.6° for the hero, ±2° for the finale, mapped from smoothed scroll velocity and spring-returned to 0° at rest. Transform-only; collapses to 0° under reduced motion. Apply only to `KineticHeading` and the hero/finale headlines, never to body copy or images.
+
+### Kinetic Heading (`KineticHeading`)
+The standard section opener: one mask + slide-up per visual line (110% → 0, ease-out-expo 900ms, 90ms stagger) plus velocity skew. All section headings use it; ad-hoc heading animations are retired.
+
+### Progress Paragraph (`ProgressParagraph`)
+One per page, in About: words brighten from 18% to full opacity as the paragraph crosses the viewport, pacing the read. Reduced motion renders the plain paragraph.
+
+### Preloader
+A type-only veil tied to real readiness (font loading), never a fake timer: wordmark top-left, tabular counter bottom-right, a 2px Ember progress hairline as its one beacon. Minimum 1s on screen, hard cap 2.4s, 200ms hold at 100, then the veil slides up over 800ms ease-out-expo while the hero reveal begins underneath. Skipped entirely for reduced-motion users and repeat visits in-session. If it ever waits on nothing real, cut it.
+
+### Contextual Cursor (`CustomCursor`)
+A 10px near-white dot under `mix-blend-mode: difference`, spring-tracked with zero render cost. It grows 2.4× over links and buttons, and swaps to a 64px verb disk over surfaces that need one: "View" on project cards, "Drag" on the work rail (via `data-cursor` attributes). Mouse + fine pointer only; the native cursor is suppressed while it is mounted. This is a functional cursor, not a trail: no glow, no particles, no echo. One dot, one verb.
+
+### The Footer Finale
+The last viewport is the page's second Display moment: eyebrow, "Let's work together." at `clamp(3.25rem, 11.5vw, 9.5rem)`, supporting line, then the email CTA — the loudest Ember on the page — with a magnetic pull (`Magnetic`, strength 0.22, mouse-only). Below it, the living status line (availability dot in Ember Subtle, city, live local time) and the legal hairline row.
+
+### Live Time
+Amsterdam local time (HH:MM, tabular nums) rendered live in the hero eyebrow and the finale status line. A quiet proof the site is maintained, not a template.
+
+### Case-Study Deep Links
+Every case study is addressable at `/work/:slug`. Opening pushes history, prev/next swaps replace it, Back closes the overlay, and direct loads open it over the rail with no morph. The document title follows the open study.
 
 ## 6. Do's and Don'ts
 
@@ -270,5 +302,5 @@ The system is flat by default. Depth is carried by tonal layering — Graphite B
 - **Don't** round primary buttons. Radius 0 is the commitment.
 - **Don't** UPPERCASE buttons, nav links, or body labels. Uppercase is reserved for the Eyebrow role.
 - **Don't** animate CSS layout properties (width, height, top, left). Transform and opacity only.
-- **Don't** ship two Display-scale elements on the same page. One hero headline per page, never more.
+- **Don't** ship two Display-scale elements in the same viewport. The page's two Display moments are the hero headline and the footer finale, a full page apart; nothing else reaches that scale.
 - **Don't** retrofit light mode. Design each theme natively or the design fails.
