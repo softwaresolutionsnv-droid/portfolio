@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# CMS build artifacts (gegenereerd door scripts/fetch-content.mjs)
+public/projects/cms/

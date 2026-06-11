@@ -11,114 +11,20 @@ import { ArrowUpRight } from 'lucide-react';
 import { CaseStudy, type CaseStudyProject } from './CaseStudy';
 import { KineticHeading } from './KineticHeading';
 import { webpSrcSet } from '../lib/responsiveImage';
+import { siteContent } from '../lib/content';
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const BASE_TITLE = 'Nils Vogelaar — Developer & Designer';
 
-type Project = CaseStudyProject & {
-  /** URL slug for the case study deep link (/work/:slug). */
-  slug: string;
-  /** Visual treatment for the rail card. Three projects, three layouts. */
-  cardVariant?: 'standard' | 'stat-led' | 'image-bleed';
-  /** Used by the 'stat-led' variant: the headline number that replaces
-      the description block on the rail. Falls back to first highlight. */
-  pullStat?: { value: string; label: string };
-  /** Show the Live / On request status badge on the card. */
-  showBadge?: boolean;
-};
+type Project = CaseStudyProject;
 
-const projects: Project[] = [
-  {
-    id: 1,
-    slug: 'berijdersapp',
-    title: 'BerijdersApp',
-    description:
-      'White-label mobile app for lease drivers. One overview for contract, mileage, damage reports, fines, and a fuel-score derived from every fill-up. Replaces the paper driver handbook with a tap-to-act digital version.',
-    lede:
-      'A driver handbook reduced to taps. Fines, mileage, fuel, damages: every annoyance of leasing collapses into one screen.',
-    tags: ['Vue.js', 'TypeScript', 'Ionic', 'Capacitor'],
-    role: 'Frontend Developer',
-    year: '2025',
-    client: 'Autodisk',
-    url: 'https://www.autodisk.nl/leasemaatschappij/berijdersapp/',
-    image: '/projects/berijdersapp.jpg',
-    imageAlt:
-      'BerijdersApp mobile screens showing lease contract overview, mileage, and fuel consumption score',
-    color: 'oklch(0.22 0.05 230)',
-    overview: [
-      'BerijdersApp replaces the paper driver handbook that comes with every lease vehicle. Drivers get one tap-to-act surface for their contract, mileage, damages, fines, and fuel card. No phone calls, no email chains.',
-      'The app is white-labeled per lease company: brand, copy, and enabled modules all driven by configuration. A single Ionic/Capacitor codebase ships to iOS and Android, with shared logic between the app and Autodisk\u2019s wider web platform.',
-      'The fuel-score is the interesting part: every fill-up the driver logs is normalised against vehicle, route, and climate, then surfaced as a running score. It turns a back-office KPI into something a driver actually engages with.',
-    ],    cardVariant: 'standard',    highlights: [
-      { label: 'Platform', value: 'iOS · Android · Web' },
-      { label: 'Shipped', value: 'White-label, 6 lease companies' },
-      { label: 'Scope', value: 'Contract, damage, fines, fuel-score' },
-      { label: 'Team', value: 'Solo frontend, in-house designer' },
-    ],
-  },
-  {
-    id: 2,
-    slug: 'fleetdisk',
-    title: 'FleetDisk',
-    description:
-      'Self-service fleet management portal for lease companies. 24/7 insight into damages, fines, fuel cards, insurance, and lease orders: one pane over what used to be five separate back-offices.',
-    lede:
-      'Thirty years of enterprise fleet data, made scannable in three seconds. The control surface five back-offices used to need.',
-    tags: ['Nuxt.js', 'Vue.js', 'TypeScript', 'Bootstrap'],
-    role: 'Frontend Developer',
-    year: '2024',
-    client: 'Autodisk',
-    image: '/projects/fleetdisk.jpg',
-    imageAlt:
-      'FleetDisk fleet management portal showing vehicle overview and dashboard analytics',
-    color: 'oklch(0.20 0.04 220)',
-    overview: [
-      'FleetDisk is the self-service portal lease companies use to run a live fleet. 24/7 insight into damage reports, fines, fuel cards, insurance, and open lease orders: a single pane over what used to be five legacy back-offices.',
-      'Built on Nuxt 3 with strict TypeScript on top of the iWise backoffice API. The challenge was not rendering. It was shaping thirty years of enterprise data into something a fleet manager can scan in three seconds.',
-      'Deep filtering, saved views, and CSV export mean power users stop asking the helpdesk for reports. The helpdesk team got their afternoons back.',
-    ],
-    highlights: [
-      { label: 'Users', value: 'Fleet managers, B2B' },
-      { label: 'Data scale', value: '100k+ vehicles, live' },
-      { label: 'Stack', value: 'Nuxt 3 · TypeScript · REST API' },
-      { label: 'Outcome', value: 'Fewer helpdesk tickets' },
-    ],
-    cardVariant: 'stat-led',
-    pullStat: { value: '100k+', label: 'Vehicles, live' },
-  },
-  {
-    id: 3,
-    slug: 'nb-onderhoudsdiensten',
-    title: 'N.B. Onderhoudsdiensten',
-    description:
-      'Brand identity and marketing site for a Dutch renovation duo. Warm, premium aesthetic built to convert local homeowners. Social proof above the fold, quote CTAs at every decision point.',
-    lede:
-      'A two-person renovation crew, dressed to look like the firm you would actually trust with your kitchen.',
-    tags: ['Next.js', 'TypeScript', 'Tailwind CSS'],
-    role: 'Designer',
-    year: '2025',
-    client: 'Freelance',
-    url: 'https://nbonderhoud.nl/',
-    image: '/projects/nb-onderhoudsdiensten.jpg',
-    imageAlt:
-      'N.B. Onderhoudsdiensten hero section with dark background, serif typography, and blue/gold accent colors',
-    color: 'oklch(0.18 0.03 240)',
-    overview: [
-      'N.B. Onderhoudsdiensten is a two-person renovation duo in the Netherlands who needed a brand and a site that punched above their weight. The brief: look like a crew you\u2019d trust with your kitchen, not like a templated contractor.',
-      'Dark, warm, editorial. Serif typography for confidence, a gold accent for craft, lots of air. Social proof sits above the fold, quote CTAs follow the eye down the page.',
-      'Built in Next.js with internationalisation (NL/EN) from day one. Sub-second Lighthouse scores across all pages, and a booking flow built to convert.',
-    ],    cardVariant: 'image-bleed',
-    showBadge: true,
-    showCta: true,
-    highlights: [
-      { label: 'Deliverable', value: 'Brand + site + copy' },
-      { label: 'Stack', value: 'Next.js \u00b7 NL/EN \u00b7 CMS' },
-      { label: 'Lighthouse', value: '98 / 100 / 100 / 100' },
-      { label: 'Conversion', value: '~3\u00d7 category average' },
-    ],
-  },
-];
+/** CMS-managed projects. Ids are assigned from build order (1-based) and
+    drive the morph/open state plus the deep-link maps below. */
+const projects: Project[] = siteContent.projects.map((p, i) => ({
+  ...p,
+  id: i + 1,
+}));
 
 /* ------------------------------------------------------------------
    Case-study deep links — /work/:slug without a router. The overlay
@@ -159,7 +65,6 @@ function ProjectCard({
 }) {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
-  const variant = project.cardVariant ?? 'standard';
 
   return (
     <div
@@ -181,14 +86,14 @@ function ProjectCard({
         }}
       >
         {/* ---------- LAYER 1: background image / shimmer / fallback ---------- */}
-        {!errored && !loaded && (
+        {!errored && !loaded && !!project.image && (
           <div
             className="absolute inset-0 shimmer-skeleton pointer-events-none"
             style={{ borderRadius: 'inherit' }}
             aria-hidden="true"
           />
         )}
-        {errored ? (
+        {errored || !project.image ? (
           <div
             className="absolute inset-0 pointer-events-none overflow-hidden grid place-items-center"
             aria-hidden="true"
@@ -237,9 +142,7 @@ function ProjectCard({
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              variant === 'image-bleed'
-                ? 'linear-gradient(to top, oklch(0.08 0.012 50 / 0.65) 0%, oklch(0.08 0.012 50 / 0.25) 35%, oklch(0.08 0.012 50 / 0) 65%)'
-                : 'linear-gradient(to top, oklch(0.08 0.012 50 / 0.82) 0%, oklch(0.08 0.012 50 / 0.55) 28%, oklch(0.08 0.012 50 / 0.15) 55%, oklch(0.08 0.012 50 / 0) 72%)',
+              'linear-gradient(to top, oklch(0.08 0.012 50 / 0.82) 0%, oklch(0.08 0.012 50 / 0.55) 28%, oklch(0.08 0.012 50 / 0.15) 55%, oklch(0.08 0.012 50 / 0) 72%)',
           }}
         />
         <div
@@ -342,10 +245,7 @@ function ProjectCard({
             <h3
               className="font-display"
               style={{
-                fontSize:
-                  variant === 'image-bleed'
-                    ? 'clamp(2rem, 3.8vw, 3.25rem)'
-                    : 'clamp(1.75rem, 3.2vw, 2.75rem)',
+                fontSize: 'clamp(1.75rem, 3.2vw, 2.75rem)',
                 lineHeight: 1.02,
                 letterSpacing: '-0.03em',
                 color: 'var(--ink-on-image)',
@@ -356,74 +256,41 @@ function ProjectCard({
               {project.title}
             </h3>
 
-            {/* Variant: standard — description + tags */}
-            {variant === 'standard' && (
-              <>
-                <p
-                  className="text-sm sm:text-base max-w-[52ch]"
-                  style={{ color: 'var(--ink-on-image-muted)', lineHeight: 1.55 }}
-                >
-                  {project.description}
-                </p>
-                {project.tags.length > 0 && (
-                  <div
-                    className="flex items-center gap-3 pt-3"
-                    style={{ borderTop: '1px solid var(--hairline-on-image-faint)' }}
-                  >
-                    <ul
-                      className="flex flex-wrap gap-x-2.5 gap-y-1 text-[0.72rem] tabular-nums"
-                      style={{ color: 'var(--ink-on-image-subtle)' }}
-                    >
-                      {project.tags.map((tag, i) => (
-                        <li key={tag} className="flex items-center gap-2.5">
-                          {i > 0 && (
-                            <span
-                              aria-hidden="true"
-                              className="inline-block"
-                              style={{
-                                width: '3px',
-                                height: '3px',
-                                backgroundColor: 'var(--hairline-on-image)',
-                              }}
-                            />
-                          )}
-                          {tag}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </>
-            )}
-
-            {/* Variant: stat-led — replace description with a pulled stat */}
-            {variant === 'stat-led' && project.pullStat && (
+            {/* Description + tags — one card vocabulary for every project */}
+            <p
+              className="text-sm sm:text-base max-w-[52ch]"
+              style={{ color: 'var(--ink-on-image-muted)', lineHeight: 1.55 }}
+            >
+              {project.description}
+            </p>
+            {project.tags.length > 0 && (
               <div
-                className="flex items-baseline gap-3 pt-3"
+                className="flex items-center gap-3 pt-3"
                 style={{ borderTop: '1px solid var(--hairline-on-image-faint)' }}
               >
-                <span
-                  className="font-display tabular-nums"
-                  style={{
-                    fontSize: 'clamp(2.5rem, 5vw, 3.75rem)',
-                    lineHeight: 0.95,
-                    letterSpacing: '-0.04em',
-                    color: 'var(--ink-on-image)',
-                  }}
+                <ul
+                  className="flex flex-wrap gap-x-2.5 gap-y-1 text-[0.72rem] tabular-nums"
+                  style={{ color: 'var(--ink-on-image-subtle)' }}
                 >
-                  {project.pullStat.value}
-                </span>
-                <span
-                  className="text-sm max-w-[18ch]"
-                  style={{ color: 'var(--ink-on-image-muted)', lineHeight: 1.4 }}
-                >
-                  {project.pullStat.label}
-                </span>
+                  {project.tags.map((tag, i) => (
+                    <li key={tag} className="flex items-center gap-2.5">
+                      {i > 0 && (
+                        <span
+                          aria-hidden="true"
+                          className="inline-block"
+                          style={{
+                            width: '3px',
+                            height: '3px',
+                            backgroundColor: 'var(--hairline-on-image)',
+                          }}
+                        />
+                      )}
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
-
-            {/* Variant: image-bleed — minimal chrome, no description, no tags */}
-            {/* (intentionally empty — title and meta already rendered above) */}
           </div>
         </div>
       </article>
@@ -718,7 +585,7 @@ function ProjectRail() {
             style={{ color: 'var(--text-muted)', letterSpacing: '0.02em' }}
             aria-hidden="true"
           >
-            Drag, scroll, or press 1–3
+            Drag, scroll, or press 1–{Math.min(projects.length, 9)}
           </span>
 
           <span

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 /* ===================================================================
    THEME SYSTEM — OKLCH palette, warm-tinted neutrals
@@ -59,6 +60,57 @@
   --text-muted: oklch(0.56 0.008 50);
   --border: oklch(0.82 0.007 50);
   --border-subtle: oklch(0.88 0.006 50);
+}
+
+/* ===================================================================
+   ADMIN UI TOKENS (shadcn vocabulary) — mapped onto the site palette
+   so the CMS inherits both themes for free. `--color-accent` keeps its
+   brand meaning (vermillion); shadcn's hover-accent role is covered by
+   `secondary` instead.
+   =================================================================== */
+
+:root {
+  --radius: 0.5rem;
+  --background: var(--bg);
+  --foreground: var(--text-primary);
+  --card: var(--bg-surface);
+  --card-foreground: var(--text-primary);
+  --popover: var(--bg-elevated);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--color-accent);
+  --primary-foreground: oklch(0.98 0.006 50);
+  --secondary: var(--bg-elevated);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--bg-surface);
+  --muted-foreground: var(--text-muted);
+  --destructive: oklch(0.55 0.21 20);
+  --destructive-foreground: oklch(0.98 0.006 50);
+  --input: var(--border);
+  --ring: var(--color-accent);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 * {

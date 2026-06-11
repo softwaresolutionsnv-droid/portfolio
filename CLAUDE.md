@@ -23,6 +23,12 @@ Nils is a freelance designer/developer whose portfolio is itself a demonstration
 4. **Earn every motion** — animations should improve comprehension or delight, never distract or slow the user.
 5. **Both themes are first-class** — dark mode and light mode should each feel native and complete, not like one is an afterthought.
 
+## CMS
+
+The portfolio content (projects, photos, availability status, about/skills/contact copy) is managed via a custom CMS at `/admin` — a lazy-loaded React app (shadcn-style components in `src/admin/ui/`, Dutch UI) backed by Supabase (Postgres + Storage + Auth). The public site stays fully static: components read `src/data/content.json`, which `scripts/fetch-content.mjs` regenerates at build time from Supabase (downloading uploaded images and generating the 640/1280/1920 WebP ladder with sharp). Publishing happens via a Vercel deploy hook triggered from the admin dashboard. Without `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY` the checked-in `content.json` is used and the build always succeeds. Setup guide: `docs/cms-setup.md`; schema/seed: `supabase/*.sql`.
+
+All projects render with one uniform card style on the rail; availability has three states (available / limited / unavailable) plus an optional "back in [month]" date, with site copy mapped in `src/lib/availability.ts`.
+
 ## Agent skills
 
 ### Issue tracker

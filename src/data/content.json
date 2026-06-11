@@ -1,0 +1,138 @@
+{
+  "availability": {
+    "state": "available",
+    "availableFrom": null
+  },
+  "about": {
+    "intro": "Four years building web and mobile products, mostly for scale-ups and founders who need a developer that thinks like a product person. At Autodisk I took FleetDisk from an unfinished internal tool to a polished platform now running live fleets for companies like Van Mossel.",
+    "body": "My stack spans Vue, Nuxt, React, Angular, Ionic, Node.js, and C++. I'm deeply fluent in AI tools and build them into every project to move faster without cutting corners. What stays constant is how I work: directly, communicatively, and like the product is mine.",
+    "details": [
+      { "label": "Based in", "value": "Amsterdam, NL" },
+      { "label": "Experience", "value": "4+ years" },
+      { "label": "Focus", "value": "Web & Mobile" }
+    ]
+  },
+  "skills": {
+    "intro": "The stack follows the problem, never the other way around. Here is what I reach for, and when.",
+    "picks": [
+      {
+        "tools": "Vue, Nuxt",
+        "when": "Default for fast, reactive front-ends. Forms that don’t thrash, tables with thousands of rows, anything that lives."
+      },
+      {
+        "tools": "React",
+        "when": "When the team already knows it, the ecosystem matters more than ergonomics, or a library only ships React."
+      },
+      {
+        "tools": "Ionic, Capacitor",
+        "when": "One codebase to iOS, Android, and the web. For when two native teams isn’t in the budget."
+      },
+      {
+        "tools": "TypeScript",
+        "when": "Always. Plain JS is debt the moment a second person opens the file."
+      },
+      {
+        "tools": "Node.js, REST, SQL",
+        "when": "Backend glue: APIs, schedulers, integrations. Boring on purpose."
+      },
+      {
+        "tools": "Figma, Tailwind",
+        "when": "Where the design happens, and what gets it shipped without a translation step."
+      }
+    ]
+  },
+  "contact": {
+    "email": "softwaresolutions.nv@gmail.com",
+    "location": "Amsterdam",
+    "socials": [
+      { "label": "LinkedIn", "href": "https://www.linkedin.com/in/nils-v-342b55176/" },
+      { "label": "GitHub", "href": "https://github.com/softwaresolutionsnv-droid" }
+    ]
+  },
+  "projects": [
+    {
+      "slug": "berijdersapp",
+      "title": "BerijdersApp",
+      "description": "White-label mobile app for lease drivers. One overview for contract, mileage, damage reports, fines, and a fuel-score derived from every fill-up. Replaces the paper driver handbook with a tap-to-act digital version.",
+      "lede": "A driver handbook reduced to taps. Fines, mileage, fuel, damages: every annoyance of leasing collapses into one screen.",
+      "tags": ["Vue.js", "TypeScript", "Ionic", "Capacitor"],
+      "role": "Frontend Developer",
+      "year": "2025",
+      "client": "Autodisk",
+      "url": "https://www.autodisk.nl/leasemaatschappij/berijdersapp/",
+      "image": "/projects/berijdersapp.jpg",
+      "imageAlt": "BerijdersApp mobile screens showing lease contract overview, mileage, and fuel consumption score",
+      "color": "oklch(0.22 0.05 230)",
+      "overview": [
+        "BerijdersApp replaces the paper driver handbook that comes with every lease vehicle. Drivers get one tap-to-act surface for their contract, mileage, damages, fines, and fuel card. No phone calls, no email chains.",
+        "The app is white-labeled per lease company: brand, copy, and enabled modules all driven by configuration. A single Ionic/Capacitor codebase ships to iOS and Android, with shared logic between the app and Autodisk’s wider web platform.",
+        "The fuel-score is the interesting part: every fill-up the driver logs is normalised against vehicle, route, and climate, then surfaced as a running score. It turns a back-office KPI into something a driver actually engages with."
+      ],
+      "highlights": [
+        { "label": "Platform", "value": "iOS · Android · Web" },
+        { "label": "Shipped", "value": "White-label, 6 lease companies" },
+        { "label": "Scope", "value": "Contract, damage, fines, fuel-score" },
+        { "label": "Team", "value": "Solo frontend, in-house designer" }
+      ],
+      "gallery": [],
+      "showBadge": false,
+      "showCta": false
+    },
+    {
+      "slug": "fleetdisk",
+      "title": "FleetDisk",
+      "description": "Self-service fleet management portal for lease companies. 24/7 insight into damages, fines, fuel cards, insurance, and lease orders: one pane over what used to be five separate back-offices.",
+      "lede": "Thirty years of enterprise fleet data, made scannable in three seconds. The control surface five back-offices used to need.",
+      "tags": ["Nuxt.js", "Vue.js", "TypeScript", "Bootstrap"],
+      "role": "Frontend Developer",
+      "year": "2024",
+      "client": "Autodisk",
+      "url": null,
+      "image": "/projects/fleetdisk.jpg",
+      "imageAlt": "FleetDisk fleet management portal showing vehicle overview and dashboard analytics",
+      "color": "oklch(0.20 0.04 220)",
+      "overview": [
+        "FleetDisk is the self-service portal lease companies use to run a live fleet. 24/7 insight into damage reports, fines, fuel cards, insurance, and open lease orders: a single pane over what used to be five legacy back-offices.",
+        "Built on Nuxt 3 with strict TypeScript on top of the iWise backoffice API. The challenge was not rendering. It was shaping thirty years of enterprise data into something a fleet manager can scan in three seconds.",
+        "Deep filtering, saved views, and CSV export mean power users stop asking the helpdesk for reports. The helpdesk team got their afternoons back."
+      ],
+      "highlights": [
+        { "label": "Users", "value": "Fleet managers, B2B" },
+        { "label": "Data scale", "value": "100k+ vehicles, live" },
+        { "label": "Stack", "value": "Nuxt 3 · TypeScript · REST API" },
+        { "label": "Outcome", "value": "Fewer helpdesk tickets" }
+      ],
+      "gallery": [],
+      "showBadge": false,
+      "showCta": false
+    },
+    {
+      "slug": "nb-onderhoudsdiensten",
+      "title": "N.B. Onderhoudsdiensten",
+      "description": "Brand identity and marketing site for a Dutch renovation duo. Warm, premium aesthetic built to convert local homeowners. Social proof above the fold, quote CTAs at every decision point.",
+      "lede": "A two-person renovation crew, dressed to look like the firm you would actually trust with your kitchen.",
+      "tags": ["Next.js", "TypeScript", "Tailwind CSS"],
+      "role": "Designer",
+      "year": "2025",
+      "client": "Freelance",
+      "url": "https://nbonderhoud.nl/",
+      "image": "/projects/nb-onderhoudsdiensten.jpg",
+      "imageAlt": "N.B. Onderhoudsdiensten hero section with dark background, serif typography, and blue/gold accent colors",
+      "color": "oklch(0.18 0.03 240)",
+      "overview": [
+        "N.B. Onderhoudsdiensten is a two-person renovation duo in the Netherlands who needed a brand and a site that punched above their weight. The brief: look like a crew you’d trust with your kitchen, not like a templated contractor.",
+        "Dark, warm, editorial. Serif typography for confidence, a gold accent for craft, lots of air. Social proof sits above the fold, quote CTAs follow the eye down the page.",
+        "Built in Next.js with internationalisation (NL/EN) from day one. Sub-second Lighthouse scores across all pages, and a booking flow built to convert."
+      ],
+      "highlights": [
+        { "label": "Deliverable", "value": "Brand + site + copy" },
+        { "label": "Stack", "value": "Next.js · NL/EN · CMS" },
+        { "label": "Lighthouse", "value": "98 / 100 / 100 / 100" },
+        { "label": "Conversion", "value": "~3× category average" }
+      ],
+      "gallery": [],
+      "showBadge": true,
+      "showCta": true
+    }
+  ]
+}

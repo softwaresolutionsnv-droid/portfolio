@@ -4,33 +4,11 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ArrowUpRight, X } from 'lucide-react';
 import { getLenis } from '../lib/smoothScroll';
 import { webpSrcSet } from '../lib/responsiveImage';
+import type { ProjectContent } from '../lib/content';
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-export type CaseStudyProject = {
-  id: number;
-  title: string;
-  /** Card-level summary. Used on the rail card only. */
-  description: string;
-  /**
-   * Editorial lead used inside the case-study modal. Required: the modal
-   * must never repeat the rail card description verbatim at Display scale.
-   * Write a sentence that only earns its place inside the case study.
-   */
-  lede: string;
-  tags: string[];
-  role: string;
-  year: string;
-  client: string;
-  image: string;
-  imageAlt: string;
-  color: string;
-  url?: string;
-  /** Show the live-site / request-access CTA inside the case study. Off by default. */
-  showCta?: boolean;
-  overview: string[];
-  highlights: { label: string; value: string }[];
-};
+export type CaseStudyProject = ProjectContent & { id: number };
 
 type Props = {
   project: CaseStudyProject;
@@ -287,22 +265,24 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
             height: 'clamp(360px, 62vh, 640px)',
           }}
         >
-          <picture>
-            <source
-              type="image/webp"
-              srcSet={webpSrcSet(project.image)}
-              sizes="100vw"
-            />
-            <img
-              src={project.image}
-              alt={project.imageAlt}
-              draggable={false}
-              decoding="async"
-              fetchPriority="high"
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ viewTransitionName: 'cs-image' } as React.CSSProperties}
-            />
-          </picture>
+          {project.image && (
+            <picture>
+              <source
+                type="image/webp"
+                srcSet={webpSrcSet(project.image)}
+                sizes="100vw"
+              />
+              <img
+                src={project.image}
+                alt={project.imageAlt}
+                draggable={false}
+                decoding="async"
+                fetchPriority="high"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ viewTransitionName: 'cs-image' } as React.CSSProperties}
+              />
+            </picture>
+          )}
           {/* Scrim for readable hero text — tinted graphite so warmth
               survives over imagery in either theme. */}
           <div
@@ -549,6 +529,52 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                 </motion.div>
               ))}
             </motion.dl>
+          )}
+
+          {/* Gallery — CMS-managed extra imagery, stacked editorial-style.
+              Single column keeps each shot at article width so screens stay
+              readable; hairline + card radius match the rail vocabulary. */}
+          {project.gallery.length > 0 && (
+            <div
+              style={{
+                marginTop: 'clamp(3rem, 6vw, 5rem)',
+                display: 'grid',
+                gap: 'clamp(1.25rem, 2.5vw, 2rem)',
+              }}
+            >
+              {project.gallery.map((shot, i) => (
+                <motion.figure
+                  key={`${shot.image}-${i}`}
+                  initial={reduced ? false : { opacity: 0, y: 20 }}
+                  whileInView={reduced ? {} : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
+                  className="overflow-hidden"
+                  style={{
+                    margin: 0,
+                    borderRadius: '8px',
+                    border: '1px solid var(--border-subtle)',
+                    backgroundColor: 'var(--bg-surface)',
+                  }}
+                >
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet={webpSrcSet(shot.image)}
+                      sizes="(min-width: 1080px) 1080px, 100vw"
+                    />
+                    <img
+                      src={shot.image}
+                      alt={shot.alt}
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                      className="block w-full h-auto"
+                    />
+                  </picture>
+                </motion.figure>
+              ))}
+            </div>
           )}
 
           {/* Mobile CTA (desktop has it in hero). Mirrors the URL/no-URL

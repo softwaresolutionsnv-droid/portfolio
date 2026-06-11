@@ -1,37 +1,14 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { KineticHeading } from './KineticHeading';
+import { siteContent } from '../lib/content';
 
 /**
  * "What for what" — not a tool list, an editorial point of view on the stack.
- * Each entry: a bold tool/group name, then one sentence about when I reach for it.
+ * Each entry: a bold tool/group name, then one sentence about when I reach
+ * for it. CMS-managed.
  */
-const picks = [
-  {
-    tools: 'Vue, Nuxt',
-    when: 'Default for fast, reactive front-ends. Forms that don\u2019t thrash, tables with thousands of rows, anything that lives.',
-  },
-  {
-    tools: 'React',
-    when: 'When the team already knows it, the ecosystem matters more than ergonomics, or a library only ships React.',
-  },
-  {
-    tools: 'Ionic, Capacitor',
-    when: 'One codebase to iOS, Android, and the web. For when two native teams isn\u2019t in the budget.',
-  },
-  {
-    tools: 'TypeScript',
-    when: 'Always. Plain JS is debt the moment a second person opens the file.',
-  },
-  {
-    tools: 'Node.js, REST, SQL',
-    when: 'Backend glue: APIs, schedulers, integrations. Boring on purpose.',
-  },
-  {
-    tools: 'Figma, Tailwind',
-    when: 'Where the design happens, and what gets it shipped without a translation step.',
-  },
-];
+const picks = siteContent.skills.picks;
 
 export function Skills() {
   const ref = useRef(null);
@@ -55,8 +32,7 @@ export function Skills() {
             className="text-base sm:text-lg max-w-[58ch] mb-14 sm:mb-20"
             style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}
           >
-            The stack follows the problem, never the other way around. Here is what
-            I reach for, and when.
+            {siteContent.skills.intro}
           </p>
 
           <div
