@@ -9,9 +9,15 @@ const LABELS: Partial<Record<CursorMode, string>> = {
 };
 
 /**
- * Contextual cursor: a small blend-mode dot that grows over interactive
- * elements and swaps to a labeled disk over surfaces that need a verb
- * ("View" on project cards, "Drag" on the work rail).
+ * Contextual cursor: a small dot that grows over interactive elements and
+ * swaps to a labeled disk over surfaces that need a verb ("View" on project
+ * cards, "Drag" on the work rail).
+ *
+ * The dot is painted in `--text-primary`, which is theme-aware (near-black
+ * in light, near-white in dark), so it always contrasts with the page
+ * surface. We deliberately avoid `mix-blend-mode: difference`: Safari fails
+ * to blend fixed-position elements and leaves the dot its source colour,
+ * which made it vanish on the light theme's near-white background.
  *
  * Mouse-only — never mounts for touch / coarse pointers. Position is driven
  * by motion values, so tracking costs zero React renders.
@@ -81,7 +87,8 @@ export function CustomCursor() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[500]" aria-hidden="true">
-      {/* Dot — near-white + difference blend stays legible on both themes */}
+      {/* Dot — theme-aware solid colour so it contrasts on both themes
+          without depending on (Safari-buggy) blend modes. */}
       <motion.div
         className="fixed top-0 left-0 rounded-full"
         style={{
@@ -91,8 +98,7 @@ export function CustomCursor() {
           marginTop: -5,
           width: 10,
           height: 10,
-          backgroundColor: 'oklch(0.98 0.006 50)',
-          mixBlendMode: 'difference',
+          backgroundColor: 'var(--text-primary)',
           opacity: visible ? 1 : 0,
           transition: 'opacity 200ms ease',
         }}
