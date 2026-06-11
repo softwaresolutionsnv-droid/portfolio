@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ArrowUpRight, X } from 'lucide-react';
@@ -54,6 +54,12 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
   const reduced = useReducedMotion();
   const scrollRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
+  // Hero image that failed to load, tracked by project id so an in-place
+  // prev/next swap re-attempts the next project's image without an effect.
+  // When broken, the hero falls back to its flat project tint (same
+  // degradation the rail card uses) instead of alt text over a broken icon.
+  const [erroredImageId, setErroredImageId] = useState<number | null>(null);
+  const heroImageBroken = erroredImageId === project.id;
   // DOM ref for the scroll-progress bar — updated imperatively to avoid
   // re-rendering the whole modal on every scroll tick.
   const progressBarRef = useRef<HTMLDivElement>(null);
@@ -287,22 +293,25 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
             height: 'clamp(360px, 62vh, 640px)',
           }}
         >
-          <picture>
-            <source
-              type="image/webp"
-              srcSet={webpSrcSet(project.image)}
-              sizes="100vw"
-            />
-            <img
-              src={project.image}
-              alt={project.imageAlt}
-              draggable={false}
-              decoding="async"
-              fetchPriority="high"
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ viewTransitionName: 'cs-image' } as React.CSSProperties}
-            />
-          </picture>
+          {!heroImageBroken && (
+            <picture>
+              <source
+                type="image/webp"
+                srcSet={webpSrcSet(project.image)}
+                sizes="100vw"
+              />
+              <img
+                src={project.image}
+                alt={project.imageAlt}
+                draggable={false}
+                decoding="async"
+                fetchPriority="high"
+                onError={() => setErroredImageId(project.id)}
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ viewTransitionName: 'cs-image' } as React.CSSProperties}
+              />
+            </picture>
+          )}
           {/* Scrim for readable hero text — tinted graphite so warmth
               survives over imagery in either theme. */}
           <div
