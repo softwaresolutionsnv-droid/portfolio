@@ -5,11 +5,11 @@ import { KineticHeading } from './KineticHeading';
 import { Magnetic } from './Magnetic';
 import { LocalTime } from './LocalTime';
 import { smoothScrollTo } from '../lib/smoothScroll';
+import { siteContent } from '../lib/content';
+import { availabilityCopy } from '../lib/availability';
 
-const socials = [
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nils-v-342b55176/' },
-  { label: 'GitHub', href: 'https://github.com/softwaresolutionsnv-droid' },
-];
+const { email, location, socials } = siteContent.contact;
+const status = availabilityCopy(siteContent.availability);
 
 /**
  * The finale: a full-viewport closing statement. This is the page's second
@@ -68,14 +68,14 @@ export function Contact() {
         >
           <Magnetic>
             <a
-              href="mailto:softwaresolutions.nv@gmail.com"
+              href={`mailto:${email}`}
               className="inline-flex items-center gap-2 px-7 py-4 text-sm sm:text-base font-medium tracking-wide transition-colors hover:bg-[var(--color-accent-hover,oklch(0.58_0.22_25))]"
               style={{
                 backgroundColor: 'var(--color-accent, oklch(0.65 0.22 25))',
                 color: 'white',
               }}
             >
-              softwaresolutions.nv@gmail.com
+              {email}
               <ArrowUpRight className="w-4 h-4" />
             </a>
           </Magnetic>
@@ -107,15 +107,15 @@ export function Contact() {
         >
           <span
             aria-hidden="true"
-            className="inline-block animate-pulse"
+            className={status.pulse ? 'inline-block animate-pulse' : 'inline-block'}
             style={{
               width: 7,
               height: 7,
               borderRadius: 9999,
-              backgroundColor: 'var(--color-accent-subtle)',
+              backgroundColor: status.dotColor,
             }}
           />
-          Available for new projects · Amsterdam · <LocalTime />
+          {status.contact} · {location} · <LocalTime />
         </motion.p>
 
         <div className="flex-1" aria-hidden="true" />

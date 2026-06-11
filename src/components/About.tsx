@@ -2,12 +2,16 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { KineticHeading } from './KineticHeading';
 import { ProgressParagraph } from './ProgressParagraph';
+import { siteContent } from '../lib/content';
+import { availabilityCopy } from '../lib/availability';
 
+const status = availabilityCopy(siteContent.availability);
+
+// The status row is derived from the CMS availability state; the other
+// rows are CMS-managed copy.
 const details = [
-  { label: 'Based in', value: 'Amsterdam, NL' },
-  { label: 'Experience', value: '4+ years' },
-  { label: 'Focus', value: 'Web & Mobile' },
-  { label: 'Status', value: 'Available for projects', accent: true as const },
+  ...siteContent.about.details,
+  { label: 'Status', value: status.about, accent: true as const },
 ];
 
 export function About() {
@@ -35,7 +39,7 @@ export function About() {
               <ProgressParagraph
                 className="text-lg sm:text-xl leading-relaxed mb-6"
                 style={{ color: 'var(--text-primary)', maxWidth: '58ch' }}
-                text="Four years building web and mobile products, mostly for scale-ups and founders who need a developer that thinks like a product person. At Autodisk I took FleetDisk from an unfinished internal tool to a polished platform now running live fleets for companies like Van Mossel."
+                text={siteContent.about.intro}
               />
 
               <motion.p
@@ -45,10 +49,7 @@ export function About() {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.25 }}
               >
-                My stack spans Vue, Nuxt, React, Angular, Ionic, Node.js, and C++.
-                I'm deeply fluent in AI tools and build them into every project
-                to move faster without cutting corners. What stays constant is how
-                I work: directly, communicatively, and like the product is mine.
+                {siteContent.about.body}
               </motion.p>
             </div>
 
@@ -76,12 +77,12 @@ export function About() {
                     {('accent' in item && item.accent) && (
                       <span
                         aria-hidden="true"
-                        className="inline-block animate-pulse"
+                        className={status.pulse ? 'inline-block animate-pulse' : 'inline-block'}
                         style={{
                           width: '8px',
                           height: '8px',
                           borderRadius: '9999px',
-                          backgroundColor: 'var(--color-accent, oklch(0.65 0.22 25))',
+                          backgroundColor: status.dotColor,
                         }}
                       />
                     )}

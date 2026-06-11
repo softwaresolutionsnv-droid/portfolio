@@ -7,8 +7,12 @@ import {
 } from 'framer-motion';
 import { useVelocitySkew } from '../lib/kinetic';
 import { LocalTime } from './LocalTime';
+import { siteContent } from '../lib/content';
+import { availabilityCopy } from '../lib/availability';
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+const status = availabilityCopy(siteContent.availability);
 
 function RevealLine({
   children,
@@ -68,8 +72,8 @@ export function Hero({ play }: { play: boolean }) {
             className="text-sm sm:text-base mb-6 tracking-wide uppercase"
             style={{ color: 'var(--text-muted)', letterSpacing: '0.04em' }}
           >
-            Freelance Developer & Designer · Amsterdam{' '}
-            <LocalTime /> · Available
+            Freelance Developer & Designer · {siteContent.contact.location}{' '}
+            <LocalTime /> · {status.hero}
           </p>
         </RevealLine>
 
