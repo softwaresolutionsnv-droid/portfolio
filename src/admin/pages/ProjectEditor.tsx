@@ -75,7 +75,10 @@ export function ProjectEditor() {
   // New projects land at the end of the rail; dragging in the list
   // normalizes sort_order afterwards.
   const [draft, setDraft] = useState<ProjectDraft>(() => emptyProjectDraft(9999));
-  const [loading, setLoading] = useState(!isNew);
+  // Loading is derived: we're loading until the fetch for THIS id resolved.
+  // (No setState-in-effect-body, and an id swap re-loads correctly.)
+  const [loadedId, setLoadedId] = useState<string | null>(null);
+  const loading = !isNew && loadedId !== id;
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   // Once the slug is hand-edited it stops following the title.
@@ -84,7 +87,6 @@ export function ProjectEditor() {
   useEffect(() => {
     if (!id) return;
     let cancelled = false;
-    setLoading(true);
     getProject(id)
       .then((row) => {
         if (cancelled) return;
@@ -117,7 +119,7 @@ export function ProjectEditor() {
         });
       })
       .catch((err: Error) => toast.error('Laden mislukt', { description: err.message }))
-      .finally(() => !cancelled && setLoading(false));
+      .finally(() => !cancelled && setLoadedId(id));
     return () => {
       cancelled = true;
     };

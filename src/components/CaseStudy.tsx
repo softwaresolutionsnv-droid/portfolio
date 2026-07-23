@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ArrowUpRight, X } from 'lucide-react';
@@ -47,6 +47,12 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
     onPrevRef.current = onPrev;
     onNextRef.current = onNext;
   });
+
+  // Missing/broken hero asset degrades to the tinted color block, same as
+  // the rail card — never a broken-image glyph on the flagship view.
+  // Tracked per slug so an in-place prev/next swap resets automatically.
+  const [failedSlug, setFailedSlug] = useState<string | null>(null);
+  const imageFailed = failedSlug === project.slug;
 
   // Lede is required by the data contract; the body shows the full overview.
   const lead = project.lede;
@@ -265,7 +271,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
             height: 'clamp(360px, 62vh, 640px)',
           }}
         >
-          {project.image && (
+          {project.image && !imageFailed && (
             <picture>
               <source
                 type="image/webp"
@@ -278,6 +284,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                 draggable={false}
                 decoding="async"
                 fetchPriority="high"
+                onError={() => setFailedSlug(project.slug)}
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ viewTransitionName: 'cs-image' } as React.CSSProperties}
               />
@@ -377,7 +384,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                   className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 shrink-0 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
                   style={{
                     backgroundColor: 'transparent',
-                    color: 'var(--color-accent)',
+                    color: 'var(--accent-ink)',
                     borderRadius: 0,
                     border: '1px solid var(--color-accent)',
                     viewTransitionName: 'cs-badge',
@@ -606,7 +613,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                 className="inline-flex items-center gap-2 px-5 py-3 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
                 style={{
                   backgroundColor: 'transparent',
-                  color: 'var(--color-accent)',
+                  color: 'var(--accent-ink)',
                   borderRadius: 0,
                   border: '1px solid var(--color-accent)',
                   outlineColor: 'var(--color-accent)',

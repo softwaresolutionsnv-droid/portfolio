@@ -33,7 +33,7 @@ export function Contact() {
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          Up next: your project
+          One email is enough
         </motion.p>
 
         <KineticHeading
@@ -75,12 +75,21 @@ export function Contact() {
                 color: 'white',
               }}
             >
-              {email}
+              Email me
               <ArrowUpRight className="w-4 h-4" />
             </a>
           </Magnetic>
 
           <div className="flex items-center gap-5">
+            {/* Plain-text address for visitors without a mail client wired
+                to mailto: — selectable, copyable. */}
+            <a
+              href={`mailto:${email}`}
+              className="text-sm font-medium py-3.5 transition-colors hover:opacity-70 select-all"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              {email}
+            </a>
             {socials.map((social) => (
               <a
                 key={social.label}
@@ -115,7 +124,7 @@ export function Contact() {
               backgroundColor: status.dotColor,
             }}
           />
-          {status.contact} · {location} · <LocalTime />
+          {status.contact} · Replies within one business day · {location} · <LocalTime />
         </motion.p>
 
         <div className="flex-1" aria-hidden="true" />

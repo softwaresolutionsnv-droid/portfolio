@@ -1,73 +1,31 @@
-# React + TypeScript + Vite
+# Portfolio — nilsvogelaar.com
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Portfolio van Nils Vogelaar (freelance developer/designer). React 19 + TypeScript + Vite + Tailwind 4, gehost op Vercel.
 
-Currently, two official plugins are available:
+## Structuur
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Publieke site** — `src/components/` + `src/lib/`, één scrollpagina (Hero → Work → About → Stack → Contact) met case-study-overlays op `/work/:slug` (View Transitions API).
+- **Admin CMS** — `src/admin/`, lazy-loaded op `/admin`, backed by Supabase (Postgres + Storage + Auth). Setup: `docs/cms-setup.md`.
+- **Content** — componenten lezen `src/data/content.json`. `scripts/fetch-content.mjs` regenereert dat bestand bij de build vanuit Supabase (incl. WebP-ladder 640/1280/1920 via sharp). Zonder credentials bouwt de repo op de ingecheckte content.
 
-## React Compiler
+## Commands
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev        # dev-server (Vite)
+npm run build      # content-sync + sitemap + tsc + vite build
+npm run lint       # eslint
+npm run cms:sync   # alleen content-sync vanuit Supabase
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Environment
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+`.env.local` (zie `.env.example`):
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY` (of `VITE_SUPABASE_PUBLISHABLE_KEY` — beide namen werken)
+
+Zonder deze vars werkt de publieke site volledig; alleen `/admin` en de content-sync staan dan uit.
+
+## Design
+
+Designsysteem en principes: `DESIGN.md` + `PRODUCT.md`. Kort: warm-getinte OKLCH-neutrals, vermillion-accent, Bricolage Grotesque/Figtree, beide thema's first-class, motion alleen waar het iets toevoegt.

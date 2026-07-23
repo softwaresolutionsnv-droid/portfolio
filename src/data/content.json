@@ -4,7 +4,7 @@
     "availableFrom": null
   },
   "about": {
-    "intro": "Four years building web and mobile products, mostly for scale-ups and founders who need a developer that thinks like a product person. At Autodisk I took FleetDisk from an unfinished internal tool to a polished platform now running live fleets for companies like Van Mossel.",
+    "intro": "I build web and mobile products for scale-ups, founders, and local businesses that need to punch above their weight. At Autodisk I took FleetDisk from an unfinished internal tool to a polished platform now running live fleets for companies like Van Mossel.",
     "body": "My stack spans Vue, Nuxt, React, Angular, Ionic, Node.js, and C++. I'm deeply fluent in AI tools and build them into every project to move faster without cutting corners. What stays constant is how I work: directly, communicatively, and like the product is mine.",
     "details": [
       { "label": "Based in", "value": "Amsterdam, NL" },
@@ -17,7 +17,7 @@
     "picks": [
       {
         "tools": "Vue, Nuxt",
-        "when": "Default for fast, reactive front-ends. Forms that don’t thrash, tables with thousands of rows, anything that lives."
+        "when": "My default. Interfaces that stay fast and stable as the data behind them grows — ten rows or ten thousand, it feels the same."
       },
       {
         "tools": "React",

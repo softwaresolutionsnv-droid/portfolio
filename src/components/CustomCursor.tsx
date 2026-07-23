@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
 
 type CursorMode = 'default' | 'hover' | 'view' | 'drag';
 
@@ -23,6 +23,9 @@ const LABELS: Partial<Record<CursorMode, string>> = {
  * by motion values, so tracking costs zero React renders.
  */
 export function CustomCursor() {
+  // Reduced motion: keep the native cursor — a spring-tracked dot is
+  // exactly the kind of motion the preference asks us to drop.
+  const reduced = useReducedMotion();
   const [enabled, setEnabled] = useState(false);
   const [mode, setMode] = useState<CursorMode>('default');
   const [visible, setVisible] = useState(false);
@@ -42,7 +45,7 @@ export function CustomCursor() {
   }, []);
 
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled || reduced) return;
     document.documentElement.setAttribute('data-custom-cursor', '');
 
     const onMove = (e: PointerEvent) => {
@@ -79,9 +82,9 @@ export function CustomCursor() {
       document.documentElement.removeEventListener('pointerenter', onEnter);
       document.documentElement.removeAttribute('data-custom-cursor');
     };
-  }, [enabled, x, y]);
+  }, [enabled, reduced, x, y]);
 
-  if (!enabled) return null;
+  if (!enabled || reduced) return null;
 
   const label = LABELS[mode];
 

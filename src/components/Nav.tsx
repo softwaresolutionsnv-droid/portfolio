@@ -77,7 +77,13 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
     <motion.header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
-        backgroundColor: scrolled || menuOpen ? 'oklch(from var(--bg) l c h / 0.7)' : 'transparent',
+        // Open drawer must fully occlude the page — 0.7 alpha lets the hero
+        // headline bleed through the menu rows on mobile.
+        backgroundColor: menuOpen
+          ? 'var(--bg)'
+          : scrolled
+            ? 'oklch(from var(--bg) l c h / 0.7)'
+            : 'transparent',
         borderBottom: scrolled ? '1px solid var(--border-subtle)' : '1px solid transparent',
         backdropFilter: scrolled || menuOpen ? 'blur(16px) saturate(1.2)' : 'none',
         WebkitBackdropFilter: scrolled || menuOpen ? 'blur(16px) saturate(1.2)' : 'none',
@@ -202,7 +208,10 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
             id="mobile-nav"
             key="mobile-nav"
             className="sm:hidden overflow-hidden"
-            style={{ borderTop: '1px solid var(--border-subtle)' }}
+            style={{
+              borderTop: '1px solid var(--border-subtle)',
+              borderBottom: '1px solid var(--border-subtle)',
+            }}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

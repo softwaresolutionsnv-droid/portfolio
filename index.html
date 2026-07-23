@@ -2,6 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Set the theme before first paint — dark is the CSS default, so
+      // stored light-theme visitors would otherwise see a dark flash.
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/svg+xml" href="/icons/nils-primary-dark.svg" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/svg+xml" href="/icons/nils-primary-light.svg" media="(prefers-color-scheme: light)" />
@@ -11,12 +19,20 @@
       name="description"
       content="Nils Vogelaar is a freelance developer and designer in Amsterdam building web and mobile products with the thinking behind them."
     />
+    <link rel="canonical" href="https://nilsvogelaar.com/" />
     <meta property="og:title" content="Nils Vogelaar — Developer & Designer" />
     <meta
       property="og:description"
       content="Freelance developer and designer in Amsterdam. Fluent in product, design, and code."
     />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nilsvogelaar.com/" />
+    <meta property="og:image" content="https://nilsvogelaar.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nils Vogelaar — Developer & Designer" />
+    <meta name="twitter:image" content="https://nilsvogelaar.com/og.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

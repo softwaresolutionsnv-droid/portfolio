@@ -22,9 +22,16 @@
   --bg-elevated: oklch(0.20 0.008 50);
   --text-primary: oklch(0.93 0.008 50);
   --text-secondary: oklch(0.65 0.01 50);
-  --text-muted: oklch(0.45 0.008 50);
+  /* 0.58 = 4.73:1 on the dark bg — WCAG AA for body-sized text. */
+  --text-muted: oklch(0.58 0.008 50);
   --border: oklch(0.25 0.008 50);
   --border-subtle: oklch(0.20 0.006 50);
+  /* Accent when used as body-sized TEXT (links, CTA labels). Same as the
+     brand accent in dark; darkened in light where 0.65 only hits 3.29:1. */
+  --accent-ink: var(--color-accent);
+  /* Background orbs: intensity per theme — light mode needs heavy damping
+     or the blur wash reads as the banned gradient aesthetic. */
+  --orb-intensity: 0.55;
 
   /* On-image vocabulary — hue 50 tinted, never hue 0.
      Scrims layered over photography; ink colors used for text/chrome
@@ -57,9 +64,12 @@
   --bg-elevated: oklch(0.89 0.008 50);
   --text-primary: oklch(0.17 0.010 50);
   --text-secondary: oklch(0.38 0.012 50);
-  --text-muted: oklch(0.56 0.008 50);
+  /* 0.54 = 4.65:1 on the light bg — WCAG AA for body-sized text. */
+  --text-muted: oklch(0.54 0.008 50);
   --border: oklch(0.82 0.007 50);
   --border-subtle: oklch(0.88 0.006 50);
+  --accent-ink: oklch(0.55 0.22 25); /* 4.98:1 on light bg */
+  --orb-intensity: 0.2;
 }
 
 /* ===================================================================

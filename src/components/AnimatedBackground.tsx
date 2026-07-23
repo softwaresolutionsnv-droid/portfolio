@@ -70,6 +70,10 @@ export function AnimatedBackground() {
 
   return (
     <motion.div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ opacity: containerOpacity }}>
+      {/* Orbs wrapped in a theme-damped layer: PRODUCT.md bans the soft
+          gradient-blob aesthetic, so light mode (where the wash is far more
+          visible) runs at a fraction of the dark-mode intensity. */}
+      <div className="absolute inset-0" style={{ opacity: 'var(--orb-intensity)' }}>
       {/* Primary orb — warm vermillion, top-right. Brand-coherent. */}
       <motion.div
         className="absolute w-[700px] h-[700px] md:w-[1000px] md:h-[1000px] rounded-full"
@@ -99,6 +103,7 @@ export function AnimatedBackground() {
           opacity: orb2Opacity,
         }}
       />
+      </div>
 
       {/* Parallax grid — very faint, geometric precision */}
       <motion.div
