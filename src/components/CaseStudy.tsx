@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, ArrowUpRight, X } from 'lucide-react';
-import { getLenis } from '../lib/smoothScroll';
 import { webpSrcSet } from '../lib/responsiveImage';
 import type { ProjectContent } from '../lib/content';
 
-const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export type CaseStudyProject = ProjectContent & { id: number };
 
@@ -17,28 +15,23 @@ type Props = {
   /** Title of the next case study, shown in the footer as anticipation. */
   nextTitle?: string;
   onClose: () => void;
-  /** Optional: navigate to previous case study (in-place swap). */
   onPrev?: () => void;
-  /** Optional: navigate to next case study (in-place swap). */
   onNext?: () => void;
 };
 
 /**
- * Full-screen cinematic case study. Morphs from the rail card via the
- * View Transitions API (see Projects.tsx). Mobile-first: swipe-down to
- * dismiss, safe-area padded, native-feeling.
+ * The open plate — a full-screen monograph spread. Morphs from the
+ * plate via the View Transitions API (see Projects.tsx). Keyboard:
+ * Esc closes, ←/→ move between plates.
  */
 export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, onNext }: Props) {
   const reduced = useReducedMotion();
   const scrollRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
-  // DOM ref for the scroll-progress bar — updated imperatively to avoid
-  // re-rendering the whole modal on every scroll tick.
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   // Latest-callback refs so the mount-only keydown listener always invokes
-  // the fresh prev/next/close passed by the parent (callbacks are recreated
-  // each render, so a closure over props would go stale on prop swap).
+  // the fresh prev/next/close passed by the parent.
   const onCloseRef = useRef(onClose);
   const onPrevRef = useRef(onPrev);
   const onNextRef = useRef(onNext);
@@ -48,21 +41,14 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
     onNextRef.current = onNext;
   });
 
-  // Missing/broken hero asset degrades to the tinted color block, same as
-  // the rail card — never a broken-image glyph on the flagship view.
-  // Tracked per slug so an in-place prev/next swap resets automatically.
+  // Missing/broken hero asset degrades to a typographic plate.
   const [failedSlug, setFailedSlug] = useState<string | null>(null);
   const imageFailed = failedSlug === project.slug;
 
-  // Lede is required by the data contract; the body shows the full overview.
-  const lead = project.lede;
-  const bodyOverview = project.overview;
-
-  // Root ref for focus trap (queries focusable descendants on demand).
   const rootRef = useRef<HTMLDivElement>(null);
 
-  // Lock body scroll, mark page background as inert, focus close button,
-  // wire Escape + arrow nav, and trap Tab inside the dialog.
+  // Lock body scroll, mark background inert, focus close, wire keys,
+  // trap Tab inside the dialog.
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     const prevPad = document.body.style.paddingRight;
@@ -70,13 +56,6 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
     document.body.style.overflow = 'hidden';
     if (scrollbar > 0) document.body.style.paddingRight = `${scrollbar}px`;
 
-    // Lenis intercepts wheel events globally — pause it so the modal's
-    // overflow-y-auto container can receive them directly.
-    const lenis = getLenis();
-    lenis?.stop();
-
-    // Mark every direct child of <body> outside the dialog as `inert` so
-    // assistive tech and keyboard tabbing skip them. Restore on unmount.
     const root = rootRef.current;
     const inerted: HTMLElement[] = [];
     if (root) {
@@ -99,11 +78,12 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
         onCloseRef.current();
         return;
       }
-      // Trap Tab within the dialog
       if (e.key === 'Tab' && rootRef.current) {
         const nodes = Array.from(
           rootRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)
-        ).filter((n) => !n.hasAttribute('disabled') && n.offsetParent !== null);
+        // getClientRects (not offsetParent) so the fixed close button
+        // stays inside the Tab cycle.
+        ).filter((n) => !n.hasAttribute('disabled') && n.getClientRects().length > 0);
         if (nodes.length === 0) {
           e.preventDefault();
           return;
@@ -120,7 +100,6 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
         }
         return;
       }
-      // Don't hijack arrows while the user is typing or focused in a control.
       const target = e.target as HTMLElement | null;
       if (target && target.closest('input, textarea, select, [contenteditable="true"]')) return;
       if (e.key === 'ArrowLeft' && onPrevRef.current) {
@@ -133,8 +112,6 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
     };
     window.addEventListener('keydown', onKey);
 
-    // Focus on the next animation frame — view transitions paint synchronously,
-    // so this is enough without racing the 300ms timeout we used to use.
     const raf = requestAnimationFrame(() => closeBtnRef.current?.focus());
 
     return () => {
@@ -146,22 +123,17 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
         el.removeAttribute('inert');
         el.removeAttribute('aria-hidden');
       });
-      lenis?.start();
     };
   }, []);
 
-  // Swipe-down-to-close gesture removed — it was intercepting normal
-  // scroll on touch devices. Use the close button or Esc key to dismiss.
-
-  // When the project swaps in-place (prev/next), reset scroll position so
-  // the new case study starts at its hero, not mid-article.
+  // Reset scroll when the project swaps in place.
   useEffect(() => {
     const el = scrollRef.current;
     if (el) el.scrollTop = 0;
     if (progressBarRef.current) progressBarRef.current.style.transform = 'scaleX(0)';
   }, [project.id]);
 
-  // Wire the scroll-progress bar imperatively — no state update, no re-render.
+  // Scroll-progress hairline — updated imperatively.
   useEffect(() => {
     const el = scrollRef.current;
     const bar = progressBarRef.current;
@@ -173,30 +145,23 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
     };
     el.addEventListener('scroll', onScroll, { passive: true });
     return () => el.removeEventListener('scroll', onScroll);
-    // Re-attach when the scroll container is ready; project.id causes the
-    // container to remount (portal stays, but content flushes) — no-op safe.
   }, []);
+
+  const no = String(index + 1).padStart(2, '0');
 
   return createPortal(
     <div
       ref={rootRef}
-      className="fixed inset-0 z-[200] cs-root"
+      className="fixed inset-0 z-[200]"
       role="dialog"
       aria-modal="true"
       aria-label={`${project.title}: case study`}
-      style={{
-        backgroundColor: 'var(--scrim-strong)',
-      }}
+      style={{ backgroundColor: 'var(--scrim-strong)' }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      {/* Scroll-progress beacon — a 2px Ember strip at the top of the modal.
-          This is the One Beacon on this surface: a sales artifact whose
-          north star is The Signal Fire should not render a beaconless
-          viewport, even when the project has no live URL. The bar updates
-          imperatively from rAF-cadence scroll events; no CSS transition
-          needed (the easing was lagging real scroll position by ~120ms). */}
+      {/* Reading-progress hairline — Oxide, functional. */}
       <div
         aria-hidden="true"
         style={{
@@ -207,7 +172,6 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
           height: 2,
           zIndex: 30,
           pointerEvents: 'none',
-          backgroundColor: 'transparent',
         }}
       >
         <div
@@ -217,7 +181,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
             width: '100%',
             transform: 'scaleX(0)',
             transformOrigin: '0% 50%',
-            backgroundColor: 'var(--color-accent)',
+            backgroundColor: 'var(--accent-ink)',
           }}
         />
       </div>
@@ -228,56 +192,106 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
         animate={reduced ? { opacity: 1 } : {}}
         transition={{ duration: 0.2 }}
         className="cs-surface absolute inset-0 overflow-y-auto overflow-x-hidden"
-        data-lenis-prevent
         style={{
           backgroundColor: 'var(--bg)',
+          boxShadow: '0 40px 120px -40px oklch(0 0 0 / 0.5)',
           overscrollBehavior: 'contain',
           WebkitOverflowScrolling: 'touch',
           touchAction: 'pan-y',
         }}
       >
-        {/* CLOSE BUTTON — floats over hero, always visible.
-            The offset tracks the same fluid scale as the hero chrome and
-            article body (clamp 1.25rem → 3rem) so the disk sits on the
-            same optical gutter as the title and meta, not jammed against
-            the viewport edge at wide viewports. */}
+        {/* Close — a square hairline control, typeset mark. */}
         <button
           ref={closeBtnRef}
           onClick={onClose}
           aria-label="Close case study"
-          className="fixed z-20 grid place-items-center outline-none focus-visible:outline-2 focus-visible:outline-offset-4 cs-close"
+          className="cs-close fixed z-20 grid place-items-center outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
           style={{
             top: 'calc(env(safe-area-inset-top) + clamp(1rem, 3vw, 2rem))',
             right: 'calc(env(safe-area-inset-right) + clamp(1rem, 4vw, 3rem))',
             width: 44,
             height: 44,
-            borderRadius: 999,
-            // Solid disk per DESIGN.md §4 "Case-study close button". The One
-            // Blur Rule reserves backdrop-filter for the nav scroll state only.
-            backgroundColor: 'var(--disk-on-image)',
-            color: 'var(--ink-on-image)',
-            border: '1px solid var(--hairline-on-image)',
-            outlineColor: 'var(--color-accent)',
+            backgroundColor: 'var(--bg)',
+            color: 'var(--text-primary)',
+            border: '1px solid var(--border)',
+            outlineColor: 'var(--accent-ink)',
+            fontSize: '1rem',
+            lineHeight: 1,
           }}
         >
-          <X className="w-5 h-5" strokeWidth={2} />
+          <span aria-hidden="true">✕</span>
         </button>
 
-        {/* ------------- HERO (morph target from card) ------------- */}
-        <header
-          className="relative w-full overflow-hidden cs-hero"
-          style={{
-            backgroundColor: project.color,
-            height: 'clamp(360px, 62vh, 640px)',
-          }}
-        >
-          {project.image && !imageFailed && (
+        {/* ------------- SPREAD HEADER ------------- */}
+        <header className="mx-auto w-full max-w-[1200px] px-5 sm:px-10 pt-24 sm:pt-28">
+          <div
+            className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4 pb-6"
+            style={{ borderBottom: '1px solid var(--border)' }}
+          >
+            <div className="min-w-0">
+              <p className="t-label mb-3" style={{ color: 'var(--text-muted)' }}>
+                Plate {no} / {String(total).padStart(2, '0')} — {project.client} · {project.year}
+              </p>
+              <h1
+                className="t-headline"
+                style={{
+                  fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)',
+                  color: 'var(--text-primary)',
+                  viewTransitionName: 'cs-title',
+                } as React.CSSProperties}
+              >
+                {project.title}
+              </h1>
+            </div>
+
+            {project.showCta &&
+              (project.url ? (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="t-label inline-flex items-center gap-2 shrink-0 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+                  style={{
+                    backgroundColor: 'var(--color-accent)',
+                    color: 'oklch(0.96 0.004 90)',
+                    padding: '14px 24px',
+                    outlineColor: 'var(--accent-ink)',
+                    viewTransitionName: 'cs-badge',
+                    transition: 'background-color 200ms ease',
+                  } as React.CSSProperties}
+                  onMouseEnter={(e) =>
+                    ((e.currentTarget as HTMLElement).style.backgroundColor = 'var(--color-accent-hover)')
+                  }
+                  onMouseLeave={(e) =>
+                    ((e.currentTarget as HTMLElement).style.backgroundColor = 'var(--color-accent)')
+                  }
+                >
+                  Visit live site <span aria-hidden="true">↗</span>
+                </a>
+              ) : (
+                <a
+                  href="#contact"
+                  onClick={() => onClose()}
+                  className="t-label inline-flex items-center gap-2 shrink-0 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+                  style={{
+                    color: 'var(--text-primary)',
+                    border: '1px solid var(--border)',
+                    padding: '13px 23px',
+                    outlineColor: 'var(--accent-ink)',
+                    viewTransitionName: 'cs-badge',
+                  } as React.CSSProperties}
+                >
+                  Request access <span aria-hidden="true">↗</span>
+                </a>
+              ))}
+          </div>
+        </header>
+
+        {/* ------------- HERO PLATE (morph target) ------------- */}
+        <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-10 pt-8 sm:pt-10">
+          {project.image && !imageFailed ? (
             <picture>
-              <source
-                type="image/webp"
-                srcSet={webpSrcSet(project.image)}
-                sizes="100vw"
-              />
+              <source type="image/webp" srcSet={webpSrcSet(project.image)} sizes="(min-width: 1200px) 1120px, 100vw" />
               <img
                 src={project.image}
                 alt={project.imageAlt}
@@ -285,192 +299,84 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                 decoding="async"
                 fetchPriority="high"
                 onError={() => setFailedSlug(project.slug)}
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ viewTransitionName: 'cs-image' } as React.CSSProperties}
+                className="block w-full h-auto"
+                style={{
+                  border: '1px solid var(--border-subtle)',
+                  viewTransitionName: 'cs-image',
+                } as React.CSSProperties}
               />
             </picture>
-          )}
-          {/* Scrim for readable hero text — tinted graphite so warmth
-              survives over imagery in either theme. */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                'linear-gradient(to top, oklch(0.08 0.012 50 / 0.82) 0%, oklch(0.08 0.012 50 / 0.50) 30%, oklch(0.08 0.012 50 / 0.10) 60%, oklch(0.08 0.012 50 / 0) 78%)',
-            }}
-          />
-
-          {/* Hero chrome overlay — index + meta + title */}
-          <div
-            className="absolute inset-0 flex flex-col justify-end cs-hero-chrome"
-            style={{
-              padding:
-                'clamp(1.25rem, 4vw, 3rem) clamp(1.25rem, 5vw, 4rem)',
-              paddingBottom: 'max(clamp(1.5rem, 4vw, 3rem), env(safe-area-inset-bottom))',
-            }}
-          >
-            <div className="flex items-end justify-between gap-6 w-full max-w-6xl mx-auto">
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-3 mb-4">
-                  <span
-                    className="font-display tabular-nums"
-                    style={{
-                      fontSize: 'clamp(0.85rem, 1.1vw, 1rem)',
-                      color: 'var(--ink-on-image-muted)',
-                      letterSpacing: '0.08em',
-                    }}
-                  >
-                    {String(index + 1).padStart(2, '0')}
-                    <span style={{ color: 'var(--ink-on-image-subtle)' }}>
-                      {' '}
-                      / {String(total).padStart(2, '0')}
-                    </span>
-                  </span>
-                  <span
-                    className="h-px flex-1 max-w-[120px]"
-                    style={{ backgroundColor: 'var(--hairline-on-image)' }}
-                    aria-hidden="true"
-                  />
-                  <span
-                    className="text-[0.68rem] font-medium uppercase tracking-[0.22em]"
-                    style={{
-                      color: 'var(--ink-on-image-muted)',
-                    }}
-                  >
-                    {project.client} · {project.year}
-                  </span>
-                </div>
-                <h1
-                  className="font-display"
-                  style={{
-                    fontSize: 'clamp(2.25rem, 7vw, 5.5rem)',
-                    lineHeight: 0.98,
-                    letterSpacing: '-0.035em',
-                    color: 'var(--ink-on-image)',
-                    viewTransitionName: 'cs-title',
-                  } as React.CSSProperties}
-                >
-                  {project.title}
-                </h1>
-              </div>
-
-              {/* CTA — morphs from the card's "Live" badge.
-                  This is the One Beacon on this surface. Focus ring is
-                  text-tinted so it doesn't disappear into the Ember fill.
-                  When the project has no public URL, route the beacon to
-                  the contact section instead of rendering a dead pill. */}
-              {project.showCta && (project.url ? (
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 shrink-0 cs-cta outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-                  style={{
-                    backgroundColor: 'var(--color-accent)',
-                    color: 'var(--ink-on-image)',
-                    borderRadius: 0,
-                    border: '1px solid var(--color-accent-hover)',
-                    viewTransitionName: 'cs-badge',
-                    outlineColor: 'var(--ink-on-image)',
-                  } as React.CSSProperties}
-                >
-                  <span className="text-sm font-medium">Visit live site</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
-                </a>
-              ) : (
-                <a
-                  href="#contact"
-                  onClick={() => onClose()}
-                  className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 shrink-0 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-                  style={{
-                    backgroundColor: 'transparent',
-                    color: 'var(--accent-ink)',
-                    borderRadius: 0,
-                    border: '1px solid var(--color-accent)',
-                    viewTransitionName: 'cs-badge',
-                    outlineColor: 'var(--color-accent)',
-                  } as React.CSSProperties}
-                >
-                  <span className="text-sm font-medium">Request access</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
-                </a>
-              ))}
+          ) : (
+            <div
+              className="grid place-items-center"
+              aria-hidden="true"
+              style={{
+                aspectRatio: '16 / 10',
+                backgroundColor: 'var(--bg-surface)',
+                border: '1px solid var(--border-subtle)',
+              }}
+            >
+              <span
+                className="t-headline text-center px-6"
+                style={{
+                  fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)',
+                  color: 'var(--emboss)',
+                  filter: 'contrast(1.2)',
+                }}
+              >
+                {project.title}
+              </span>
             </div>
-          </div>
-        </header>
+          )}
+        </div>
 
         {/* ------------- BODY ------------- */}
         <article
-          className="mx-auto w-full"
+          className="mx-auto w-full max-w-[1200px] px-5 sm:px-10"
           style={{
-            maxWidth: 1080,
-            padding: 'clamp(2rem, 5vw, 4rem) clamp(1.25rem, 5vw, 4rem)',
+            paddingTop: 'clamp(2.5rem, 5vw, 4rem)',
             paddingBottom: 'max(clamp(3rem, 6vw, 5rem), env(safe-area-inset-bottom))',
           }}
         >
-          {/* Lead paragraph — larger, editorial. Required by the data
-              contract so it is never the rail card description repeated. */}
+          {/* Lede — the spread's serif opening. */}
           <motion.p
-            initial={reduced ? false : { opacity: 0, y: 14 }}
+            initial={reduced ? false : { opacity: 0, y: 16 }}
             animate={reduced ? {} : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.10, ease: EASE_OUT_EXPO }}
-            className="font-display"
+            transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
+            className="t-serif"
             style={{
-              fontSize: 'clamp(1.35rem, 2.4vw, 1.9rem)',
-              lineHeight: 1.4,
-              letterSpacing: '-0.015em',
+              fontSize: 'clamp(1.375rem, 2.4vw, 1.75rem)',
+              lineHeight: 1.5,
               color: 'var(--text-primary)',
-              maxWidth: '38ch',
-              fontWeight: 600,
+              maxWidth: '40ch',
             }}
           >
-            {lead}
+            {project.lede}
           </motion.p>
 
-          {/* Meta dl removed: client+year already live in the hero eyebrow,
-              role lives next to the title, and stack is carried as a row of
-              the highlights list below. Three repetitions of the same facts
-              was the SaaS "credits row" the brand explicitly rejects. */}
-
-          {/* Overview paragraphs */}
+          {/* Overview */}
           <div
             style={{
               marginTop: 'clamp(2.5rem, 5vw, 4rem)',
               display: 'grid',
-              gridTemplateColumns: 'minmax(0, 1fr)',
               gap: 'clamp(1rem, 2vw, 1.5rem)',
-              maxWidth: '65ch',
+              maxWidth: '62ch',
             }}
           >
-            <motion.h2
-              initial={reduced ? false : { opacity: 0, y: 14 }}
-              whileInView={reduced ? {} : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
-              className="font-display"
-              style={{
-                fontSize: '0.875rem',
-                fontWeight: 500,
-                color: 'var(--text-muted)',
-                letterSpacing: '0.02em',
-              }}
-            >
+            <h2 className="t-label" style={{ color: 'var(--text-muted)' }}>
               Overview
-            </motion.h2>
-            {bodyOverview.map((para, i) => (
+            </h2>
+            {project.overview.map((para, i) => (
               <motion.p
                 key={i}
-                initial={reduced ? false : { opacity: 0, y: 14 }}
+                initial={reduced ? false : { opacity: 0, y: 16 }}
                 whileInView={reduced ? {} : { opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.08 * i,
-                  ease: EASE_OUT_EXPO,
-                }}
+                transition={{ duration: 0.9, delay: 0.12 * i, ease: EASE }}
+                className="t-serif"
                 style={{
-                  fontSize: 'clamp(1rem, 1.15vw, 1.075rem)',
-                  lineHeight: 1.65,
+                  fontSize: '1.125rem',
+                  lineHeight: 1.75,
                   color: 'var(--text-secondary)',
                 }}
               >
@@ -479,72 +385,50 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
             ))}
           </div>
 
-          {/* Highlights — rendered as an inline definition list, not a
-              metric grid. The hero-metric template (label/value tiles in a
-              tidy auto-fit grid) is a SaaS cliché the brand explicitly
-              rejects; an editorial dl reads as journalism, not pricing. */}
+          {/* Highlights — a ruled spec table. */}
           {project.highlights.length > 0 && (
+            <div style={{ marginTop: 'clamp(3rem, 6vw, 5rem)', maxWidth: '62ch' }}>
+            <h2 className="t-label" style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
+              Highlights
+            </h2>
             <motion.dl
               initial={reduced ? false : { opacity: 0, y: 20 }}
               whileInView={reduced ? {} : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
+              transition={{ duration: 0.9, ease: EASE }}
               style={{
-                marginTop: 'clamp(3rem, 6vw, 5rem)',
-                maxWidth: '60ch',
-                display: 'grid',
-                rowGap: '0.5rem',
-                columnGap: '2rem',
-                gridTemplateColumns: 'minmax(7rem, max-content) 1fr',
+                borderTop: '1px solid var(--border)',
               }}
             >
-              {project.highlights.map((h, i) => (
-                <motion.div
+              {project.highlights.map((h) => (
+                <div
                   key={h.label}
-                  initial={reduced ? false : { opacity: 0, y: 14 }}
-                  whileInView={reduced ? {} : { opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{
-                    duration: 0.5,
-                    delay: 0.05 * i,
-                    ease: EASE_OUT_EXPO,
-                  }}
-                  style={{ display: 'contents' }}
+                  className="grid grid-cols-[8rem_1fr] gap-4 py-3"
+                  style={{ borderBottom: '1px solid var(--border-subtle)' }}
                 >
-                  <dt
-                    className="text-sm font-medium"
-                    style={{
-                      color: 'var(--text-muted)',
-                      paddingTop: '0.5rem',
-                      borderTop: i === 0 ? 'none' : '1px solid var(--border-subtle)',
-                    }}
-                  >
+                  <dt className="t-label" style={{ color: 'var(--text-muted)', paddingTop: 2 }}>
                     {h.label}
                   </dt>
                   <dd
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: 1.55,
-                      color: 'var(--text-primary)',
-                      paddingTop: '0.5rem',
-                      borderTop: i === 0 ? 'none' : '1px solid var(--border-subtle)',
-                      margin: 0,
-                    }}
+                    className="t-serif m-0"
+                    style={{ fontSize: '1rem', lineHeight: 1.55, color: 'var(--text-primary)' }}
                   >
                     {h.value}
                   </dd>
-                </motion.div>
+                </div>
               ))}
             </motion.dl>
+            </div>
           )}
 
-          {/* Gallery — CMS-managed extra imagery, stacked editorial-style.
-              Single column keeps each shot at article width so screens stay
-              readable; hairline + card radius match the rail vocabulary. */}
+          {/* Gallery — additional plates, stacked. */}
           {project.gallery.length > 0 && (
+            <div style={{ marginTop: 'clamp(3rem, 6vw, 5rem)' }}>
+            <h2 className="t-label" style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
+              Gallery
+            </h2>
             <div
               style={{
-                marginTop: 'clamp(3rem, 6vw, 5rem)',
                 display: 'grid',
                 gap: 'clamp(1.25rem, 2.5vw, 2rem)',
               }}
@@ -555,20 +439,14 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                   initial={reduced ? false : { opacity: 0, y: 20 }}
                   whileInView={reduced ? {} : { opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
-                  className="overflow-hidden"
-                  style={{
-                    margin: 0,
-                    borderRadius: '8px',
-                    border: '1px solid var(--border-subtle)',
-                    backgroundColor: 'var(--bg-surface)',
-                  }}
+                  transition={{ duration: 0.9, ease: EASE }}
+                  style={{ margin: 0, border: '1px solid var(--border-subtle)' }}
                 >
                   <picture>
                     <source
                       type="image/webp"
                       srcSet={webpSrcSet(shot.image)}
-                      sizes="(min-width: 1080px) 1080px, 100vw"
+                      sizes="(min-width: 1200px) 1120px, 100vw"
                     />
                     <img
                       src={shot.image}
@@ -582,132 +460,110 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                 </motion.figure>
               ))}
             </div>
+            </div>
           )}
 
-          {/* Mobile CTA (desktop has it in hero). Mirrors the URL/no-URL
-              branch so URL-less projects still expose a beacon on phones. */}
-          <div
-            className="sm:hidden"
-            style={{ marginTop: 'clamp(2.5rem, 6vw, 3.5rem)' }}
-          >
-            {project.showCta && (project.url ? (
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-                style={{
-                  backgroundColor: 'var(--color-accent)',
-                  color: 'var(--ink-on-image)',
-                  borderRadius: 0,
-                  outlineColor: 'var(--color-accent)',
-                }}
-              >
-                <span className="text-sm font-medium">Visit live site</span>
-                <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
-              </a>
-            ) : (
-              <a
-                href="#contact"
-                onClick={() => onClose()}
-                className="inline-flex items-center gap-2 px-5 py-3 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-                style={{
-                  backgroundColor: 'transparent',
-                  color: 'var(--accent-ink)',
-                  borderRadius: 0,
-                  border: '1px solid var(--color-accent)',
-                  outlineColor: 'var(--color-accent)',
-                }}
-              >
-                <span className="text-sm font-medium">Request access</span>
-                <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
-              </a>
-            ))}
+          {/* Mobile CTA (desktop has it in the header). */}
+          <div className="sm:hidden" style={{ marginTop: 'clamp(2.5rem, 6vw, 3.5rem)' }}>
+            {project.showCta &&
+              (project.url ? (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="t-label inline-flex items-center gap-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+                  style={{
+                    backgroundColor: 'var(--color-accent)',
+                    color: 'oklch(0.96 0.004 90)',
+                    padding: '14px 24px',
+                    outlineColor: 'var(--accent-ink)',
+                  }}
+                >
+                  Visit live site <span aria-hidden="true">↗</span>
+                </a>
+              ) : (
+                <a
+                  href="#contact"
+                  onClick={() => onClose()}
+                  className="t-label inline-flex items-center gap-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+                  style={{
+                    color: 'var(--text-primary)',
+                    border: '1px solid var(--border)',
+                    padding: '13px 23px',
+                    outlineColor: 'var(--accent-ink)',
+                  }}
+                >
+                  Request access <span aria-hidden="true">↗</span>
+                </a>
+              ))}
           </div>
 
-          {/* Footer nav — close cue + prev/next teaser between case studies.
-              The footer index used to repeat the hero's "02 / 03"; we now
-              promote the next project's title so navigation reads as
-              anticipation, not chrome talking to itself.
-              Keyboard: ← prev, → next, Esc close. */}
+          {/* Footer nav — back to index, prev/next plate. */}
           <div
             className="flex items-center justify-between gap-4 mt-16 pt-6"
-            style={{ borderTop: '1px solid var(--border-subtle)' }}
+            style={{ borderTop: '1px solid var(--border)' }}
           >
             <button
               onClick={onClose}
-              className="inline-flex items-center gap-2 text-sm outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+              className="t-index inline-flex items-center gap-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
               style={{
                 color: 'var(--text-secondary)',
-                outlineColor: 'var(--color-accent)',
+                background: 'none',
+                border: 'none',
+                padding: '8px 0',
+                cursor: 'pointer',
+                outlineColor: 'var(--accent-ink)',
               }}
             >
-              <span aria-hidden="true">←</span> Back to archive
+              <span aria-hidden="true">←</span> Back to the index
             </button>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
+              {/* Surface the existing ←/→ keyboard navigation. */}
+              <span
+                className="t-index hidden md:inline"
+                style={{ color: 'var(--text-muted)' }}
+              >
+                Leaf with ← →
+              </span>
               {onPrev && (
                 <button
                   type="button"
                   onClick={onPrev}
-                  aria-label="Previous case study"
+                  aria-label="Previous plate"
                   className="grid place-items-center outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
                   style={{
                     width: 44,
                     height: 44,
                     color: 'var(--text-secondary)',
                     border: '1px solid var(--border)',
-                    borderRadius: 999,
-                    outlineColor: 'var(--color-accent)',
+                    background: 'none',
+                    cursor: 'pointer',
+                    outlineColor: 'var(--accent-ink)',
                   }}
                 >
-                  <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+                  <span aria-hidden="true">←</span>
                 </button>
               )}
               {onNext && (
                 <button
                   type="button"
                   onClick={onNext}
-                  className="hidden sm:inline-flex items-center gap-3 pl-3 pr-2 py-2 text-sm outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+                  aria-label={nextTitle ? `Next plate: ${nextTitle}` : 'Next plate'}
+                  className="inline-flex items-center gap-3 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
                   style={{
                     color: 'var(--text-primary)',
                     border: '1px solid var(--border)',
-                    borderRadius: 999,
-                    outlineColor: 'var(--color-accent)',
+                    background: 'none',
+                    padding: '11px 16px',
+                    cursor: 'pointer',
+                    outlineColor: 'var(--accent-ink)',
                   }}
                 >
-                  <span style={{ color: 'var(--text-muted)' }}>Next</span>
-                  <span className="font-medium">{nextTitle}</span>
-                  <span
-                    aria-hidden="true"
-                    className="grid place-items-center"
-                    style={{
-                      width: 28,
-                      height: 28,
-                      borderRadius: 999,
-                      backgroundColor: 'var(--color-accent)',
-                      color: 'var(--ink-on-image)',
-                    }}
-                  >
-                    <ArrowRight className="w-3.5 h-3.5" />
+                  <span className="t-index hidden sm:inline" style={{ color: 'var(--text-muted)' }}>
+                    Next
                   </span>
-                </button>
-              )}
-              {onNext && (
-                <button
-                  type="button"
-                  onClick={onNext}
-                  aria-label={nextTitle ? `Next case study: ${nextTitle}` : 'Next case study'}
-                  className="sm:hidden grid place-items-center outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-                  style={{
-                    width: 44,
-                    height: 44,
-                    color: 'var(--text-secondary)',
-                    border: '1px solid var(--border)',
-                    borderRadius: 999,
-                    outlineColor: 'var(--color-accent)',
-                  }}
-                >
-                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  <span className="t-index hidden sm:inline">{nextTitle}</span>
+                  <span aria-hidden="true">→</span>
                 </button>
               )}
             </div>

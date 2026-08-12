@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import {
   ArrowLeft,
-  Check,
   ExternalLink,
   Loader2,
   MoreVertical,
@@ -46,17 +45,6 @@ import { Label } from '@/admin/ui/label';
 import { Skeleton } from '@/admin/ui/skeleton';
 import { Switch } from '@/admin/ui/switch';
 import { Textarea } from '@/admin/ui/textarea';
-import { cn } from '@/lib/utils';
-
-const COLOR_SWATCHES = [
-  { value: 'oklch(0.22 0.05 230)', label: 'Diep blauw' },
-  { value: 'oklch(0.20 0.04 220)', label: 'Staalblauw' },
-  { value: 'oklch(0.18 0.03 240)', label: 'Indigo' },
-  { value: 'oklch(0.20 0.05 150)', label: 'Bosgroen' },
-  { value: 'oklch(0.22 0.06 25)', label: 'Donker ember' },
-  { value: 'oklch(0.20 0.05 310)', label: 'Aubergine' },
-  { value: 'oklch(0.18 0.01 50)', label: 'Grafiet' },
-];
 
 function slugify(input: string): string {
   return input
@@ -108,11 +96,9 @@ export function ProjectEditor() {
           url: row.url,
           image: row.image,
           image_alt: row.image_alt,
-          color: row.color,
           overview: row.overview,
           highlights: row.highlights,
           gallery: row.gallery,
-          show_badge: row.show_badge,
           show_cta: row.show_cta,
           published: row.published,
           sort_order: row.sort_order,
@@ -419,41 +405,9 @@ export function ProjectEditor() {
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <Label>Accentkleur (achter het beeld)</Label>
-            <div className="flex flex-wrap gap-2">
-              {[
-                ...COLOR_SWATCHES,
-                ...(COLOR_SWATCHES.some((s) => s.value === draft.color)
-                  ? []
-                  : [{ value: draft.color, label: 'Huidig' }]),
-              ].map((swatch) => (
-                <button
-                  key={swatch.value}
-                  type="button"
-                  title={swatch.label}
-                  onClick={() => patch({ color: swatch.value })}
-                  className={cn(
-                    'grid size-9 cursor-pointer place-items-center rounded-md border transition-transform hover:scale-105',
-                    draft.color === swatch.value ? 'border-primary' : 'border-border'
-                  )}
-                  style={{ backgroundColor: swatch.value }}
-                  aria-label={`Kleur ${swatch.label}`}
-                >
-                  {draft.color === swatch.value && <Check className="size-4 text-white" />}
-                </button>
-              ))}
-            </div>
-          </div>
-
+          {/* `color` en `show_badge` bestaan nog als DB-kolommen maar de
+              site leest ze niet; de controls zijn daarom verwijderd. */}
           <div className="flex flex-col gap-3 sm:flex-row sm:gap-8">
-            <label className="flex cursor-pointer items-center gap-2 text-sm">
-              <Switch
-                checked={draft.show_badge}
-                onCheckedChange={(show_badge) => patch({ show_badge })}
-              />
-              Status-badge op de kaart (Live / On request)
-            </label>
             <label className="flex cursor-pointer items-center gap-2 text-sm">
               <Switch
                 checked={draft.show_cta}

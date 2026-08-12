@@ -29,13 +29,10 @@ export type ProjectContent = {
   url?: string | null;
   image: string;
   imageAlt: string;
-  color: string;
   overview: string[];
   highlights: { label: string; value: string }[];
   /** Extra case-study imagery, rendered below the highlights. */
   gallery: GalleryImage[];
-  /** Show the Live / On request status badge on the card. */
-  showBadge?: boolean;
   /** Show the live-site / request-access CTA inside the case study. */
   showCta?: boolean;
 };

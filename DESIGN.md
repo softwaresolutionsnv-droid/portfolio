@@ -1,306 +1,279 @@
 ---
 name: Nils Vogelaar — Portfolio
-description: Freelance developer and designer portfolio; warm-tinted OKLCH system with a single vermillion beacon.
+description: Freelance designer-developer portfolio as a concrete monograph; charcoal and bone duotone with one oxide accent.
 colors:
-  ember: "oklch(0.65 0.22 25)"
-  ember-deep: "oklch(0.58 0.22 25)"
-  ember-subtle: "oklch(0.65 0.08 25)"
-  graphite-bg: "oklch(0.12 0.008 50)"
-  graphite-surface: "oklch(0.16 0.008 50)"
-  graphite-elevated: "oklch(0.20 0.008 50)"
-  graphite-text: "oklch(0.93 0.008 50)"
-  graphite-text-secondary: "oklch(0.65 0.01 50)"
-  graphite-text-muted: "oklch(0.45 0.008 50)"
-  graphite-border: "oklch(0.25 0.008 50)"
-  graphite-border-subtle: "oklch(0.20 0.006 50)"
-  paper-bg: "oklch(0.97 0.006 50)"
-  paper-surface: "oklch(0.93 0.007 50)"
-  paper-elevated: "oklch(0.89 0.008 50)"
-  paper-text: "oklch(0.17 0.010 50)"
-  paper-text-secondary: "oklch(0.38 0.012 50)"
-  paper-text-muted: "oklch(0.56 0.008 50)"
-  paper-border: "oklch(0.82 0.007 50)"
-  paper-border-subtle: "oklch(0.88 0.006 50)"
+  oxide: "oklch(0.48 0.15 30)"
+  oxide-deep: "oklch(0.42 0.15 30)"
+  oxide-ink-dark: "oklch(0.62 0.16 32)"
+  oxide-ink-light: "oklch(0.47 0.15 30)"
+  emboss-night: "oklch(0.19 0.005 260)"
+  emboss-day: "oklch(0.905 0.005 90)"
+  night-bg: "oklch(0.14 0.004 260)"
+  night-surface: "oklch(0.18 0.005 260)"
+  night-elevated: "oklch(0.22 0.005 260)"
+  night-text: "oklch(0.93 0.004 90)"
+  night-text-secondary: "oklch(0.68 0.005 90)"
+  night-text-muted: "oklch(0.55 0.005 90)"
+  night-border: "oklch(0.28 0.005 260)"
+  night-border-subtle: "oklch(0.22 0.004 260)"
+  bone-bg: "oklch(0.96 0.004 90)"
+  bone-surface: "oklch(0.92 0.005 90)"
+  bone-elevated: "oklch(0.88 0.005 90)"
+  bone-text: "oklch(0.18 0.005 260)"
+  bone-text-secondary: "oklch(0.40 0.006 260)"
+  bone-text-muted: "oklch(0.52 0.005 260)"
+  bone-border: "oklch(0.80 0.005 90)"
+  bone-border-subtle: "oklch(0.87 0.004 90)"
 typography:
-  display:
-    fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
-    fontSize: "clamp(2.8rem, 8vw, 7rem)"
-    fontWeight: 700
-    lineHeight: 0.95
-    letterSpacing: "-0.02em"
-  headline:
-    fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
-    fontSize: "clamp(1.875rem, 4vw, 3rem)"
-    fontWeight: 700
-    lineHeight: 1.1
-    letterSpacing: "-0.015em"
-  title:
-    fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
-    fontSize: "1.125rem"
-    fontWeight: 600
-    lineHeight: 1.3
+  monument:
+    fontFamily: "Archivo, system-ui, sans-serif"
+    fontSize: "clamp(2.75rem, 6.8vw, 7.5rem)"
+    fontWeight: 500
+    fontStretch: "125%"
+    lineHeight: 0.92
+    letterSpacing: "0.01em"
+    textTransform: "uppercase"
+  plate-numeral:
+    fontFamily: "Archivo, system-ui, sans-serif"
+    fontSize: "clamp(5rem, 18vw, 16rem)"
+    fontWeight: 200
+    fontStretch: "125%"
+    lineHeight: 1
     letterSpacing: "-0.01em"
-  body:
-    fontFamily: "Figtree, system-ui, sans-serif"
+  headline:
+    fontFamily: "Archivo, system-ui, sans-serif"
+    fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)"
+    fontWeight: 500
+    fontStretch: "125%"
+    lineHeight: 1.05
+    letterSpacing: "0.01em"
+    textTransform: "uppercase"
+  title:
+    fontFamily: "Archivo, system-ui, sans-serif"
     fontSize: "1.125rem"
+    fontWeight: 500
+    fontStretch: "125%"
+    lineHeight: 1.05
+    letterSpacing: "0.01em"
+    textTransform: "uppercase"
+  lede:
+    fontFamily: "Source Serif 4, Georgia, serif"
+    fontSize: "clamp(1.375rem, 2.4vw, 1.75rem)"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "normal"
+  serif-intro:
+    fontFamily: "Source Serif 4, Georgia, serif"
+    fontSize: "clamp(1.0625rem, 1.4vw, 1.25rem)"
     fontWeight: 400
     lineHeight: 1.7
     letterSpacing: "normal"
-  body-compact:
-    fontFamily: "Figtree, system-ui, sans-serif"
+  essay:
+    fontFamily: "Source Serif 4, Georgia, serif"
+    fontSize: "1.1875rem"
+    fontWeight: 400
+    lineHeight: 1.75
+    letterSpacing: "normal"
+  caption:
+    fontFamily: "Source Serif 4, Georgia, serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.6
     letterSpacing: "normal"
+  caption-small:
+    fontFamily: "Source Serif 4, Georgia, serif"
+    fontSize: "0.9375rem"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "normal"
   label:
-    fontFamily: "Figtree, system-ui, sans-serif"
-    fontSize: "0.875rem"
+    fontFamily: "Archivo, system-ui, sans-serif"
+    fontSize: "0.8125rem"
     fontWeight: 500
     lineHeight: 1.4
-    letterSpacing: "0.02em"
-  eyebrow:
-    fontFamily: "Figtree, system-ui, sans-serif"
-    fontSize: "0.875rem"
-    fontWeight: 500
+    letterSpacing: "0.14em"
+    textTransform: "uppercase"
+  index:
+    fontFamily: "Archivo, system-ui, sans-serif"
+    fontSize: "0.8125rem"
+    fontWeight: 400
     lineHeight: 1.4
-    letterSpacing: "0.04em"
+    letterSpacing: "0.06em"
+    fontVariantNumeric: "tabular-nums"
 rounded:
   none: "0px"
-  sm: "6px"
-  md: "8px"
-  pill: "9999px"
 spacing:
   xs: "4px"
   sm: "8px"
   md: "16px"
   lg: "24px"
-  xl: "40px"
-  2xl: "64px"
-  3xl: "128px"
+  xl: "48px"
+  2xl: "96px"
+  3xl: "160px"
 components:
   button-primary:
-    backgroundColor: "{colors.ember}"
-    textColor: "#ffffff"
+    backgroundColor: "{colors.oxide}"
+    textColor: "oklch(0.96 0.004 90)"
     typography: "{typography.label}"
     rounded: "{rounded.none}"
-    padding: "14px 28px"
+    padding: "18px 36px"
   button-primary-hover:
-    backgroundColor: "{colors.ember-deep}"
-    textColor: "#ffffff"
+    backgroundColor: "{colors.oxide-deep}"
+    textColor: "oklch(0.96 0.004 90)"
     rounded: "{rounded.none}"
-    padding: "14px 28px"
-  button-secondary:
+    padding: "18px 36px"
+  button-hairline:
     backgroundColor: "transparent"
-    textColor: "{colors.graphite-text}"
+    textColor: "{colors.night-text}"
     typography: "{typography.label}"
     rounded: "{rounded.none}"
-    padding: "14px 28px"
+    padding: "17px 35px"
   nav-link:
     backgroundColor: "transparent"
-    textColor: "{colors.graphite-text-secondary}"
-    typography: "{typography.label}"
-    rounded: "{rounded.sm}"
-    padding: "6px 12px"
-  nav-link-active:
+    textColor: "{colors.night-text-secondary}"
+    typography: "{typography.index}"
+    rounded: "{rounded.none}"
+    padding: "4px 0"
+  spec-row:
     backgroundColor: "transparent"
-    textColor: "{colors.graphite-text}"
-    rounded: "{rounded.sm}"
-    padding: "6px 12px"
-  tag:
-    backgroundColor: "{colors.graphite-surface}"
-    textColor: "{colors.graphite-text-secondary}"
-    typography: "{typography.label}"
-    rounded: "{rounded.pill}"
-    padding: "4px 10px"
+    textColor: "{colors.night-text}"
+    typography: "{typography.caption}"
+    rounded: "{rounded.none}"
+    padding: "20px 0"
 ---
 
-# Design System: Nils Vogt — Portfolio
+# Design System: Nils Vogelaar — Portfolio
 
 ## 1. Overview
 
-**Creative North Star: "The Signal Fire"**
+**Creative North Star: "The Concrete Monograph"**
 
-A warm-tinted neutral ground, almost black at rest, with a single vermillion beacon that appears only where it matters most. The portfolio is built on the idea that confidence is quiet by default and loud on purpose. Surfaces are flat and editorial; the accent is rare, not generic.
+The portfolio is a high-end architectural monograph rendered as a website. No metaphor is performed and nothing is skeuomorphic: the page simply carries itself like a printed monograph of built work — vast scale contrast, duotone plates, hairline rules, engraved capitals, and shadow as the only ornament. Each project is a numbered plate. The visitor leafs; the work leads; the interface recedes.
 
-The system rejects the visual vocabulary of contemporary portfolio templates. No gradient text, no glassmorphism cards, no decorative cursor trails, no SaaS-landing hero metrics, no identical project grids. The personality is *bold, precise, memorable* and the interface earns that by committing to a small set of strong choices, not by accumulating decoration.
-
-The site's one sanctioned spectacle is **kinetic typography**: type that responds to scroll momentum and paces reading. Every other award-site convention it adopts (preloader, contextual cursor, footer finale, live time) is functional chrome in service of that signature, specified in §5a. Anything outside that list remains banned.
-
-Both themes are first-class. Dark is the default — a warm graphite canvas meant to sit behind work. Light is crisp and editorial, like good magazine paper. Neither is a retrofit.
+This world replaces "The Signal Fire" (warm graphite + vermillion, kinetic type, preloader, custom cursor). Nothing from that vocabulary survives. The prior site's award-chrome (preloader, contextual cursor, velocity skew) is retired; the new system's spectacle is stillness, mass, and one photographic reveal.
 
 **Key Characteristics:**
-- Warm-tinted OKLCH neutrals (hue 50, chroma ~0.008) — never pure `#000` or `#fff`
-- A single accent: vermillion Ember, used on roughly 5–10% of any screen
-- Large fluid display type with tight leading; long-form body capped at ~52ch
-- Sharp-edged primary actions; nothing is uncommittedly rounded
-- Flat surfaces with one purposeful shadow role and one purposeful blur role
-- Framer Motion ease-out-expo for entrances, `layoutId` springs for continuity
+- Cool charcoal and bone duotone; color belongs to the work, not the chrome
+- One accent, Oxide: deep rust used for the active plate numeral, the primary CTA, selection, and focus — never decoration
+- Archivo Expanded capitals at monumental scale against small engraved labels; Source Serif 4 for essay text
+- Radius 0 everywhere; hairline rules structure the page; no cards, no pills, no shadows-as-style
+- Plates rest in duotone and develop into full color when attended — the system's signature move
+- Museum-slow motion: long ease-outs, small distances, nothing bounces
+
+Both themes are first-class, as product law. Dark ("Night Gallery", default) is charcoal walls with lit plates. Light ("Printed Page") is bone paper with charcoal ink. Each is the same monograph under different light.
 
 ## 2. Colors
 
-A two-family palette — warm graphite and warm paper — plus one vermillion accent. Every neutral carries a trace of red-orange hue (hue 50) so nothing is sterile. OKLCH is the source of truth; the Stitch linter will flag the frontmatter values and that is accepted.
+### Accent
+- **Oxide** (`oklch(0.48 0.15 30)`): the only chroma the chrome may carry, as the primary CTA fill (0.48 keeps bone label text at AA). Reserved for the primary CTA surface, the active plate numeral, selection, and focus rings.
+- **Oxide Deep** (`oklch(0.42 0.15 30)`): primary CTA hover. Never decorative.
+- **Oxide Ink** (`--accent-ink`): Oxide as body-sized text — `oklch(0.62 0.16 32)` on Night, `oklch(0.47 0.15 30)` on Day, both AA.
+- **Emboss** (`--emboss`): the blind-emboss tone for the colossal hero numeral and typographic fallback plates; barely off the ground in each theme.
 
-### Primary
-- **Ember** (`oklch(0.65 0.22 25)`): the single accent. Reserved for the primary CTA surface, the active-section underline in the nav, the hero word emphasis, selection highlight, and focus rings. If Ember appears more than once per viewport at rest, the design has lost discipline.
-- **Ember Deep** (`oklch(0.58 0.22 25)`): hover state for the primary button. Never used decoratively.
-- **Ember Subtle** (`oklch(0.65 0.08 25)`): for low-chroma echoes of the accent (quiet highlights, disabled-accent states). Use sparingly.
+### Neutral — Night Gallery (dark, default)
+- **Night BG** (`oklch(0.14 0.004 260)`): page canvas; cool charcoal, never pure black.
+- **Night Surface** (`oklch(0.18 0.005 260)`) / **Night Elevated** (`oklch(0.22 0.005 260)`): tonal steps for overlays and the case-study spread.
+- **Night Text** (`oklch(0.93 0.004 90)`): bone-white ink.
+- **Night Text Secondary** (`oklch(0.68 0.005 90)`), **Muted** (`oklch(0.55 0.005 90)`).
+- **Night Border** (`oklch(0.28 0.005 260)`) / **Subtle** (`oklch(0.22 0.004 260)`): hairlines.
 
-### Neutral — Dark (default theme, "Graphite Warm")
-- **Graphite BG** (`oklch(0.12 0.008 50)`): page canvas.
-- **Graphite Surface** (`oklch(0.16 0.008 50)`): hover backgrounds on nav items; rail card fill.
-- **Graphite Elevated** (`oklch(0.20 0.008 50)`): case-study overlays and modal surfaces.
-- **Graphite Text** (`oklch(0.93 0.008 50)`): primary text on dark.
-- **Graphite Text Secondary** (`oklch(0.65 0.01 50)`): body paragraphs, inactive nav.
-- **Graphite Text Muted** (`oklch(0.45 0.008 50)`): eyebrow, metadata, footer.
-- **Graphite Border** (`oklch(0.25 0.008 50)`): dividers with presence.
-- **Graphite Border Subtle** (`oklch(0.20 0.006 50)`): section rules and footer hairlines.
-
-### Neutral — Light (alt theme, "Paper")
-- **Paper BG** (`oklch(0.97 0.006 50)`): page canvas, intentionally warmer than white.
-- **Paper Surface** (`oklch(0.93 0.007 50)`): hover fills.
-- **Paper Elevated** (`oklch(0.89 0.008 50)`): case-study surfaces.
-- **Paper Text** (`oklch(0.17 0.010 50)`): primary text — near-black with a whisper of warmth.
-- **Paper Text Secondary** (`oklch(0.38 0.012 50)`): body paragraphs.
-- **Paper Text Muted** (`oklch(0.56 0.008 50)`): metadata.
-- **Paper Border** / **Paper Border Subtle**: dividers.
+### Neutral — Printed Page (light)
+- **Bone BG** (`oklch(0.96 0.004 90)`): barely-warm paper, not cream.
+- **Bone Surface / Elevated**: tonal steps.
+- **Bone Text** (`oklch(0.18 0.005 260)`): charcoal ink.
+- **Bone Text Secondary / Muted**, **Bone Border / Subtle**: as listed in frontmatter.
 
 ### Named Rules
 
-**The One Beacon Rule.** Ember appears on at most one surface per viewport at rest. The primary CTA. The active nav underline. A single emphasized word. Never two at once. Its rarity is what gives it weight.
+**The Ink Rule.** Chrome is duotone: charcoal and bone only, plus Oxide in its four reserved roles. Full color enters the page exclusively through project imagery.
 
-**The Tinted Neutrals Rule.** No neutral is hue 0. Every greyscale value carries hue 50 at chroma 0.006–0.012. Pure `#000` and `#fff` are banned.
+**The One Oxide Rule.** At rest, at most one Oxide surface per viewport. Its rarity is its authority.
 
-**The OKLCH Source of Truth Rule.** OKLCH values ship directly in the frontmatter and CSS variables. Hex approximations are not maintained in parallel. If a tool needs hex, it converts from OKLCH.
+**The Cool Ground Rule.** Neutrals are cool (hue 260, chroma ≤ 0.006) on the dark ground and barely-warm bone (hue 90, chroma ≤ 0.005) on light. No pure `#000`/`#fff`; no warm cream.
 
 ## 3. Typography
 
-**Display Font:** Bricolage Grotesque (system-ui fallback) — a contemporary geometric with optical-size axis. Tight letter-spacing and weight 700 for headlines.
-**Body Font:** Figtree (system-ui fallback) — humanist sans with full italic support. Variable weight 300–900.
-
-**Character:** Confident and editorial. Bricolage has just enough personality in its curves to feel authored rather than neutral; Figtree keeps body copy unhurried and readable. The pairing reads as *designer-developer, not agency boilerplate*.
+**Display:** Archivo (variable; width 125 "Expanded", weights 200–600). Monumental settings are uppercase, positive-tracked, engraved in the page.
+**Text:** Source Serif 4 (variable) for essays and captions — the monograph's book hand.
 
 ### Hierarchy
-- **Display** (700, `clamp(2.8rem, 8vw, 7rem)`, line-height 0.95, tracking −0.02em): hero headline only. One per page.
-- **Headline** (700, `clamp(1.875rem, 4vw, 3rem)`, line-height 1.1, tracking −0.015em): section openers ("Let's work together.", "Selected Work").
-- **Title** (600, 1.125rem, line-height 1.3): project card titles, case-study subheads.
-- **Body** (400, 1.125rem, line-height 1.7): long-form paragraphs. Width capped at `52ch` in hero, `65ch` elsewhere.
-- **Body Compact** (400, 1rem, line-height 1.6): dense contexts — case-study highlights, footer.
-- **Label** (500, 0.875rem, tracking 0.02em): buttons, nav links, tags. Case left as set.
-- **Eyebrow** (500, 0.875rem, tracking 0.04em, **uppercase**): the single small line above a hero headline. Uppercase is reserved for this role.
+- **Monument** (500, expanded, `clamp(2.75rem, 6.8vw, 7.5rem)`, lh 0.92, uppercase): the title page name and the colophon close. Exactly two per page, a full page apart, both at this one scale so neither outranks the other.
+- **Plate Numeral** (200, expanded, number-only): the project index number, scaled to context — `clamp(5rem, 13vw, 12rem)` on plates, up to `clamp(20rem, 55vh, 44rem)` as the hero's blind emboss (weight 100, `--emboss` tone).
+- **Headline** (500, expanded, uppercase): project titles and the case-study title.
+- **Title** (headline voice at 1.125rem): spec-table tool names.
+- **Lede** (serif, `clamp(1.375rem, 2.4vw, 1.75rem)`): the essay intro and case-study opening paragraph.
+- **Serif Intro** (serif, `clamp(1.0625rem, 1.4vw, 1.25rem)`): hero practice line, colophon supporting line.
+- **Essay** (serif, 1.1875rem, lh 1.75): long-form paragraphs, measure capped at 62ch.
+- **Caption** (serif, 1rem) / **Caption Small** (serif, 0.9375rem): plate captions, spec values, index annotations.
+- **Label** (Archivo 500, 0.8125rem, tracking 0.14em, uppercase): eyebrows, buttons, table headers.
+- **Index** (Archivo 400, 0.8125rem, tabular): nav items, plate numbers in margins, metadata.
 
 ### Named Rules
 
-**The One Display Rule.** A page gets exactly two Display-scale moments, a full page apart: the hero headline that opens it and the footer finale ("Let's work together.") that closes it. Nothing between them reaches Display scale, and two Displays in one viewport remains banned. Secondary pages use Headline instead.
+**The Two Monuments Rule.** The title page name and the colophon close are the page's only Monument settings; nothing between them approaches that scale except Plate Numerals, which are number-only.
 
-**The Measure Rule.** Body paragraphs cap at 52–65ch. Never full-width body on a wide viewport.
+**The Measure Rule.** Serif text caps at 62ch. Never full-width prose.
 
-**The Uppercase-Is-Eyebrow Rule.** The only uppercase text in the system is the eyebrow above a headline. Buttons, nav, and labels keep their natural case. No UPPERCASE CTAs.
+**The Engraved Caps Rule.** Uppercase always carries positive tracking (≥ 0.01em at monument scale, 0.14em at label scale) and lives only in the Monument, Headline, and Label roles. Tight-tracked uppercase is banned.
 
-## 4. Elevation
+## 4. Elevation & Light
 
-The system is flat by default. Depth is carried by tonal layering — Graphite BG, Surface, Elevated form an ordered stack — not by shadows. Shadows appear in three disciplined roles only.
+Flat, tonal, and lit — never floating. Depth comes from the tonal stack and from light behaving like light on matte concrete.
 
-### Shadow Vocabulary
-- **Project image hover** (`box-shadow: 0 20px 60px -12px oklch(0 0 0 / 0.3)`): applied to project images on hover inside the work rail. A soft, low, warm shadow; signals affordance, not elevation.
-- **Nav scroll state** (`backdrop-filter: blur(16px) saturate(1.2)` + `background: oklch(from var(--bg) l c h / 0.7)`): the only sanctioned blur in the system. Appears on the fixed nav after 40px of scroll and nowhere else.
-- **Case-study close button** (`background: oklch(0 0 0 / 0.72)` on hover): a dark disk for controls that sit over imagery.
-
-### Named Rules
-
-**The Flat-Until-State Rule.** Resting surfaces are flat. Shadows are a *response* — to hover, to scroll, to a control that must float over content. Never decoration.
-
-**The One Blur Rule.** Backdrop blur is allowed exactly once: the nav bar during scroll. Cards do not blur. Modals do not blur. Glassmorphism as an aesthetic is banned.
+- **The Raking Light**: the one gradient in the system. A near-invisible luminance sweep (≤ 4% lightness delta) may cross a Monument setting once on entrance, like sun crossing an incised wall. Never on body text, never looping.
+- **The Develop**: plates rest in duotone (grayscale, lifted slightly toward the theme's ground) and develop to full color when attended. Scroll position is the developer bath: where scroll-driven animations are supported (`animation-timeline: view()`), development is continuous and bidirectional — the print emerges on approach, completes just before viewport center, and recedes as it leaves; the plate numeral inks to Oxide only in the final stretch of development (a threshold, never a mid-blend). Hover/focus develops the plate fully via a separate ~1200ms-eased attention value merged with `max()`. Browsers without scroll timelines get the one-shot in-view develop (~1200ms ease) as a complete experience; reduced motion shows full color immediately.
+- **Case-study spread**: sits on Elevated tone with a 1px border. No backdrop blur anywhere. No decorative drop shadows; the single functional shadow allowed is under the open case-study spread (`0 40px 120px -40px oklch(0 0 0 / 0.5)`).
 
 ## 5. Components
 
 ### Buttons
-- **Shape:** sharp-edged — `border-radius: 0`. The decision is intentional; rounded corners soften the brand.
-- **Primary:** Ember background, white text, Label typography, padding `14px 28px` (roughly `py-3.5 px-7`). Hover → Ember Deep. Primary buttons are rare — one per section at most.
-- **Secondary ("ghost"):** transparent fill, 1px border at `var(--border)`, primary text color. Hover → surface-filled (`var(--bg-surface)`). Used for "View Work" alongside a primary CTA.
-- **Link-action:** inline-flex with a trailing `ArrowUpRight` (Lucide, 14–16px). Used for external links (email, socials). Hover → `opacity: 0.7`.
-- **Focus:** 2px Ember outline offset 2px. Visible on keyboard only.
+- **Primary ("the seal")**: Oxide fill, bone text, Label type, `18px 36px`, radius 0. One per page region at most; the colophon's is the largest.
+- **Hairline**: transparent, 1px border in the theme border color, Label type. Hover fills with Surface tone. Used for secondary actions.
+- **Text-action**: Index type with a hairline underline offset 6px; hover shifts the underline to text color. External links append "↗" as a typeset character, not an icon.
+- **Focus**: 2px Oxide outline, offset 3px, keyboard only.
 
 ### Navigation
-- **Shape:** fixed top bar, 64px tall, `max-w-6xl` container.
-- **At rest:** fully transparent background, no border.
-- **Scrolled (>40px):** translucent canvas `oklch(from var(--bg) l c h / 0.7)` with `backdrop-filter: blur(16px) saturate(1.2)` and a 1px subtle border.
-- **Link:** Label typography, 6–12px padding, rounded-sm (6px) hover fill. Inactive color is text-secondary; active is text-primary.
-- **Active indicator:** 2px Ember underline, `layoutId="nav-indicator"`, spring `stiffness: 380, damping: 30`. This is the only spring in the system.
-- **Theme toggle:** icon-only (Sun/Moon from Lucide), same padding as links, icon rotates and scales on swap.
+- A single hairline header: wordmark ("N.VOGELAAR", Label type) left; plate index ("01 02 03", Index type) center; theme toggle and colophon link right. Transparent at rest; after 40px scroll it gains the theme BG at 95% opacity and a bottom hairline. No blur.
+- The active plate number in the nav renders in Oxide; it is that viewport's one Oxide when no CTA is visible.
+- Theme toggle is text: "Day" / "Night" (Index type), not an icon pair.
 
-### Project Cards (the primary content pattern)
-- **No container chrome.** Cards are a title, metadata row, image, and description — separated by type hierarchy, not borders. Cards are explicitly NOT boxed.
-- **Image:** aspect-ratio preserved, no crop. Wrapped in `.project-image-wrap` for the hover shadow.
-- **Hover:** image lifts with `translateY(-4px)` and the project-image hover shadow appears. Title shifts to Ember over 200ms.
-- **Tags:** the Tag component — pill-shaped, Graphite Surface fill, Label type.
-- **No icons-and-heading identical grid.** Project cards vary in image aspect ratio; they are not cloned tiles.
+### Plates (project pattern)
+- Full-width compositions on the page grid, separated by hairlines and 160px of air, never boxed.
+- Anatomy: Plate Numeral overlapping the image edge; Headline title; serif lede; spec captions (role, year, client, stack) in a hairline-ruled caption grid; image in duotone-at-rest.
+- Images keep native aspect ratios. Hover lifts nothing: the Develop plays and the plate's number turns Oxide.
+- Plates alternate composition (numeral left / numeral right); they are never identical tiles.
 
-### Tags / Chips
-- **Shape:** pill (`border-radius: 9999px`).
-- **Style:** Graphite Surface fill, text-secondary color, Label typography, padding `4px 10px`.
-- **No hover state** — tags are metadata, not interactive targets.
+### Spec tables (skills, case-study highlights)
+- Hairline-ruled rows, Label header column, Caption values. No chips, no pills, no tags. Stack lists render as comma-separated serif text.
 
-### Section Rules (the horizontal hairline)
-- 1px high, `var(--border)` color, transform-origin left, `scaleX` sweep on entrance over 900ms ease-out-expo. This hairline is a signature motion — don't replace it with a static `<hr>`.
+### Section rules
+- 1px static hairlines in the theme border color. The old animated `scaleX` sweep is retired.
 
-### Signature: The Hero Reveal
-- Each visual line of the hero headline lives inside an `overflow-hidden` mask and slides up from `y: 110% opacity: 0` to `y: 0 opacity: 1`. Staggered by 100ms. Ease-out-expo over 800ms.
-- The accented word (`work.`) gets a subtle scale pulse `[1, 1.06, 1]` 300ms after the line settles. This pulse is unique to the hero; do not reuse it.
-- The reveal holds until the preloader veil starts lifting, so the visitor always sees it play (never half-finished behind the veil).
-- On exit (scrolling away), the hero lines shear apart horizontally (max ±7%) while the block fades. Transform/opacity only.
+## 6. Motion
 
-## 5a. Kinetic Type & Sanctioned Award Chrome
+**Grammar: mass, not energy.** Everything moves as if it weighs something.
 
-The site's signature is kinetic typography. These patterns are the complete sanctioned list; each exists to pace comprehension, signal affordance, or close the sale, never as free-floating decoration.
+- Entrances: opacity + ≤ 24px translate, 900–1200ms, ease `[0.22, 1, 0.36, 1]`. Staggers ≥ 120ms.
+- The Develop and the Raking Light are the only two signature effects. No springs, no bounces, no velocity-coupled transforms, no parallax.
+- Case-study transitions: a slow vertical spread-open (transform/opacity only).
+- `prefers-reduced-motion`: entrances become ≤ 180ms fades; Develop and Raking Light are disabled (plates rest in color).
 
-### Velocity Skew (`useVelocitySkew`)
-Display and Headline type shears with scroll momentum: max ±1.4° for section headings, ±1.6° for the hero, ±2° for the finale, mapped from smoothed scroll velocity and spring-returned to 0° at rest. Transform-only; collapses to 0° under reduced motion. Apply only to `KineticHeading` and the hero/finale headlines, never to body copy or images.
-
-### Kinetic Heading (`KineticHeading`)
-The standard section opener: one mask + slide-up per visual line (110% → 0, ease-out-expo 900ms, 90ms stagger) plus velocity skew. All section headings use it; ad-hoc heading animations are retired.
-
-### Progress Paragraph (`ProgressParagraph`)
-One per page, in About: words brighten from 18% to full opacity as the paragraph crosses the viewport, pacing the read. Reduced motion renders the plain paragraph.
-
-### Preloader
-A type-only veil tied to real readiness (font loading), never a fake timer: wordmark top-left, tabular counter bottom-right, a 2px Ember progress hairline as its one beacon. Minimum 1s on screen, hard cap 2.4s, 200ms hold at 100, then the veil slides up over 800ms ease-out-expo while the hero reveal begins underneath. Skipped entirely for reduced-motion users and repeat visits in-session. If it ever waits on nothing real, cut it.
-
-### Contextual Cursor (`CustomCursor`)
-A 10px near-white dot under `mix-blend-mode: difference`, spring-tracked with zero render cost. It grows 2.4× over links and buttons, and swaps to a 64px verb disk over surfaces that need one: "View" on project cards, "Drag" on the work rail (via `data-cursor` attributes). Mouse + fine pointer only; the native cursor is suppressed while it is mounted. This is a functional cursor, not a trail: no glow, no particles, no echo. One dot, one verb.
-
-### The Footer Finale
-The last viewport is the page's second Display moment: eyebrow, "Let's work together." at `clamp(3.25rem, 11.5vw, 9.5rem)`, supporting line, then the email CTA — the loudest Ember on the page — with a magnetic pull (`Magnetic`, strength 0.22, mouse-only). Below it, the living status line (availability dot in Ember Subtle, city, live local time) and the legal hairline row.
-
-### Live Time
-Amsterdam local time (HH:MM, tabular nums) rendered live in the hero eyebrow and the finale status line. A quiet proof the site is maintained, not a template.
-
-### Case-Study Deep Links
-Every case study is addressable at `/work/:slug`. Opening pushes history, prev/next swaps replace it, Back closes the overlay, and direct loads open it over the rail with no morph. The document title follows the open study.
-
-## 6. Do's and Don'ts
+## 7. Do's and Don'ts
 
 ### Do:
-- **Do** use OKLCH values directly in CSS. Every neutral carries hue 50, chroma ≈0.008.
-- **Do** reserve Ember for the primary CTA, the active nav underline, one emphasized word, and focus rings. Nothing else.
-- **Do** ship dark and light as first-class peers. Test every new screen in both themes before committing.
-- **Do** honor `prefers-reduced-motion`: motion is cut to ≤180ms fades, and hero slide-ups skip to their resting state.
-- **Do** cap body line length at 52–65ch. Respect the measure.
-- **Do** use sharp-edged primary buttons (`border-radius: 0`). This is a committed brand choice.
-- **Do** use Framer Motion ease-out-expo (`[0.16, 1, 0.3, 1]`) for entrances. It's the system's signature curve.
-- **Do** use `layoutId` for continuity (nav indicator, case-study morphs).
-- **Do** extract only a component's distinctive CSS when building new components. No reset bloat.
+- **Do** let project imagery be the only full-color element on the page.
+- **Do** compose with scale contrast: monumental numerals against small engraved labels.
+- **Do** keep radius 0 on every element. No exceptions.
+- **Do** use 1px hairlines in the theme border color as the page's structural drawing.
+- **Do** ship Night and Day as equals; test every change in both.
+- **Do** keep serif measure ≤ 62ch and label tracking at 0.14em.
 
 ### Don't:
-- **Don't** use `#000` or `#fff`. Every neutral is tinted — hue 50 at low chroma.
-- **Don't** use gradient text or `background-clip: text` for decoration. One solid color; emphasis via weight, size, or the Ember accent.
-- **Don't** use glassmorphism as an aesthetic. The nav's backdrop-blur is the only sanctioned use in the whole system.
-- **Don't** build identical project-card grids — icon + heading + text, repeated. Project cards vary; they are not clones.
-- **Don't** build a hero-metric template (big number + small label + supporting stats). It's the SaaS cliché PRODUCT.md explicitly rejects.
-- **Don't** add a testimonials carousel, a gradient mesh background, or a cursor trail. All are template-shaped.
-- **Don't** use em dashes (`—` or `--`) in UI copy. Commas, colons, semicolons, parentheses, periods.
-- **Don't** use `border-left` or `border-right` greater than 1px as a colored stripe. Side-stripe borders are banned.
-- **Don't** round primary buttons. Radius 0 is the commitment.
-- **Don't** UPPERCASE buttons, nav links, or body labels. Uppercase is reserved for the Eyebrow role.
-- **Don't** animate CSS layout properties (width, height, top, left). Transform and opacity only.
-- **Don't** ship two Display-scale elements in the same viewport. The page's two Display moments are the hero headline and the footer finale, a full page apart; nothing else reaches that scale.
-- **Don't** retrofit light mode. Design each theme natively or the design fails.
+- **Don't** reintroduce the retired vocabulary: preloader, custom cursor, velocity skew, animated hairline sweeps, magnetic buttons, background orbs, grain overlays.
+- **Don't** use blur anywhere, including the nav.
+- **Don't** use pills, chips, cards, or any rounded container.
+- **Don't** use gradient text, glassmorphism, or decorative shadows.
+- **Don't** give chrome any chroma beyond Oxide's four reserved roles.
+- **Don't** animate layout properties; transform and opacity only.
+- **Don't** exceed two Monument settings per page.
+- **Don't** use icon fonts or Lucide glyphs on the public site; arrows and marks are typeset characters.

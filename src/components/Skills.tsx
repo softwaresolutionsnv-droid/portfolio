@@ -1,99 +1,66 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { KineticHeading } from './KineticHeading';
+import { motion, useReducedMotion } from 'framer-motion';
 import { siteContent } from '../lib/content';
 
-/**
- * "What for what" — not a tool list, an editorial point of view on the stack.
- * Each entry: a bold tool/group name, then one sentence about when I reach
- * for it. CMS-managed.
- */
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
 const picks = siteContent.skills.picks;
 
+/**
+ * Specifications — the stack as a ruled spec table: tool column in
+ * engraved capitals, rationale in serif. CMS-managed.
+ */
 export function Skills() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const reduced = useReducedMotion();
 
   return (
-    <section id="skills" className="px-5 sm:px-8 py-20 sm:py-32">
-      <div className="max-w-6xl mx-auto w-full">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+    <section id="skills" style={{ padding: 'clamp(5rem, 12vh, 10rem) 0', paddingTop: 0 }}>
+      <div className="mx-auto w-full max-w-[1600px] px-5 sm:px-10">
+        <div
+          className="flex flex-wrap items-baseline justify-between gap-4 pb-5 mb-10 sm:mb-14"
+          style={{ borderBottom: '1px solid var(--border)' }}
         >
-          <KineticHeading
-            as="h2"
-            lines={['How I pick', 'the stack.']}
-            className="font-display text-3xl sm:text-4xl md:text-5xl mb-4"
-          />
+          <h2 className="t-label" style={{ color: 'var(--text-muted)' }}>
+            Specifications — the stack
+          </h2>
           <p
-            className="text-base sm:text-lg max-w-[58ch] mb-14 sm:mb-20"
-            style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}
+            className="t-serif"
+            style={{ fontSize: '1rem', color: 'var(--text-secondary)', maxWidth: '52ch' }}
           >
             {siteContent.skills.intro}
           </p>
+        </div>
 
-          <div
-            className="grid grid-cols-1 md:grid-cols-2"
-            style={{
-              borderTop: '1px solid var(--border-subtle)',
-            }}
-          >
-            {picks.map((p, i) => (
-              <motion.div
-                key={p.tools}
-                className="py-7 sm:py-8 flex gap-6 sm:gap-8"
-                style={{
-                  borderBottom: '1px solid var(--border-subtle)',
-                  // Vertical hairline between columns on md+
-                  ...(i % 2 === 0
-                    ? { paddingRight: 'clamp(1rem, 3vw, 2.5rem)' }
-                    : { paddingLeft: 'clamp(1rem, 3vw, 2.5rem)' }),
-                }}
-                initial={{ opacity: 0, y: 16 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-                transition={{ duration: 0.5, delay: 0.1 + i * 0.06 }}
+        <div style={{ borderTop: '1px solid var(--border)' }}>
+          {picks.map((p, i) => (
+            <motion.div
+              key={p.tools}
+              initial={reduced ? false : { opacity: 0, y: 16 }}
+              whileInView={reduced ? {} : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.9, delay: Math.min(i * 0.06, 0.3), ease: EASE }}
+              className="grid gap-2 sm:gap-8 py-6 sm:grid-cols-[minmax(180px,280px)_1fr]"
+              style={{ borderBottom: '1px solid var(--border-subtle)' }}
+            >
+              <h3
+                className="t-headline"
+                style={{ fontSize: '1.125rem', color: 'var(--text-primary)' }}
               >
-                <span
-                  className="font-display tabular-nums shrink-0"
-                  style={{
-                    color: 'var(--text-muted)',
-                    fontSize: '0.875rem',
-                    letterSpacing: '0.04em',
-                    paddingTop: '0.35rem',
-                  }}
-                >
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <div className="flex-1">
-                  <h3
-                    className="font-display mb-2"
-                    style={{
-                      fontSize: 'clamp(1.25rem, 2vw, 1.625rem)',
-                      lineHeight: 1.15,
-                      letterSpacing: '-0.015em',
-                      color: 'var(--text-primary)',
-                    }}
-                  >
-                    {p.tools}
-                  </h3>
-                  <p
-                    className="text-base sm:text-[1.0625rem]"
-                    style={{
-                      color: 'var(--text-secondary)',
-                      lineHeight: 1.6,
-                      maxWidth: '52ch',
-                    }}
-                  >
-                    {p.when}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                {p.tools}
+              </h3>
+              <p
+                className="t-serif m-0"
+                style={{
+                  fontSize: '1.0625rem',
+                  lineHeight: 1.65,
+                  color: 'var(--text-secondary)',
+                  maxWidth: '58ch',
+                }}
+              >
+                {p.when}
+              </p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

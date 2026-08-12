@@ -29,8 +29,13 @@ export type ProjectRow = {
   updated_at: string;
 };
 
-/** Editable fields of a project (everything except server-managed columns). */
-export type ProjectDraft = Omit<ProjectRow, 'id' | 'created_at' | 'updated_at'>;
+/** Editable fields of a project (everything except server-managed columns).
+    `color` and `show_badge` still exist as DB columns but the site reads
+    neither, so the CMS no longer edits them; DB defaults cover inserts. */
+export type ProjectDraft = Omit<
+  ProjectRow,
+  'id' | 'created_at' | 'updated_at' | 'color' | 'show_badge'
+>;
 
 export type AboutContent = {
   intro: string;
@@ -78,11 +83,9 @@ export function emptyProjectDraft(sortOrder: number): ProjectDraft {
     url: null,
     image: null,
     image_alt: '',
-    color: 'oklch(0.22 0.05 230)',
     overview: [],
     highlights: [],
     gallery: [],
-    show_badge: false,
     show_cta: false,
     published: false,
     sort_order: sortOrder,

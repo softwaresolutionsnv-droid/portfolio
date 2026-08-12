@@ -33,10 +33,8 @@ export type AvailabilityCopy = {
   about: string;
   /** Contact living status line. */
   contact: string;
-  /** Status dot color (CSS value). */
-  dotColor: string;
-  /** Whether the status dot pulses. */
-  pulse: boolean;
+  /** The seal — the colophon's primary CTA label, kept honest per state. */
+  cta: string;
 };
 
 export function availabilityCopy(availability: Availability): AvailabilityCopy {
@@ -49,24 +47,21 @@ export function availabilityCopy(availability: Availability): AvailabilityCopy {
         hero: 'Limited availability',
         about: `Limited availability${suffix}`,
         contact: `Limited availability for new projects${suffix}`,
-        dotColor: 'oklch(0.78 0.14 85)',
-        pulse: true,
+        cta: 'Email me',
       };
     case 'unavailable':
       return {
         hero: 'Fully booked',
         about: `Fully booked${suffix}`,
         contact: `Not taking new projects${suffix}`,
-        dotColor: 'var(--text-muted)',
-        pulse: false,
+        cta: 'Email me anyway',
       };
     default:
       return {
         hero: 'Available',
         about: 'Available for projects',
         contact: 'Available for new projects',
-        dotColor: 'var(--color-accent, oklch(0.65 0.22 25))',
-        pulse: true,
+        cta: 'Email me',
       };
   }
 }

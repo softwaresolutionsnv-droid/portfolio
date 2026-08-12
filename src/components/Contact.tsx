@@ -1,92 +1,113 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { ArrowUp, ArrowUpRight } from 'lucide-react';
-import { KineticHeading } from './KineticHeading';
-import { Magnetic } from './Magnetic';
-import { LocalTime } from './LocalTime';
-import { smoothScrollTo } from '../lib/smoothScroll';
+import { motion, useReducedMotion } from 'framer-motion';
 import { siteContent } from '../lib/content';
 import { availabilityCopy } from '../lib/availability';
+
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const { email, location, socials } = siteContent.contact;
 const status = availabilityCopy(siteContent.availability);
 
 /**
- * The finale: a full-viewport closing statement. This is the page's second
- * and last Display-scale moment (the first is the hero), and the email CTA
- * is the loudest Ember on the whole page.
+ * The colophon — the monograph's closing page and the page's second
+ * Monument moment. The email seal is the loudest Oxide on the site.
  */
 export function Contact() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const reduced = useReducedMotion();
+  const r = (delay: number) =>
+    reduced
+      ? {}
+      : {
+          initial: { opacity: 0, y: 24 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, margin: '-80px' },
+          transition: { duration: 1.0, delay, ease: EASE },
+        };
 
   return (
     <section
       id="contact"
-      className="px-5 sm:px-8 pt-24 sm:pt-32 pb-6 sm:pb-8 min-h-[100svh] flex flex-col"
+      className="min-h-[100svh] flex flex-col"
+      style={{ paddingTop: 'clamp(5rem, 12vh, 10rem)' }}
     >
-      <div ref={ref} className="max-w-6xl mx-auto w-full flex-1 flex flex-col">
-        <motion.p
-          className="text-sm font-medium uppercase mb-8 sm:mb-10"
-          style={{ color: 'var(--text-muted)', letterSpacing: '0.04em' }}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.5 }}
+      <div className="mx-auto w-full max-w-[1600px] px-5 sm:px-10 flex-1 flex flex-col">
+        <div
+          className="flex items-baseline justify-between pb-5 mb-14 sm:mb-20"
+          style={{ borderBottom: '1px solid var(--border)' }}
         >
+          <h2 className="t-label" style={{ color: 'var(--text-muted)' }}>
+            Colophon
+          </h2>
+          <span className="t-index" style={{ color: 'var(--text-muted)' }}>
+            {location}
+          </span>
+        </div>
+
+        <motion.p {...r(0)} className="t-label mb-8" style={{ color: 'var(--text-muted)' }}>
           One email is enough
         </motion.p>
 
-        <KineticHeading
-          as="h2"
-          lines={["Let's work", 'together.']}
-          skew={2}
-          className="font-display"
-          style={{
-            fontSize: 'clamp(3.25rem, 11.5vw, 9.5rem)',
-            lineHeight: 0.92,
-            letterSpacing: '-0.03em',
-            color: 'var(--text-primary)',
-          }}
-        />
+        {/* A real heading so AT users navigating by heading land on the
+            page's closing ask, not just the "Colophon" label above it. */}
+        <motion.h3
+          {...r(0.1)}
+          className="t-monument"
+          style={{ color: 'var(--text-primary)' }}
+        >
+          Let's work
+          <br />
+          together.
+        </motion.h3>
 
         <motion.p
-          className="text-lg sm:text-xl max-w-[50ch] mt-8 sm:mt-10"
-          style={{ color: 'var(--text-secondary)', lineHeight: 1.7 }}
-          initial={{ opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          {...r(0.25)}
+          className="t-serif mt-10"
+          style={{
+            fontSize: 'clamp(1.0625rem, 1.4vw, 1.25rem)',
+            lineHeight: 1.7,
+            color: 'var(--text-secondary)',
+            maxWidth: '50ch',
+          }}
         >
           Scaling something and need a developer who thinks alongside you?
           Tell me what you're building. I'll tell you what it actually takes.
         </motion.p>
 
         <motion.div
-          className="flex flex-col sm:flex-row sm:items-center items-start gap-5 mt-10"
-          initial={{ opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          {...r(0.35)}
+          className="flex flex-col sm:flex-row sm:items-center items-start gap-6 mt-12"
         >
-          <Magnetic>
-            <a
-              href={`mailto:${email}`}
-              className="inline-flex items-center gap-2 px-7 py-4 text-sm sm:text-base font-medium tracking-wide transition-colors hover:bg-[var(--color-accent-hover,oklch(0.58_0.22_25))]"
-              style={{
-                backgroundColor: 'var(--color-accent, oklch(0.65 0.22 25))',
-                color: 'white',
-              }}
-            >
-              Email me
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
-          </Magnetic>
+          {/* The seal — the page's one Oxide surface. */}
+          <a
+            href={`mailto:${email}`}
+            className="t-label inline-flex items-center gap-2.5 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+            style={{
+              backgroundColor: 'var(--color-accent)',
+              color: 'oklch(0.96 0.004 90)',
+              padding: '18px 36px',
+              outlineColor: 'var(--accent-ink)',
+              transition: 'background-color 200ms ease',
+            }}
+            onMouseEnter={(e) =>
+              ((e.currentTarget as HTMLElement).style.backgroundColor = 'var(--color-accent-hover)')
+            }
+            onMouseLeave={(e) =>
+              ((e.currentTarget as HTMLElement).style.backgroundColor = 'var(--color-accent)')
+            }
+          >
+            {status.cta} <span aria-hidden="true">↗</span>
+          </a>
 
-          <div className="flex items-center gap-5">
-            {/* Plain-text address for visitors without a mail client wired
-                to mailto: — selectable, copyable. */}
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-2">
             <a
               href={`mailto:${email}`}
-              className="text-sm font-medium py-3.5 transition-colors hover:opacity-70 select-all"
-              style={{ color: 'var(--text-secondary)' }}
+              className="t-index py-3 select-all outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+              style={{
+                color: 'var(--text-secondary)',
+                textDecoration: 'underline',
+                textUnderlineOffset: 6,
+                textDecorationColor: 'var(--border)',
+                outlineColor: 'var(--accent-ink)',
+              }}
             >
               {email}
             </a>
@@ -96,65 +117,59 @@ export function Contact() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm font-medium py-3.5 transition-colors hover:opacity-70"
-                style={{ color: 'var(--text-secondary)' }}
+                className="t-index py-3 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+                style={{
+                  color: 'var(--text-secondary)',
+                  textDecoration: 'underline',
+                  textUnderlineOffset: 6,
+                  textDecorationColor: 'var(--border)',
+                  outlineColor: 'var(--accent-ink)',
+                }}
               >
-                {social.label}
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                {social.label} <span aria-hidden="true">↗</span>
               </a>
             ))}
           </div>
         </motion.div>
 
-        {/* Living status line */}
+        {/* Status line */}
         <motion.p
-          className="inline-flex items-center gap-2 text-sm mt-10"
-          style={{ color: 'var(--text-muted)' }}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.5, delay: 0.45 }}
+          {...r(0.45)}
+          className="t-serif mt-12"
+          style={{ fontSize: '1rem', color: 'var(--text-muted)' }}
         >
-          <span
-            aria-hidden="true"
-            className={status.pulse ? 'inline-block animate-pulse' : 'inline-block'}
-            style={{
-              width: 7,
-              height: 7,
-              borderRadius: 9999,
-              backgroundColor: status.dotColor,
-            }}
-          />
-          {status.contact} · Replies within one business day · {location} · <LocalTime />
+          {status.contact} · Replies within one business day · {location}
         </motion.p>
 
         <div className="flex-1" aria-hidden="true" />
 
-        <motion.footer
-          className="pt-8 mt-16 border-t flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
-          style={{ borderColor: 'var(--border-subtle)' }}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+        {/* Legal hairline row */}
+        <footer
+          className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 py-8 mt-16"
+          style={{ borderTop: '1px solid var(--border-subtle)' }}
         >
-          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-            &copy; {new Date().getFullYear()} Nils Vogelaar
+          <p className="t-index m-0" style={{ color: 'var(--text-muted)' }}>
+            © {new Date().getFullYear()} Nils Vogelaar
           </p>
-          <p
-            className="text-sm hidden sm:block"
-            style={{ color: 'var(--text-muted)' }}
-          >
-            Built with React, Tailwind CSS & Framer Motion
+          <p className="t-index m-0 hidden sm:block" style={{ color: 'var(--text-muted)' }}>
+            Set in Archivo & Source Serif 4
           </p>
           <button
             type="button"
-            onClick={() => smoothScrollTo(0)}
-            className="inline-flex items-center gap-1.5 text-sm transition-colors hover:opacity-70"
-            style={{ color: 'var(--text-secondary)' }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="t-index outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+            style={{
+              color: 'var(--text-secondary)',
+              background: 'none',
+              border: 'none',
+              padding: '8px 0',
+              cursor: 'pointer',
+              outlineColor: 'var(--accent-ink)',
+            }}
           >
-            Back to top
-            <ArrowUp className="w-3.5 h-3.5" />
+            Back to top <span aria-hidden="true">↑</span>
           </button>
-        </motion.footer>
+        </footer>
       </div>
     </section>
   );

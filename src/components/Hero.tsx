@@ -1,177 +1,158 @@
-import { useRef } from 'react';
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from 'framer-motion';
-import { useVelocitySkew } from '../lib/kinetic';
-import { LocalTime } from './LocalTime';
+import { motion, useReducedMotion } from 'framer-motion';
 import { siteContent } from '../lib/content';
 import { availabilityCopy } from '../lib/availability';
 
-const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const status = availabilityCopy(siteContent.availability);
 
-function RevealLine({
-  children,
-  delay,
-  play,
-  className = '',
-}: {
-  children: React.ReactNode;
-  delay: number;
-  play: boolean;
-  className?: string;
-}) {
-  const reduced = useReducedMotion();
-  const shown = reduced || play;
-  return (
-    <span className={`block overflow-hidden ${className}`}>
-      <motion.span
-        className="block"
-        initial={reduced ? false : { y: '110%', opacity: 0 }}
-        animate={shown ? { y: '0%', opacity: 1 } : { y: '110%', opacity: 0 }}
-        transition={{
-          y: { duration: 0.8, delay, ease: EASE_OUT_EXPO },
-          opacity: { duration: 0.4, delay, ease: 'easeOut' },
-        }}
-      >
-        {children}
-      </motion.span>
-    </span>
-  );
+/** First sentence of the card description — the index row's annotation. */
+function firstSentence(text: string): string {
+  const i = text.indexOf('. ');
+  return i === -1 ? text : text.slice(0, i + 1);
 }
 
-export function Hero({ play }: { play: boolean }) {
-  const reduced = useReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
+const rows = siteContent.projects.map((p, i) => ({
+  no: String(i + 1).padStart(2, '0'),
+  id: `plate-${String(i + 1).padStart(2, '0')}`,
+  title: p.title,
+  year: p.year,
+  note: firstSentence(p.description),
+}));
 
-  // Kinetic exit: as the hero scrolls away, the headline lines shear apart
-  // horizontally while the block fades. Transform/opacity only.
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end start'],
-  });
-  const drift1 = useTransform(scrollYProgress, [0, 1], ['0%', '-7%']);
-  const drift2 = useTransform(scrollYProgress, [0, 1], ['0%', '5%']);
-  const drift3 = useTransform(scrollYProgress, [0, 1], ['0%', '-3.5%']);
-  const fade = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
-  const skewY = useVelocitySkew(1.6);
+/** Entrance: mass, not energy — fade + ≤24px rise, museum-slow. */
+const rise = (delay: number) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 1.0, delay, ease: EASE },
+});
+
+/**
+ * Title page — the approved "Marginal Index" composition. Index of
+ * built work left; stacked Monument name right with a colossal
+ * blind-embossed numeral behind it; serif practice line below.
+ */
+export function Hero() {
+  const reduced = useReducedMotion();
+  const r = (delay: number) => (reduced ? {} : rise(delay));
 
   return (
     <section
-      ref={sectionRef}
-      className="min-h-[100svh] flex items-end pb-16 sm:pb-24 pt-32 px-5 sm:px-8 relative"
+      className="relative min-h-[100svh] flex flex-col justify-end overflow-hidden"
+      aria-label="Title page"
     >
-      <div className="max-w-6xl mx-auto w-full">
-        {/* Eyebrow — with the live Amsterdam clock */}
-        <RevealLine delay={0.15} play={play}>
-          <p
-            className="text-sm sm:text-base mb-6 tracking-wide uppercase"
-            style={{ color: 'var(--text-muted)', letterSpacing: '0.04em' }}
+      {/* Colossal blind-embossed numeral — set into the wall, not on it. */}
+      <div
+        aria-hidden="true"
+        className="t-numeral absolute pointer-events-none select-none"
+        style={{
+          fontSize: 'clamp(20rem, 55vh, 44rem)',
+          color: 'var(--emboss)',
+          right: '-0.08em',
+          top: '40%',
+          transform: 'translateY(-50%)',
+          fontWeight: 100,
+        }}
+      >
+        01
+      </div>
+
+      {/* Monument first in the DOM so tab/reading order announces the name
+          before the index; CSS order handles the desktop composition. */}
+      <div className="relative mx-auto w-full max-w-[1600px] px-5 sm:px-10 pt-28 pb-10 sm:pb-14 grid gap-14 lg:gap-10 lg:grid-cols-[minmax(300px,420px)_1fr]">
+        {/* ---------- The monument (right on desktop) ---------- */}
+        <div className="lg:order-2 flex flex-col justify-end min-w-0">
+          <motion.p
+            {...r(0.15)}
+            className="t-label mb-8"
+            style={{ color: 'var(--text-muted)' }}
           >
-            Freelance Developer & Designer · {siteContent.contact.location}{' '}
-            <LocalTime /> · {status.hero}
-          </p>
-        </RevealLine>
+            Designer — Developer, {siteContent.contact.location} · {status.hero}
+          </motion.p>
 
-        {/* Headline — masked line reveals on entrance, shear-apart on exit */}
-        <motion.h1
-          className="font-display text-[clamp(2.8rem,8vw,7rem)] leading-[0.95] mb-8 max-w-[18ch]"
-          style={{
-            color: 'var(--text-primary)',
-            skewY,
-            opacity: reduced ? 1 : fade,
-            transformOrigin: '0% 100%',
-          }}
-        >
-          <motion.span className="block" style={{ x: reduced ? 0 : drift1 }}>
-            <RevealLine delay={0.3} play={play}>
-              I build products
-            </RevealLine>
-          </motion.span>
-          <motion.span className="block" style={{ x: reduced ? 0 : drift2 }}>
-            <RevealLine delay={0.4} play={play}>
-              with the thinking
-            </RevealLine>
-          </motion.span>
-          <motion.span className="block" style={{ x: reduced ? 0 : drift3 }}>
-            <RevealLine delay={0.5} play={play} className="inline-flex">
-              <motion.span
-                style={{ color: 'var(--color-accent, oklch(0.65 0.22 25))' }}
-                initial={reduced ? false : { scale: 1 }}
-                animate={play && !reduced ? { scale: [1, 1.06, 1] } : {}}
-                transition={{
-                  delay: 1.1,
-                  duration: 0.5,
-                  ease: [0.22, 1, 0.36, 1],
-                  times: [0, 0.5, 1],
-                }}
-              >
-                behind them.
-              </motion.span>
-            </RevealLine>
-          </motion.span>
-        </motion.h1>
-
-        {/* Horizontal rule — sweeps left to right */}
-        <motion.div
-          className="h-px mb-10 origin-left"
-          style={{ backgroundColor: 'var(--border)' }}
-          initial={reduced ? false : { scaleX: 0 }}
-          animate={reduced || play ? { scaleX: 1 } : { scaleX: 0 }}
-          transition={{
-            duration: 0.9,
-            delay: 0.8,
-            ease: EASE_OUT_EXPO,
-          }}
-        />
-
-        {/* Body text */}
-        <RevealLine delay={0.95} play={play}>
-          <p
-            className="text-lg sm:text-xl max-w-[52ch] mb-10"
-            style={{ color: 'var(--text-secondary)', lineHeight: 1.7 }}
+          <motion.h1
+            {...r(0.3)}
+            className="t-monument raking-light"
+            style={{ color: 'var(--text-primary)' }}
           >
-            Four years shipping web and mobile products — most recently
-            a fleet platform running live for companies like Van Mossel.
-            I design it, build it, and ship it myself: no handoffs,
-            no account managers, one person who answers from the first
-            conversation to launch day.
-          </p>
-        </RevealLine>
+            Nils
+            <br />
+            Vogelaar
+          </motion.h1>
 
-        {/* CTAs — both ghost. The loudest Ember on the page lives in the finale. */}
-        <motion.div
-          className="flex flex-col sm:flex-row gap-4"
-          initial={reduced ? false : { opacity: 0, y: 20 }}
-          animate={
-            reduced || play ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-          }
-          transition={{ duration: 0.6, delay: 1.15, ease: EASE_OUT_EXPO }}
-        >
-          <a
-            href="#projects"
-            className="inline-flex items-center justify-center px-7 py-3.5 text-sm font-medium tracking-wide border transition-colors hover:bg-[var(--bg-surface)]"
+          <motion.p
+            {...r(0.5)}
+            className="t-serif mt-10"
             style={{
-              borderColor: 'var(--text-primary)',
-              color: 'var(--text-primary)',
-            }}
-          >
-            View Selected Work
-          </a>
-          <a
-            href="#contact"
-            className="inline-flex items-center justify-center px-7 py-3.5 text-sm font-medium tracking-wide transition-colors hover:opacity-70"
-            style={{
+              fontSize: 'clamp(1.0625rem, 1.4vw, 1.25rem)',
+              lineHeight: 1.7,
               color: 'var(--text-secondary)',
+              maxWidth: '52ch',
             }}
           >
-            Start a conversation →
-          </a>
-        </motion.div>
+            I design and build web and mobile products for scale-ups, founders,
+            and local businesses that need to punch above their weight. One
+            person from first conversation to launch day: no handoffs, no
+            account managers.
+          </motion.p>
+        </div>
+
+        {/* ---------- The index of built work (left on desktop) ---------- */}
+        <motion.nav
+          {...r(0.55)}
+          aria-label="Index of built work"
+          className="lg:order-1 self-end lg:pr-10 lg:border-r"
+          style={{ borderColor: 'var(--border)' }}
+        >
+          <p className="t-label mb-6" style={{ color: 'var(--text-muted)' }}>
+            Index of built work
+          </p>
+          <ul style={{ borderTop: '1px solid var(--border)' }}>
+            {rows.map((row, i) => (
+              <li key={row.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                <a
+                  href={`#${row.id}`}
+                  className="group block py-4 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+                  style={{ outlineColor: 'var(--accent-ink)' }}
+                >
+                  <span
+                    className="t-index flex items-baseline gap-3"
+                    style={{
+                      color: i === 0 ? 'var(--accent-ink)' : 'var(--text-primary)',
+                    }}
+                  >
+                    <span>{row.no}</span>
+                    <span className="t-label" style={{ color: 'inherit' }}>
+                      {row.title}
+                    </span>
+                    <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>
+                      {row.year}
+                    </span>
+                  </span>
+                  <span
+                    className="t-serif block mt-1.5"
+                    style={{
+                      fontSize: '0.9375rem',
+                      lineHeight: 1.5,
+                      color: 'var(--text-secondary)',
+                      maxWidth: '44ch',
+                    }}
+                  >
+                    {row.note}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </motion.nav>
+      </div>
+
+      {/* Base hairline closing the title page */}
+      <div
+        className="mx-auto w-full max-w-[1600px] px-5 sm:px-10"
+        aria-hidden="true"
+      >
+        <div style={{ height: 1, backgroundColor: 'var(--border)' }} />
       </div>
     </section>
   );

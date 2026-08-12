@@ -114,11 +114,9 @@ for (const row of projectRows) {
     url: row.url ?? null,
     image: row.image ? await processImage(row.image) : '',
     imageAlt: row.image_alt ?? '',
-    color: row.color ?? 'oklch(0.22 0.05 230)',
     overview: row.overview ?? [],
     highlights: row.highlights ?? [],
     gallery,
-    showBadge: Boolean(row.show_badge),
     showCta: Boolean(row.show_cta),
   });
 }

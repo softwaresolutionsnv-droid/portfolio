@@ -2,51 +2,46 @@
 @import "tw-animate-css";
 
 /* ===================================================================
-   THEME SYSTEM — OKLCH palette, warm-tinted neutrals
-   Accent: warm vermillion-orange. Both themes are first-class.
+   THEME SYSTEM — "The Concrete Monograph"
+   Cool charcoal (Night Gallery, default) and bone paper (Printed Page).
+   One accent: Oxide, deep rust. Chrome is duotone; color belongs to
+   the work. See DESIGN.md.
    =================================================================== */
 
 @theme {
-  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
-  --font-body: "Figtree", system-ui, sans-serif;
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-body: "Source Serif 4", Georgia, serif;
 
-  --color-accent: oklch(0.65 0.22 25);
-  --color-accent-hover: oklch(0.58 0.22 25);
-  --color-accent-subtle: oklch(0.65 0.08 25);
+  /* Oxide — primary CTA fill (0.48 keeps bone label text at AA). */
+  --color-accent: oklch(0.48 0.15 30);
+  --color-accent-hover: oklch(0.42 0.15 30);
 }
 
 :root {
-  /* Dark theme (default) */
-  --bg: oklch(0.12 0.008 50);
-  --bg-surface: oklch(0.16 0.008 50);
-  --bg-elevated: oklch(0.20 0.008 50);
-  --text-primary: oklch(0.93 0.008 50);
-  --text-secondary: oklch(0.65 0.01 50);
-  /* 0.58 = 4.73:1 on the dark bg — WCAG AA for body-sized text. */
-  --text-muted: oklch(0.58 0.008 50);
-  --border: oklch(0.25 0.008 50);
-  --border-subtle: oklch(0.20 0.006 50);
-  /* Accent when used as body-sized TEXT (links, CTA labels). Same as the
-     brand accent in dark; darkened in light where 0.65 only hits 3.29:1. */
-  --accent-ink: var(--color-accent);
-  /* Background orbs: intensity per theme — light mode needs heavy damping
-     or the blur wash reads as the banned gradient aesthetic. */
-  --orb-intensity: 0.55;
+  /* Night Gallery (default) */
+  --bg: oklch(0.14 0.004 260);
+  --bg-surface: oklch(0.18 0.005 260);
+  --bg-elevated: oklch(0.22 0.005 260);
+  --text-primary: oklch(0.93 0.004 90);
+  --text-secondary: oklch(0.68 0.005 90);
+  /* 0.58 keeps muted text at AA on the charcoal ground. */
+  --text-muted: oklch(0.58 0.005 90);
+  --border: oklch(0.28 0.005 260);
+  --border-subtle: oklch(0.22 0.004 260);
+  /* Oxide as body-sized text — lifted on dark for contrast. */
+  --accent-ink: oklch(0.62 0.16 32);
+  /* Faint blind-emboss tone for the colossal hero numeral. */
+  --emboss: oklch(0.19 0.005 260);
 
-  /* On-image vocabulary — hue 50 tinted, never hue 0.
-     Scrims layered over photography; ink colors used for text/chrome
-     that sits on top of those scrims. */
-  --scrim-strong: oklch(0.08 0.012 50 / 0.82);
-  --scrim-mid: oklch(0.08 0.012 50 / 0.55);
-  --scrim-soft: oklch(0.08 0.012 50 / 0.35);
-  --ink-on-image: oklch(0.98 0.006 50 / 0.98);
-  --ink-on-image-muted: oklch(0.98 0.006 50 / 0.78);
-  --ink-on-image-subtle: oklch(0.98 0.006 50 / 0.5);
-  --hairline-on-image: oklch(0.98 0.006 50 / 0.18);
-  --hairline-on-image-faint: oklch(0.98 0.006 50 / 0.08);
-  --disk-on-image: oklch(0.08 0.012 50 / 0.72);
+  /* On-image vocabulary — neutral scrims over plate photography. */
+  --scrim-strong: oklch(0.10 0.005 260 / 0.82);
+  --scrim-mid: oklch(0.10 0.005 260 / 0.55);
+  --ink-on-image: oklch(0.95 0.004 90 / 0.98);
+  --ink-on-image-muted: oklch(0.95 0.004 90 / 0.78);
+  --ink-on-image-subtle: oklch(0.95 0.004 90 / 0.5);
+  --hairline-on-image: oklch(0.95 0.004 90 / 0.2);
 
-  font-family: "Figtree", system-ui, sans-serif;
+  font-family: "Source Serif 4", Georgia, serif;
   line-height: 1.6;
   font-weight: 400;
   color: var(--text-primary);
@@ -57,26 +52,25 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Light theme overrides — crisp, editorial */
+/* Printed Page (light) */
 [data-theme="light"] {
-  --bg: oklch(0.97 0.006 50);
-  --bg-surface: oklch(0.93 0.007 50);
-  --bg-elevated: oklch(0.89 0.008 50);
-  --text-primary: oklch(0.17 0.010 50);
-  --text-secondary: oklch(0.38 0.012 50);
-  /* 0.54 = 4.65:1 on the light bg — WCAG AA for body-sized text. */
-  --text-muted: oklch(0.54 0.008 50);
-  --border: oklch(0.82 0.007 50);
-  --border-subtle: oklch(0.88 0.006 50);
-  --accent-ink: oklch(0.55 0.22 25); /* 4.98:1 on light bg */
-  --orb-intensity: 0.2;
+  --bg: oklch(0.96 0.004 90);
+  --bg-surface: oklch(0.92 0.005 90);
+  --bg-elevated: oklch(0.88 0.005 90);
+  --text-primary: oklch(0.18 0.005 260);
+  --text-secondary: oklch(0.40 0.006 260);
+  --text-muted: oklch(0.50 0.005 260);
+  --border: oklch(0.80 0.005 90);
+  --border-subtle: oklch(0.87 0.004 90);
+  --accent-ink: oklch(0.47 0.15 30);
+  --emboss: oklch(0.905 0.005 90);
+  --scrim-strong: oklch(0.10 0.005 260 / 0.82);
+  --scrim-mid: oklch(0.10 0.005 260 / 0.55);
 }
 
 /* ===================================================================
    ADMIN UI TOKENS (shadcn vocabulary) — mapped onto the site palette
-   so the CMS inherits both themes for free. `--color-accent` keeps its
-   brand meaning (vermillion); shadcn's hover-accent role is covered by
-   `secondary` instead.
+   so the CMS inherits both themes for free.
    =================================================================== */
 
 :root {
@@ -88,13 +82,13 @@
   --popover: var(--bg-elevated);
   --popover-foreground: var(--text-primary);
   --primary: var(--color-accent);
-  --primary-foreground: oklch(0.98 0.006 50);
+  --primary-foreground: oklch(0.96 0.004 90);
   --secondary: var(--bg-elevated);
   --secondary-foreground: var(--text-primary);
   --muted: var(--bg-surface);
   --muted-foreground: var(--text-muted);
   --destructive: oklch(0.55 0.21 20);
-  --destructive-foreground: oklch(0.98 0.006 50);
+  --destructive-foreground: oklch(0.96 0.004 90);
   --input: var(--border);
   --ring: var(--color-accent);
 }
@@ -137,7 +131,6 @@ body {
 }
 
 a {
-  font-weight: 500;
   color: inherit;
   text-decoration: none;
 }
@@ -147,38 +140,241 @@ button {
 }
 
 /* ===================================================================
-   TYPOGRAPHY SCALE — fluid display + fixed body
+   TYPE ROLES — the monograph's voices (DESIGN.md §3)
    =================================================================== */
 
 .font-display {
-  font-family: "Bricolage Grotesque", system-ui, sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: "Archivo", system-ui, sans-serif;
+  font-stretch: 125%;
+}
+
+/* Monument — title page name and colophon close. Two per page, one
+   shared scale: neither Monument outranks the other. */
+.t-monument {
+  font-family: "Archivo", system-ui, sans-serif;
+  font-stretch: 125%;
+  font-weight: 500;
+  font-size: clamp(2.75rem, 6.8vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+/* Plate numeral — thin, colossal, number-only. */
+.t-numeral {
+  font-family: "Archivo", system-ui, sans-serif;
+  font-stretch: 125%;
+  font-weight: 200;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.t-headline {
+  font-family: "Archivo", system-ui, sans-serif;
+  font-stretch: 125%;
+  font-weight: 500;
   line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.t-label {
+  font-family: "Archivo", system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.t-index {
+  font-family: "Archivo", system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.t-serif {
+  font-family: "Source Serif 4", Georgia, serif;
 }
 
 /* ===================================================================
-   ANCHOR SCROLL OFFSET — keep section headings clear of the fixed nav
+   SIGNATURE: THE DEVELOP — plates rest in duotone and develop to full
+   color when attended (in view / hover / focus). DESIGN.md §4.
+
+   Where the browser supports scroll-driven animations, the Develop is
+   continuous: scroll position is the developer bath. --develop rises
+   as the plate approaches viewport center and recedes as it leaves;
+   the image filter and the numeral's Oxide ink both derive from it.
+   Hover/focus contributes through a separate transitioned property so
+   the two sources never fight. Elsewhere, the one-shot JS develop
+   below is the complete experience, not a degraded one.
    =================================================================== */
 
-section[id] {
+@property --develop {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --develop-hover {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* --- Fallback develop (no scroll-timeline support) --------------- */
+
+.plate-img {
+  filter: grayscale(1) contrast(0.98);
+  transition: filter 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.is-developed .plate-img,
+.plate:hover .plate-img,
+.plate:focus-within .plate-img {
+  filter: none;
+}
+
+/* Plate number answers the Develop in Oxide. */
+.plate .plate-no {
+  color: var(--text-primary);
+  transition: color 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.plate:hover .plate-no,
+.plate:focus-within .plate-no {
+  color: var(--accent-ink);
+}
+
+/* --- The darkroom (scroll-driven) -------------------------------- */
+
+@supports (animation-timeline: view()) {
+  .plate {
+    animation: plate-develop linear both;
+    animation-timeline: view();
+    /* Progress spans the plate's traversal; keyframes put full
+       development in the viewport-center band. */
+    animation-range: cover 5% cover 95%;
+    transition: --develop-hover 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .plate:hover,
+  .plate:focus-within {
+    --develop-hover: 1;
+  }
+
+  /* One attention value, whichever source is stronger. */
+  .plate-img,
+  .is-developed .plate-img,
+  .plate:hover .plate-img,
+  .plate:focus-within .plate-img {
+    filter: grayscale(calc(1 - max(var(--develop), var(--develop-hover))))
+      contrast(calc(0.98 + 0.02 * max(var(--develop), var(--develop-hover))));
+    transition: none;
+    will-change: filter;
+  }
+
+  /* The numeral inks to Oxide in the last stretch of development —
+     a threshold, not a smear, so no murky in-between hue. */
+  .plate .plate-no,
+  .plate:hover .plate-no,
+  .plate:focus-within .plate-no {
+    color: color-mix(
+      in oklab,
+      var(--text-primary)
+        calc((1 - clamp(0, (max(var(--develop), var(--develop-hover)) - 0.7) / 0.3, 1)) * 100%),
+      var(--accent-ink)
+    );
+    transition: none;
+  }
+}
+
+/* S-curve ramps so the image visibly emerges on approach and completes
+   just before viewport center; ease-out ramps finish it off-screen. */
+@keyframes plate-develop {
+  0% {
+    --develop: 0;
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+  46% {
+    --develop: 1;
+  }
+  62% {
+    --develop: 1;
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+  100% {
+    --develop: 0;
+  }
+}
+
+/* ===================================================================
+   SIGNATURE: THE RAKING LIGHT — a ≤4% luminance sweep crossing a
+   Monument setting once on entrance. The one gradient in the system.
+   =================================================================== */
+
+.raking-light {
+  background-image: linear-gradient(
+    100deg,
+    var(--text-primary) 42%,
+    color-mix(in oklab, var(--text-primary) 88%, var(--bg)) 50%,
+    var(--text-primary) 58%
+  );
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: raking-light 1800ms cubic-bezier(0.22, 1, 0.36, 1) 400ms 1 forwards;
+}
+
+@keyframes raking-light {
+  to {
+    background-position: 0% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .raking-light {
+    animation: none;
+    background: none;
+    color: var(--text-primary);
+  }
+  .plate-img {
+    filter: none !important;
+    transition: none;
+  }
+  /* Plates rest in full color; the darkroom is closed. */
+  .plate {
+    animation: none;
+  }
+  .plate .plate-no,
+  .plate:hover .plate-no,
+  .plate:focus-within .plate-no {
+    transition: none;
+  }
+}
+
+/* ===================================================================
+   ANCHOR SCROLL OFFSET — keep section openers clear of the fixed nav
+   =================================================================== */
+
+section[id],
+article[id] {
   scroll-margin-top: 96px;
 }
 
-/* ===================================================================
-   CUSTOM CURSOR — when the contextual cursor is mounted (mouse + fine
-   pointer only), the native cursor yields everywhere. The dot + verb
-   disk carry all affordance.
-   =================================================================== */
-
-[data-custom-cursor],
-[data-custom-cursor] * {
-  cursor: none !important;
+html {
+  scroll-behavior: smooth;
 }
 
-/* ===================================================================
-   TRANSITION HELPERS
-   =================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
 
 .theme-transition {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -197,133 +393,72 @@ section[id] {
 }
 
 /* ===================================================================
-   SELECTION
+   SELECTION — Oxide, per DESIGN.md's reserved roles
    =================================================================== */
 
 ::selection {
-  background: oklch(0.65 0.22 25 / 0.3);
+  background: color-mix(in oklab, var(--color-accent) 35%, transparent);
   color: var(--text-primary);
 }
 
 /* ===================================================================
-   SUBTLE GRAIN TEXTURE (dark mode only)
+   SKIP LINK — revealed on keyboard focus only; Oxide, per its
+   reserved focus role.
    =================================================================== */
 
-/* ===================================================================
-   SHIMMER SKELETON — loading placeholder for images
-   =================================================================== */
-
-.shimmer-skeleton {
-  background: linear-gradient(
-    90deg,
-    oklch(0.5 0 0 / 0) 0%,
-    oklch(0.5 0 0 / 0.06) 50%,
-    oklch(0.5 0 0 / 0) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.8s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* ===================================================================
-   PROJECT IMAGE HOVER SHADOW
-   =================================================================== */
-
-.group:hover .project-image-wrap {
-  box-shadow: 0 20px 60px -12px oklch(0 0 0 / 0.3);
-}
-
-/* ===================================================================
-   HORIZONTAL RAIL — hide native scrollbar (HUD bar replaces it)
-   =================================================================== */
-
-.rail-scroll {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  overscroll-behavior-x: contain;
-}
-.rail-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-.grain::after {
-  content: "";
+.skip-link {
   position: fixed;
-  inset: 0;
-  pointer-events: none;
+  top: 12px;
+  left: 12px;
   z-index: 100;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px 256px;
+  padding: 14px 24px;
+  background-color: var(--color-accent);
+  color: oklch(0.96 0.004 90);
+  transform: translateY(calc(-100% - 16px));
 }
 
-/* AnimatedBackground vignette — adapts to theme */
-.animated-bg-vignette {
-  background: radial-gradient(ellipse at center, transparent 35%, oklch(0.12 0.008 50 / 0.55) 100%);
-}
-
-[data-theme="light"] .animated-bg-vignette {
-  background: radial-gradient(ellipse at center, transparent 35%, oklch(0.97 0.006 50 / 0.65) 100%);
+.skip-link:focus-visible {
+  transform: none;
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 3px;
 }
 
 /* ===================================================================
-   CINEMATIC CASE STUDY — View Transitions morph timing
+   CINEMATIC CASE STUDY — View Transitions morph timing (museum-slow)
    =================================================================== */
 
-/* Root transition: fade backdrop/overlay cleanly */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 520ms;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Shared element morphs: image, title, badge */
-::view-transition-group(cs-image),
-::view-transition-group(cs-title),
-::view-transition-group(cs-badge) {
-  animation-duration: 620ms;
+  animation-duration: 560ms;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Cross-fade the captured images during the morph so content pops in smoothly */
+::view-transition-group(cs-image),
+::view-transition-group(cs-title),
+::view-transition-group(cs-badge) {
+  animation-duration: 700ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 ::view-transition-old(cs-image),
 ::view-transition-new(cs-image) {
-  animation-duration: 520ms;
+  animation-duration: 560ms;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   mix-blend-mode: normal;
 }
 ::view-transition-old(cs-title),
 ::view-transition-new(cs-title) {
-  animation-duration: 560ms;
+  animation-duration: 600ms;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Prevent the grain overlay from being captured as a shared element —
-   it's fixed position with z-index:100 and would otherwise ghost-shift. */
-.grain::after {
-  view-transition-name: none;
-}
-
-/* Close button pulse affordance */
 .cs-close {
-  transition:
-    background-color 200ms ease,
-    transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 200ms ease, border-color 200ms ease;
 }
 .cs-close:hover {
-  background-color: var(--disk-on-image) !important;
-  transform: scale(1.04);
-}
-.cs-close:active {
-  transform: scale(0.96);
+  background-color: var(--bg-elevated);
 }
 
-/* Reduced motion: no morph, just a fast fade */
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
   ::view-transition-new(root),
@@ -334,4 +469,3 @@ section[id] {
     animation-timing-function: ease-out !important;
   }
 }
-
