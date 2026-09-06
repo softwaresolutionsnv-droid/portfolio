@@ -1,8 +1,10 @@
 /**
- * Availability status — set from the CMS, rendered in three places
+ * Availability status — set in content.json, rendered in three places
  * (hero eyebrow, about status row, contact status line). The copy per
- * state lives here so the three surfaces never drift apart.
+ * state lives in the i18n ui dictionary so the surfaces never drift.
  */
+
+import { ui, type Lang } from './i18n';
 
 export type AvailabilityState = 'available' | 'limited' | 'unavailable';
 
@@ -12,56 +14,45 @@ export type Availability = {
   availableFrom: string | null;
 };
 
-const MONTHS = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December',
-];
+const MONTHS: Record<Lang, string[]> = {
+  nl: [
+    'januari', 'februari', 'maart', 'april', 'mei', 'juni',
+    'juli', 'augustus', 'september', 'oktober', 'november', 'december',
+  ],
+  en: [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ],
+};
 
-/** '2026-09' → 'September 2026'; invalid input → null. */
-export function formatMonth(ym: string | null): string | null {
+/** '2026-09' → 'september 2026' / 'September 2026'; invalid input → null. */
+export function formatMonth(ym: string | null, lang: Lang): string | null {
   if (!ym) return null;
   const m = ym.match(/^(\d{4})-(\d{2})$/);
   if (!m) return null;
-  const month = MONTHS[Number(m[2]) - 1];
+  const month = MONTHS[lang][Number(m[2]) - 1];
   return month ? `${month} ${m[1]}` : null;
 }
 
 export type AvailabilityCopy = {
-  /** Hero eyebrow — short, sits at the end of a long line. */
   hero: string;
-  /** About "Status" detail row. */
   about: string;
-  /** Contact living status line. */
   contact: string;
   /** The seal — the colophon's primary CTA label, kept honest per state. */
   cta: string;
 };
 
-export function availabilityCopy(availability: Availability): AvailabilityCopy {
-  const back = formatMonth(availability.availableFrom);
-  const suffix = back ? ` — back in ${back}` : '';
+export function availabilityCopy(availability: Availability, lang: Lang): AvailabilityCopy {
+  const t = ui[lang].availability;
+  const base = t[availability.state];
+  const back = formatMonth(availability.availableFrom, lang);
+  const suffix =
+    back && availability.state !== 'available' ? ` — ${t.backIn} ${back}` : '';
 
-  switch (availability.state) {
-    case 'limited':
-      return {
-        hero: 'Limited availability',
-        about: `Limited availability${suffix}`,
-        contact: `Limited availability for new projects${suffix}`,
-        cta: 'Email me',
-      };
-    case 'unavailable':
-      return {
-        hero: 'Fully booked',
-        about: `Fully booked${suffix}`,
-        contact: `Not taking new projects${suffix}`,
-        cta: 'Email me anyway',
-      };
-    default:
-      return {
-        hero: 'Available',
-        about: 'Available for projects',
-        contact: 'Available for new projects',
-        cta: 'Email me',
-      };
-  }
+  return {
+    hero: base.hero,
+    about: `${base.about}${suffix}`,
+    contact: `${base.contact}${suffix}`,
+    cta: base.cta,
+  };
 }

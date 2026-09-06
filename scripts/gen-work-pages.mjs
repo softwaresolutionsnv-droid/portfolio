@@ -23,9 +23,10 @@ const setTag = (html, pattern, replacement) => {
 const content = JSON.parse(await readFile(path.join(ROOT, 'src', 'data', 'content.json'), 'utf8'));
 const base = await readFile(path.join(ROOT, 'dist', 'index.html'), 'utf8');
 
-for (const p of content.projects) {
+// NL is de brontaal (ADR-0003) — de statische meta van de werkpagina's is NL.
+for (const p of content.werkstukken) {
   const title = escapeHtml(`${p.title} · Nils Vogelaar`);
-  const desc = escapeHtml(p.lede || p.description);
+  const desc = escapeHtml(p.lede?.nl || p.bovenlaag.nl);
   const url = `${ORIGIN}/work/${p.slug}`;
   // A project may reference an image that isn't shipped yet (the site
   // renders a typographic fallback plate); the share card then keeps og.png.
@@ -51,4 +52,4 @@ for (const p of content.projects) {
   await mkdir(dir, { recursive: true });
   await writeFile(path.join(dir, 'index.html'), html);
 }
-console.log(`[work-pages] ${content.projects.length} pages`);
+console.log(`[work-pages] ${content.werkstukken.length} pages`);

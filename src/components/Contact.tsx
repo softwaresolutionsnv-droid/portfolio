@@ -1,11 +1,11 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { siteContent } from '../lib/content';
 import { availabilityCopy } from '../lib/availability';
+import { useLang, useLoc, useT } from '../lib/i18n';
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const { email, location, socials } = siteContent.contact;
-const status = availabilityCopy(siteContent.availability);
 
 /**
  * The colophon — the monograph's closing page and the page's second
@@ -13,6 +13,10 @@ const status = availabilityCopy(siteContent.availability);
  */
 export function Contact() {
   const reduced = useReducedMotion();
+  const t = useT();
+  const loc = useLoc();
+  const { lang } = useLang();
+  const status = availabilityCopy(siteContent.availability, lang);
   const r = (delay: number) =>
     reduced
       ? {}
@@ -35,7 +39,7 @@ export function Contact() {
           style={{ borderBottom: '1px solid var(--border)' }}
         >
           <h2 className="t-label" style={{ color: 'var(--text-muted)' }}>
-            Colophon
+            {t.contact.header}
           </h2>
           <span className="t-index" style={{ color: 'var(--text-muted)' }}>
             {location}
@@ -43,7 +47,7 @@ export function Contact() {
         </div>
 
         <motion.p {...r(0)} className="t-label mb-8" style={{ color: 'var(--text-muted)' }}>
-          One email is enough
+          {t.contact.eyebrow}
         </motion.p>
 
         {/* A real heading so AT users navigating by heading land on the
@@ -53,9 +57,9 @@ export function Contact() {
           className="t-monument"
           style={{ color: 'var(--text-primary)' }}
         >
-          Let's work
+          {t.contact.monument[0]}
           <br />
-          together.
+          {t.contact.monument[1]}
         </motion.h3>
 
         <motion.p
@@ -68,8 +72,7 @@ export function Contact() {
             maxWidth: '50ch',
           }}
         >
-          Scaling something and need a developer who thinks alongside you?
-          Tell me what you're building. I'll tell you what it actually takes.
+          {loc(siteContent.contact.pitch)}
         </motion.p>
 
         <motion.div
@@ -138,7 +141,7 @@ export function Contact() {
           className="t-serif mt-12"
           style={{ fontSize: '1rem', color: 'var(--text-muted)' }}
         >
-          {status.contact} · Replies within one business day · {location}
+          {status.contact} · {t.contact.replies} · {location}
         </motion.p>
 
         <div className="flex-1" aria-hidden="true" />
@@ -149,10 +152,10 @@ export function Contact() {
           style={{ borderTop: '1px solid var(--border-subtle)' }}
         >
           <p className="t-index m-0" style={{ color: 'var(--text-muted)' }}>
-            © {new Date().getFullYear()} Nils Vogelaar
+            © {new Date().getFullYear()} {t.contact.copyright}
           </p>
           <p className="t-index m-0 hidden sm:block" style={{ color: 'var(--text-muted)' }}>
-            Set in Archivo & Source Serif 4
+            {t.contact.setIn}
           </p>
           <button
             type="button"
@@ -167,7 +170,7 @@ export function Contact() {
               outlineColor: 'var(--accent-ink)',
             }}
           >
-            Back to top <span aria-hidden="true">↑</span>
+            {t.contact.backToTop} <span aria-hidden="true">↑</span>
           </button>
         </footer>
       </div>

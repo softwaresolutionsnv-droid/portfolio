@@ -3,56 +3,93 @@
     "state": "available",
     "availableFrom": null
   },
+  "hero": {
+    "practice": {
+      "nl": "Ik ontwerp en bouw web- en mobiele producten voor scale-ups, founders en lokale bedrijven die boven hun gewicht willen boksen. Eén persoon van eerste gesprek tot livegang: geen overdrachten, geen accountmanagers.",
+      "en": "I design and build web and mobile products for scale-ups, founders, and local businesses that need to punch above their weight. One person from first conversation to launch day: no handoffs, no account managers."
+    }
+  },
   "about": {
-    "intro": "I build web and mobile products for scale-ups, founders, and local businesses that need to punch above their weight. At Autodisk I took FleetDisk from an unfinished internal tool to a polished platform now running live fleets for companies like Van Mossel.",
-    "body": "My stack spans Vue, Nuxt, React, Angular, Ionic, Node.js, and C++. I'm deeply fluent in AI tools and build them into every project to move faster without cutting corners. What stays constant is how I work: directly, communicatively, and like the product is mine.",
+    "intro": {
+      "nl": "Ik bouw web- en mobiele producten voor scale-ups, founders en lokale bedrijven die boven hun gewicht willen boksen. Bij Autodisk bracht ik FleetDisk van een onafgemaakt intern hulpmiddel naar een volwassen platform dat nu live wagenparken draait voor bedrijven als Van Mossel.",
+      "en": "I build web and mobile products for scale-ups, founders, and local businesses that need to punch above their weight. At Autodisk I took FleetDisk from an unfinished internal tool to a polished platform now running live fleets for companies like Van Mossel."
+    },
+    "body": {
+      "nl": "Mijn stack omvat Vue, Nuxt, React, Angular, Ionic, Node.js en C++. Ik werk diepgaand met AI-gereedschap en bouw het in elk project in om sneller te gaan zonder bochten af te snijden. Wat constant blijft is hoe ik werk: direct, communicatief, en alsof het product van mij is.",
+      "en": "My stack spans Vue, Nuxt, React, Angular, Ionic, Node.js, and C++. I'm deeply fluent in AI tools and build them into every project to move faster without cutting corners. What stays constant is how I work: directly, communicatively, and like the product is mine."
+    },
     "details": [
       {
-        "label": "Based in",
-        "value": "Amsterdam, NL"
+        "label": { "nl": "Gevestigd in", "en": "Based in" },
+        "value": { "nl": "Amsterdam, NL", "en": "Amsterdam, NL" }
       },
       {
-        "label": "Experience",
-        "value": "4+ years"
+        "label": { "nl": "Ervaring", "en": "Experience" },
+        "value": { "nl": "4+ jaar", "en": "4+ years" }
       },
       {
-        "label": "Focus",
-        "value": "Web & Mobile"
+        "label": { "nl": "Focus", "en": "Focus" },
+        "value": { "nl": "Web & mobiel", "en": "Web & Mobile" }
       }
     ]
   },
   "skills": {
-    "intro": "The stack follows the problem, never the other way around. Here is what I reach for, and when.",
+    "intro": {
+      "nl": "De stack volgt het probleem, nooit andersom. Dit is waar ik naar grijp, en wanneer.",
+      "en": "The stack follows the problem, never the other way around. Here is what I reach for, and when."
+    },
     "picks": [
       {
         "tools": "Vue, Nuxt",
-        "when": "My default. Interfaces that stay fast and stable as the data behind them grows — ten rows or ten thousand, it feels the same."
+        "when": {
+          "nl": "Mijn standaard. Interfaces die snel en stabiel blijven terwijl de data erachter groeit — tien rijen of tienduizend, het voelt hetzelfde.",
+          "en": "My default. Interfaces that stay fast and stable as the data behind them grows — ten rows or ten thousand, it feels the same."
+        }
       },
       {
         "tools": "React",
-        "when": "When the team already knows it, the ecosystem matters more than ergonomics, or a library only ships React."
+        "when": {
+          "nl": "Wanneer het team het al kent, het ecosysteem zwaarder weegt dan ergonomie, of een library alleen in React bestaat.",
+          "en": "When the team already knows it, the ecosystem matters more than ergonomics, or a library only ships React."
+        }
       },
       {
         "tools": "Ionic, Capacitor",
-        "when": "One codebase to iOS, Android, and the web. For when two native teams isn’t in the budget."
+        "when": {
+          "nl": "Eén codebase naar iOS, Android en web. Voor wanneer twee native teams niet in het budget past.",
+          "en": "One codebase to iOS, Android, and the web. For when two native teams isn't in the budget."
+        }
       },
       {
         "tools": "TypeScript",
-        "when": "Always. Plain JS is debt the moment a second person opens the file."
+        "when": {
+          "nl": "Altijd. Kale JS is schuld zodra een tweede persoon het bestand opent.",
+          "en": "Always. Plain JS is debt the moment a second person opens the file."
+        }
       },
       {
         "tools": "Node.js, REST, SQL",
-        "when": "Backend glue: APIs, schedulers, integrations. Boring on purpose."
+        "when": {
+          "nl": "Backend-lijm: API's, schedulers, integraties. Bewust saai.",
+          "en": "Backend glue: APIs, schedulers, integrations. Boring on purpose."
+        }
       },
       {
         "tools": "Figma, Tailwind",
-        "when": "Where the design happens, and what gets it shipped without a translation step."
+        "when": {
+          "nl": "Waar het ontwerp gebeurt, en wat het zonder vertaalslag live krijgt.",
+          "en": "Where the design happens, and what gets it shipped without a translation step."
+        }
       }
     ]
   },
   "contact": {
     "email": "softwaresolutions.nv@gmail.com",
     "location": "Amsterdam",
+    "pitch": {
+      "nl": "Ben je iets aan het schalen en zoek je een developer die met je meedenkt? Vertel wat je bouwt. Ik vertel wat het werkelijk vraagt.",
+      "en": "Scaling something and need a developer who thinks alongside you? Tell me what you're building. I'll tell you what it actually takes."
+    },
     "socials": [
       {
         "label": "LinkedIn",
@@ -64,134 +101,347 @@
       }
     ]
   },
-  "projects": [
+  "werkstukken": [
+    {
+      "slug": "nachtagenda",
+      "title": "Nachtagenda",
+      "groep": "apps-ai",
+      "herkomst": "eigen-product",
+      "status": "pre-launch",
+      "bovenlaag": {
+        "nl": "Uitgaansagenda voor het Nederlandse nachtleven. Festivals en clubnachten uit losse bronnen komen samen in één feed die van je smaak leert — met je vriendengroep erbij, een ticketalarm voor drops en een jaaroverzicht achteraf.",
+        "en": "Nightlife agenda for the Netherlands. Festivals and club nights from scattered sources come together in one feed that learns your taste — with your crew along, a ticket alarm for drops, and a year-in-review afterwards."
+      },
+      "lede": {
+        "nl": "Het Nederlandse nachtleven in één agenda die je smaak leert — vóórdat de tickets weg zijn.",
+        "en": "Dutch nightlife in one agenda that learns your taste — before the tickets are gone."
+      },
+      "onderlaag": [
+        {
+          "nl": "De agenda begint bij een eigen datapijplijn: Python-scrapers op vijf bronnen (Ticketmaster, Resident Advisor, festivalsites, venue-data), met deduplicatie en cross-source-samenvoeging tot één schone eventlijst — zo'n 660 live events op dit moment. Het datamodel staat in Supabase, opgebouwd in 41 migraties met row-level security.",
+          "en": "The agenda starts with its own data pipeline: Python scrapers over five sources (Ticketmaster, Resident Advisor, festival sites, venue data), with deduplication and cross-source merging into one clean event list — around 660 live events right now. The data model lives in Supabase, built up across 41 migrations with row-level security."
+        },
+        {
+          "nl": "De personalisatie is gebouwd als afgeleide laag, met toestemming als voorwaarde. Zes soorten gedragssignalen — bekijken, ticket-taps, RSVP's, alarms, artiest-interacties — worden gewogen en met een verval van twee jaar samengevat tot een smaakprofiel per genre, stad, venue en artiest. Zonder toestemming staat de laag simpelweg uit.",
+          "en": "Personalisation is built as a derived layer, with consent as the precondition. Six kinds of behavioural signals — views, ticket taps, RSVPs, alarms, artist interactions — are weighted and decayed over two years into a taste profile per genre, city, venue, and artist. Without consent the layer is simply off."
+        },
+        {
+          "nl": "Daaromheen zit het sociale weefsel: een vriendengroep met wederzijdse RSVP's, een notificatie-engine die ticketdrops bewaakt, verrijkte artiestenpagina's en een Wrapped-achtig jaaroverzicht. Alles native gebouwd met Expo en React Native, in TypeScript.",
+          "en": "Around it sits the social fabric: a crew with mutual RSVPs, a notification engine watching ticket drops, enriched artist pages, and a Wrapped-style year in review. All built natively with Expo and React Native, in TypeScript."
+        }
+      ],
+      "tags": ["Expo", "React Native", "TypeScript", "Supabase", "Python"],
+      "role": {
+        "nl": "Ontwerp, app & datapijplijn",
+        "en": "Design, app & data pipeline"
+      },
+      "year": "2026",
+      "client": "",
+      "url": null,
+      "image": "",
+      "imageAlt": {
+        "nl": "Nachtagenda-appschermen met de gepersonaliseerde eventfeed en een eventpagina",
+        "en": "Nachtagenda app screens showing the personalised event feed and an event page"
+      },
+      "highlights": [
+        {
+          "label": { "nl": "Pijplijn", "en": "Pipeline" },
+          "value": {
+            "nl": "5 bronnen → ±660 samengevoegde events",
+            "en": "5 sources → ±660 merged events"
+          }
+        },
+        {
+          "label": { "nl": "Datamodel", "en": "Data model" },
+          "value": {
+            "nl": "Supabase, 41 migraties, row-level security",
+            "en": "Supabase, 41 migrations, row-level security"
+          }
+        },
+        {
+          "label": { "nl": "Personalisatie", "en": "Personalisation" },
+          "value": {
+            "nl": "6 gedragssignalen, 2 jaar verval, alleen met toestemming",
+            "en": "6 behavioural signals, 2-year decay, consent-gated"
+          }
+        },
+        {
+          "label": { "nl": "Status", "en": "Status" },
+          "value": {
+            "nl": "Pre-launch, getest in Expo Go",
+            "en": "Pre-launch, tested in Expo Go"
+          }
+        }
+      ],
+      "gallery": []
+    },
     {
       "slug": "berijdersapp",
       "title": "BerijdersApp",
-      "description": "White-label mobile app for lease drivers. One overview for contract, mileage, damage reports, fines, and a fuel-score derived from every fill-up. Replaces the paper driver handbook with a tap-to-act digital version.",
-      "lede": "A driver handbook reduced to taps. Fines, mileage, fuel, damages: every annoyance of leasing collapses into one screen.",
-      "tags": [
-        "Vue.js",
-        "TypeScript",
-        "Ionic",
-        "Capacitor"
+      "groep": "apps-ai",
+      "herkomst": "in-opdracht",
+      "status": "live",
+      "bovenlaag": {
+        "nl": "White-label mobiele app voor leaserijders. Eén overzicht voor contract, kilometerstand, schademeldingen, boetes en een brandstofscore afgeleid uit elke tankbeurt. Vervangt het papieren berijdershandboek door een digitale versie waarin elke actie één tik is.",
+        "en": "White-label mobile app for lease drivers. One overview for contract, mileage, damage reports, fines, and a fuel-score derived from every fill-up. Replaces the paper driver handbook with a tap-to-act digital version."
+      },
+      "lede": {
+        "nl": "Een berijdershandboek teruggebracht tot tikken. Boetes, kilometers, brandstof, schades: elk leed van leasen valt samen in één scherm.",
+        "en": "A driver handbook reduced to taps. Fines, mileage, fuel, damages: every annoyance of leasing collapses into one screen."
+      },
+      "onderlaag": [
+        {
+          "nl": "BerijdersApp vervangt het papieren berijdershandboek dat bij elk leasevoertuig hoort. Berijders krijgen één oppervlak waarin elke actie één tik is: contract, kilometerstand, schades, boetes en tankpas. Geen telefoontjes, geen mailketens.",
+          "en": "BerijdersApp replaces the paper driver handbook that comes with every lease vehicle. Drivers get one tap-to-act surface for their contract, mileage, damages, fines, and fuel card. No phone calls, no email chains."
+        },
+        {
+          "nl": "De app is white-label per leasemaatschappij: merk, teksten en actieve modules komen volledig uit configuratie. Eén Ionic/Capacitor-codebase levert naar iOS en Android, met gedeelde logica tussen de app en het bredere webplatform van Autodisk.",
+          "en": "The app is white-labeled per lease company: brand, copy, and enabled modules all driven by configuration. A single Ionic/Capacitor codebase ships to iOS and Android, with shared logic between the app and Autodisk's wider web platform."
+        },
+        {
+          "nl": "De brandstofscore is het interessante deel: elke tankbeurt die de berijder registreert wordt genormaliseerd op voertuig, route en klimaat, en als lopende score getoond. Het maakt van een backoffice-KPI iets waar een berijder daadwerkelijk mee bezig is.",
+          "en": "The fuel-score is the interesting part: every fill-up the driver logs is normalised against vehicle, route, and climate, then surfaced as a running score. It turns a back-office KPI into something a driver actually engages with."
+        }
       ],
-      "role": "Frontend Developer",
+      "tags": ["Vue.js", "TypeScript", "Ionic", "Capacitor"],
+      "role": { "nl": "Frontend-developer", "en": "Frontend Developer" },
       "year": "2025",
       "client": "Autodisk",
       "url": "https://www.autodisk.nl/leasemaatschappij/berijdersapp/",
       "image": "/projects/berijdersapp.jpg",
-      "imageAlt": "BerijdersApp mobile screens showing lease contract overview, mileage, and fuel consumption score",
-      "overview": [
-        "BerijdersApp replaces the paper driver handbook that comes with every lease vehicle. Drivers get one tap-to-act surface for their contract, mileage, damages, fines, and fuel card. No phone calls, no email chains.",
-        "The app is white-labeled per lease company: brand, copy, and enabled modules all driven by configuration. A single Ionic/Capacitor codebase ships to iOS and Android, with shared logic between the app and Autodisk’s wider web platform.",
-        "The fuel-score is the interesting part: every fill-up the driver logs is normalised against vehicle, route, and climate, then surfaced as a running score. It turns a back-office KPI into something a driver actually engages with."
-      ],
+      "imageAlt": {
+        "nl": "BerijdersApp-schermen met leasecontractoverzicht, kilometerstand en brandstofscore",
+        "en": "BerijdersApp mobile screens showing lease contract overview, mileage, and fuel consumption score"
+      },
       "highlights": [
         {
-          "label": "Platform",
-          "value": "iOS · Android · Web"
+          "label": { "nl": "Platform", "en": "Platform" },
+          "value": { "nl": "iOS · Android · Web", "en": "iOS · Android · Web" }
         },
         {
-          "label": "Shipped",
-          "value": "White-label, 6 lease companies"
+          "label": { "nl": "Opgeleverd", "en": "Shipped" },
+          "value": {
+            "nl": "White-label, per leasemaatschappij configureerbaar",
+            "en": "White-label, config-driven per lease company"
+          }
         },
         {
-          "label": "Scope",
-          "value": "Contract, damage, fines, fuel-score"
+          "label": { "nl": "Scope", "en": "Scope" },
+          "value": {
+            "nl": "Contract, schade, boetes, brandstofscore",
+            "en": "Contract, damage, fines, fuel-score"
+          }
         },
         {
-          "label": "Team",
-          "value": "Solo frontend, in-house designer"
+          "label": { "nl": "Team", "en": "Team" },
+          "value": {
+            "nl": "Solo frontend, designer in-house",
+            "en": "Solo frontend, in-house designer"
+          }
+        }
+      ],
+      "gallery": []
+    },
+    {
+      "slug": "garmin-mcp",
+      "title": "garmin-mcp",
+      "groep": "mcp-tooling",
+      "herkomst": "eigen-product",
+      "status": "live",
+      "bovenlaag": {
+        "nl": "MCP-server die een AI-assistent rechtstreeks toegang geeft tot Garmin-trainingsdata. Slaap, hartslagvariabiliteit, trainingsbelasting en krachttraining komen als antwoord terug in het gesprek zelf — geen exports, geen dashboards. Draait in productie als dagelijkse hardloopcoach.",
+        "en": "MCP server that gives an AI assistant direct access to Garmin training data. Sleep, heart-rate variability, training load, and strength work come back as answers inside the conversation itself — no exports, no dashboards. Runs in production as a daily running coach."
+      },
+      "lede": {
+        "nl": "Een hardloopcoach die je data al kent: 43 gereedschappen tussen je AI-assistent en je horloge.",
+        "en": "A running coach that already knows your data: 43 tools between your AI assistant and your watch."
+      },
+      "onderlaag": [
+        {
+          "nl": "Een FastMCP-server in Python die Garmin Connect ontsluit over stdio, HTTP en SSE, met OAuth 2.1 + PKCE voor de claude.ai-connectors. Hij draait op Fly.io; de Garmin-sessietokens leven op een persistent volume en de server schrijft ze na elke rotatie terug, zodat een herstart nooit een nieuwe login vraagt.",
+          "en": "A FastMCP server in Python exposing Garmin Connect over stdio, HTTP, and SSE, with OAuth 2.1 + PKCE for the claude.ai connectors. It runs on Fly.io; the Garmin session tokens live on a persistent volume and the server writes them back after every rotation, so a restart never asks for a fresh login."
+        },
+        {
+          "nl": "De 43 tools zijn geschreven voor coaching, niet als kale API-doorgeefluiken: één health-snapshot voor het dagbeeld, loopefficiëntie met cardiac drift per interval, racevoorspellingen, wind per ronde uit het geregistreerde weer, en een Hevy-koppeling voor krachttraining. Zes tools mogen schrijven — workouts aanmaken en inplannen — en zijn met één omgevingsvariabele uit te zetten.",
+          "en": "The 43 tools are written for coaching, not as bare API pass-throughs: one health snapshot for the daily picture, running efficiency with cardiac drift per interval, race predictions, per-lap wind from the recorded weather, and a Hevy integration for strength training. Six tools may write — creating and scheduling workouts — and can be disabled with a single environment variable."
+        },
+        {
+          "nl": "Voor alles wat geen eigen tool heeft is er een rauwe escape hatch naar elk Garmin-endpoint, en een statustool die de verbinding bewaakt. De server is er daardoor ook het bewijs van hoe ik MCP's bouw: klein oppervlak, zelfherstellend, en gedragen door echte dagelijkse eindgebruik.",
+          "en": "For anything without a dedicated tool there is a raw escape hatch to any Garmin endpoint, plus a status tool watching the connection. That makes the server double as proof of how I build MCPs: small surface, self-healing, and carried by real daily use."
+        }
+      ],
+      "tags": ["Python", "FastMCP", "Fly.io", "OAuth 2.1"],
+      "role": { "nl": "Ontwerp & bouw", "en": "Design & build" },
+      "year": "2026",
+      "client": "",
+      "url": null,
+      "image": "",
+      "imageAlt": {
+        "nl": "Architectuurdiagram: een AI-assistent praat via MCP met garmin-mcp op Fly.io, dat de Garmin Connect- en Hevy-API's ontsluit",
+        "en": "Architecture diagram: an AI assistant talks over MCP to garmin-mcp on Fly.io, which exposes the Garmin Connect and Hevy APIs"
+      },
+      "highlights": [
+        {
+          "label": { "nl": "Tools", "en": "Tools" },
+          "value": {
+            "nl": "43, waarvan 6 met schrijfrechten",
+            "en": "43, of which 6 can write"
+          }
+        },
+        {
+          "label": { "nl": "Transport", "en": "Transport" },
+          "value": {
+            "nl": "stdio · HTTP · SSE, OAuth 2.1 + PKCE",
+            "en": "stdio · HTTP · SSE, OAuth 2.1 + PKCE"
+          }
+        },
+        {
+          "label": { "nl": "Deploy", "en": "Deploy" },
+          "value": {
+            "nl": "Fly.io, zelfherstellende tokenopslag",
+            "en": "Fly.io, self-healing token store"
+          }
+        },
+        {
+          "label": { "nl": "Integraties", "en": "Integrations" },
+          "value": {
+            "nl": "Garmin Connect + Hevy",
+            "en": "Garmin Connect + Hevy"
+          }
         }
       ],
       "gallery": [],
-      "showCta": false
+      "trace": {
+        "vraag": {
+          "nl": "Wat zijn mijn voorspelde racetijden?",
+          "en": "What are my predicted race times?"
+        },
+        "aanroep": "get_race_predictions()",
+        "antwoord": "{\n  \"calendarDate\": \"2026-08-13\",\n  \"time5K\": 1503,\n  \"time10K\": 3228,\n  \"timeHalfMarathon\": 7308,\n  \"timeMarathon\": 16218\n}",
+        "duiding": {
+          "nl": "Tijden in seconden — 25:03 · 53:48 · 2:01:48 · 4:30:18. Opgenomen op 13 augustus 2026.",
+          "en": "Times in seconds — 25:03 · 53:48 · 2:01:48 · 4:30:18. Recorded on 13 August 2026."
+        }
+      }
     },
     {
       "slug": "fleetdisk",
       "title": "FleetDisk",
-      "description": "Self-service fleet management portal for lease companies. 24/7 insight into damages, fines, fuel cards, insurance, and lease orders: one pane over what used to be five separate back-offices.",
-      "lede": "Thirty years of enterprise fleet data, made scannable in three seconds. The control surface five back-offices used to need.",
-      "tags": [
-        "Nuxt.js",
-        "Vue.js",
-        "TypeScript",
-        "Bootstrap"
+      "groep": "sites-merk",
+      "herkomst": "in-opdracht",
+      "status": "besloten",
+      "bovenlaag": {
+        "nl": "Self-service fleetmanagementportaal voor leasemaatschappijen. 24/7 inzicht in schades, boetes, tankpassen, verzekeringen en leaseorders: één venster op wat vroeger vijf losse backoffices waren.",
+        "en": "Self-service fleet management portal for lease companies. 24/7 insight into damages, fines, fuel cards, insurance, and lease orders: one pane over what used to be five separate back-offices."
+      },
+      "lede": {
+        "nl": "Dertig jaar enterprise-fleetdata, scanbaar gemaakt in drie seconden. Het bedieningspaneel waar vroeger vijf backoffices voor nodig waren.",
+        "en": "Thirty years of enterprise fleet data, made scannable in three seconds. The control surface five back-offices used to need."
+      },
+      "onderlaag": [
+        {
+          "nl": "FleetDisk is het self-serviceportaal waarmee leasemaatschappijen een live wagenpark draaien. 24/7 inzicht in schademeldingen, boetes, tankpassen, verzekeringen en openstaande leaseorders: één venster op wat vroeger vijf legacy-backoffices waren.",
+          "en": "FleetDisk is the self-service portal lease companies use to run a live fleet. 24/7 insight into damage reports, fines, fuel cards, insurance, and open lease orders: a single pane over what used to be five legacy back-offices."
+        },
+        {
+          "nl": "Gebouwd op Nuxt 3 met strikte TypeScript, bovenop de iWise-backoffice-API. De uitdaging was niet het renderen, maar dertig jaar enterprise-data vormgeven tot iets wat een fleetmanager in drie seconden scant.",
+          "en": "Built on Nuxt 3 with strict TypeScript on top of the iWise backoffice API. The challenge was not rendering. It was shaping thirty years of enterprise data into something a fleet manager can scan in three seconds."
+        },
+        {
+          "nl": "Diepe filters, opgeslagen weergaven en CSV-export zorgen dat powerusers de helpdesk niet meer om rapporten vragen. Het helpdeskteam kreeg zijn middagen terug.",
+          "en": "Deep filtering, saved views, and CSV export mean power users stop asking the helpdesk for reports. The helpdesk team got their afternoons back."
+        }
       ],
-      "role": "Frontend Developer",
+      "tags": ["Nuxt.js", "Vue.js", "TypeScript", "Bootstrap"],
+      "role": { "nl": "Frontend-developer", "en": "Frontend Developer" },
       "year": "2024",
       "client": "Autodisk",
       "url": null,
-      "image": "/projects/fleetdisk.jpg",
-      "imageAlt": "FleetDisk fleet management portal showing vehicle overview and dashboard analytics",
-      "overview": [
-        "FleetDisk is the self-service portal lease companies use to run a live fleet. 24/7 insight into damage reports, fines, fuel cards, insurance, and open lease orders: a single pane over what used to be five legacy back-offices.",
-        "Built on Nuxt 3 with strict TypeScript on top of the iWise backoffice API. The challenge was not rendering. It was shaping thirty years of enterprise data into something a fleet manager can scan in three seconds.",
-        "Deep filtering, saved views, and CSV export mean power users stop asking the helpdesk for reports. The helpdesk team got their afternoons back."
-      ],
+      "image": "/projects/fleetdisk.png",
+      "imageAlt": {
+        "nl": "FleetDisk-fleetmanagementportaal met voertuigoverzicht en dashboardanalyses",
+        "en": "FleetDisk fleet management portal showing vehicle overview and dashboard analytics"
+      },
       "highlights": [
         {
-          "label": "Users",
-          "value": "Fleet managers, B2B"
+          "label": { "nl": "Gebruikers", "en": "Users" },
+          "value": { "nl": "Fleetmanagers, B2B", "en": "Fleet managers, B2B" }
         },
         {
-          "label": "Data scale",
-          "value": "100k+ vehicles, live"
+          "label": { "nl": "Dataschaal", "en": "Data scale" },
+          "value": { "nl": "100k+ voertuigen, live", "en": "100k+ vehicles, live" }
         },
         {
-          "label": "Stack",
-          "value": "Nuxt 3 · TypeScript · REST API"
+          "label": { "nl": "Stack", "en": "Stack" },
+          "value": {
+            "nl": "Nuxt 3 · TypeScript · REST-API",
+            "en": "Nuxt 3 · TypeScript · REST API"
+          }
         },
         {
-          "label": "Outcome",
-          "value": "Fewer helpdesk tickets"
+          "label": { "nl": "Resultaat", "en": "Outcome" },
+          "value": { "nl": "Minder helpdesktickets", "en": "Fewer helpdesk tickets" }
         }
       ],
-      "gallery": [],
-      "showCta": false
+      "gallery": []
     },
     {
       "slug": "nb-onderhoudsdiensten",
       "title": "N.B. Onderhoudsdiensten",
-      "description": "Brand identity and marketing site for a Dutch renovation duo. Warm, premium aesthetic built to convert local homeowners. Social proof above the fold, quote CTAs at every decision point.",
-      "lede": "A two-person renovation crew, dressed to look like the firm you would actually trust with your kitchen.",
-      "tags": [
-        "Next.js",
-        "TypeScript",
-        "Tailwind CSS"
+      "groep": "sites-merk",
+      "herkomst": "in-opdracht",
+      "status": "live",
+      "bovenlaag": {
+        "nl": "Merkidentiteit en marketingsite voor een Nederlands renovatieduo. Warme, premium uitstraling gebouwd om lokale huiseigenaren te overtuigen. Social proof boven de vouw, offerte-CTA's op elk beslismoment.",
+        "en": "Brand identity and marketing site for a Dutch renovation duo. Warm, premium aesthetic built to convert local homeowners. Social proof above the fold, quote CTAs at every decision point."
+      },
+      "lede": {
+        "nl": "Een renovatieploeg van twee man, aangekleed als het bedrijf dat je daadwerkelijk je keuken toevertrouwt.",
+        "en": "A two-person renovation crew, dressed to look like the firm you would actually trust with your kitchen."
+      },
+      "onderlaag": [
+        {
+          "nl": "N.B. Onderhoudsdiensten is een renovatieduo dat een merk en site nodig had die boven hun gewicht boksen. De opdracht: eruitzien als een ploeg die je je keuken toevertrouwt, niet als een aannemer uit een template.",
+          "en": "N.B. Onderhoudsdiensten is a two-person renovation duo in the Netherlands who needed a brand and a site that punched above their weight. The brief: look like a crew you'd trust with your kitchen, not like a templated contractor."
+        },
+        {
+          "nl": "Donker, warm, redactioneel. Serif-typografie voor vertrouwen, een gouden accent voor vakmanschap, veel lucht. Social proof staat boven de vouw, offerte-CTA's volgen het oog de pagina af.",
+          "en": "Dark, warm, editorial. Serif typography for confidence, a gold accent for craft, lots of air. Social proof sits above the fold, quote CTAs follow the eye down the page."
+        },
+        {
+          "nl": "Gebouwd in Next.js met internationalisatie (NL/EN) vanaf dag één, en een boekingsflow gebouwd om te converteren.",
+          "en": "Built in Next.js with internationalisation (NL/EN) from day one, and a booking flow built to convert."
+        }
       ],
-      "role": "Designer",
+      "tags": ["Next.js", "TypeScript", "Tailwind CSS"],
+      "role": { "nl": "Ontwerp & bouw", "en": "Design & build" },
       "year": "2025",
       "client": "Freelance",
       "url": "https://nbonderhoud.nl/",
-      "image": "/projects/nb-onderhoudsdiensten.jpg",
-      "imageAlt": "N.B. Onderhoudsdiensten hero section with dark background, serif typography, and blue/gold accent colors",
-      "overview": [
-        "N.B. Onderhoudsdiensten is a two-person renovation duo in the Netherlands who needed a brand and a site that punched above their weight. The brief: look like a crew you’d trust with your kitchen, not like a templated contractor.",
-        "Dark, warm, editorial. Serif typography for confidence, a gold accent for craft, lots of air. Social proof sits above the fold, quote CTAs follow the eye down the page.",
-        "Built in Next.js with internationalisation (NL/EN) from day one. Sub-second Lighthouse scores across all pages, and a booking flow built to convert."
-      ],
+      "image": "/projects/nb-onderhoudsdiensten.png",
+      "imageAlt": {
+        "nl": "Herosectie van N.B. Onderhoudsdiensten met donkere achtergrond, serif-typografie en blauw-gouden accenten",
+        "en": "N.B. Onderhoudsdiensten hero section with dark background, serif typography, and blue/gold accent colors"
+      },
       "highlights": [
         {
-          "label": "Deliverable",
-          "value": "Brand + site + copy"
+          "label": { "nl": "Oplevering", "en": "Deliverable" },
+          "value": { "nl": "Merk + site + copy", "en": "Brand + site + copy" }
         },
         {
-          "label": "Stack",
-          "value": "Next.js · NL/EN · CMS"
+          "label": { "nl": "Stack", "en": "Stack" },
+          "value": { "nl": "Next.js · NL/EN", "en": "Next.js · NL/EN" }
         },
         {
-          "label": "Lighthouse",
-          "value": "98 / 100 / 100 / 100"
+          "label": { "nl": "Scope", "en": "Scope" },
+          "value": { "nl": "Solo: ontwerp, copy, bouw", "en": "Solo: design, copy, build" }
         },
         {
-          "label": "Conversion",
-          "value": "~3× category average"
+          "label": { "nl": "Talen", "en": "Languages" },
+          "value": { "nl": "NL / EN", "en": "NL / EN" }
         }
       ],
-      "gallery": [],
-      "showCta": true
+      "gallery": []
     }
   ]
 }

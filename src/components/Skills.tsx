@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { siteContent } from '../lib/content';
+import { useLoc, useT } from '../lib/i18n';
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -7,10 +8,12 @@ const picks = siteContent.skills.picks;
 
 /**
  * Specifications — the stack as a ruled spec table: tool column in
- * engraved capitals, rationale in serif. CMS-managed.
+ * engraved capitals, rationale in serif.
  */
 export function Skills() {
   const reduced = useReducedMotion();
+  const t = useT();
+  const loc = useLoc();
 
   return (
     <section id="skills" style={{ padding: 'clamp(5rem, 12vh, 10rem) 0', paddingTop: 0 }}>
@@ -20,13 +23,13 @@ export function Skills() {
           style={{ borderBottom: '1px solid var(--border)' }}
         >
           <h2 className="t-label" style={{ color: 'var(--text-muted)' }}>
-            Specifications — the stack
+            {t.skills.header}
           </h2>
           <p
             className="t-serif"
             style={{ fontSize: '1rem', color: 'var(--text-secondary)', maxWidth: '52ch' }}
           >
-            {siteContent.skills.intro}
+            {loc(siteContent.skills.intro)}
           </p>
         </div>
 
@@ -56,7 +59,7 @@ export function Skills() {
                   maxWidth: '58ch',
                 }}
               >
-                {p.when}
+                {loc(p.when)}
               </p>
             </motion.div>
           ))}

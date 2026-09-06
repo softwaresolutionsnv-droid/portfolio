@@ -1,38 +1,39 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { useCallback, useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { CaseStudy, type CaseStudyProject } from './CaseStudy';
+import { CaseStudy, type CaseStudyWerkstuk } from './CaseStudy';
+import { McpDiagram } from './McpDiagram';
 import { webpSrcSet } from '../lib/responsiveImage';
-import { siteContent } from '../lib/content';
+import { siteContent, GROEP_VOLGORDE } from '../lib/content';
+import { useLoc, useT } from '../lib/i18n';
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-const BASE_TITLE = 'Nils Vogelaar — Developer & Designer';
+type Plaat = CaseStudyWerkstuk;
 
-type Project = CaseStudyProject;
-
-/** CMS-managed projects. Ids are assigned from build order (1-based) and
+/** Werkstukken in display order — content.json is pre-sorted by groep
+    (apps-ai → mcp-tooling → sites-merk); ids are global (1-based) and
     drive the open state plus the deep-link maps below. */
-const projects: Project[] = siteContent.projects.map((p, i) => ({
-  ...p,
+const werkstukken: Plaat[] = siteContent.werkstukken.map((w, i) => ({
+  ...w,
   id: i + 1,
 }));
 
 /* ------------------------------------------------------------------
-   Case-study deep links — /work/:slug without a router. The overlay
-   state is mirrored into history so projects are shareable URLs and
+   Case-page deep links — /work/:slug without a router. The overlay
+   state is mirrored into history so werkstukken are shareable URLs and
    browser back/forward behaves like navigation.
    ------------------------------------------------------------------ */
 
-const slugToId = new Map(projects.map((p) => [p.slug, p.id]));
-const idToSlug = new Map(projects.map((p) => [p.id, p.slug]));
+const slugToId = new Map(werkstukken.map((w) => [w.slug, w.id]));
+const idToSlug = new Map(werkstukken.map((w) => [w.id, w.slug]));
 
 function parseWorkPath(pathname: string): string | null {
   const m = pathname.match(/^\/work\/([a-z0-9-]+)\/?$/i);
   return m ? m[1].toLowerCase() : null;
 }
 
-/** Case study to open on first paint when loaded via /work/:slug. */
+/** Case page to open on first paint when loaded via /work/:slug. */
 function initialCaseStudyId(): number | null {
   if (typeof window === 'undefined') return null;
   const slug = parseWorkPath(window.location.pathname);
@@ -40,25 +41,27 @@ function initialCaseStudyId(): number | null {
 }
 
 /* ------------------------------------------------------------------
-   A plate — the monograph's project pattern (DESIGN.md §5). Full-width,
+   A plate — the monograph's werkstuk pattern (DESIGN.md §5). Full-width,
    hairline-separated, never boxed: colossal thin numeral overlapping
-   the image edge, Headline title, serif lede, spec captions. The image
-   rests in duotone and develops to color when attended.
+   the image edge, Headline title, serif bovenlaag, spec captions. The
+   image rests in duotone and develops to color when attended.
    ------------------------------------------------------------------ */
 
 function Plate({
-  project,
+  werkstuk,
   index,
   morphing,
   onOpen,
 }: {
-  project: Project;
+  werkstuk: Plaat;
   index: number;
   /** True while this plate owns the view-transition-name. */
   morphing: boolean;
   onOpen: () => void;
 }) {
   const reduced = useReducedMotion();
+  const t = useT();
+  const loc = useLoc();
   const [errored, setErrored] = useState(false);
   const [developed, setDeveloped] = useState(false);
 
@@ -66,11 +69,13 @@ function Plate({
   const flipped = index % 2 === 1;
 
   const specs: { label: string; value: string }[] = [
-    { label: 'Client', value: project.client },
-    { label: 'Year', value: project.year },
-    { label: 'Role', value: project.role },
-    { label: 'Stack', value: project.tags.join(', ') },
-  ];
+    { label: t.plates.specClient, value: werkstuk.client },
+    { label: t.plates.specYear, value: werkstuk.year },
+    { label: t.plates.specRole, value: loc(werkstuk.role) },
+    { label: t.plates.specHerkomst, value: t.herkomst[werkstuk.herkomst] },
+    { label: t.plates.specStatus, value: t.status[werkstuk.status] },
+    { label: t.plates.specStack, value: werkstuk.tags.join(', ') },
+  ].filter((s) => s.value);
 
   return (
     <article
@@ -105,7 +110,8 @@ function Plate({
           </span>
           <div className={`pb-3 min-w-0 ${flipped ? 'ml-0 mr-auto' : 'ml-0'}`}>
             <p className="t-label mb-3" style={{ color: 'var(--text-muted)' }}>
-              Plate {no} — {project.client}
+              {t.nav.plate} {no} — {t.herkomst[werkstuk.herkomst]}
+              {werkstuk.client ? ` · ${werkstuk.client}` : ''} · {t.status[werkstuk.status]}
             </p>
             <h3
               className="t-headline"
@@ -115,7 +121,7 @@ function Plate({
                 viewTransitionName: morphing ? 'cs-title' : undefined,
               } as React.CSSProperties}
             >
-              {project.title}
+              {werkstuk.title}
             </h3>
           </div>
         </motion.div>
@@ -136,7 +142,10 @@ function Plate({
             className="relative min-w-0"
             style={{ direction: 'ltr' }}
           >
-            {errored || !project.image ? (
+            {werkstuk.slug === 'garmin-mcp' ? (
+              /* Onzichtbare software krijgt een diagram, geen artefact. */
+              <McpDiagram alt={loc(werkstuk.imageAlt)} />
+            ) : errored || !werkstuk.image ? (
               /* Missing artwork: a blind-embossed typographic plate. */
               <div
                 className="grid place-items-center"
@@ -155,19 +164,19 @@ function Plate({
                     filter: 'contrast(1.2)',
                   }}
                 >
-                  {project.title}
+                  {werkstuk.title}
                 </span>
               </div>
             ) : (
               <picture>
                 <source
                   type="image/webp"
-                  srcSet={webpSrcSet(project.image)}
+                  srcSet={webpSrcSet(werkstuk.image)}
                   sizes="(min-width: 1024px) 60vw, 100vw"
                 />
                 <img
-                  src={project.image}
-                  alt={project.imageAlt}
+                  src={werkstuk.image}
+                  alt={loc(werkstuk.imageAlt)}
                   draggable={false}
                   className="plate-img block w-full h-auto"
                   loading={index === 0 ? 'eager' : 'lazy'}
@@ -201,14 +210,14 @@ function Plate({
                 maxWidth: '52ch',
               }}
             >
-              {project.description}
+              {loc(werkstuk.bovenlaag)}
             </p>
 
             <dl className="mt-8" style={{ borderTop: '1px solid var(--border)' }}>
               {specs.map((s) => (
                 <div
                   key={s.label}
-                  className="grid grid-cols-[6rem_1fr] gap-4 py-3"
+                  className="grid grid-cols-[7rem_1fr] gap-4 py-3"
                   style={{ borderBottom: '1px solid var(--border-subtle)' }}
                 >
                   <dt className="t-label" style={{ color: 'var(--text-muted)', paddingTop: 2 }}>
@@ -229,7 +238,7 @@ function Plate({
               aria-hidden="true"
               style={{ color: 'var(--text-primary)' }}
             >
-              Open the plate <span aria-hidden="true">→</span>
+              {t.plates.open} <span aria-hidden="true">→</span>
             </span>
           </motion.div>
         </div>
@@ -247,7 +256,7 @@ function Plate({
           cursor: 'pointer',
           outlineColor: 'var(--accent-ink)',
         }}
-        aria-label={`Open case study: ${project.title}`}
+        aria-label={`${t.plates.openAria} ${werkstuk.title}`}
       />
     </article>
   );
@@ -257,9 +266,10 @@ function Plate({
 
 export function Projects() {
   const reduced = useReducedMotion();
+  const t = useT();
 
   // morphingId = plate currently owning the view-transition-name
-  // openId     = case study actually rendered
+  // openId     = case page actually rendered
   // Both seed from the URL so /work/:slug deep links open with no morph.
   const [morphingId, setMorphingId] = useState<number | null>(initialCaseStudyId);
   const [openId, setOpenId] = useState<number | null>(initialCaseStudyId);
@@ -332,15 +342,15 @@ export function Projects() {
     return () => window.removeEventListener('popstate', onPop);
   }, [openCaseStudy, closeCaseStudy]);
 
-  // Document title mirrors the open case study.
+  // Document title mirrors the open case page.
   useEffect(() => {
     if (openId == null) {
-      document.title = BASE_TITLE;
+      document.title = t.baseTitle;
       return;
     }
-    const p = projects.find((x) => x.id === openId);
-    if (p) document.title = `${p.title} · Nils Vogelaar`;
-  }, [openId]);
+    const w = werkstukken.find((x) => x.id === openId);
+    if (w) document.title = `${w.title} · Nils Vogelaar`;
+  }, [openId, t.baseTitle]);
 
   const swap = useCallback(
     (id: number) => {
@@ -368,6 +378,13 @@ export function Projects() {
     [reduced]
   );
 
+  /* De drie benoemde groepen, in vaste volgorde — de volgorde draagt de
+     positionering. Lege groepen (nog zonder werkstuk) worden overgeslagen. */
+  const groepen = GROEP_VOLGORDE.map((g) => ({
+    groep: g,
+    items: werkstukken.filter((w) => w.groep === g),
+  })).filter((g) => g.items.length > 0);
+
   return (
     <section id="projects">
       {/* Section opener: a quiet ruled row, not a display moment. */}
@@ -377,47 +394,69 @@ export function Projects() {
           style={{ borderBottom: '1px solid var(--border)' }}
         >
           <h2 className="t-label" style={{ color: 'var(--text-muted)' }}>
-            The plates — built work
+            {t.plates.header}
           </h2>
           <span className="t-index" style={{ color: 'var(--text-muted)' }}>
-            {String(projects.length).padStart(2, '0')} works · more under NDA
+            {String(werkstukken.length).padStart(2, '0')} {t.plates.counterSuffix}
           </span>
         </div>
       </div>
 
-      {projects.map((project, i) => (
-        <div key={project.id}>
-          <Plate
-            project={project}
-            index={i}
-            morphing={morphingId === project.id && openId !== project.id}
-            onOpen={() => openCaseStudy(project.id)}
-          />
-          {i < projects.length - 1 && (
-            <div className="mx-auto w-full max-w-[1600px] px-5 sm:px-10" aria-hidden="true">
-              <div style={{ height: 1, backgroundColor: 'var(--border-subtle)' }} />
+      {groepen.map(({ groep, items }) => (
+        <div key={groep}>
+          {/* Groepskop — a ruled row naming the cluster. */}
+          <div className="mx-auto w-full max-w-[1600px] px-5 sm:px-10 pt-14 sm:pt-20">
+            <div
+              className="flex items-baseline justify-between pb-4"
+              style={{ borderBottom: '1px solid var(--border)' }}
+            >
+              <h3 className="t-headline" style={{ fontSize: '1.125rem', color: 'var(--text-primary)' }}>
+                {t.groep[groep]}
+              </h3>
+              <span className="t-index" style={{ color: 'var(--text-muted)' }}>
+                {String(items.length).padStart(2, '0')}
+              </span>
             </div>
-          )}
+          </div>
+
+          {items.map((werkstuk, i) => {
+            const globalIndex = werkstuk.id - 1;
+            return (
+              <div key={werkstuk.id}>
+                <Plate
+                  werkstuk={werkstuk}
+                  index={globalIndex}
+                  morphing={morphingId === werkstuk.id && openId !== werkstuk.id}
+                  onOpen={() => openCaseStudy(werkstuk.id)}
+                />
+                {i < items.length - 1 && (
+                  <div className="mx-auto w-full max-w-[1600px] px-5 sm:px-10" aria-hidden="true">
+                    <div style={{ height: 1, backgroundColor: 'var(--border-subtle)' }} />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       ))}
 
-      {/* Case study overlay */}
+      {/* Case page overlay */}
       {openId !== null &&
         (() => {
-          const p = projects.find((x) => x.id === openId);
-          if (!p) return null;
-          const idx = projects.findIndex((x) => x.id === openId);
-          const prev = projects[(idx - 1 + projects.length) % projects.length];
-          const next = projects[(idx + 1) % projects.length];
+          const w = werkstukken.find((x) => x.id === openId);
+          if (!w) return null;
+          const idx = werkstukken.findIndex((x) => x.id === openId);
+          const prev = werkstukken[(idx - 1 + werkstukken.length) % werkstukken.length];
+          const next = werkstukken[(idx + 1) % werkstukken.length];
           return (
             <CaseStudy
-              project={p}
+              werkstuk={w}
               index={idx}
-              total={projects.length}
-              nextTitle={projects.length > 1 ? next.title : undefined}
+              total={werkstukken.length}
+              nextTitle={werkstukken.length > 1 ? next.title : undefined}
               onClose={closeCaseStudy}
-              onPrev={projects.length > 1 ? () => swap(prev.id) : undefined}
-              onNext={projects.length > 1 ? () => swap(next.id) : undefined}
+              onPrev={werkstukken.length > 1 ? () => swap(prev.id) : undefined}
+              onNext={werkstukken.length > 1 ? () => swap(next.id) : undefined}
             />
           );
         })()}

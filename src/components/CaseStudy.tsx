@@ -2,17 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { webpSrcSet } from '../lib/responsiveImage';
-import type { ProjectContent } from '../lib/content';
+import { McpDiagram } from './McpDiagram';
+import type { Werkstuk } from '../lib/content';
+import { useLoc, useT } from '../lib/i18n';
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-export type CaseStudyProject = ProjectContent & { id: number };
+export type CaseStudyWerkstuk = Werkstuk & { id: number };
 
 type Props = {
-  project: CaseStudyProject;
+  werkstuk: CaseStudyWerkstuk;
   index: number;
   total: number;
-  /** Title of the next case study, shown in the footer as anticipation. */
+  /** Title of the next case page, shown in the footer as anticipation. */
   nextTitle?: string;
   onClose: () => void;
   onPrev?: () => void;
@@ -24,8 +26,17 @@ type Props = {
  * plate via the View Transitions API (see Projects.tsx). Keyboard:
  * Esc closes, ←/→ move between plates.
  */
-export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, onNext }: Props) {
+export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose, onPrev, onNext }: Props) {
   const reduced = useReducedMotion();
+  const t = useT();
+  const loc = useLoc();
+  // Status bepaalt of er een link staat en welk label de bezoeker ziet.
+  const cta =
+    project.status === 'live' && project.url
+      ? { href: project.url, label: t.caseStudy.visit, external: true }
+      : project.status === 'besloten'
+        ? { href: '#contact', label: t.caseStudy.requestAccess, external: false }
+        : null;
   const scrollRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
@@ -155,7 +166,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
       className="fixed inset-0 z-[200]"
       role="dialog"
       aria-modal="true"
-      aria-label={`${project.title}: case study`}
+      aria-label={`${project.title}: ${t.caseStudy.ariaSuffix}`}
       style={{ backgroundColor: 'var(--scrim-strong)' }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -204,7 +215,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
         <button
           ref={closeBtnRef}
           onClick={onClose}
-          aria-label="Close case study"
+          aria-label={t.caseStudy.close}
           className="cs-close fixed z-20 grid place-items-center outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
           style={{
             top: 'calc(env(safe-area-inset-top) + clamp(1rem, 3vw, 2rem))',
@@ -230,7 +241,9 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
           >
             <div className="min-w-0">
               <p className="t-label mb-3" style={{ color: 'var(--text-muted)' }}>
-                Plate {no} / {String(total).padStart(2, '0')} — {project.client} · {project.year}
+                {t.nav.plate} {no} / {String(total).padStart(2, '0')} —{' '}
+                {project.client ? `${project.client} · ` : ''}
+                {project.year} · {t.herkomst[project.herkomst]} · {t.status[project.status]}
               </p>
               <h1
                 className="t-headline"
@@ -244,10 +257,10 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
               </h1>
             </div>
 
-            {project.showCta &&
-              (project.url ? (
+            {cta &&
+              (cta.external ? (
                 <a
-                  href={project.url}
+                  href={cta.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="t-label inline-flex items-center gap-2 shrink-0 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
@@ -266,11 +279,11 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                     ((e.currentTarget as HTMLElement).style.backgroundColor = 'var(--color-accent)')
                   }
                 >
-                  Visit live site <span aria-hidden="true">↗</span>
+                  {cta.label} <span aria-hidden="true">↗</span>
                 </a>
               ) : (
                 <a
-                  href="#contact"
+                  href={cta.href}
                   onClick={() => onClose()}
                   className="t-label inline-flex items-center gap-2 shrink-0 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
                   style={{
@@ -281,7 +294,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                     viewTransitionName: 'cs-badge',
                   } as React.CSSProperties}
                 >
-                  Request access <span aria-hidden="true">↗</span>
+                  {cta.label} <span aria-hidden="true">↗</span>
                 </a>
               ))}
           </div>
@@ -289,12 +302,15 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
 
         {/* ------------- HERO PLATE (morph target) ------------- */}
         <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-10 pt-8 sm:pt-10">
-          {project.image && !imageFailed ? (
+          {project.slug === 'garmin-mcp' ? (
+            /* Onzichtbare software krijgt een diagram, geen artefact. */
+            <McpDiagram alt={loc(project.imageAlt)} />
+          ) : project.image && !imageFailed ? (
             <picture>
               <source type="image/webp" srcSet={webpSrcSet(project.image)} sizes="(min-width: 1200px) 1120px, 100vw" />
               <img
                 src={project.image}
-                alt={project.imageAlt}
+                alt={loc(project.imageAlt)}
                 draggable={false}
                 decoding="async"
                 fetchPriority="high"
@@ -351,7 +367,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
               maxWidth: '40ch',
             }}
           >
-            {project.lede}
+            {loc(project.lede)}
           </motion.p>
 
           {/* Overview */}
@@ -364,9 +380,9 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
             }}
           >
             <h2 className="t-label" style={{ color: 'var(--text-muted)' }}>
-              Overview
+              {t.caseStudy.overview}
             </h2>
-            {project.overview.map((para, i) => (
+            {project.onderlaag.map((para, i) => (
               <motion.p
                 key={i}
                 initial={reduced ? false : { opacity: 0, y: 16 }}
@@ -380,16 +396,111 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                   color: 'var(--text-secondary)',
                 }}
               >
-                {para}
+                {loc(para)}
               </motion.p>
             ))}
           </div>
+
+          {/* De trace — an opgenomen tool-call playing out: vraag, aanroep,
+              antwoord. Named as a recording, never as a live server. */}
+          {project.trace && (
+            <div style={{ marginTop: 'clamp(3rem, 6vw, 5rem)', maxWidth: '62ch' }}>
+              <div
+                className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1"
+                style={{ marginBottom: '1rem' }}
+              >
+                <h2 className="t-label" style={{ color: 'var(--text-muted)' }}>
+                  {t.trace.header}
+                </h2>
+                <p
+                  className="t-serif m-0"
+                  style={{ fontSize: '0.9375rem', color: 'var(--text-muted)' }}
+                >
+                  {t.trace.disclaimer}
+                </p>
+              </div>
+
+              <div style={{ borderTop: '1px solid var(--border)' }}>
+                {/* Vraag */}
+                <motion.div
+                  initial={reduced ? false : { opacity: 0, y: 16 }}
+                  whileInView={reduced ? {} : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.9, ease: EASE }}
+                  className="grid gap-2 sm:gap-4 py-4 sm:grid-cols-[8rem_1fr]"
+                  style={{ borderBottom: '1px solid var(--border-subtle)' }}
+                >
+                  <span className="t-label" style={{ color: 'var(--text-muted)', paddingTop: 3 }}>
+                    {t.trace.vraag}
+                  </span>
+                  <p
+                    className="t-serif m-0"
+                    style={{ fontSize: '1.125rem', lineHeight: 1.6, color: 'var(--text-primary)' }}
+                  >
+                    {loc(project.trace.vraag)}
+                  </p>
+                </motion.div>
+
+                {/* Aanroep */}
+                <motion.div
+                  initial={reduced ? false : { opacity: 0, y: 16 }}
+                  whileInView={reduced ? {} : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.9, delay: 0.25, ease: EASE }}
+                  className="grid gap-2 sm:gap-4 py-4 sm:grid-cols-[8rem_1fr]"
+                  style={{ borderBottom: '1px solid var(--border-subtle)' }}
+                >
+                  <span className="t-label" style={{ color: 'var(--text-muted)', paddingTop: 2 }}>
+                    {t.trace.aanroep}
+                  </span>
+                  <p className="t-index m-0" style={{ color: 'var(--text-primary)' }}>
+                    → {project.trace.aanroep}
+                  </p>
+                </motion.div>
+
+                {/* Antwoord */}
+                <motion.div
+                  initial={reduced ? false : { opacity: 0, y: 16 }}
+                  whileInView={reduced ? {} : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.9, delay: 0.5, ease: EASE }}
+                  className="grid gap-2 sm:gap-4 py-4 sm:grid-cols-[8rem_1fr]"
+                  style={{ borderBottom: '1px solid var(--border-subtle)' }}
+                >
+                  <span className="t-label" style={{ color: 'var(--text-muted)', paddingTop: 2 }}>
+                    {t.trace.antwoord}
+                  </span>
+                  <pre
+                    className="t-index m-0 overflow-x-auto"
+                    style={{
+                      color: 'var(--text-secondary)',
+                      lineHeight: 1.7,
+                      backgroundColor: 'var(--bg-surface)',
+                      border: '1px solid var(--border-subtle)',
+                      padding: '1rem 1.25rem',
+                    }}
+                  >
+                    {project.trace.antwoord}
+                  </pre>
+                </motion.div>
+              </div>
+
+              {project.trace.duiding && (
+                <p
+                  className="t-serif mt-3"
+                  style={{ fontSize: '0.9375rem', lineHeight: 1.5, color: 'var(--text-muted)' }}
+                >
+                  {loc(project.trace.duiding)}
+                </p>
+              )}
+            </div>
+          )}
 
           {/* Highlights — a ruled spec table. */}
           {project.highlights.length > 0 && (
             <div style={{ marginTop: 'clamp(3rem, 6vw, 5rem)', maxWidth: '62ch' }}>
             <h2 className="t-label" style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
-              Highlights
+              {t.caseStudy.highlights}
             </h2>
             <motion.dl
               initial={reduced ? false : { opacity: 0, y: 20 }}
@@ -402,18 +513,18 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
             >
               {project.highlights.map((h) => (
                 <div
-                  key={h.label}
+                  key={h.label.nl}
                   className="grid grid-cols-[8rem_1fr] gap-4 py-3"
                   style={{ borderBottom: '1px solid var(--border-subtle)' }}
                 >
                   <dt className="t-label" style={{ color: 'var(--text-muted)', paddingTop: 2 }}>
-                    {h.label}
+                    {loc(h.label)}
                   </dt>
                   <dd
                     className="t-serif m-0"
                     style={{ fontSize: '1rem', lineHeight: 1.55, color: 'var(--text-primary)' }}
                   >
-                    {h.value}
+                    {loc(h.value)}
                   </dd>
                 </div>
               ))}
@@ -425,7 +536,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
           {project.gallery.length > 0 && (
             <div style={{ marginTop: 'clamp(3rem, 6vw, 5rem)' }}>
             <h2 className="t-label" style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
-              Gallery
+              {t.caseStudy.gallery}
             </h2>
             <div
               style={{
@@ -450,7 +561,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                     />
                     <img
                       src={shot.image}
-                      alt={shot.alt}
+                      alt={loc(shot.alt)}
                       loading="lazy"
                       decoding="async"
                       draggable={false}
@@ -465,10 +576,10 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
 
           {/* Mobile CTA (desktop has it in the header). */}
           <div className="sm:hidden" style={{ marginTop: 'clamp(2.5rem, 6vw, 3.5rem)' }}>
-            {project.showCta &&
-              (project.url ? (
+            {cta &&
+              (cta.external ? (
                 <a
-                  href={project.url}
+                  href={cta.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="t-label inline-flex items-center gap-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
@@ -479,11 +590,11 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                     outlineColor: 'var(--accent-ink)',
                   }}
                 >
-                  Visit live site <span aria-hidden="true">↗</span>
+                  {cta.label} <span aria-hidden="true">↗</span>
                 </a>
               ) : (
                 <a
-                  href="#contact"
+                  href={cta.href}
                   onClick={() => onClose()}
                   className="t-label inline-flex items-center gap-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
                   style={{
@@ -493,7 +604,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                     outlineColor: 'var(--accent-ink)',
                   }}
                 >
-                  Request access <span aria-hidden="true">↗</span>
+                  {cta.label} <span aria-hidden="true">↗</span>
                 </a>
               ))}
           </div>
@@ -515,7 +626,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                 outlineColor: 'var(--accent-ink)',
               }}
             >
-              <span aria-hidden="true">←</span> Back to the index
+              <span aria-hidden="true">←</span> {t.caseStudy.backToIndex}
             </button>
             <div className="flex items-center gap-4">
               {/* Surface the existing ←/→ keyboard navigation. */}
@@ -523,13 +634,13 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                 className="t-index hidden md:inline"
                 style={{ color: 'var(--text-muted)' }}
               >
-                Leaf with ← →
+                {t.caseStudy.leaf}
               </span>
               {onPrev && (
                 <button
                   type="button"
                   onClick={onPrev}
-                  aria-label="Previous plate"
+                  aria-label={t.caseStudy.prevPlate}
                   className="grid place-items-center outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
                   style={{
                     width: 44,
@@ -548,7 +659,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                 <button
                   type="button"
                   onClick={onNext}
-                  aria-label={nextTitle ? `Next plate: ${nextTitle}` : 'Next plate'}
+                  aria-label={nextTitle ? `${t.caseStudy.nextPlate}: ${nextTitle}` : t.caseStudy.nextPlate}
                   className="inline-flex items-center gap-3 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
                   style={{
                     color: 'var(--text-primary)',
@@ -560,7 +671,7 @@ export function CaseStudy({ project, index, total, nextTitle, onClose, onPrev, o
                   }}
                 >
                   <span className="t-index hidden sm:inline" style={{ color: 'var(--text-muted)' }}>
-                    Next
+                    {t.caseStudy.next}
                   </span>
                   <span className="t-index hidden sm:inline">{nextTitle}</span>
                   <span aria-hidden="true">→</span>

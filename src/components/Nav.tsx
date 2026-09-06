@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import { siteContent } from '../lib/content';
+import { useLang, useT } from '../lib/i18n';
 
 /**
  * Monograph header: a single hairline row. Wordmark left, the plate
- * index center (desktop), essay/colophon links and the text theme
- * toggle right. Transparent at rest; solid + hairline after 40px of
- * scroll. No blur, no icons, no drawer — DESIGN.md §5.
+ * index center (desktop), essay/colophon links and the text theme +
+ * language toggles right. Transparent at rest; solid + hairline after
+ * 40px of scroll. No blur, no icons, no drawer — DESIGN.md §5.
  */
 
 const NAV_HEIGHT = 64;
 
-const plateIds = siteContent.projects.map((_, i) => `plate-${String(i + 1).padStart(2, '0')}`);
+const plateIds = siteContent.werkstukken.map((_, i) => `plate-${String(i + 1).padStart(2, '0')}`);
 
 interface NavProps {
   theme: 'dark' | 'light';
@@ -18,6 +19,8 @@ interface NavProps {
 }
 
 export function Nav({ theme, onToggleTheme }: NavProps) {
+  const t = useT();
+  const { toggleLang } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [activePlate, setActivePlate] = useState<string | null>(null);
 
@@ -77,7 +80,7 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
         </a>
 
         {/* Plate index — desktop only */}
-        <div className="hidden md:flex items-center gap-6" aria-label="Plate index">
+        <div className="hidden md:flex items-center gap-6" aria-label={t.nav.plateIndex}>
           {plateIds.map((id, i) => {
             const isActive = activePlate === id;
             return (
@@ -85,7 +88,7 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
                 key={id}
                 href={`#${id}`}
                 className="t-index py-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-                aria-label={`Plate ${String(i + 1).padStart(2, '0')}: ${siteContent.projects[i].title}`}
+                aria-label={`${t.nav.plate} ${String(i + 1).padStart(2, '0')}: ${siteContent.werkstukken[i].title}`}
                 style={{
                   color: isActive ? 'var(--accent-ink)' : 'var(--text-muted)',
                   outlineColor: 'var(--accent-ink)',
@@ -104,23 +107,31 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
             className="t-index hidden sm:block py-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
             style={{ color: 'var(--text-secondary)', outlineColor: 'var(--accent-ink)' }}
           >
-            Essay
+            {t.nav.essay}
           </a>
           <a
             href="#contact"
-            aria-label="Contact"
+            aria-label={t.nav.colophon}
             className="t-index py-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
             style={{ color: 'var(--text-secondary)', outlineColor: 'var(--accent-ink)' }}
           >
-            Colophon
+            {t.nav.colophon}
           </a>
           <button
             onClick={onToggleTheme}
             className="t-index py-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
             style={{ color: 'var(--text-secondary)', outlineColor: 'var(--accent-ink)' }}
-            aria-label={theme === 'dark' ? 'Switch to day theme' : 'Switch to night theme'}
+            aria-label={theme === 'dark' ? t.nav.toDay : t.nav.toNight}
           >
-            {theme === 'dark' ? 'Day' : 'Night'}
+            {theme === 'dark' ? t.nav.day : t.nav.night}
+          </button>
+          <button
+            onClick={toggleLang}
+            className="t-index py-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
+            style={{ color: 'var(--text-secondary)', outlineColor: 'var(--accent-ink)' }}
+            aria-label={t.nav.toOtherLang}
+          >
+            {t.nav.langButton}
           </button>
         </div>
       </nav>

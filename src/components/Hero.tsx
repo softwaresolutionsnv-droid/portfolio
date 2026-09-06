@@ -1,24 +1,15 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { siteContent } from '../lib/content';
 import { availabilityCopy } from '../lib/availability';
+import { useLang, useLoc, useT } from '../lib/i18n';
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-const status = availabilityCopy(siteContent.availability);
-
-/** First sentence of the card description — the index row's annotation. */
+/** First sentence of the bovenlaag — the index row's annotation. */
 function firstSentence(text: string): string {
   const i = text.indexOf('. ');
   return i === -1 ? text : text.slice(0, i + 1);
 }
-
-const rows = siteContent.projects.map((p, i) => ({
-  no: String(i + 1).padStart(2, '0'),
-  id: `plate-${String(i + 1).padStart(2, '0')}`,
-  title: p.title,
-  year: p.year,
-  note: firstSentence(p.description),
-}));
 
 /** Entrance: mass, not energy — fade + ≤24px rise, museum-slow. */
 const rise = (delay: number) => ({
@@ -34,12 +25,25 @@ const rise = (delay: number) => ({
  */
 export function Hero() {
   const reduced = useReducedMotion();
+  const t = useT();
+  const loc = useLoc();
+  const { lang } = useLang();
   const r = (delay: number) => (reduced ? {} : rise(delay));
+
+  const status = availabilityCopy(siteContent.availability, lang);
+
+  const rows = siteContent.werkstukken.map((w, i) => ({
+    no: String(i + 1).padStart(2, '0'),
+    id: `plate-${String(i + 1).padStart(2, '0')}`,
+    title: w.title,
+    year: w.year,
+    note: firstSentence(loc(w.bovenlaag)),
+  }));
 
   return (
     <section
       className="relative min-h-[100svh] flex flex-col justify-end overflow-hidden"
-      aria-label="Title page"
+      aria-label={t.hero.titlePage}
     >
       {/* Colossal blind-embossed numeral — set into the wall, not on it. */}
       <div
@@ -67,7 +71,7 @@ export function Hero() {
             className="t-label mb-8"
             style={{ color: 'var(--text-muted)' }}
           >
-            Designer — Developer, {siteContent.contact.location} · {status.hero}
+            {t.hero.role}, {siteContent.contact.location} · {status.hero}
           </motion.p>
 
           <motion.h1
@@ -90,22 +94,19 @@ export function Hero() {
               maxWidth: '52ch',
             }}
           >
-            I design and build web and mobile products for scale-ups, founders,
-            and local businesses that need to punch above their weight. One
-            person from first conversation to launch day: no handoffs, no
-            account managers.
+            {loc(siteContent.hero.practice)}
           </motion.p>
         </div>
 
         {/* ---------- The index of built work (left on desktop) ---------- */}
         <motion.nav
           {...r(0.55)}
-          aria-label="Index of built work"
+          aria-label={t.hero.index}
           className="lg:order-1 self-end lg:pr-10 lg:border-r"
           style={{ borderColor: 'var(--border)' }}
         >
           <p className="t-label mb-6" style={{ color: 'var(--text-muted)' }}>
-            Index of built work
+            {t.hero.index}
           </p>
           <ul style={{ borderTop: '1px solid var(--border)' }}>
             {rows.map((row, i) => (

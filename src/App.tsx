@@ -28,10 +28,16 @@ import { Projects } from './components/Projects';
 import { Skills } from './components/Skills';
 import { Contact } from './components/Contact';
 import { Nav } from './components/Nav';
+import { LangContext, ui, type Lang } from './lib/i18n';
 
 export default function App() {
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     return (localStorage.getItem('theme') as 'dark' | 'light') || 'dark';
+  });
+
+  // Nederlands is de default én de brontaal (ADR-0003).
+  const [lang, setLang] = useState<Lang>(() => {
+    return (localStorage.getItem('lang') as Lang) || 'nl';
   });
 
   useEffect(() => {
@@ -39,18 +45,26 @@ export default function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    localStorage.setItem('lang', lang);
+  }, [lang]);
+
   const toggleTheme = useCallback(
     () => setTheme((t) => (t === 'dark' ? 'light' : 'dark')),
     []
   );
 
+  const toggleLang = useCallback(() => setLang((l) => (l === 'nl' ? 'en' : 'nl')), []);
+
   return (
+    <LangContext.Provider value={{ lang, toggleLang }}>
     <div
       className="relative min-h-screen theme-transition"
       style={{ backgroundColor: 'var(--bg)', color: 'var(--text-primary)' }}
     >
       <a href="#main" className="skip-link t-label">
-        Skip to content
+        {ui[lang].skip}
       </a>
       <Nav theme={theme} onToggleTheme={toggleTheme} />
       <main id="main">
@@ -62,5 +76,6 @@ export default function App() {
       </main>
       <Analytics />
     </div>
+    </LangContext.Provider>
   );
 }

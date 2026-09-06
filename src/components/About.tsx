@@ -1,19 +1,22 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { siteContent } from '../lib/content';
 import { availabilityCopy } from '../lib/availability';
+import { useLang, useLoc, useT } from '../lib/i18n';
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
-
-const status = availabilityCopy(siteContent.availability);
-
-const details = [
-  ...siteContent.about.details,
-  { label: 'Status', value: status.about },
-];
 
 /** The monograph's essay: serif long-form with a ruled marginalia column. */
 export function About() {
   const reduced = useReducedMotion();
+  const t = useT();
+  const loc = useLoc();
+  const { lang } = useLang();
+
+  const status = availabilityCopy(siteContent.availability, lang);
+  const details = [
+    ...siteContent.about.details.map((d) => ({ label: loc(d.label), value: loc(d.value) })),
+    { label: t.about.statusLabel, value: status.about },
+  ];
 
   return (
     <section id="about" style={{ padding: 'clamp(5rem, 12vh, 10rem) 0' }}>
@@ -23,7 +26,7 @@ export function About() {
           style={{ borderBottom: '1px solid var(--border)' }}
         >
           <h2 className="t-label" style={{ color: 'var(--text-muted)' }}>
-            Essay — the practice
+            {t.about.header}
           </h2>
         </div>
 
@@ -43,7 +46,7 @@ export function About() {
                 maxWidth: '46ch',
               }}
             >
-              {siteContent.about.intro}
+              {loc(siteContent.about.intro)}
             </p>
             <p
               className="t-serif mt-8"
@@ -54,7 +57,7 @@ export function About() {
                 maxWidth: '58ch',
               }}
             >
-              {siteContent.about.body}
+              {loc(siteContent.about.body)}
             </p>
           </motion.div>
 
