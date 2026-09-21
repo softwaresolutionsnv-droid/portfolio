@@ -25,15 +25,15 @@ Proof over promises. Nils shows live production work — a fleet platform runnin
 
 ## Operating Context
 
-- Prospects typically evaluate on a laptop, often between calls or in the evening, comparing candidates; the site must land its case fast in either ambient light (both themes are product law, see Brand Commitments).
-- Content (projects, availability, about/skills/contact copy) is managed via a custom CMS at `/admin` (Supabase + Vercel deploy hook). The Supabase project is currently paused, so the checked-in `src/data/content.json` is the effective content source; the build works with or without CMS env vars.
+- Prospects typically evaluate on a laptop, often between calls or in the evening, comparing candidates; the site must land its case fast.
+- Content (werkstukken, availability, hero/services/about/contact copy) lives in `src/data/content.json` (ADR-0002); updating content is a commit and a deploy.
 - Case studies are shareable deep links at `/work/:slug`; prospects may enter the site through one.
 
 ## Capabilities and Constraints
 
-- One-page site (title page / plates / essay / specifications / colophon) plus case-study overlays at `/work/:slug`. Public site is fully static; the CMS is a lazy-loaded admin chunk.
+- One-page site (hero / work / what I do / about / contact) plus case-page overlays at `/work/:slug`. Fully static Vite build; Lenis smooth scroll, GSAP reveals, and an OGL dither shader in the hero, all degrading cleanly under `prefers-reduced-motion`.
 - All commercial and factual claims in copy must be real; nothing is invented (no fabricated metrics, clients, or testimonials).
-- **A Dutch (NL) version is planned.** Future work must not hard-code against a second locale; copy architecture should anticipate NL/EN.
+- **Bilingual, NL first.** Dutch is the source language, English the translation (ADR-0003); all copy is `{nl,en}` pairs, chrome copy lives in `src/lib/i18n.tsx`.
 - Open decision: e-mail on the own domain (currently a Gmail address).
 
 ## Brand Commitments
@@ -42,21 +42,23 @@ Proof over promises. Nils shows live production work — a fleet platform runnin
 
 **Personality: Bold. Precise. Memorable.** The interface should feel like it was made by someone who knows exactly what they're doing.
 
-**Both themes are first-class.** Dark and light are each native and complete, never one retrofitted from the other.
+**Sections own the theme.** There is no user theme toggle (decision of 6 Sep 2026): the page opens dark, turns off-white for the services and about sections, and closes on the green signal field. Every section is designed for the theme it owns.
+
+**Pinned reference (binding, decision of 6 Sep 2026):** lamalama.com is the visual north star, translated as literally as a solo practice allows — bold grotesk caps at line-height .8, a mono UI voice in `[ brackets ]` and `( + )`, a dither field as hero material, a floating nav with a per-section tagline, a right-hand card stack, work as a ruled list with image strips, section-owned themes, Lenis + GSAP motion. Agency-only elements (team, pitchdeck, awards, client logos, "20+ freaks") are not carried over; what replaces them must be true of one person.
 
 **Anti-references (binding):**
 - Template-shaped agency sites: identical project-card grids, generic "Hello, I'm a…" heroes, obligatory testimonial carousels.
-- Awwwards-bait: WebGL distortions, cursor trails, scroll-jacking as spectacle.
+- Cursor trails and scroll-jacking as spectacle; the dither shader is the one WebGL surface and it stays in the hero.
 - SaaS-landing-page portfolios: feature grids, hero-metric templates, pricing-style CTAs applied to a person.
 - Dribbble gradient aesthetic: soft purple/pink gradients, gradient text, floating glass cards, 3D blobs.
 - Personal-blog informality: lowercase everything, handwritten fonts, cluttered sidebars.
-- Derivative originals: no specific site is the north star; the aesthetic must feel authored, not referenced.
+- The retired "Concrete Monograph" world (Archivo Expanded + serif, oxide accent, museum-slow motion) is an anti-reference, not a fallback.
 
 ## Evidence on Hand
 
-- Three real projects in `src/data/content.json`: BerijdersApp (Autodisk, 2025), FleetDisk (Autodisk, 2024), N.B. Onderhoudsdiensten (freelance, 2025), each with overview, highlights, role, stack.
-- Project imagery in `/public/projects`: FleetDisk and N.B. Onderhoudsdiensten present (JPG + WebP ladder); **BerijdersApp image pending from the owner** — the site ships a typographic fallback plate until it lands.
-- Client-confirmed claims in content: FleetDisk at 100k+ vehicles live; N.B. site Lighthouse 98/100/100/100 and ~3× category-average conversion.
+- Five werkstukken in `src/data/content.json`: Nachtagenda (own product, pre-launch), BerijdersApp (Autodisk, 2025), garmin-mcp (own product, live), FleetDisk (Autodisk, 2024, confidential), N.B. Onderhoudsdiensten (freelance, 2025), each with bovenlaag, onderlaag, highlights, role, stack; garmin-mcp carries a recorded trace.
+- Imagery in `/public/projects`: FleetDisk (one composite) and N.B. Onderhoudsdiensten (viewport captures of the live site, desktop + mobile). **Owner still owes:** BerijdersApp screens, Nachtagenda simulator captures, a portrait for the "this is me" card. Until then those strips show black spec tiles carrying real scope-facts.
+- The only hard number in content is FleetDisk at 100k+ vehicles live; every other figure is a scope-fact.
 - No testimonials exist; future work must not fabricate any.
 
 ## Product Principles
@@ -73,3 +75,7 @@ Proof over promises. Nils shows live production work — a fleet platform runnin
 - **Motion:** honor `prefers-reduced-motion`. Information-carrying animation must also work reduced; decorative motion disables cleanly.
 - **Typography:** body copy readable at 200% zoom and on small screens; line length capped.
 - **Color:** palette verified against common color-vision deficiencies; never rely on color alone to convey state or hierarchy.
+
+## Werkstukselectie (6 sep 2026)
+
+Alleen werk voor klanten staat in de werk-sectie: BerijdersApp, Shaftlab, FleetDisk, Puik Bouw, N.B. Onderhoudsdiensten, 4 Fruit Company. Eigen producten en hulpprojecten (Nachtagenda, garmin-mcp) zijn er bewust af — beslissing van de eigenaar. Beeld is altijd een echte opname van de build (live domein of lokale dev-build); 4fruitcompany.nl toont nog de oude WordPress-site, dus de 4fruit-opnames komen uit de lokale build en de status is pre-launch zonder link.

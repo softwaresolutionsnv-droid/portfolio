@@ -1,140 +1,179 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Mark } from './Mark';
+import { LangSwitch } from './BottomBar';
 import { siteContent } from '../lib/content';
-import { useLang, useT } from '../lib/i18n';
+import { availabilityCopy } from '../lib/availability';
+import { useLang, useLoc, useT } from '../lib/i18n';
+import { decode, scrollToId } from '../lib/motion';
 
 /**
- * Monograph header: a single hairline row. Wordmark left, the plate
- * index center (desktop), essay/colophon links and the text theme +
- * language toggles right. Transparent at rest; solid + hairline after
- * 40px of scroll. No blur, no icons, no drawer — DESIGN.md §5.
+ * Floating nav pill, top centre: mark · section tagline (mono, decodes on
+ * change) · menu toggle. The menu drops down *inside* the pill (lamalama
+ * grammar): 50px rows with hairlines that draw from the left, an outline
+ * button and two solid CTAs; the page behind blurs and dims.
+ * Right stack (desktop): contact card + "this is me" fold-out.
  */
-
-const NAV_HEIGHT = 64;
-
-const plateIds = siteContent.werkstukken.map((_, i) => `plate-${String(i + 1).padStart(2, '0')}`);
-
-interface NavProps {
-  theme: 'dark' | 'light';
-  onToggleTheme: () => void;
-}
-
-export function Nav({ theme, onToggleTheme }: NavProps) {
+export function Nav({ tagline }: { tagline: string }) {
   const t = useT();
-  const { toggleLang } = useLang();
-  const [scrolled, setScrolled] = useState(false);
-  const [activePlate, setActivePlate] = useState<string | null>(null);
+  const loc = useLoc();
+  const { lang } = useLang();
+  const [open, setOpen] = useState(false);
+  const [me, setMe] = useState(false);
+  const tagRef = useRef<HTMLSpanElement>(null);
+  const pillRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    if (tagRef.current) decode(tagRef.current, 600, tagline);
+  }, [tagline]);
 
-  // Track which plate is in view so its number carries the Oxide. One
-  // observer over plates AND the sections after them, so entering the
-  // essay/specs/colophon reliably clears the active number.
+  // Esc / click-outside close; scroll closes too (the pill is fixed, the page is not).
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const id = entry.target.id;
-          setActivePlate(id.startsWith('plate-') ? id : null);
-        }
-      },
-      { rootMargin: `-${NAV_HEIGHT + 1}px 0px -55% 0px`, threshold: 0 }
-    );
-    for (const id of [...plateIds, 'about', 'skills', 'contact']) {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    }
-    return () => observer.disconnect();
-  }, []);
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    const onDown = (e: PointerEvent) => {
+      if (!pillRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('pointerdown', onDown);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('pointerdown', onDown);
+    };
+  }, [open]);
+
+  const go = (id: string) => {
+    setOpen(false);
+    setTimeout(() => scrollToId(id), 30);
+  };
+
+  const status = availabilityCopy(siteContent.availability, lang);
+  const email = siteContent.contact.email;
+  const items: [string, string][] = [
+    ['work', t.nav.work],
+    ['services', t.nav.services],
+    ['about', t.nav.about],
+    ['contact', t.nav.contact],
+  ];
 
   return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50"
-      style={{
-        height: NAV_HEIGHT,
-        backgroundColor: scrolled
-          ? 'color-mix(in oklab, var(--bg) 95%, transparent)'
-          : 'transparent',
-        borderBottom: scrolled
-          ? '1px solid var(--border-subtle)'
-          : '1px solid transparent',
-        transition: 'background-color 300ms ease, border-color 300ms ease',
-      }}
-    >
-      <nav className="mx-auto h-full flex items-center justify-between px-5 sm:px-10 max-w-[1600px]">
-        <a
-          href="#"
-          className="t-label outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-          style={{ color: 'var(--text-primary)', outlineColor: 'var(--accent-ink)' }}
-          onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0 });
-          }}
+    <>
+      {/* Scrim behind the open menu */}
+      <div aria-hidden="true" className={`menu-scrim ${open ? 'is-open' : ''}`} />
+
+      {/* Pill */}
+      <div className="fixed top-4 left-0 right-0 z-[100] pointer-events-none px-4">
+        <div
+          ref={pillRef}
+          className={`navbar pointer-events-auto mx-auto flex flex-col ${open ? 'is-open' : ''}`}
+          style={{ width: 'min(438px, 100%)' }}
         >
-          N.Vogelaar
+          <div className="flex items-center justify-between h-[50px] pl-[9px] pr-[7px]">
+            <button type="button" onClick={() => go('hero')} aria-label={t.nav.home} className="p-1">
+              <Mark size={26} />
+            </button>
+            <span className="t-mono text-center absolute left-1/2 -translate-x-1/2 pointer-events-none">
+              <span ref={tagRef} aria-hidden="true">{tagline}</span>
+              <span className="sr-only">{tagline}</span>
+            </span>
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="site-menu"
+              aria-label={open ? t.nav.close : t.nav.menu}
+              className="burger flex flex-col gap-[3px] py-3 px-[7px]"
+            >
+              <span className="block h-[2px] w-4" style={{ background: 'currentColor' }} />
+              <span className="block h-[2px] w-4" style={{ background: 'currentColor' }} />
+              <span className="block h-[2px] w-4" style={{ background: 'currentColor' }} />
+            </button>
+          </div>
+
+          {/* Dropdown */}
+          <div
+            id="site-menu"
+            className="overflow-hidden"
+            style={{
+              display: 'grid',
+              gridTemplateRows: open ? '1fr' : '0fr',
+              transition: 'grid-template-rows 550ms var(--ease-out)',
+            }}
+          >
+            <nav className="min-h-0 menu" aria-label={t.nav.menu} aria-hidden={!open}>
+              <ul className="flex flex-col">
+                {items.map(([id, label], i) => (
+                  <li key={id} className="menu-row" style={{ ['--i' as string]: i }}>
+                    <button type="button" onClick={() => go(id)} tabIndex={open ? 0 : -1} className="menu-link flex items-center h-[50px] w-full text-left pl-11 pr-4 t-h6">
+                      {label}
+                      <span className="pix ml-auto" aria-hidden="true" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-col gap-1 p-4 pt-4 menu-row" style={{ ['--i' as string]: items.length }}>
+                <a href={siteContent.contact.socials[0].href} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1} className="btn justify-center w-full">
+                  LinkedIn <span className="arrow" aria-hidden="true">↗</span>
+                </a>
+                <div className="grid grid-cols-2 gap-1">
+                  <a href={`mailto:${email}?subject=${encodeURIComponent(t.nav.subjectCall)}`} tabIndex={open ? 0 : -1} className="btn btn--solid justify-center">
+                    {t.nav.planCall}
+                  </a>
+                  <a href={`mailto:${email}?subject=${encodeURIComponent(t.nav.subjectProject)}`} tabIndex={open ? 0 : -1} className="btn btn--solid justify-center">
+                    {t.nav.startProject}
+                  </a>
+                </div>
+                <div className="flex items-center justify-between pt-3 t-mono">
+                  <a href={`mailto:${email}`} tabIndex={open ? 0 : -1} style={{ opacity: 0.7 }}>{email}</a>
+                  <LangSwitch />
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      {/* Right stack — desktop */}
+      <div className="fixed top-4 right-4 z-[100] hidden lg:flex flex-col gap-1 w-[160px]">
+        <a href={`mailto:${email}`} className="side-card side-card--contact flex items-center gap-3 p-1 pr-3 t-mono whitespace-nowrap">
+          <span className="grid place-items-center w-10 h-10 rounded-[3px] flex-shrink-0" style={{ background: 'rgb(var(--c-dark))', color: 'rgb(var(--c-off-white))' }}>
+            <Mark size={20} />
+          </span>
+          {t.nav.contact}
         </a>
-
-        {/* Plate index — desktop only */}
-        <div className="hidden md:flex items-center gap-6" aria-label={t.nav.plateIndex}>
-          {plateIds.map((id, i) => {
-            const isActive = activePlate === id;
-            return (
-              <a
-                key={id}
-                href={`#${id}`}
-                className="t-index py-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-                aria-label={`${t.nav.plate} ${String(i + 1).padStart(2, '0')}: ${siteContent.werkstukken[i].title}`}
-                style={{
-                  color: isActive ? 'var(--accent-ink)' : 'var(--text-muted)',
-                  outlineColor: 'var(--accent-ink)',
-                  transition: 'color 300ms ease',
-                }}
-              >
-                {String(i + 1).padStart(2, '0')}
-              </a>
-            );
-          })}
-        </div>
-
-        <div className="flex items-center gap-5 sm:gap-8">
-          <a
-            href="#about"
-            className="t-index hidden sm:block py-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-            style={{ color: 'var(--text-secondary)', outlineColor: 'var(--accent-ink)' }}
-          >
-            {t.nav.essay}
-          </a>
-          <a
-            href="#contact"
-            aria-label={t.nav.colophon}
-            className="t-index py-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-            style={{ color: 'var(--text-secondary)', outlineColor: 'var(--accent-ink)' }}
-          >
-            {t.nav.colophon}
-          </a>
+        <div className="side-card">
           <button
-            onClick={onToggleTheme}
-            className="t-index py-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-            style={{ color: 'var(--text-secondary)', outlineColor: 'var(--accent-ink)' }}
-            aria-label={theme === 'dark' ? t.nav.toDay : t.nav.toNight}
+            type="button"
+            onClick={() => setMe((v) => !v)}
+            aria-expanded={me}
+            className="flex items-center justify-between w-full px-3 t-mono" style={{ paddingTop: 12, paddingBottom: 12 }}
           >
-            {theme === 'dark' ? t.nav.day : t.nav.night}
+            <span>{t.nav.thisIsMe}</span>
+            <span className="paren" aria-hidden="true">{me ? '-' : '+'}</span>
           </button>
-          <button
-            onClick={toggleLang}
-            className="t-index py-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4"
-            style={{ color: 'var(--text-secondary)', outlineColor: 'var(--accent-ink)' }}
-            aria-label={t.nav.toOtherLang}
+          <div
+            className="overflow-hidden"
+            style={{
+              display: 'grid',
+              gridTemplateRows: me ? '1fr' : '0fr',
+              transition: 'grid-template-rows 500ms var(--ease-out)',
+            }}
           >
-            {t.nav.langButton}
-          </button>
+            <div className="min-h-0">
+              <div className="px-3 pb-3 flex flex-col gap-3">
+                <div className="hairline" style={{ background: 'currentColor', opacity: 0.15 }} />
+                <p className="t-body-sm" style={{ opacity: 0.85 }}>{loc(siteContent.about.intro).split('. ')[0]}.</p>
+                <p className="t-mono inline-flex items-center gap-2">
+                  <span className="dot" aria-hidden="true" />
+                  {status.about}
+                </p>
+                <a href={siteContent.contact.socials[0].href} target="_blank" rel="noopener noreferrer" className="t-mono">
+                  LinkedIn <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-      </nav>
-    </header>
+      </div>
+    </>
   );
 }

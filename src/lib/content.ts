@@ -5,7 +5,7 @@
  */
 
 import type { Availability } from './availability';
-import type { Localized } from './i18n';
+import type { Localized, LocalizedLines } from './i18n';
 import rawContent from '../data/content.json';
 
 /** Wie het werkstuk liet maken — altijd zichtbaar, nooit weggelaten (ADR-0001). */
@@ -30,12 +30,10 @@ export type Trace = {
   vraag: Localized;
   aanroep: string;
   antwoord: string;
-  /** Optioneel bijschrift dat het antwoord leesbaar maakt (bv. seconden → tijden). */
   duiding?: Localized;
 };
 
 export type Werkstuk = {
-  /** URL slug for the case page deep link (/work/:slug). */
   slug: string;
   title: string;
   groep: Groep;
@@ -56,7 +54,6 @@ export type Werkstuk = {
   image: string;
   imageAlt: Localized;
   highlights: { label: Localized; value: Localized }[];
-  /** Extra case-page imagery, rendered below the highlights. */
   gallery: GalleryImage[];
   trace?: Trace;
 };
@@ -64,17 +61,18 @@ export type Werkstuk = {
 export type SiteContent = {
   availability: Availability;
   hero: {
-    /** De praktijkregel onder het monument. */
+    headline: LocalizedLines;
     practice: Localized;
+  };
+  work: { intro: Localized };
+  services: {
+    intro: Localized;
+    diensten: { groep: Groep; items: Localized[] }[];
   };
   about: {
     intro: Localized;
     body: Localized;
     details: { label: Localized; value: Localized }[];
-  };
-  skills: {
-    intro: Localized;
-    picks: { tools: string; when: Localized }[];
   };
   contact: {
     email: string;

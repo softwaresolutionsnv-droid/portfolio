@@ -1,50 +1,78 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 /* ===================================================================
-   THEME SYSTEM — "The Concrete Monograph"
-   Cool charcoal (Night Gallery, default) and bone paper (Printed Page).
-   One accent: Oxide, deep rust. Chrome is duotone; color belongs to
-   the work. See DESIGN.md.
+   THEME SYSTEM — "Signal"
+   Lamalama-grammar: one dark ground, one off-white ground, one signal
+   field. The theme is owned by the section in view (data-theme on <html>
+   is switched by ScrollTrigger), never by a user toggle.
+   Colors are RGB triplets so alpha steps derive from one source.
    =================================================================== */
 
 @theme {
-  --font-display: "Archivo", system-ui, sans-serif;
-  --font-body: "Source Serif 4", Georgia, serif;
-
-  /* Oxide — primary CTA fill (0.48 keeps bone label text at AA). */
-  --color-accent: oklch(0.48 0.15 30);
-  --color-accent-hover: oklch(0.42 0.15 30);
+  --font-sans: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "Sometype Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }
 
 :root {
-  /* Night Gallery (default) */
-  --bg: oklch(0.14 0.004 260);
-  --bg-surface: oklch(0.18 0.005 260);
-  --bg-elevated: oklch(0.22 0.005 260);
-  --text-primary: oklch(0.93 0.004 90);
-  --text-secondary: oklch(0.68 0.005 90);
-  /* 0.58 keeps muted text at AA on the charcoal ground. */
-  --text-muted: oklch(0.58 0.005 90);
-  --border: oklch(0.28 0.005 260);
-  --border-subtle: oklch(0.22 0.004 260);
-  /* Oxide as body-sized text — lifted on dark for contrast. */
-  --accent-ink: oklch(0.62 0.16 32);
-  /* Faint blind-emboss tone for the colossal hero numeral. */
-  --emboss: oklch(0.19 0.005 260);
+  --c-dark: 26 28 28;
+  --c-black: 0 0 0;
+  --c-white: 255 255 255;
+  --c-off-black: 12 12 12;
+  --c-off-white: 249 244 235;
+  --c-red: 230 57 70;
+  --c-green: 208 255 126;
+  --c-pink: 255 198 218;
+  --c-blue: 220 242 244;
 
-  /* On-image vocabulary — neutral scrims over plate photography. */
-  --scrim-strong: oklch(0.10 0.005 260 / 0.82);
-  --scrim-mid: oklch(0.10 0.005 260 / 0.55);
-  --ink-on-image: oklch(0.95 0.004 90 / 0.98);
-  --ink-on-image-muted: oklch(0.95 0.004 90 / 0.78);
-  --ink-on-image-subtle: oklch(0.95 0.004 90 / 0.5);
-  --hairline-on-image: oklch(0.95 0.004 90 / 0.2);
+  /* dark (default) */
+  --bg-rgb: var(--c-dark);
+  --ink-rgb: var(--c-off-white);
+  --bg2-rgb: var(--c-black);
+  --signal-rgb: var(--c-red);
 
-  font-family: "Source Serif 4", Georgia, serif;
-  line-height: 1.6;
-  font-weight: 400;
-  color: var(--text-primary);
+  --bg: rgb(var(--bg-rgb));
+  --ink: rgb(var(--ink-rgb));
+  --bg2: rgb(var(--bg2-rgb));
+  --signal: rgb(var(--signal-rgb));
+  --ink-70: rgb(var(--ink-rgb) / 0.7);
+  --ink-50: rgb(var(--ink-rgb) / 0.5);
+  --ink-20: rgb(var(--ink-rgb) / 0.2);
+  --ink-10: rgb(var(--ink-rgb) / 0.1);
+
+  /* Legacy names kept for McpDiagram / shared pieces. */
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-70);
+  --text-muted: var(--ink-50);
+  --border: var(--ink-20);
+  --border-subtle: var(--ink-10);
+  --bg-surface: var(--bg2);
+  --bg-elevated: var(--bg2);
+  --accent-ink: var(--ink);
+  --emboss: var(--ink-10);
+  --scrim-strong: rgb(0 0 0 / 0.82);
+
+  /* Fluid grid + spacing, 1440 reference. */
+  --margin: max(1rem, calc(40 / 1440 * 100vw));
+  --gap: max(0.625rem, calc(24 / 1440 * 100vw));
+  --s-xs: max(0.5rem, calc(12 / 1440 * 100vw));
+  --s-sm: max(0.75rem, calc(16 / 1440 * 100vw));
+  --s-md: max(1rem, calc(24 / 1440 * 100vw));
+  --s-lg: max(1.5rem, calc(32 / 1440 * 100vw));
+  --s-xl: max(2rem, calc(48 / 1440 * 100vw));
+  --s-2xl: max(3rem, calc(64 / 1440 * 100vw));
+  --sec-sm: max(2.5rem, calc(80 / 1440 * 100vw));
+  --sec-md: max(3.75rem, calc(120 / 1440 * 100vw));
+  --sec-lg: max(5rem, calc(160 / 1440 * 100vw));
+  --sec-xl: max(6.25rem, calc(200 / 1440 * 100vw));
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: dark;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
   background-color: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -52,420 +80,375 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Printed Page (light) */
 [data-theme="light"] {
-  --bg: oklch(0.96 0.004 90);
-  --bg-surface: oklch(0.92 0.005 90);
-  --bg-elevated: oklch(0.88 0.005 90);
-  --text-primary: oklch(0.18 0.005 260);
-  --text-secondary: oklch(0.40 0.006 260);
-  --text-muted: oklch(0.50 0.005 260);
-  --border: oklch(0.80 0.005 90);
-  --border-subtle: oklch(0.87 0.004 90);
-  --accent-ink: oklch(0.47 0.15 30);
-  --emboss: oklch(0.905 0.005 90);
-  --scrim-strong: oklch(0.10 0.005 260 / 0.82);
-  --scrim-mid: oklch(0.10 0.005 260 / 0.55);
+  --bg-rgb: var(--c-off-white);
+  --ink-rgb: var(--c-off-black);
+  --bg2-rgb: var(--c-white);
+  color-scheme: light;
 }
 
-/* ===================================================================
-   ADMIN UI TOKENS (shadcn vocabulary) — mapped onto the site palette
-   so the CMS inherits both themes for free.
-   =================================================================== */
-
-:root {
-  --radius: 0.5rem;
-  --background: var(--bg);
-  --foreground: var(--text-primary);
-  --card: var(--bg-surface);
-  --card-foreground: var(--text-primary);
-  --popover: var(--bg-elevated);
-  --popover-foreground: var(--text-primary);
-  --primary: var(--color-accent);
-  --primary-foreground: oklch(0.96 0.004 90);
-  --secondary: var(--bg-elevated);
-  --secondary-foreground: var(--text-primary);
-  --muted: var(--bg-surface);
-  --muted-foreground: var(--text-muted);
-  --destructive: oklch(0.55 0.21 20);
-  --destructive-foreground: oklch(0.96 0.004 90);
-  --input: var(--border);
-  --ring: var(--color-accent);
+[data-theme="green"] {
+  --bg-rgb: var(--c-green);
+  --ink-rgb: var(--c-off-black);
+  --bg2-rgb: var(--c-white);
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+[data-theme="pink"] {
+  --bg-rgb: var(--c-pink);
+  --ink-rgb: var(--c-off-black);
+  --bg2-rgb: var(--c-white);
+  color-scheme: light;
 }
 
-* {
-  box-sizing: border-box;
-}
+/* Scoped theme for a block inside another section (contact cards etc.) */
+.theme-dark { --bg-rgb: var(--c-dark); --ink-rgb: var(--c-off-white); --bg2-rgb: var(--c-black); }
+.theme-black { --bg-rgb: var(--c-black); --ink-rgb: var(--c-off-white); --bg2-rgb: var(--c-dark); }
+.theme-light { --bg-rgb: var(--c-off-white); --ink-rgb: var(--c-off-black); --bg2-rgb: var(--c-white); }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: auto; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
 
 body {
   margin: 0;
-  min-width: 320px;
   min-height: 100vh;
-  overflow-x: hidden;
   background-color: var(--bg);
-  color: var(--text-primary);
+  color: var(--ink);
+  transition: background-color 700ms var(--ease-out), color 700ms var(--ease-out);
+  overflow-x: clip;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+::selection { background: var(--ink); color: var(--bg); }
 
-button {
-  font-family: inherit;
-}
+img, video, canvas, svg { display: block; max-width: 100%; }
+@layer base { button { font: inherit; letter-spacing: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; } }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, pre { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
 /* ===================================================================
-   TYPE ROLES — the monograph's voices (DESIGN.md §3)
+   TYPE SCALE — Suisse-register grotesk. Display: bold caps, lh .8.
    =================================================================== */
 
-.font-display {
-  font-family: "Archivo", system-ui, sans-serif;
-  font-stretch: 125%;
-}
-
-/* Monument — title page name and colophon close. Two per page, one
-   shared scale: neither Monument outranks the other. */
-.t-monument {
-  font-family: "Archivo", system-ui, sans-serif;
-  font-stretch: 125%;
-  font-weight: 500;
-  font-size: clamp(2.75rem, 6.8vw, 7.5rem);
-  line-height: 0.92;
-  letter-spacing: 0.01em;
+.t-display {
+  font-family: var(--font-sans);
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.82;
+  font-size: clamp(3.25rem, 1.0625rem + 4.38vw, 7.7rem);
 }
-
-/* Plate numeral — thin, colossal, number-only. */
-.t-numeral {
-  font-family: "Archivo", system-ui, sans-serif;
-  font-stretch: 125%;
-  font-weight: 200;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums;
-}
-
-.t-headline {
-  font-family: "Archivo", system-ui, sans-serif;
-  font-stretch: 125%;
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: 0.01em;
+.t-display-sm {
+  font-family: var(--font-sans);
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.82;
+  font-size: clamp(3rem, 1.125rem + 3.75vw, 6.75rem);
 }
-
-.t-label {
-  font-family: "Archivo", system-ui, sans-serif;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: 0.14em;
+.t-h1 {
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.82;
+  font-size: clamp(2.5rem, 0.9375rem + 3.13vw, 5.625rem);
 }
-
-.t-index {
-  font-family: "Archivo", system-ui, sans-serif;
-  font-size: 0.8125rem;
+.t-h2 {
   font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  font-size: clamp(2rem, 0.75rem + 2.5vw, 4.5rem);
+}
+.t-h3 {
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  font-size: clamp(1.75rem, 0.8125rem + 1.88vw, 3.5rem);
+}
+.t-h4 {
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  font-size: clamp(1.5rem, 0.875rem + 1.25vw, 2.66rem);
+}
+.t-h6 {
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  font-size: clamp(1.125rem, 0.96875rem + 0.31vw, 1.39rem);
+}
+.t-body-lg {
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  font-size: clamp(1.25rem, 0.9375rem + 0.63vw, 1.8rem);
+}
+.t-body-md {
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  font-size: clamp(1rem, 0.6875rem + 0.63vw, 1.5625rem);
+}
+.t-body {
+  font-weight: 400;
+  letter-spacing: -0.02em;
   line-height: 1.4;
-  letter-spacing: 0.06em;
-  font-variant-numeric: tabular-nums;
+  font-size: clamp(0.9375rem, 0.85rem + 0.2vw, 1.14rem);
+}
+.t-body-sm {
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.5;
+  font-size: clamp(0.8125rem, 0.72rem + 0.18vw, 1.02rem);
 }
 
-.t-serif {
-  font-family: "Source Serif 4", Georgia, serif;
+/* Mono: the site's UI voice — labels, nav, tags, buttons, meta. */
+.t-mono {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1.6;
+  font-size: 0.6875rem;
 }
+.t-mono-sm { font-family: var(--font-mono); text-transform: uppercase; font-size: 0.625rem; line-height: 1.8; font-weight: 500; letter-spacing: 0; }
+.t-mono-md { font-family: var(--font-mono); text-transform: uppercase; font-size: 0.75rem; line-height: 1.6; letter-spacing: 0; }
+.t-code { font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.7; letter-spacing: 0; }
+
+/* Bracketed label: [ label ] — the brackets are typeset, not borders. */
+.bracket::before { content: "[ "; }
+.bracket::after { content: " ]"; }
+.paren::before { content: "( "; }
+.paren::after { content: " )"; }
 
 /* ===================================================================
-   SIGNATURE: THE DEVELOP — plates rest in duotone and develop to full
-   color when attended (in view / hover / focus). DESIGN.md §4.
-
-   Where the browser supports scroll-driven animations, the Develop is
-   continuous: scroll position is the developer bath. --develop rises
-   as the plate approaches viewport center and recedes as it leaves;
-   the image filter and the numeral's Oxide ink both derive from it.
-   Hover/focus contributes through a separate transitioned property so
-   the two sources never fight. Elsewhere, the one-shot JS develop
-   below is the complete experience, not a degraded one.
+   LAYOUT
    =================================================================== */
 
-@property --develop {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
-@property --develop-hover {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
-/* --- Fallback develop (no scroll-timeline support) --------------- */
-
-.plate-img {
-  filter: grayscale(1) contrast(0.98);
-  transition: filter 1200ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.is-developed .plate-img,
-.plate:hover .plate-img,
-.plate:focus-within .plate-img {
-  filter: none;
-}
-
-/* Plate number answers the Develop in Oxide. */
-.plate .plate-no {
-  color: var(--text-primary);
-  transition: color 600ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.plate:hover .plate-no,
-.plate:focus-within .plate-no {
-  color: var(--accent-ink);
-}
-
-/* --- The darkroom (scroll-driven) -------------------------------- */
-
-@supports (animation-timeline: view()) {
-  .plate {
-    animation: plate-develop linear both;
-    animation-timeline: view();
-    /* Progress spans the plate's traversal; keyframes put full
-       development in the viewport-center band. */
-    animation-range: cover 5% cover 95%;
-    transition: --develop-hover 1200ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .plate:hover,
-  .plate:focus-within {
-    --develop-hover: 1;
-  }
-
-  /* One attention value, whichever source is stronger. */
-  .plate-img,
-  .is-developed .plate-img,
-  .plate:hover .plate-img,
-  .plate:focus-within .plate-img {
-    filter: grayscale(calc(1 - max(var(--develop), var(--develop-hover))))
-      contrast(calc(0.98 + 0.02 * max(var(--develop), var(--develop-hover))));
-    transition: none;
-    will-change: filter;
-  }
-
-  /* The numeral inks to Oxide in the last stretch of development —
-     a threshold, not a smear, so no murky in-between hue. */
-  .plate .plate-no,
-  .plate:hover .plate-no,
-  .plate:focus-within .plate-no {
-    color: color-mix(
-      in oklab,
-      var(--text-primary)
-        calc((1 - clamp(0, (max(var(--develop), var(--develop-hover)) - 0.7) / 0.3, 1)) * 100%),
-      var(--accent-ink)
-    );
-    transition: none;
-  }
-}
-
-/* S-curve ramps so the image visibly emerges on approach and completes
-   just before viewport center; ease-out ramps finish it off-screen. */
-@keyframes plate-develop {
-  0% {
-    --develop: 0;
-    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
-  }
-  46% {
-    --develop: 1;
-  }
-  62% {
-    --develop: 1;
-    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
-  }
-  100% {
-    --develop: 0;
-  }
-}
+.container { padding-left: var(--margin); padding-right: var(--margin); width: 100%; }
+.grid-12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); }
+.hairline { height: 1px; background: var(--ink-20); }
 
 /* ===================================================================
-   SIGNATURE: THE RAKING LIGHT — a ≤4% luminance sweep crossing a
-   Monument setting once on entrance. The one gradient in the system.
+   COMPONENTS
    =================================================================== */
 
-.raking-light {
-  background-image: linear-gradient(
-    100deg,
-    var(--text-primary) 42%,
-    color-mix(in oklab, var(--text-primary) 88%, var(--bg)) 50%,
-    var(--text-primary) 58%
-  );
-  background-size: 300% 100%;
-  background-position: 100% 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: raking-light 1800ms cubic-bezier(0.22, 1, 0.36, 1) 400ms 1 forwards;
+/* Chip / tag — black block, mono text. */
+.chip {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 0.4rem 0.5rem;
+  background: var(--bg2);
+  color: var(--ink);
+  border-radius: 2px;
+  white-space: nowrap;
+}
+[data-theme="light"] .chip, [data-theme="green"] .chip, [data-theme="pink"] .chip, .theme-light .chip {
+  background: rgb(var(--c-off-black));
+  color: rgb(var(--c-off-white));
 }
 
-@keyframes raking-light {
-  to {
-    background-position: 0% 0;
-  }
+/* Outline button — mono, 1px, 4px radius, arrow ↗ typeset. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  text-transform: uppercase;
+  padding: 1.125rem 1.25rem;
+  border: 1px solid var(--ink-20);
+  border-radius: 4px;
+  color: var(--ink);
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  transition: color 350ms var(--ease-out), border-color 350ms var(--ease-out);
+  isolation: isolate;
 }
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  transition: transform 450ms var(--ease-out);
+  z-index: -1;
+}
+.btn:hover { color: var(--bg); border-color: var(--ink); }
+.btn:hover::before { transform: scaleY(1); transform-origin: 50% 0%; }
+.btn--solid { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn--solid::before { background: var(--bg2); }
+.btn--solid:hover { color: var(--ink); }
+.btn .arrow { display: inline-block; transition: transform 350ms var(--ease-out); }
+.btn:hover .arrow { transform: translate(2px, -2px); }
+
+/* Contact card — the "avatar + label" block. */
+.card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgb(var(--c-black));
+  color: rgb(var(--c-off-white));
+  border-radius: 4px;
+  padding: 0.5rem 1.25rem 0.5rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  transition: background 350ms var(--ease-out), color 350ms var(--ease-out);
+}
+.card:hover { background: rgb(var(--c-off-white)); color: rgb(var(--c-off-black)); }
+.card .avatar {
+  width: 2.5rem; height: 2.5rem; border-radius: 3px; overflow: hidden; flex-shrink: 0;
+  display: grid; place-items: center; background: rgb(var(--c-dark));
+}
+
+/* Text mask reveal: each line/word sits in an overflow-hidden box. */
+.rv { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.08em; margin-bottom: -0.08em; text-indent: 0; }
+.rv > span { display: inline-block; will-change: transform; }
+
+/* Media hover — image strip tiles. */
+.tile { border-radius: 4px; overflow: hidden; background: var(--bg2); flex-shrink: 0; }
+.tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-out), filter 600ms var(--ease-out); }
+.row:hover .tile img { transform: scale(1.04); }
+
+/* Work row */
+.row { border-top: 1px solid var(--ink-20); transition: background-color 400ms var(--ease-out); }
+.row:last-child { border-bottom: 1px solid var(--ink-20); }
+.row:hover { background-color: transparent; }
+.row .strip { transition: transform 700ms var(--ease-out); }
+.row:hover .strip { transform: translateX(-1.5rem); }
+.row .vp { display: none; }
+.row:hover .vp { display: inline; }
+@media (max-width: 1023px) { .row .strip { overflow-x: auto; scrollbar-width: none; } .row:hover .strip { transform: none; } }
+
+/* Marquee (strip drift) */
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* Sticky meta bar — floats at the bottom of every section, lands in the footer. */
+.bottombar {
+  position: sticky; bottom: 0; z-index: 80;
+  background: rgb(var(--bg-rgb) / 0.86);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  transition: background-color 700ms var(--ease-out);
+}
+@media (max-width: 767px) { .bottombar { position: static; background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; } }
+@keyframes drawx { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.bottombar > .hairline { transform-origin: left; animation: drawx 900ms var(--ease-out) 400ms both; }
+
+/* Live clock dot */
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+.dot { display: inline-block; width: 0.4em; height: 0.4em; border-radius: 50%; background: var(--signal); animation: blink 1.6s ease-in-out infinite; }
+
+/* Nav bar */
+.navbar {
+  background: rgb(var(--c-black) / 0.92);
+  color: rgb(var(--c-off-white));
+  border: 1px solid rgb(var(--c-off-white) / 0.08);
+  border-radius: 4px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+[data-theme="light"] .navbar, [data-theme="green"] .navbar, [data-theme="pink"] .navbar {
+  background: rgb(var(--c-off-white) / 0.92);
+  color: rgb(var(--c-off-black));
+  border-color: rgb(var(--c-off-black) / 0.12);
+}
+.side-card {
+  background: rgb(var(--c-black) / 0.92);
+  color: rgb(var(--c-off-white));
+  border-radius: 4px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+[data-theme="light"] .side-card, [data-theme="green"] .side-card, [data-theme="pink"] .side-card {
+  background: rgb(var(--c-off-white) / 0.92);
+  color: rgb(var(--c-off-black));
+}
+
+/* Without backdrop-filter (old engines, reduced transparency) the bars go fully opaque. */
+@supports not (backdrop-filter: blur(1px)) {
+  .navbar, .side-card { background: rgb(var(--c-black)); }
+  [data-theme="light"] .navbar, [data-theme="green"] .navbar, [data-theme="pink"] .navbar,
+  [data-theme="light"] .side-card, [data-theme="green"] .side-card, [data-theme="pink"] .side-card { background: rgb(var(--c-off-white)); }
+}
+
+/* Menu dropdown (inside the pill) */
+.navbar { position: relative; }
+.navbar > div:first-child { position: relative; }
+.menu-scrim {
+  position: fixed; inset: 0; z-index: 99; pointer-events: none;
+  background: rgb(0 0 0 / 0.4);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  opacity: 0; transition: opacity 500ms var(--ease-out);
+}
+.menu-scrim.is-open { opacity: 1; pointer-events: auto; }
+.menu-row { position: relative; }
+.menu-row::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: currentColor; opacity: 0.12;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 500ms var(--ease-out) calc(var(--i) * 45ms + 60ms);
+}
+.navbar.is-open .menu-row::before { transform: scaleX(1); }
+.menu-link {
+  position: relative; opacity: 0; transform: translateY(6px);
+  transition: opacity 350ms var(--ease-out) calc(var(--i) * 45ms + 60ms), transform 500ms var(--ease-out) calc(var(--i) * 45ms + 60ms), background-color 250ms var(--ease-out);
+}
+.navbar.is-open .menu-link { opacity: 1; transform: none; }
+.menu-link:hover { background: rgb(255 255 255 / 0.08); }
+[data-theme="light"] .menu-link:hover, [data-theme="green"] .menu-link:hover { background: rgb(0 0 0 / 0.06); }
+/* pixel glyph on the right: a 3x3 dotted square, ala lamalama's nav icons */
+.pix { width: 10px; height: 10px; flex-shrink: 0; opacity: 0.35;
+  background-image: radial-gradient(currentColor 1px, transparent 1.2px); background-size: 4px 4px; background-position: 1px 1px;
+  transition: opacity 250ms var(--ease-out); }
+.menu-link:hover .pix { opacity: 1; }
+/* burger → single line */
+.burger span { transition: transform 350ms var(--ease-out), opacity 250ms var(--ease-out); transform-origin: center; }
+.navbar.is-open .burger span:nth-child(1) { transform: translateY(5px) scaleX(0); opacity: 0; }
+.navbar.is-open .burger span:nth-child(3) { transform: translateY(-5px) scaleX(0); opacity: 0; }
+.side-card--contact { background: rgb(var(--c-off-white) / 0.92); color: rgb(var(--c-off-black)); }
+.side-card--contact:hover { background: rgb(var(--c-white)); }
+
+/* Cursor label — a mono tag that trails the pointer over [data-cursor] targets. */
+.cursor-label {
+  position: fixed; left: 0; top: 0; z-index: 110; pointer-events: none;
+  opacity: 0; transition: opacity 200ms var(--ease-out);
+}
+.cursor-label.is-on { opacity: 1; }
+.cursor-label > span {
+  display: flex; align-items: center; height: 48px; padding: 0 18px; width: max-content; gap: 0.75em;
+  transform: translate(-50%, -50%);
+  background: rgb(255 255 255 / 0.14); color: rgb(var(--c-off-white));
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-radius: 4px; font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; line-height: 1;
+}
+[data-theme="light"] .cursor-label > span, [data-theme="green"] .cursor-label > span { background: rgb(0 0 0 / 0.08); color: rgb(var(--c-off-black)); }
+@media (pointer: coarse) { .cursor-label { display: none; } }
+
+/* Dither canvas */
+.dither { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* Case overlay surface scroll */
+.cs-surface { scrollbar-gutter: stable; }
+
+/* Skip link */
+.skip-link { position: absolute; left: 1rem; top: -100%; z-index: 1000; padding: 0.75rem 1rem; background: var(--ink); color: var(--bg); }
+.skip-link:focus { top: 1rem; }
 
 @media (prefers-reduced-motion: reduce) {
-  .raking-light {
-    animation: none;
-    background: none;
-    color: var(--text-primary);
-  }
-  .plate-img {
-    filter: none !important;
-    transition: none;
-  }
-  /* Plates rest in full color; the darkroom is closed. */
-  .plate {
-    animation: none;
-  }
-  .plate .plate-no,
-  .plate:hover .plate-no,
-  .plate:focus-within .plate-no {
-    transition: none;
-  }
-}
-
-/* ===================================================================
-   ANCHOR SCROLL OFFSET — keep section openers clear of the fixed nav
-   =================================================================== */
-
-section[id],
-article[id] {
-  scroll-margin-top: 96px;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-.theme-transition {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-/* ===================================================================
-   REDUCED MOTION
-   =================================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* ===================================================================
-   SELECTION — Oxide, per DESIGN.md's reserved roles
-   =================================================================== */
-
-::selection {
-  background: color-mix(in oklab, var(--color-accent) 35%, transparent);
-  color: var(--text-primary);
-}
-
-/* ===================================================================
-   SKIP LINK — revealed on keyboard focus only; Oxide, per its
-   reserved focus role.
-   =================================================================== */
-
-.skip-link {
-  position: fixed;
-  top: 12px;
-  left: 12px;
-  z-index: 100;
-  padding: 14px 24px;
-  background-color: var(--color-accent);
-  color: oklch(0.96 0.004 90);
-  transform: translateY(calc(-100% - 16px));
-}
-
-.skip-link:focus-visible {
-  transform: none;
-  outline: 2px solid var(--accent-ink);
-  outline-offset: 3px;
-}
-
-/* ===================================================================
-   CINEMATIC CASE STUDY — View Transitions morph timing (museum-slow)
-   =================================================================== */
-
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 560ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-::view-transition-group(cs-image),
-::view-transition-group(cs-title),
-::view-transition-group(cs-badge) {
-  animation-duration: 700ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-::view-transition-old(cs-image),
-::view-transition-new(cs-image) {
-  animation-duration: 560ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  mix-blend-mode: normal;
-}
-::view-transition-old(cs-title),
-::view-transition-new(cs-title) {
-  animation-duration: 600ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.cs-close {
-  transition: background-color 200ms ease, border-color 200ms ease;
-}
-.cs-close:hover {
-  background-color: var(--bg-elevated);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root),
-  ::view-transition-group(cs-image),
-  ::view-transition-group(cs-title),
-  ::view-transition-group(cs-badge) {
-    animation-duration: 180ms !important;
-    animation-timing-function: ease-out !important;
-  }
+  .dot, .bottombar > .hairline { animation: none; }
+  .btn::before, .btn, .tile img, .row .strip, .menu-row::before, .menu-link, .menu-scrim, .burger span { transition: none; }
+  body { transition: none; }
 }

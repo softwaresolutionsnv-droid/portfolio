@@ -1,7 +1,7 @@
 /**
  * i18n — NL is de bron, EN de vertaling (ADR-0003). Twee lagen:
  *  - chrome-copy (labels, knoppen, aria) leeft hier in het `ui`-woordenboek;
- *  - content (werkstukken, essay, colofon) leeft als {nl,en}-paren in
+ *  - content (werkstukken, diensten, teksten) leeft als {nl,en}-paren in
  *    content.json en wordt gelezen via useLoc().
  * Componenten bevatten geen copy.
  */
@@ -9,10 +9,12 @@ import { createContext, useContext } from 'react';
 
 export type Lang = 'nl' | 'en';
 export type Localized = { nl: string; en: string };
+export type LocalizedLines = { nl: string[]; en: string[] };
 
-export const LangContext = createContext<{ lang: Lang; toggleLang: () => void }>({
+export const LangContext = createContext<{ lang: Lang; toggleLang: () => void; setLang: (l: Lang) => void }>({
   lang: 'nl',
   toggleLang: () => {},
+  setLang: () => {},
 });
 
 export function useLang() {
@@ -22,34 +24,66 @@ export function useLang() {
 /** Kies de juiste taalvariant uit een {nl,en}-paar. */
 export function useLoc() {
   const { lang } = useLang();
-  return (l: Localized) => l[lang];
+  return <T,>(l: { nl: T; en: T }) => l[lang];
 }
 
 const nl = {
   baseTitle: 'Nils Vogelaar — Developer & Designer',
   skip: 'Naar de inhoud',
   nav: {
-    essay: 'Essay',
-    colophon: 'Colofon',
-    plateIndex: 'Platenindex',
-    plate: 'Plaat',
-    day: 'Dag',
-    night: 'Nacht',
-    toDay: 'Schakel naar het dagthema',
-    toNight: 'Schakel naar het nachtthema',
-    langButton: 'EN',
+    taglines: {
+      hero: 'Goeie binnenkomst',
+      work: 'Werk dat draait',
+      services: 'Wat ik doe',
+      about: 'Dit ben ik',
+      contact: 'Laten we praten',
+    },
+    menu: 'Menu',
+    close: 'Sluiten',
+    work: 'Werk',
+    services: 'Wat ik doe',
+    about: 'Over mij',
+    contact: 'Contact',
+    getInTouch: 'Neem contact op',
+    thisIsMe: 'Dit ben ik',
+    planCall: 'Plan een gesprek',
+    startProject: 'Start een project',
+    subjectCall: 'Kennismaken',
+    subjectProject: 'Nieuw project',
     toOtherLang: 'Switch to English',
+    home: 'Naar boven',
   },
   hero: {
-    titlePage: 'Titelpagina',
-    role: 'Designer — Developer',
-    index: 'Index van gebouwd werk',
+    eyebrow: 'Nils Vogelaar',
+    role: 'Designer-developer',
+    city: 'Amsterdam',
+    follow: 'Volg mij',
+  },
+  work: {
+    label: 'Uitgelicht werk',
+    view: 'Bekijk',
+    cursor: 'Bekijk case',
+    openAria: 'Open werkstuk:',
+    imageComing: 'Beeld volgt',
+  },
+  services: {
+    title: 'Wat ik doe.',
+    tldr: 'TLDR; ik doe veel. Mail me gewoon:',
+  },
+  about: {
+    based: 'Gevestigd in het hart van Amsterdam',
+    statusLabel: 'Status',
+    linkedin: 'LinkedIn',
+  },
+  contact: {
+    title: ['Brief me', 'iets.'],
+    label: 'Neem contact op',
+    mail: 'Mail me',
+    linkedin: 'LinkedIn',
+    copyright: 'Nils Vogelaar',
+    setIn: 'Gezet uit Geist & Sometype Mono',
   },
   plates: {
-    header: 'De platen — gebouwd werk',
-    counterSuffix: 'werkstukken · meer onder NDA',
-    open: 'Open de plaat',
-    openAria: 'Open werkstuk:',
     specClient: 'Opdrachtgever',
     specYear: 'Jaar',
     specRole: 'Rol',
@@ -73,17 +107,18 @@ const nl = {
   },
   caseStudy: {
     ariaSuffix: 'werkstuk',
+    back: 'Terug naar werk',
     close: 'Sluit het werkstuk',
     visit: 'Bezoek de site',
     requestAccess: 'Vraag toegang',
     overview: 'Overzicht',
+    credits: 'Credits',
     highlights: 'Specificaties',
     gallery: 'Galerij',
-    backToIndex: 'Terug naar de index',
     leaf: 'Blader met ← →',
     next: 'Volgende',
-    prevPlate: 'Vorige plaat',
-    nextPlate: 'Volgende plaat',
+    prevPlate: 'Vorig werkstuk',
+    nextPlate: 'Volgend werkstuk',
   },
   trace: {
     header: 'De trace',
@@ -103,22 +138,6 @@ const nl = {
     hevy: 'Hevy-API',
     hevyNote: 'krachttraining',
     protocol: 'MCP — stdio / HTTP / SSE',
-  },
-  about: {
-    header: 'Essay — de praktijk',
-    statusLabel: 'Status',
-  },
-  skills: {
-    header: 'Specificaties — de stack',
-  },
-  contact: {
-    header: 'Colofon',
-    eyebrow: 'Eén mail is genoeg',
-    monument: ['Laten we', 'samenwerken.'],
-    replies: 'Reactie binnen één werkdag',
-    copyright: 'Nils Vogelaar',
-    setIn: 'Gezet uit Archivo & Source Serif 4',
-    backToTop: 'Naar boven',
   },
   availability: {
     available: {
@@ -147,27 +166,59 @@ const en: typeof nl = {
   baseTitle: 'Nils Vogelaar — Developer & Designer',
   skip: 'Skip to content',
   nav: {
-    essay: 'Essay',
-    colophon: 'Colophon',
-    plateIndex: 'Plate index',
-    plate: 'Plate',
-    day: 'Day',
-    night: 'Night',
-    toDay: 'Switch to the day theme',
-    toNight: 'Switch to the night theme',
-    langButton: 'NL',
+    taglines: {
+      hero: 'Nice entrance',
+      work: 'Work that ships',
+      services: 'What I do',
+      about: 'This is me',
+      contact: "Let's talk",
+    },
+    menu: 'Menu',
+    close: 'Close',
+    work: 'Work',
+    services: 'What I do',
+    about: 'About',
+    contact: 'Contact',
+    getInTouch: 'Get in touch',
+    thisIsMe: 'This is me',
+    planCall: 'Book a call',
+    startProject: 'Start a project',
+    subjectCall: 'Intro call',
+    subjectProject: 'New project',
     toOtherLang: 'Schakel naar Nederlands',
+    home: 'Back to top',
   },
   hero: {
-    titlePage: 'Title page',
-    role: 'Designer — Developer',
-    index: 'Index of built work',
+    eyebrow: 'Nils Vogelaar',
+    role: 'Designer-developer',
+    city: 'Amsterdam',
+    follow: 'Follow me',
+  },
+  work: {
+    label: 'Featured work',
+    view: 'View',
+    cursor: 'View case',
+    openAria: 'Open work:',
+    imageComing: 'Imagery coming',
+  },
+  services: {
+    title: 'What I do.',
+    tldr: 'TLDR; I do a lot. Just email me:',
+  },
+  about: {
+    based: 'Based in the beating heart of Amsterdam',
+    statusLabel: 'Status',
+    linkedin: 'LinkedIn',
+  },
+  contact: {
+    title: ['Brief me', 'something.'],
+    label: 'Get in touch',
+    mail: 'Email me',
+    linkedin: 'LinkedIn',
+    copyright: 'Nils Vogelaar',
+    setIn: 'Set in Geist & Sometype Mono',
   },
   plates: {
-    header: 'The plates — built work',
-    counterSuffix: 'works · more under NDA',
-    open: 'Open the plate',
-    openAria: 'Open work:',
     specClient: 'Client',
     specYear: 'Year',
     specRole: 'Role',
@@ -191,17 +242,18 @@ const en: typeof nl = {
   },
   caseStudy: {
     ariaSuffix: 'case study',
+    back: 'Back to work',
     close: 'Close case study',
     visit: 'Visit live site',
     requestAccess: 'Request access',
     overview: 'Overview',
+    credits: 'Credits',
     highlights: 'Specifications',
     gallery: 'Gallery',
-    backToIndex: 'Back to the index',
     leaf: 'Leaf with ← →',
     next: 'Next',
-    prevPlate: 'Previous plate',
-    nextPlate: 'Next plate',
+    prevPlate: 'Previous case',
+    nextPlate: 'Next case',
   },
   trace: {
     header: 'The trace',
@@ -221,22 +273,6 @@ const en: typeof nl = {
     hevy: 'Hevy API',
     hevyNote: 'strength training',
     protocol: 'MCP — stdio / HTTP / SSE',
-  },
-  about: {
-    header: 'Essay — the practice',
-    statusLabel: 'Status',
-  },
-  skills: {
-    header: 'Specifications — the stack',
-  },
-  contact: {
-    header: 'Colophon',
-    eyebrow: 'One email is enough',
-    monument: ["Let's work", 'together.'],
-    replies: 'Replies within one business day',
-    copyright: 'Nils Vogelaar',
-    setIn: 'Set in Archivo & Source Serif 4',
-    backToTop: 'Back to top',
   },
   availability: {
     available: {

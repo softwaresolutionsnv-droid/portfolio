@@ -7,7 +7,140 @@
     "practice": {
       "nl": "Ik ontwerp en bouw web- en mobiele producten voor scale-ups, founders en lokale bedrijven die boven hun gewicht willen boksen. Eén persoon van eerste gesprek tot livegang: geen overdrachten, geen accountmanagers.",
       "en": "I design and build web and mobile products for scale-ups, founders, and local businesses that need to punch above their weight. One person from first conversation to launch day: no handoffs, no account managers."
+    },
+    "headline": {
+      "nl": [
+        "Eén persoon",
+        "van eerste gesprek",
+        "tot livegang."
+      ],
+      "en": [
+        "One person",
+        "from first call",
+        "to launch day."
+      ]
     }
+  },
+  "work": {
+    "intro": {
+      "nl": "Ik bouw voor scale-ups, founders en lokale bedrijven die boven hun gewicht willen boksen. Dit is werk dat draait, geen mockups.",
+      "en": "I build for scale-ups, founders and local businesses that need to punch above their weight. This is work that ships, not mockups."
+    }
+  },
+  "services": {
+    "intro": {
+      "nl": "Ik ontwerp en bouw apps, MCP-servers en sites die het echt doen. Ontwerp, code en de AI-integratie erbij, van het eerste gesprek tot de livegang. Geen overdrachten, geen accountmanagers, wel iemand die het product als het zijne behandelt.",
+      "en": "I design and build apps, MCP servers and sites that actually work. Design, code and the AI integration that goes with it, from first conversation to launch day. No handoffs, no account managers, just someone who treats the product as their own."
+    },
+    "diensten": [
+      {
+        "groep": "apps-ai",
+        "items": [
+          {
+            "nl": "Productontwerp & UX",
+            "en": "Product design & UX"
+          },
+          {
+            "nl": "React Native & Expo",
+            "en": "React Native & Expo"
+          },
+          {
+            "nl": "Ionic & Capacitor",
+            "en": "Ionic & Capacitor"
+          },
+          {
+            "nl": "Vue, Nuxt & React",
+            "en": "Vue, Nuxt & React"
+          },
+          {
+            "nl": "TypeScript",
+            "en": "TypeScript"
+          },
+          {
+            "nl": "Supabase & datamodellen",
+            "en": "Supabase & data models"
+          },
+          {
+            "nl": "Datapijplijnen & scrapers",
+            "en": "Data pipelines & scrapers"
+          },
+          {
+            "nl": "Personalisatie op gedragsdata",
+            "en": "Behaviour-based personalisation"
+          },
+          {
+            "nl": "AI-integratie in het product",
+            "en": "AI integration in the product"
+          }
+        ]
+      },
+      {
+        "groep": "mcp-tooling",
+        "items": [
+          {
+            "nl": "MCP-servers (FastMCP, Python)",
+            "en": "MCP servers (FastMCP, Python)"
+          },
+          {
+            "nl": "Tool-ontwerp voor AI-assistenten",
+            "en": "Tool design for AI assistants"
+          },
+          {
+            "nl": "OAuth 2.1 & PKCE",
+            "en": "OAuth 2.1 & PKCE"
+          },
+          {
+            "nl": "Deploy op Fly.io",
+            "en": "Deploys on Fly.io"
+          },
+          {
+            "nl": "API-ontsluiting",
+            "en": "API exposure"
+          },
+          {
+            "nl": "Automatisering & schedulers",
+            "en": "Automation & schedulers"
+          },
+          {
+            "nl": "Zelfherstellende integraties",
+            "en": "Self-healing integrations"
+          }
+        ]
+      },
+      {
+        "groep": "sites-merk",
+        "items": [
+          {
+            "nl": "Merkidentiteit",
+            "en": "Brand identity"
+          },
+          {
+            "nl": "Webdesign in Figma",
+            "en": "Web design in Figma"
+          },
+          {
+            "nl": "Next.js & Tailwind",
+            "en": "Next.js & Tailwind"
+          },
+          {
+            "nl": "Copy & contentstructuur",
+            "en": "Copy & content structure"
+          },
+          {
+            "nl": "Meertalig (NL/EN)",
+            "en": "Multilingual (NL/EN)"
+          },
+          {
+            "nl": "Performance & SEO",
+            "en": "Performance & SEO"
+          },
+          {
+            "nl": "Conversiegerichte flows",
+            "en": "Conversion-driven flows"
+          }
+        ]
+      }
+    ]
   },
   "about": {
     "intro": {
@@ -20,65 +153,33 @@
     },
     "details": [
       {
-        "label": { "nl": "Gevestigd in", "en": "Based in" },
-        "value": { "nl": "Amsterdam, NL", "en": "Amsterdam, NL" }
-      },
-      {
-        "label": { "nl": "Ervaring", "en": "Experience" },
-        "value": { "nl": "4+ jaar", "en": "4+ years" }
-      },
-      {
-        "label": { "nl": "Focus", "en": "Focus" },
-        "value": { "nl": "Web & mobiel", "en": "Web & Mobile" }
-      }
-    ]
-  },
-  "skills": {
-    "intro": {
-      "nl": "De stack volgt het probleem, nooit andersom. Dit is waar ik naar grijp, en wanneer.",
-      "en": "The stack follows the problem, never the other way around. Here is what I reach for, and when."
-    },
-    "picks": [
-      {
-        "tools": "Vue, Nuxt",
-        "when": {
-          "nl": "Mijn standaard. Interfaces die snel en stabiel blijven terwijl de data erachter groeit — tien rijen of tienduizend, het voelt hetzelfde.",
-          "en": "My default. Interfaces that stay fast and stable as the data behind them grows — ten rows or ten thousand, it feels the same."
+        "label": {
+          "nl": "Gevestigd in",
+          "en": "Based in"
+        },
+        "value": {
+          "nl": "Amsterdam, NL",
+          "en": "Amsterdam, NL"
         }
       },
       {
-        "tools": "React",
-        "when": {
-          "nl": "Wanneer het team het al kent, het ecosysteem zwaarder weegt dan ergonomie, of een library alleen in React bestaat.",
-          "en": "When the team already knows it, the ecosystem matters more than ergonomics, or a library only ships React."
+        "label": {
+          "nl": "Ervaring",
+          "en": "Experience"
+        },
+        "value": {
+          "nl": "4+ jaar",
+          "en": "4+ years"
         }
       },
       {
-        "tools": "Ionic, Capacitor",
-        "when": {
-          "nl": "Eén codebase naar iOS, Android en web. Voor wanneer twee native teams niet in het budget past.",
-          "en": "One codebase to iOS, Android, and the web. For when two native teams isn't in the budget."
-        }
-      },
-      {
-        "tools": "TypeScript",
-        "when": {
-          "nl": "Altijd. Kale JS is schuld zodra een tweede persoon het bestand opent.",
-          "en": "Always. Plain JS is debt the moment a second person opens the file."
-        }
-      },
-      {
-        "tools": "Node.js, REST, SQL",
-        "when": {
-          "nl": "Backend-lijm: API's, schedulers, integraties. Bewust saai.",
-          "en": "Backend glue: APIs, schedulers, integrations. Boring on purpose."
-        }
-      },
-      {
-        "tools": "Figma, Tailwind",
-        "when": {
-          "nl": "Waar het ontwerp gebeurt, en wat het zonder vertaalslag live krijgt.",
-          "en": "Where the design happens, and what gets it shipped without a translation step."
+        "label": {
+          "nl": "Focus",
+          "en": "Focus"
+        },
+        "value": {
+          "nl": "Web & mobiel",
+          "en": "Web & Mobile"
         }
       }
     ]
@@ -102,79 +203,6 @@
     ]
   },
   "werkstukken": [
-    {
-      "slug": "nachtagenda",
-      "title": "Nachtagenda",
-      "groep": "apps-ai",
-      "herkomst": "eigen-product",
-      "status": "pre-launch",
-      "bovenlaag": {
-        "nl": "Uitgaansagenda voor het Nederlandse nachtleven. Festivals en clubnachten uit losse bronnen komen samen in één feed die van je smaak leert — met je vriendengroep erbij, een ticketalarm voor drops en een jaaroverzicht achteraf.",
-        "en": "Nightlife agenda for the Netherlands. Festivals and club nights from scattered sources come together in one feed that learns your taste — with your crew along, a ticket alarm for drops, and a year-in-review afterwards."
-      },
-      "lede": {
-        "nl": "Het Nederlandse nachtleven in één agenda die je smaak leert — vóórdat de tickets weg zijn.",
-        "en": "Dutch nightlife in one agenda that learns your taste — before the tickets are gone."
-      },
-      "onderlaag": [
-        {
-          "nl": "De agenda begint bij een eigen datapijplijn: Python-scrapers op vijf bronnen (Ticketmaster, Resident Advisor, festivalsites, venue-data), met deduplicatie en cross-source-samenvoeging tot één schone eventlijst — zo'n 660 live events op dit moment. Het datamodel staat in Supabase, opgebouwd in 41 migraties met row-level security.",
-          "en": "The agenda starts with its own data pipeline: Python scrapers over five sources (Ticketmaster, Resident Advisor, festival sites, venue data), with deduplication and cross-source merging into one clean event list — around 660 live events right now. The data model lives in Supabase, built up across 41 migrations with row-level security."
-        },
-        {
-          "nl": "De personalisatie is gebouwd als afgeleide laag, met toestemming als voorwaarde. Zes soorten gedragssignalen — bekijken, ticket-taps, RSVP's, alarms, artiest-interacties — worden gewogen en met een verval van twee jaar samengevat tot een smaakprofiel per genre, stad, venue en artiest. Zonder toestemming staat de laag simpelweg uit.",
-          "en": "Personalisation is built as a derived layer, with consent as the precondition. Six kinds of behavioural signals — views, ticket taps, RSVPs, alarms, artist interactions — are weighted and decayed over two years into a taste profile per genre, city, venue, and artist. Without consent the layer is simply off."
-        },
-        {
-          "nl": "Daaromheen zit het sociale weefsel: een vriendengroep met wederzijdse RSVP's, een notificatie-engine die ticketdrops bewaakt, verrijkte artiestenpagina's en een Wrapped-achtig jaaroverzicht. Alles native gebouwd met Expo en React Native, in TypeScript.",
-          "en": "Around it sits the social fabric: a crew with mutual RSVPs, a notification engine watching ticket drops, enriched artist pages, and a Wrapped-style year in review. All built natively with Expo and React Native, in TypeScript."
-        }
-      ],
-      "tags": ["Expo", "React Native", "TypeScript", "Supabase", "Python"],
-      "role": {
-        "nl": "Ontwerp, app & datapijplijn",
-        "en": "Design, app & data pipeline"
-      },
-      "year": "2026",
-      "client": "",
-      "url": null,
-      "image": "",
-      "imageAlt": {
-        "nl": "Nachtagenda-appschermen met de gepersonaliseerde eventfeed en een eventpagina",
-        "en": "Nachtagenda app screens showing the personalised event feed and an event page"
-      },
-      "highlights": [
-        {
-          "label": { "nl": "Pijplijn", "en": "Pipeline" },
-          "value": {
-            "nl": "5 bronnen → ±660 samengevoegde events",
-            "en": "5 sources → ±660 merged events"
-          }
-        },
-        {
-          "label": { "nl": "Datamodel", "en": "Data model" },
-          "value": {
-            "nl": "Supabase, 41 migraties, row-level security",
-            "en": "Supabase, 41 migrations, row-level security"
-          }
-        },
-        {
-          "label": { "nl": "Personalisatie", "en": "Personalisation" },
-          "value": {
-            "nl": "6 gedragssignalen, 2 jaar verval, alleen met toestemming",
-            "en": "6 behavioural signals, 2-year decay, consent-gated"
-          }
-        },
-        {
-          "label": { "nl": "Status", "en": "Status" },
-          "value": {
-            "nl": "Pre-launch, getest in Expo Go",
-            "en": "Pre-launch, tested in Expo Go"
-          }
-        }
-      ],
-      "gallery": []
-    },
     {
       "slug": "berijdersapp",
       "title": "BerijdersApp",
@@ -203,37 +231,60 @@
           "en": "The fuel-score is the interesting part: every fill-up the driver logs is normalised against vehicle, route, and climate, then surfaced as a running score. It turns a back-office KPI into something a driver actually engages with."
         }
       ],
-      "tags": ["Vue.js", "TypeScript", "Ionic", "Capacitor"],
-      "role": { "nl": "Frontend-developer", "en": "Frontend Developer" },
+      "tags": [
+        "Vue.js",
+        "TypeScript",
+        "Ionic",
+        "Capacitor"
+      ],
+      "role": {
+        "nl": "Frontend-developer",
+        "en": "Frontend Developer"
+      },
       "year": "2025",
       "client": "Autodisk",
       "url": "https://www.autodisk.nl/leasemaatschappij/berijdersapp/",
-      "image": "/projects/berijdersapp.jpg",
+      "image": "",
       "imageAlt": {
         "nl": "BerijdersApp-schermen met leasecontractoverzicht, kilometerstand en brandstofscore",
         "en": "BerijdersApp mobile screens showing lease contract overview, mileage, and fuel consumption score"
       },
       "highlights": [
         {
-          "label": { "nl": "Platform", "en": "Platform" },
-          "value": { "nl": "iOS · Android · Web", "en": "iOS · Android · Web" }
+          "label": {
+            "nl": "Platform",
+            "en": "Platform"
+          },
+          "value": {
+            "nl": "iOS · Android · Web",
+            "en": "iOS · Android · Web"
+          }
         },
         {
-          "label": { "nl": "Opgeleverd", "en": "Shipped" },
+          "label": {
+            "nl": "Opgeleverd",
+            "en": "Shipped"
+          },
           "value": {
             "nl": "White-label, per leasemaatschappij configureerbaar",
             "en": "White-label, config-driven per lease company"
           }
         },
         {
-          "label": { "nl": "Scope", "en": "Scope" },
+          "label": {
+            "nl": "Scope",
+            "en": "Scope"
+          },
           "value": {
             "nl": "Contract, schade, boetes, brandstofscore",
             "en": "Contract, damage, fines, fuel-score"
           }
         },
         {
-          "label": { "nl": "Team", "en": "Team" },
+          "label": {
+            "nl": "Team",
+            "en": "Team"
+          },
           "value": {
             "nl": "Solo frontend, designer in-house",
             "en": "Solo frontend, in-house designer"
@@ -243,86 +294,116 @@
       "gallery": []
     },
     {
-      "slug": "garmin-mcp",
-      "title": "garmin-mcp",
-      "groep": "mcp-tooling",
-      "herkomst": "eigen-product",
-      "status": "live",
+      "slug": "shaftlab",
+      "title": "Shaftlab",
+      "groep": "apps-ai",
+      "herkomst": "in-opdracht",
+      "status": "pre-launch",
       "bovenlaag": {
-        "nl": "MCP-server die een AI-assistent rechtstreeks toegang geeft tot Garmin-trainingsdata. Slaap, hartslagvariabiliteit, trainingsbelasting en krachttraining komen als antwoord terug in het gesprek zelf — geen exports, geen dashboards. Draait in productie als dagelijkse hardloopcoach.",
-        "en": "MCP server that gives an AI assistant direct access to Garmin training data. Sleep, heart-rate variability, training load, and strength work come back as answers inside the conversation itself — no exports, no dashboards. Runs in production as a daily running coach."
+        "nl": "Shopify-webshop met een eigen club-builder voor een golfwerkplaats. De golfer die zijn spec kent kiest shaft, flex, grip en adapter, en bestelt een op maat gebouwde club als één product.",
+        "en": "Shopify store with a custom club builder for a golf workshop. The golfer who knows their spec picks shaft, flex, grip and adapter, and orders a custom-built club as one product."
       },
       "lede": {
-        "nl": "Een hardloopcoach die je data al kent: 43 gereedschappen tussen je AI-assistent en je horloge.",
-        "en": "A running coach that already knows your data: 43 tools between your AI assistant and your watch."
+        "nl": "Geen configurator die uitlegt, maar een werkplaats die bouwt wat je al weet dat je wilt.",
+        "en": "Not a configurator that explains, but a workshop that builds what you already know you want."
       },
       "onderlaag": [
         {
-          "nl": "Een FastMCP-server in Python die Garmin Connect ontsluit over stdio, HTTP en SSE, met OAuth 2.1 + PKCE voor de claude.ai-connectors. Hij draait op Fly.io; de Garmin-sessietokens leven op een persistent volume en de server schrijft ze na elke rotatie terug, zodat een herstart nooit een nieuwe login vraagt.",
-          "en": "A FastMCP server in Python exposing Garmin Connect over stdio, HTTP, and SSE, with OAuth 2.1 + PKCE for the claude.ai connectors. It runs on Fly.io; the Garmin session tokens live on a persistent volume and the server writes them back after every rotation, so a restart never asks for a fresh login."
+          "nl": "De primaire gebruiker weet welk shaftmodel, welke flex en welk gewicht hij wil. De flow is dus één zin: shaftpagina, welke kop heb je, configureren, kar. Uitleg zit als inklapbare laag onder elke keuze, nooit ervoor.",
+          "en": "The primary user knows which shaft model, flex and weight they want. So the flow is one sentence: shaft page, which head do you have, configure, cart. Explanation sits as a collapsible layer under each choice, never in front of it."
         },
         {
-          "nl": "De 43 tools zijn geschreven voor coaching, niet als kale API-doorgeefluiken: één health-snapshot voor het dagbeeld, loopefficiëntie met cardiac drift per interval, racevoorspellingen, wind per ronde uit het geregistreerde weer, en een Hevy-koppeling voor krachttraining. Zes tools mogen schrijven — workouts aanmaken en inplannen — en zijn met één omgevingsvariabele uit te zetten.",
-          "en": "The 43 tools are written for coaching, not as bare API pass-throughs: one health snapshot for the daily picture, running efficiency with cardiac drift per interval, race predictions, per-lap wind from the recorded weather, and a Hevy integration for strength training. Six tools may write — creating and scheduling workouts — and can be disabled with a single environment variable."
+          "nl": "Eigen Shopify-thema, geen Dawn-afgeleide. De configurator is een vanilla-JS-eiland in één theme section; de catalogus komt uit Liquid, niet uit de Storefront API. Een Cloudflare Worker houdt het Admin-token vast en maakt per build een fixed bundle aan, zonder App Store, zonder Plus, zonder omzetfee.",
+          "en": "Custom Shopify theme, not a Dawn derivative. The configurator is a vanilla-JS island in one theme section; the catalogue comes from Liquid, not the Storefront API. A Cloudflare Worker holds the Admin token and creates a fixed bundle per build, with no App Store, no Plus, no revenue fee."
         },
         {
-          "nl": "Voor alles wat geen eigen tool heeft is er een rauwe escape hatch naar elk Garmin-endpoint, en een statustool die de verbinding bewaakt. De server is er daardoor ook het bewijs van hoe ik MCP's bouw: klein oppervlak, zelfherstellend, en gedragen door echte dagelijkse eindgebruik.",
-          "en": "For anything without a dedicated tool there is a raw escape hatch to any Garmin endpoint, plus a status tool watching the connection. That makes the server double as proof of how I build MCPs: small surface, self-healing, and carried by real daily use."
+          "nl": "Alles wat de eigenaar moet beheren, kan in de Shopify-admin: productdata, specs, foto's, CSV-imports. De builder is een webcomponent, zodat het moederbedrijf hem later in zijn eigen site kan inbedden.",
+          "en": "Everything the owner has to manage lives in the Shopify admin: product data, specs, photos, CSV imports. The builder is a web component so the parent company can embed it in its own site later."
         }
       ],
-      "tags": ["Python", "FastMCP", "Fly.io", "OAuth 2.1"],
-      "role": { "nl": "Ontwerp & bouw", "en": "Design & build" },
+      "tags": [
+        "Shopify",
+        "Liquid",
+        "JavaScript",
+        "Cloudflare Workers"
+      ],
+      "role": {
+        "nl": "Ontwerp, bouw & integratie",
+        "en": "Design, build & integration"
+      },
       "year": "2026",
-      "client": "",
+      "client": "Shaftlab",
       "url": null,
-      "image": "",
+      "image": "/projects/shaftlab-01.png",
       "imageAlt": {
-        "nl": "Architectuurdiagram: een AI-assistent praat via MCP met garmin-mcp op Fly.io, dat de Garmin Connect- en Hevy-API's ontsluit",
-        "en": "Architecture diagram: an AI assistant talks over MCP to garmin-mcp on Fly.io, which exposes the Garmin Connect and Hevy APIs"
+        "nl": "Club-builder van Shaftlab op Shopify",
+        "en": "Shaftlab club builder on Shopify"
       },
       "highlights": [
         {
-          "label": { "nl": "Tools", "en": "Tools" },
+          "label": {
+            "nl": "Platform",
+            "en": "Platform"
+          },
           "value": {
-            "nl": "43, waarvan 6 met schrijfrechten",
-            "en": "43, of which 6 can write"
+            "nl": "Shopify, eigen thema",
+            "en": "Shopify, custom theme"
           }
         },
         {
-          "label": { "nl": "Transport", "en": "Transport" },
+          "label": {
+            "nl": "Builder",
+            "en": "Builder"
+          },
           "value": {
-            "nl": "stdio · HTTP · SSE, OAuth 2.1 + PKCE",
-            "en": "stdio · HTTP · SSE, OAuth 2.1 + PKCE"
+            "nl": "Vanilla-JS-eiland, geen build step",
+            "en": "Vanilla-JS island, no build step"
           }
         },
         {
-          "label": { "nl": "Deploy", "en": "Deploy" },
+          "label": {
+            "nl": "Bundel",
+            "en": "Bundle"
+          },
           "value": {
-            "nl": "Fly.io, zelfherstellende tokenopslag",
-            "en": "Fly.io, self-healing token store"
+            "nl": "Fixed bundle via Cloudflare Worker",
+            "en": "Fixed bundle via Cloudflare Worker"
           }
         },
         {
-          "label": { "nl": "Integraties", "en": "Integrations" },
+          "label": {
+            "nl": "Beheer",
+            "en": "Admin"
+          },
           "value": {
-            "nl": "Garmin Connect + Hevy",
-            "en": "Garmin Connect + Hevy"
+            "nl": "Alles in de Shopify-admin",
+            "en": "Everything in the Shopify admin"
           }
         }
       ],
-      "gallery": [],
-      "trace": {
-        "vraag": {
-          "nl": "Wat zijn mijn voorspelde racetijden?",
-          "en": "What are my predicted race times?"
+      "gallery": [
+        {
+          "image": "/projects/shaftlab-02.png",
+          "alt": {
+            "nl": "Configuratiestap van de Shaftlab club-builder",
+            "en": "Configuration step of the Shaftlab club builder"
+          }
         },
-        "aanroep": "get_race_predictions()",
-        "antwoord": "{\n  \"calendarDate\": \"2026-08-13\",\n  \"time5K\": 1503,\n  \"time10K\": 3228,\n  \"timeHalfMarathon\": 7308,\n  \"timeMarathon\": 16218\n}",
-        "duiding": {
-          "nl": "Tijden in seconden — 25:03 · 53:48 · 2:01:48 · 4:30:18. Opgenomen op 13 augustus 2026.",
-          "en": "Times in seconds — 25:03 · 53:48 · 2:01:48 · 4:30:18. Recorded on 13 August 2026."
+        {
+          "image": "/projects/shaftlab-m-01.png",
+          "alt": {
+            "nl": "Mobiele weergave van de Shaftlab-shop",
+            "en": "Mobile view of the Shaftlab store"
+          }
+        },
+        {
+          "image": "/projects/shaftlab-03.png",
+          "alt": {
+            "nl": "Productpagina van de Shaftlab-shop",
+            "en": "Product page of the Shaftlab store"
+          }
         }
-      }
+      ]
     },
     {
       "slug": "fleetdisk",
@@ -352,8 +433,16 @@
           "en": "Deep filtering, saved views, and CSV export mean power users stop asking the helpdesk for reports. The helpdesk team got their afternoons back."
         }
       ],
-      "tags": ["Nuxt.js", "Vue.js", "TypeScript", "Bootstrap"],
-      "role": { "nl": "Frontend-developer", "en": "Frontend Developer" },
+      "tags": [
+        "Nuxt.js",
+        "Vue.js",
+        "TypeScript",
+        "Bootstrap"
+      ],
+      "role": {
+        "nl": "Frontend-developer",
+        "en": "Frontend Developer"
+      },
       "year": "2024",
       "client": "Autodisk",
       "url": null,
@@ -364,26 +453,165 @@
       },
       "highlights": [
         {
-          "label": { "nl": "Gebruikers", "en": "Users" },
-          "value": { "nl": "Fleetmanagers, B2B", "en": "Fleet managers, B2B" }
+          "label": {
+            "nl": "Gebruikers",
+            "en": "Users"
+          },
+          "value": {
+            "nl": "Fleetmanagers, B2B",
+            "en": "Fleet managers, B2B"
+          }
         },
         {
-          "label": { "nl": "Dataschaal", "en": "Data scale" },
-          "value": { "nl": "100k+ voertuigen, live", "en": "100k+ vehicles, live" }
+          "label": {
+            "nl": "Dataschaal",
+            "en": "Data scale"
+          },
+          "value": {
+            "nl": "100k+ voertuigen, live",
+            "en": "100k+ vehicles, live"
+          }
         },
         {
-          "label": { "nl": "Stack", "en": "Stack" },
+          "label": {
+            "nl": "Stack",
+            "en": "Stack"
+          },
           "value": {
             "nl": "Nuxt 3 · TypeScript · REST-API",
             "en": "Nuxt 3 · TypeScript · REST API"
           }
         },
         {
-          "label": { "nl": "Resultaat", "en": "Outcome" },
-          "value": { "nl": "Minder helpdesktickets", "en": "Fewer helpdesk tickets" }
+          "label": {
+            "nl": "Resultaat",
+            "en": "Outcome"
+          },
+          "value": {
+            "nl": "Minder helpdesktickets",
+            "en": "Fewer helpdesk tickets"
+          }
         }
       ],
       "gallery": []
+    },
+    {
+      "slug": "puikbouw",
+      "title": "Puik Bouw",
+      "groep": "sites-merk",
+      "herkomst": "in-opdracht",
+      "status": "live",
+      "bovenlaag": {
+        "nl": "Website voor een familiebedrijf in bouwonderhoud, sinds 1989. Eén partij voor verbouwing, renovatie en onderhoud, gebouwd om VvE's, vastgoedbeheerders en huiseigenaren naar een offerte te brengen.",
+        "en": "Website for a family building-maintenance firm, trading since 1989. One partner for renovation, refurbishment and upkeep, built to move owners' associations, property managers and homeowners toward a quote."
+      },
+      "lede": {
+        "nl": "Vader en zonen, 37 jaar vakwerk, en een site die dat eindelijk laat zien in plaats van het te roepen.",
+        "en": "Father and sons, 37 years of craft, and a site that finally shows it instead of shouting it."
+      },
+      "onderlaag": [
+        {
+          "nl": "Puik Bouw verenigt alle vakgebieden onder één dak: gevelrenovatie, verbouwen, schilderwerk en wandafwerking, energielabel verhogen. De oude site vertelde dat niet. De opdracht: een rustige, betrouwbare site die de breedte laat zien zonder te overweldigen, met de offerteaanvraag op elk beslismoment binnen handbereik.",
+          "en": "Puik Bouw brings every trade under one roof: façade renovation, refurbishment, painting and wall finishing, energy-label upgrades. The old site didn't say so. The brief: a calm, trustworthy site that shows the breadth without overwhelming, with the quote request one tap away at every decision point."
+        },
+        {
+          "nl": "De copy komt uit de klantteksten en is geherstructureerd tot vier vakgebieden. Projectfoto's zijn echte voor-en-na-opnames van eigen werk, geen stock. Bewust geen prijzen: de site verkoopt zekerheid over de contractperiode, niet de laagste offerte.",
+          "en": "The copy comes from the client's own texts, restructured into four trades. Project photos are real before-and-after shots of their own work, no stock. Deliberately no prices: the site sells certainty across the contract period, not the lowest quote."
+        },
+        {
+          "nl": "Gebouwd in Next.js met Tailwind, mobiel-eerst getest, met een zwevende telefoonknop die zich verbergt waar hij in de weg zit. Een dormante Instagram-sectie wacht op het Business-account van de klant.",
+          "en": "Built in Next.js with Tailwind, tested mobile-first, with a floating phone button that hides where it would get in the way. A dormant Instagram section waits for the client's business account."
+        }
+      ],
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS"
+      ],
+      "role": {
+        "nl": "Ontwerp, copy-structuur & bouw",
+        "en": "Design, copy structure & build"
+      },
+      "year": "2026",
+      "client": "Puik Bouw bv",
+      "url": "https://puikbouw.nl/",
+      "image": "/projects/puikbouw-01.png",
+      "imageAlt": {
+        "nl": "Herosectie van puikbouw.nl: 'Eén partij voor uw verbouwing, renovatie en onderhoud' naast een foto van gevelwerk op steigers",
+        "en": "Hero of puikbouw.nl: 'One partner for your refurbishment, renovation and upkeep' beside a photo of façade work on scaffolding"
+      },
+      "highlights": [
+        {
+          "label": {
+            "nl": "Oplevering",
+            "en": "Deliverable"
+          },
+          "value": {
+            "nl": "Site + copy-structuur",
+            "en": "Site + copy structure"
+          }
+        },
+        {
+          "label": {
+            "nl": "Vakgebieden",
+            "en": "Trades"
+          },
+          "value": {
+            "nl": "4, uit klantteksten",
+            "en": "4, from client copy"
+          }
+        },
+        {
+          "label": {
+            "nl": "Beeld",
+            "en": "Imagery"
+          },
+          "value": {
+            "nl": "Echte projectfoto's, geen stock",
+            "en": "Real project photos, no stock"
+          }
+        },
+        {
+          "label": {
+            "nl": "Stack",
+            "en": "Stack"
+          },
+          "value": {
+            "nl": "Next.js · Tailwind",
+            "en": "Next.js · Tailwind"
+          }
+        }
+      ],
+      "gallery": [
+        {
+          "image": "/projects/puikbouw-02.png",
+          "alt": {
+            "nl": "Vakgebieden-overzicht van puikbouw.nl met projectfoto's",
+            "en": "Trades overview on puikbouw.nl with project photos"
+          }
+        },
+        {
+          "image": "/projects/puikbouw-m-01.png",
+          "alt": {
+            "nl": "Mobiele herosectie van puikbouw.nl",
+            "en": "Mobile hero of puikbouw.nl"
+          }
+        },
+        {
+          "image": "/projects/puikbouw-04.png",
+          "alt": {
+            "nl": "Dienstenpagina van puikbouw.nl",
+            "en": "Services page of puikbouw.nl"
+          }
+        },
+        {
+          "image": "/projects/puikbouw-m-02.png",
+          "alt": {
+            "nl": "Mobiel dienstenoverzicht van puikbouw.nl",
+            "en": "Mobile services overview of puikbouw.nl"
+          }
+        }
+      ]
     },
     {
       "slug": "nb-onderhoudsdiensten",
@@ -413,35 +641,214 @@
           "en": "Built in Next.js with internationalisation (NL/EN) from day one, and a booking flow built to convert."
         }
       ],
-      "tags": ["Next.js", "TypeScript", "Tailwind CSS"],
-      "role": { "nl": "Ontwerp & bouw", "en": "Design & build" },
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS"
+      ],
+      "role": {
+        "nl": "Ontwerp & bouw",
+        "en": "Design & build"
+      },
       "year": "2025",
       "client": "Freelance",
       "url": "https://nbonderhoud.nl/",
-      "image": "/projects/nb-onderhoudsdiensten.png",
+      "image": "/projects/nb-onderhoudsdiensten-01.png",
       "imageAlt": {
         "nl": "Herosectie van N.B. Onderhoudsdiensten met donkere achtergrond, serif-typografie en blauw-gouden accenten",
         "en": "N.B. Onderhoudsdiensten hero section with dark background, serif typography, and blue/gold accent colors"
       },
       "highlights": [
         {
-          "label": { "nl": "Oplevering", "en": "Deliverable" },
-          "value": { "nl": "Merk + site + copy", "en": "Brand + site + copy" }
+          "label": {
+            "nl": "Oplevering",
+            "en": "Deliverable"
+          },
+          "value": {
+            "nl": "Merk + site + copy",
+            "en": "Brand + site + copy"
+          }
         },
         {
-          "label": { "nl": "Stack", "en": "Stack" },
-          "value": { "nl": "Next.js · NL/EN", "en": "Next.js · NL/EN" }
+          "label": {
+            "nl": "Stack",
+            "en": "Stack"
+          },
+          "value": {
+            "nl": "Next.js · NL/EN",
+            "en": "Next.js · NL/EN"
+          }
         },
         {
-          "label": { "nl": "Scope", "en": "Scope" },
-          "value": { "nl": "Solo: ontwerp, copy, bouw", "en": "Solo: design, copy, build" }
+          "label": {
+            "nl": "Scope",
+            "en": "Scope"
+          },
+          "value": {
+            "nl": "Solo: ontwerp, copy, bouw",
+            "en": "Solo: design, copy, build"
+          }
         },
         {
-          "label": { "nl": "Talen", "en": "Languages" },
-          "value": { "nl": "NL / EN", "en": "NL / EN" }
+          "label": {
+            "nl": "Talen",
+            "en": "Languages"
+          },
+          "value": {
+            "nl": "NL / EN",
+            "en": "NL / EN"
+          }
         }
       ],
-      "gallery": []
+      "gallery": [
+        {
+          "image": "/projects/nb-onderhoudsdiensten-02.png",
+          "alt": {
+            "nl": "Dienstenoverzicht van N.B. Onderhoudsdiensten",
+            "en": "Services overview of N.B. Onderhoudsdiensten"
+          }
+        },
+        {
+          "image": "/projects/nb-onderhoudsdiensten-m-01.png",
+          "alt": {
+            "nl": "Mobiele herosectie van nbonderhoud.nl",
+            "en": "Mobile hero section of nbonderhoud.nl"
+          }
+        },
+        {
+          "image": "/projects/nb-onderhoudsdiensten-03.png",
+          "alt": {
+            "nl": "Projectensectie met voor- en na-foto's",
+            "en": "Projects section with before and after photos"
+          }
+        },
+        {
+          "image": "/projects/nb-onderhoudsdiensten-04.png",
+          "alt": {
+            "nl": "Werkgebied en offerte-CTA van nbonderhoud.nl",
+            "en": "Service area and quote CTA of nbonderhoud.nl"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "4fruit",
+      "title": "4 Fruit Company",
+      "groep": "sites-merk",
+      "herkomst": "in-opdracht",
+      "status": "pre-launch",
+      "bovenlaag": {
+        "nl": "Vijftalige B2B-site voor een AGF-importeur en -exporteur uit Ridderkerk, sinds 2000. Gebouwd om inkopers van supermarkten en grossiers over de streep te trekken: assortiment, koelketen, certificeringen en de mensen erachter.",
+        "en": "Five-language B2B site for a fresh-produce importer and exporter from Ridderkerk, trading since 2000. Built to win over supermarket buyers and wholesalers: assortment, cold chain, certifications and the people behind the trade."
+      },
+      "lede": {
+        "nl": "Een handelaar in vers fruit die zijn woord houdt, en een site die dat in vijf talen zonder omhaal zegt.",
+        "en": "A fresh-produce trader who keeps their word, and a site that says so in five languages without fuss."
+      },
+      "onderlaag": [
+        {
+          "nl": "4 Fruit Company had een gedateerde WordPress-brochure. De bezoeker is een ervaren inkoper met één vraag: kan ik hierop bouwen, het hele jaar? De site antwoordt met bewijs: certificeringen (BRC, GLOBALG.A.P., AEO), koelcellen, palletcapaciteit, landen, en de namen van de mensen die de relaties onderhouden.",
+          "en": "4 Fruit Company had a dated WordPress brochure. The visitor is an experienced buyer with one question: can I rely on this, all year round? The site answers with proof: certifications (BRC, GLOBALG.A.P., AEO), cold stores, pallet capacity, countries, and the names of the people who maintain the relationships."
+        },
+        {
+          "nl": "De visuele wereld is gebouwd rond de reefer-container: staal, zink en één crimson accent, geen afgeronde hoeken. De copy komt rechtstreeks uit het klantdocument. Geen stock, wel het echte product en de echte keten.",
+          "en": "The visual world is built around the reefer container: steel, zinc and one crimson accent, no rounded corners. The copy comes straight from the client's document. No stock, just the real product and the real chain."
+        },
+        {
+          "nl": "Next.js met een eigen, dependency-vrije i18n-laag: NL is canoniek, EN/DE/ES/FR volgen onder een taalprefix. De Instagram-strip loopt via Behold. De vertalingen liggen bij de klant ter controle vóór livegang.",
+          "en": "Next.js with a dependency-free i18n layer of its own: NL is canonical, EN/DE/ES/FR follow under a locale prefix. The Instagram strip runs through Behold. Translations are with the client for review before launch."
+        }
+      ],
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "i18n"
+      ],
+      "role": {
+        "nl": "Ontwerp & bouw",
+        "en": "Design & build"
+      },
+      "year": "2026",
+      "client": "4 Fruit Company B.V.",
+      "url": null,
+      "image": "/projects/4fruit-01.png",
+      "imageAlt": {
+        "nl": "Herosectie van de nieuwe 4 Fruit Company-site in de reefer-wereld: staal, zink en crimson",
+        "en": "Hero of the new 4 Fruit Company site in the reefer world: steel, zinc and crimson"
+      },
+      "highlights": [
+        {
+          "label": {
+            "nl": "Talen",
+            "en": "Languages"
+          },
+          "value": {
+            "nl": "NL · EN · DE · ES · FR",
+            "en": "NL · EN · DE · ES · FR"
+          }
+        },
+        {
+          "label": {
+            "nl": "Publiek",
+            "en": "Audience"
+          },
+          "value": {
+            "nl": "B2B-inkopers, geen consumenten",
+            "en": "B2B buyers, not consumers"
+          }
+        },
+        {
+          "label": {
+            "nl": "Bewijs",
+            "en": "Proof"
+          },
+          "value": {
+            "nl": "Certificeringen + cijfers boven de vouw",
+            "en": "Certifications + numbers above the fold"
+          }
+        },
+        {
+          "label": {
+            "nl": "Stack",
+            "en": "Stack"
+          },
+          "value": {
+            "nl": "Next.js · eigen i18n",
+            "en": "Next.js · own i18n"
+          }
+        }
+      ],
+      "gallery": [
+        {
+          "image": "/projects/4fruit-02.png",
+          "alt": {
+            "nl": "Ketensectie van de 4 Fruit Company-site",
+            "en": "Supply-chain section of the 4 Fruit Company site"
+          }
+        },
+        {
+          "image": "/projects/4fruit-m-01.png",
+          "alt": {
+            "nl": "Mobiele herosectie van de 4 Fruit Company-site",
+            "en": "Mobile hero of the 4 Fruit Company site"
+          }
+        },
+        {
+          "image": "/projects/4fruit-03.png",
+          "alt": {
+            "nl": "Assortimentspagina van de 4 Fruit Company-site",
+            "en": "Assortment page of the 4 Fruit Company site"
+          }
+        },
+        {
+          "image": "/projects/4fruit-m-02.png",
+          "alt": {
+            "nl": "Mobiele assortimentspagina van de 4 Fruit Company-site",
+            "en": "Mobile assortment page of the 4 Fruit Company site"
+          }
+        }
+      ]
     }
   ]
 }

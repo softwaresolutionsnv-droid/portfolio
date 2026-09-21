@@ -25,11 +25,11 @@ function Node({
       className="flex flex-col justify-center px-6 py-5"
       style={{
         border: `1px solid ${emphasized ? 'var(--border)' : 'var(--border-subtle)'}`,
-        backgroundColor: emphasized ? 'var(--bg-elevated)' : 'var(--bg-surface)',
+        backgroundColor: emphasized ? 'rgb(var(--c-dark))' : 'rgb(var(--c-black))',
       }}
     >
       <span
-        className="t-headline"
+        className="t-h6"
         style={{
           fontSize: emphasized ? '1.125rem' : '0.9375rem',
           color: emphasized ? 'var(--text-primary)' : 'var(--text-secondary)',
@@ -37,7 +37,7 @@ function Node({
       >
         {title}
       </span>
-      <span className="t-index mt-2" style={{ color: 'var(--text-muted)' }}>
+      <span className="t-mono mt-2" style={{ color: 'var(--text-muted)' }}>
         {note}
       </span>
     </div>
@@ -49,10 +49,10 @@ function Arrow() {
   const style = { fontSize: '1.375rem', color: 'var(--text-muted)', lineHeight: 1 };
   return (
     <div aria-hidden="true" className="flex items-center justify-center">
-      <span className="t-serif sm:hidden" style={style}>
+      <span className="t-body sm:hidden" style={style}>
         ↓
       </span>
-      <span className="t-serif hidden sm:inline" style={style}>
+      <span className="t-body hidden sm:inline" style={style}>
         →
       </span>
     </div>
@@ -69,14 +69,14 @@ export function McpDiagram({ alt }: { alt: string }) {
       aria-label={alt}
       className="w-full"
       style={{
-        border: '1px solid var(--border-subtle)',
-        backgroundColor: 'var(--bg-surface)',
+        
+        backgroundColor: 'rgb(var(--c-black))',
         padding: 'clamp(1.5rem, 4vw, 3.5rem)',
       }}
     >
       {/* Protocol rule — the drawing's engraved caption line. */}
       <p
-        className="t-label pb-4 mb-8"
+        className="t-mono pb-4 mb-8"
         style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--border-subtle)' }}
       >
         {d.protocol}
@@ -87,7 +87,7 @@ export function McpDiagram({ alt }: { alt: string }) {
         <Arrow />
         <div className="flex flex-col">
           <Node title={d.server} note={d.serverNote} emphasized />
-          <p className="t-index mt-3" style={{ color: 'var(--text-muted)' }}>
+          <p className="t-mono mt-3" style={{ color: 'var(--text-muted)' }}>
             {d.serverAuth}
           </p>
         </div>
