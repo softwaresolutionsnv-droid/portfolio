@@ -9,7 +9,7 @@
    =================================================================== */
 
 @theme {
-  --font-sans: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: "Geist Variable", "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: "Sometype Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }
 
@@ -36,20 +36,9 @@
   --signal: rgb(var(--signal-rgb));
   --ink-70: rgb(var(--ink-rgb) / 0.7);
   --ink-50: rgb(var(--ink-rgb) / 0.5);
+  --ink-40: rgb(var(--ink-rgb) / 0.4);
   --ink-20: rgb(var(--ink-rgb) / 0.2);
   --ink-10: rgb(var(--ink-rgb) / 0.1);
-
-  /* Legacy names kept for McpDiagram / shared pieces. */
-  --text-primary: var(--ink);
-  --text-secondary: var(--ink-70);
-  --text-muted: var(--ink-50);
-  --border: var(--ink-20);
-  --border-subtle: var(--ink-10);
-  --bg-surface: var(--bg2);
-  --bg-elevated: var(--bg2);
-  --accent-ink: var(--ink);
-  --emboss: var(--ink-10);
-  --scrim-strong: rgb(0 0 0 / 0.82);
 
   /* Fluid grid + spacing, 1440 reference. */
   --margin: max(1rem, calc(40 / 1440 * 100vw));
@@ -107,7 +96,7 @@
 .theme-light { --bg-rgb: var(--c-off-white); --ink-rgb: var(--c-off-black); --bg2-rgb: var(--c-white); }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: auto; }
+html { scroll-behavior: auto; scroll-padding-top: 5rem; /* focus scrolled into view clears the fixed nav pill (2.4.11) */ }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
@@ -121,16 +110,23 @@ body {
   transition: background-color 700ms var(--ease-out), color 700ms var(--ease-out);
   overflow-x: clip;
 }
+/* Scroll-scrubbed theme blend drives the colour itself; a timed fade would lag it. */
+.is-blending body { transition: color 700ms var(--ease-out); }
 
 ::selection { background: var(--ink); color: var(--bg); }
 
-img, video, canvas, svg { display: block; max-width: 100%; }
-@layer base { button { font: inherit; letter-spacing: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; } }
-a { color: inherit; text-decoration: none; }
-h1, h2, h3, h4, p, ul, ol, dl, dd, figure, pre { margin: 0; }
-ul, ol { padding: 0; list-style: none; }
+/* Element resets live in the base layer: unlayered, they outrank every Tailwind utility (an mt-8 on a <p> did nothing). */
+@layer base {
+  img, video, canvas, svg { display: block; max-width: 100%; }
+  button { font: inherit; letter-spacing: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3, h4, p, ul, ol, dl, dd, figure, pre { margin: 0; }
+  ul, ol { padding: 0; list-style: none; }
+}
 
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+/* A section that takes focus after in-page navigation is a reading position, not a control. */
+section[tabindex="-1"]:focus { outline: none; }
 
 /* ===================================================================
    TYPE SCALE — Suisse-register grotesk. Display: bold caps, lh .8.
@@ -142,8 +138,9 @@ ul, ol { padding: 0; list-style: none; }
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 0.82;
-  font-size: clamp(3.25rem, 1.0625rem + 4.38vw, 7.7rem);
+  font-size: clamp(2.6rem, 0.5rem + 4.2vw, 7.2rem); /* sized so the three NL hero lines hold on one line each from 1024 up */
 }
+.t-display--hero { font-size: clamp(2.6rem, 0.25rem + 6.6vw, 7.25rem); text-wrap: balance; } /* the first promise runs all 12 columns and outranks every section title */
 .t-display-sm {
   font-family: var(--font-sans);
   font-weight: 700;
@@ -151,13 +148,6 @@ ul, ol { padding: 0; list-style: none; }
   letter-spacing: -0.02em;
   line-height: 0.82;
   font-size: clamp(3rem, 1.125rem + 3.75vw, 6.75rem);
-}
-.t-h1 {
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  line-height: 0.82;
-  font-size: clamp(2.5rem, 0.9375rem + 3.13vw, 5.625rem);
 }
 .t-h2 {
   font-weight: 400;
@@ -217,7 +207,7 @@ ul, ol { padding: 0; list-style: none; }
   line-height: 1.6;
   font-size: 0.6875rem;
 }
-.t-mono-sm { font-family: var(--font-mono); text-transform: uppercase; font-size: 0.625rem; line-height: 1.8; font-weight: 500; letter-spacing: 0; }
+.t-mono-sm { font-family: var(--font-mono); text-transform: uppercase; font-size: 0.6875rem; line-height: 1.8; font-weight: 500; letter-spacing: 0; } /* 11px floor: the caption step differs from .t-mono by weight, not by shrinking */
 .t-mono-md { font-family: var(--font-mono); text-transform: uppercase; font-size: 0.75rem; line-height: 1.6; letter-spacing: 0; }
 .t-code { font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.7; letter-spacing: 0; }
 
@@ -231,7 +221,8 @@ ul, ol { padding: 0; list-style: none; }
    LAYOUT
    =================================================================== */
 
-.container { padding-left: var(--margin); padding-right: var(--margin); width: 100%; }
+/* Full-bleed on the --margin gutter; overrides Tailwind's breakpoint max-width on `container`. */
+.container { padding-left: var(--margin); padding-right: var(--margin); width: 100%; max-width: none; }
 .grid-12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); }
 .hairline { height: 1px; background: var(--ink-20); }
 
@@ -242,7 +233,7 @@ ul, ol { padding: 0; list-style: none; }
 /* Chip / tag — black block, mono text. */
 .chip {
   font-family: var(--font-mono);
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
   line-height: 1;
   font-weight: 500;
   text-transform: uppercase;
@@ -256,6 +247,12 @@ ul, ol { padding: 0; list-style: none; }
   background: rgb(var(--c-off-black));
   color: rgb(var(--c-off-white));
 }
+/* Groep chip is outlined so the three chip kinds (groep · herkomst · status) read as two facts, not one. */
+.chip--groep, [data-theme="light"] .chip--groep, [data-theme="green"] .chip--groep, [data-theme="pink"] .chip--groep, .theme-light .chip--groep {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink-50);
+}
 
 /* Outline button — mono, 1px, 4px radius, arrow ↗ typeset. */
 .btn {
@@ -267,7 +264,7 @@ ul, ol { padding: 0; list-style: none; }
   line-height: 1;
   text-transform: uppercase;
   padding: 1.125rem 1.25rem;
-  border: 1px solid var(--ink-20);
+  border: 1px solid var(--ink-50); /* 3:1 non-text contrast on every theme (1.4.11) */
   border-radius: 4px;
   color: var(--ink);
   background: transparent;
@@ -316,36 +313,81 @@ ul, ol { padding: 0; list-style: none; }
 
 /* Text mask reveal: each line/word sits in an overflow-hidden box. */
 .rv { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.08em; margin-bottom: -0.08em; text-indent: 0; }
-.rv > span { display: inline-block; will-change: transform; }
+.rv > span { display: inline-block; } /* no standing will-change: GSAP promotes each word only while it moves */
 
 /* Media hover — image strip tiles. */
 .tile { border-radius: 4px; overflow: hidden; background: var(--bg2); flex-shrink: 0; }
+.tile-value { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; hyphens: auto; }
 .tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-out), filter 600ms var(--ease-out); }
 .row:hover .tile img { transform: scale(1.04); }
+/* Artefact tile: an uitsnede is shown whole, never cropped (CONTEXT.md, ADR-0005).
+   No mat — the capture is the tile, hugging its own ratio; an inset hairline drawn
+   over it keeps a dark capture's edge on the dark page without adding a frame. */
+.tile--artefact { position: relative; background: none; width: fit-content; max-width: 100%; }
+.tile--artefact::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--ink-20); pointer-events: none; }
+.tile--artefact picture { display: block; height: 100%; }
+.tile--artefact img { display: block; object-fit: contain; }
+.strip .tile--artefact img { width: auto; height: 100%; }
+/* On the case page the lead capture stays well inside the viewport. */
+figure .tile--artefact img { width: auto; max-width: 100%; height: auto; max-height: 58vh; }
+
+/* Case-page gallery: a contact sheet — every shot at one height and its own ratio,
+   like the work strip, so a 390px mobile capture never swells to half the screen. */
+.shots { display: flex; flex-direction: column; gap: 2rem; }
+.shots figure .tile { width: 100%; }
+.shots figure img { display: block; width: 100%; height: auto; max-height: none; }
+.shots figure.is-portrait .tile { width: fit-content; }
+.shots figure.is-portrait img { width: auto; max-width: 100%; max-height: 64vh; }
+@media (min-width: 1024px) {
+  .shots { flex-direction: row; flex-wrap: wrap; align-items: flex-start; gap: 2rem 0.5rem; }
+  .shots figure { width: min-content; min-width: 11rem; }
+  .shots figure .tile { width: fit-content; }
+  .shots figure img, .shots figure.is-portrait img { width: auto; height: clamp(14rem, 40vh, 24rem); max-width: none; max-height: none; }
+}
+
+/* Hero scrim — measured from the copy, not a share of the viewport: dark under the
+   text, fading out above it, full-bleed past the container gutter. */
+.hero-text { position: relative; }
+.hero-text::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  left: calc(-1 * var(--margin)); right: calc(-1 * var(--margin)); top: -9rem; bottom: -7rem;
+  background: linear-gradient(to top, rgb(var(--c-dark) / 0.94) 0%, rgb(var(--c-dark) / 0.82) 45%, rgb(var(--c-dark) / 0.6) calc(100% - 9rem), rgb(var(--c-dark) / 0) 100%);
+}
+
+/* Hero signal readout + pause — a typeset mono control, no chrome of its own. */
+.hero-pause { min-height: 24px; padding: 0 0.25rem; opacity: 0.72; transition: opacity 250ms var(--ease-out); }
+.hero-pause:hover, .hero-pause[aria-pressed="true"] { opacity: 1; }
+
+/* Proof tile — fixed black like every tile; inverts on hover like the contact card.
+   The hairline keeps its edge when the theme flips to dark under it. */
+.proof {
+  display: block; border-radius: 4px; padding: 1rem 1rem 0.875rem; border: 1px solid var(--ink-20);
+  background: rgb(var(--c-black)); color: rgb(var(--c-off-white));
+  transition: background-color 350ms var(--ease-out), color 350ms var(--ease-out);
+}
+.proof:hover { background: rgb(var(--c-off-white)); color: rgb(var(--c-off-black)); border-color: rgb(var(--c-off-black) / 0.5); }
+.proof .paren { transition: transform 350ms var(--ease-out); }
+.proof:hover .paren { transform: translateX(-4px); }
+/* Static variant — the systems a dashboard can pull together; not a link, so no hover swap. */
+.proof-static, .proof-static:hover { background: rgb(var(--c-black)); color: rgb(var(--c-off-white)); border-color: var(--ink-20); }
+
+/* Work groups — the groep is a header above its rows. */
+.groep + .groep { margin-top: var(--sec-sm); }
 
 /* Work row */
-.row { border-top: 1px solid var(--ink-20); transition: background-color 400ms var(--ease-out); }
+.row { border-top: 1px solid var(--ink-20); overflow-x: clip; } /* strips run past the viewport edge, never widen the page */
 .row:last-child { border-bottom: 1px solid var(--ink-20); }
-.row:hover { background-color: transparent; }
 .row .strip { transition: transform 700ms var(--ease-out); }
+.row .strip, .row .strip-h { height: 7.5rem; }
+.row--compact .strip, .row--compact .strip-h { height: 5rem; }
 .row:hover .strip { transform: translateX(-1.5rem); }
 .row .vp { display: none; }
 .row:hover .vp { display: inline; }
 @media (max-width: 1023px) { .row .strip { overflow-x: auto; scrollbar-width: none; } .row:hover .strip { transform: none; } }
 
-/* Marquee (strip drift) */
-@keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-/* Sticky meta bar — floats at the bottom of every section, lands in the footer. */
-.bottombar {
-  position: sticky; bottom: 0; z-index: 80;
-  background: rgb(var(--bg-rgb) / 0.86);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  transition: background-color 700ms var(--ease-out);
-}
-@media (max-width: 767px) { .bottombar { position: static; background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; } }
-@keyframes drawx { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-.bottombar > .hairline { transform-origin: left; animation: drawx 900ms var(--ease-out) 400ms both; }
+/* Hero meta bar — the last row of the hero's flow, so a tall hero (short phones,
+   wrapped bar) pushes it down instead of laying it over the CTA. */
+.bottombar { position: relative; z-index: 1; }
 
 /* Live clock dot */
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
@@ -375,6 +417,7 @@ ul, ol { padding: 0; list-style: none; }
 [data-theme="light"] .side-card, [data-theme="green"] .side-card, [data-theme="pink"] .side-card {
   background: rgb(var(--c-off-white) / 0.92);
   color: rgb(var(--c-off-black));
+  box-shadow: inset 0 0 0 1px rgb(var(--c-off-black) / 0.12); /* the navbar's own edge; off-white on off-white had none */
 }
 
 /* Without backdrop-filter (old engines, reduced transparency) the bars go fully opaque. */
@@ -421,24 +464,32 @@ ul, ol { padding: 0; list-style: none; }
 .side-card--contact { background: rgb(var(--c-off-white) / 0.92); color: rgb(var(--c-off-black)); }
 .side-card--contact:hover { background: rgb(var(--c-white)); }
 
-/* Cursor label — a mono tag that trails the pointer over [data-cursor] targets. */
+/* Cursor label — a black mono tag hanging off the pointer (bottom-left corner on
+   the tip) over [data-cursor] targets; fixed black like every chip. */
 .cursor-label {
   position: fixed; left: 0; top: 0; z-index: 110; pointer-events: none;
-  opacity: 0; transition: opacity 200ms var(--ease-out);
+  opacity: 0; transition: opacity 180ms var(--ease-out);
 }
 .cursor-label.is-on { opacity: 1; }
 .cursor-label > span {
-  display: flex; align-items: center; height: 48px; padding: 0 18px; width: max-content; gap: 0.75em;
-  transform: translate(-50%, -50%);
-  background: rgb(255 255 255 / 0.14); color: rgb(var(--c-off-white));
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border-radius: 4px; font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; line-height: 1;
+  display: flex; align-items: center; height: 22px; padding: 0 8px; width: max-content;
+  transform: translateY(-100%);
+  background: rgb(var(--c-black)); color: rgb(var(--c-off-white));
+  font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; line-height: 1; white-space: pre;
 }
-[data-theme="light"] .cursor-label > span, [data-theme="green"] .cursor-label > span { background: rgb(0 0 0 / 0.08); color: rgb(var(--c-off-black)); }
+[data-theme="light"] .cursor-label > span, [data-theme="green"] .cursor-label > span, [data-theme="pink"] .cursor-label > span {
+  background: rgb(var(--c-off-black)); color: rgb(var(--c-off-white));
+}
 @media (pointer: coarse) { .cursor-label { display: none; } }
+
+/* Cursor trail — the halftone wake the pointer leaves (CursorTrail.tsx). Above
+   the sections, below the bottom bar, menu and nav. */
+.cursor-trail { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 70; pointer-events: none; }
+@media (pointer: coarse) { .cursor-trail { display: none; } }
 
 /* Dither canvas */
 .dither { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.dither-src { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
 /* Case overlay surface scroll */
 .cs-surface { scrollbar-gutter: stable; }
@@ -448,7 +499,7 @@ ul, ol { padding: 0; list-style: none; }
 .skip-link:focus { top: 1rem; }
 
 @media (prefers-reduced-motion: reduce) {
-  .dot, .bottombar > .hairline { animation: none; }
-  .btn::before, .btn, .tile img, .row .strip, .menu-row::before, .menu-link, .menu-scrim, .burger span { transition: none; }
+  .dot { animation: none; }
+  .btn::before, .btn, .tile img, .row .strip, .proof, .proof .paren, .menu-row::before, .menu-link, .menu-scrim, .burger span, .hero-pause { transition: none; }
   body { transition: none; }
 }

@@ -1,4 +1,4 @@
-import { Mono, Reveal } from './Reveal';
+import { Reveal } from './Reveal';
 import { siteContent } from '../lib/content';
 import { availabilityCopy } from '../lib/availability';
 import { useLang, useLoc, useT } from '../lib/i18n';
@@ -17,7 +17,7 @@ export function About() {
   return (
     <section id="about" style={{ paddingTop: 'var(--sec-lg)', paddingBottom: 'var(--sec-xl)' }}>
       <div className="container">
-        <Mono className="block mb-[var(--sec-sm)]">{t.about.based}</Mono>
+        <h2 className="sr-only">{t.nav.about}</h2>
       </div>
       <div className="container grid-12 gap-y-12 items-end">
         <div className="col-span-12 lg:col-span-6">

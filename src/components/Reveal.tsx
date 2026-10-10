@@ -75,7 +75,7 @@ export function Mono({
   style?: CSSProperties;
   as?: keyof HTMLElementTagNameMap;
 }) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -95,6 +95,11 @@ export function Mono({
     };
   }, [children]);
   const Tag = as as 'div'; // ponytail: narrowed for TS; the real tag is `as`
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return <Tag ref={ref as any} className={`t-mono ${bracket ? 'bracket' : ''} ${className}`} style={style}>{children}</Tag>;
+  // The decode scrambles the visible glyphs for ~700ms; assistive tech reads the sr-only copy instead.
+  return (
+    <Tag className={`t-mono ${bracket ? 'bracket' : ''} ${className}`} style={style}>
+      <span ref={ref} aria-hidden="true">{children}</span>
+      <span className="sr-only">{children}</span>
+    </Tag>
+  );
 }

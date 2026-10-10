@@ -3,7 +3,7 @@ import { flushSync } from 'react-dom';
 import { CaseStudy, type CaseStudyWerkstuk } from './CaseStudy';
 import { Mono, Reveal } from './Reveal';
 import { webpSrcSet } from '../lib/responsiveImage';
-import { siteContent, type Werkstuk } from '../lib/content';
+import { GROEP_VOLGORDE, isPortrait, opensInPlace, siteContent, type Werkstuk } from '../lib/content';
 import { useLoc, useT } from '../lib/i18n';
 import { getLenis, gsap, reducedMotion } from '../lib/motion';
 
@@ -28,12 +28,14 @@ function initialCaseStudyId(): number | null {
 
 /* ------------------------------------------------------------------
    Strip tiles. Imagery where it exists; where software has no visual
-   surface (garmin-mcp) or the capture is still owed (nachtagenda,
-   BerijdersApp), a black spec tile carries a real scope-fact instead.
+   surface (a diagram-werkstuk) or the capture is still owed
+   (BerijdersApp), a black spec tile carries a real scope-fact instead.
+   An uitsnede (scherm set) is shown whole at its own ratio, no mat; older
+   full-bleed captures keep the cover crop.
    ------------------------------------------------------------------ */
-function ImgTile({ src, alt, portrait = false }: { src: string; alt: string; portrait?: boolean }) {
+function ImgTile({ src, alt, portrait = false, artefact = false }: { src: string; alt: string; portrait?: boolean; artefact?: boolean }) {
   return (
-    <div className="tile h-full" style={{ aspectRatio: portrait ? '390 / 844' : '16 / 10' }}>
+    <div className={`tile h-full ${artefact ? 'tile--artefact' : ''}`} style={artefact ? undefined : { aspectRatio: portrait ? '390 / 844' : '16 / 10' }}>
       <picture>
         <source type="image/webp" srcSet={webpSrcSet(src)} sizes="(min-width: 1024px) 24vw, 60vw" />
         <img src={src} alt={alt} loading="lazy" decoding="async" draggable={false} className="w-full h-full object-cover" />
@@ -42,12 +44,13 @@ function ImgTile({ src, alt, portrait = false }: { src: string; alt: string; por
   );
 }
 
-export function SpecTile({ label, value, wide = false, big = false }: { label: string; value: string; wide?: boolean; big?: boolean }) {
+/** `names`: the value is a list of product names, which never break mid-word. */
+export function SpecTile({ label, value, wide = false, big = false, names = false }: { label: string; value: string; wide?: boolean; big?: boolean; names?: boolean }) {
   return (
     <div
       className="tile h-full flex flex-col justify-between p-4"
       style={{
-        aspectRatio: big ? '16 / 9' : wide ? '16 / 10' : '1 / 1',
+        aspectRatio: big ? '16 / 9' : wide ? '16 / 10' : '4 / 3', /* 4:3 holds ~16 mono chars per line, enough for one scope-fact in three lines */
         background: 'rgb(var(--c-black))',
         color: 'rgb(var(--c-off-white))',
       }}
@@ -55,7 +58,7 @@ export function SpecTile({ label, value, wide = false, big = false }: { label: s
       <span className="t-mono-sm bracket" style={{ opacity: 0.55 }}>
         {label}
       </span>
-      <span className={big ? 't-h6' : 't-code'} style={big ? { maxWidth: '22ch' } : { lineHeight: 1.35, fontSize: 'clamp(0.7rem, 0.9vw, 0.85rem)' }}>
+      <span className={big ? 't-h6' : 't-code tile-value'} style={big ? { maxWidth: '22ch' } : { lineHeight: 1.35, fontSize: 'clamp(0.7rem, 0.8vw, 0.8rem)', hyphens: names ? 'manual' : undefined }}>
         {value}
       </span>
     </div>
@@ -64,20 +67,18 @@ export function SpecTile({ label, value, wide = false, big = false }: { label: s
 
 function Strip({ w }: { w: Werkstuk }) {
   const loc = useLoc();
-  const images = [w.image, ...w.gallery.map((g) => g.image)].filter(Boolean);
-  const alts = [loc(w.imageAlt), ...w.gallery.map((g) => loc(g.alt))];
+  const tiles = [{ image: w.image, alt: w.imageAlt, scherm: w.imageScherm }, ...w.gallery].filter((g) => g.image);
 
-  if (w.trace) {
+  if (w.diagram) {
     return (
       <>
-        <SpecTile label={w.trace.aanroep.replace('()', '')} value={w.trace.antwoord} wide />
-        {w.highlights.slice(0, 3).map((h) => (
-          <SpecTile key={h.label.nl} label={loc(h.label)} value={loc(h.value)} />
+        {w.diagram.stappen.map((st, i) => (
+          <SpecTile key={st.label.nl} label={`${i === 0 ? '' : '→ '}${loc(st.label)}`} value={loc(st.titel)} wide={i === 0} names={i === 0} />
         ))}
       </>
     );
   }
-  if (images.length === 0) {
+  if (tiles.length === 0) {
     return (
       <>
         {w.highlights.slice(0, 4).map((h, i) => (
@@ -88,26 +89,39 @@ function Strip({ w }: { w: Werkstuk }) {
   }
   return (
     <>
-      {images.map((src, i) => (
-        <ImgTile key={src} src={src} alt={alts[i] ?? ''} portrait={/-m-\d+\.png$/.test(src)} />
+      {tiles.map((g) => (
+        <ImgTile key={g.image} src={g.image} alt={loc(g.alt)} portrait={isPortrait(g)} artefact={Boolean(g.scherm)} />
       ))}
     </>
   );
 }
 
-function Row({ w, onOpen }: { w: CaseStudyWerkstuk; onOpen: () => void }) {
+/** The groep is the header above its rows, so a row carries herkomst and status only. */
+function Row({ w, compact, onOpen }: { w: CaseStudyWerkstuk; compact: boolean; onOpen: () => void }) {
   const t = useT();
-  const chips = [t.groep[w.groep], t.herkomst[w.herkomst], t.status[w.status]];
+  const chips = [t.herkomst[w.herkomst], t.status[w.status]];
   return (
-    <div className="row">
-      <button
-        type="button"
-        onClick={onOpen}
-        aria-label={`${t.work.openAria} ${w.title}`}
+    <div className={`row ${compact ? 'row--compact' : ''}`}>
+      {/* A real link to the shareable /work/:slug page; a plain click opens it in place. */}
+      <a
+        href={`/work/${w.slug}`}
+        onClick={(e) => {
+          if (!opensInPlace(e)) return;
+          e.preventDefault();
+          onOpen();
+        }}
+        aria-label={`${t.work.openAria} ${w.title}, ${w.client} — ${chips.join(', ')}`}
         data-cursor={`${w.title} ( + )`}
         className="container w-full text-left grid-12 items-start gap-y-5 pt-[22px] pb-6"
       >
-        <span className="col-span-12 lg:col-span-2 t-h6 pt-[2px]">{w.title}</span>
+        <span className="col-span-12 lg:col-span-2 pt-[2px]">
+          <span className="t-h6 block">{w.title}</span>
+          {w.client && w.client !== w.title && (
+            <span className="t-mono block mt-1" style={{ opacity: 0.6 }}>
+              {w.client}
+            </span>
+          )}
+        </span>
         <span className="col-span-8 lg:col-span-3 flex flex-wrap gap-1 pt-[3px]">
           {chips.map((c) => (
             <Mono key={c} className="chip">
@@ -118,14 +132,15 @@ function Row({ w, onOpen }: { w: CaseStudyWerkstuk; onOpen: () => void }) {
         <span className="col-span-4 lg:col-span-1 t-mono paren pt-[6px] text-right lg:text-left whitespace-nowrap">
           <span className="vp">{t.work.view} </span>+
         </span>
-        <span className="col-span-12 lg:col-span-6 relative">
-          <span className="strip flex justify-start gap-2 h-[7.5rem] lg:h-[clamp(6rem,8.4vw,7.5rem)] lg:absolute lg:left-0 lg:top-0 lg:w-max">
+        {/* Decorative here (the row's name carries title + chips); every image is captioned inside the case page. */}
+        <span className="col-span-12 lg:col-span-6 relative" aria-hidden="true">
+          <span className="strip flex justify-start gap-2 lg:absolute lg:left-0 lg:top-0 lg:w-max">
             <Strip w={w} />
           </span>
           {/* keeps the row's height on desktop where the strip is absolute */}
-          <span aria-hidden="true" className="hidden lg:block h-[clamp(6rem,8.4vw,7.5rem)]" />
+          <span aria-hidden="true" className="strip-h hidden lg:block" />
         </span>
-      </button>
+      </a>
     </div>
   );
 }
@@ -233,7 +248,7 @@ export function Work() {
   return (
     <section id="work" className="relative" style={{ paddingTop: 'var(--sec-lg)' }}>
       <div className="container grid-12 gap-y-6" style={{ paddingBottom: 'var(--sec-sm)' }}>
-        <Reveal as="p" className="col-span-12 lg:col-span-9 t-h2" style={{ maxWidth: '24ch' }}>
+        <Reveal as="h2" className="col-span-12 lg:col-span-9 t-h2" style={{ maxWidth: '24ch' }}>
           {loc(siteContent.work.intro)}
         </Reveal>
         <div className="col-span-12 lg:col-span-3 lg:text-right self-end">
@@ -241,11 +256,20 @@ export function Work() {
         </div>
       </div>
 
-      <div>
-        {werkstukken.map((w) => (
-          <Row key={w.id} w={w} onOpen={() => openCaseStudy(w.id)} />
-        ))}
-      </div>
+      {GROEP_VOLGORDE.map((g) => {
+        const rows = werkstukken.filter((w) => w.groep === g);
+        if (rows.length === 0) return null;
+        return (
+          <div key={g} className="groep">
+            <h3 className="container pb-4">
+              <Mono bracket>{t.groep[g]}</Mono>
+            </h3>
+            {rows.map((w) => (
+              <Row key={w.id} w={w} compact={g === 'sites-merk'} onOpen={() => openCaseStudy(w.id)} />
+            ))}
+          </div>
+        );
+      })}
 
       {openId !== null &&
         (() => {

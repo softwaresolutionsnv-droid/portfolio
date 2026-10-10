@@ -1,30 +1,59 @@
-import { useEffect, useRef, useState } from 'react';
-import { gsap, reducedMotion } from '../lib/motion';
+import { useEffect, useRef } from 'react';
+import { gsap, reducedMotion, typeText } from '../lib/motion';
 
 /**
- * Cursor label — a mono tag trailing the pointer (GSAP quickTo) whenever it
- * is over an element carrying `data-cursor="…"`. Hidden on touch (CSS).
+ * Cursor label — a small black mono tag that hangs off the pointer, its
+ * bottom-left corner on the tip, whenever the pointer is over an element
+ * carrying `data-cursor="…"`. The text types in through the glyph pool and
+ * types back out on leave. The native cursor stays. Hidden on touch (CSS);
+ * under reduced motion the tag follows without lag and without the decode.
  */
 export function CursorLabel() {
   const ref = useRef<HTMLDivElement>(null);
-  const [text, setText] = useState('');
+  const textRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || reducedMotion()) return;
-    const x = gsap.quickTo(el, 'x', { duration: 0.35, ease: 'power3.out' });
-    const y = gsap.quickTo(el, 'y', { duration: 0.35, ease: 'power3.out' });
+    const txt = textRef.current;
+    if (!el || !txt) return;
+    const reduced = reducedMotion();
+    const x = gsap.quickTo(el, 'x', { duration: reduced ? 0 : 0.25, ease: 'power3.out' });
+    const y = gsap.quickTo(el, 'y', { duration: reduced ? 0 : 0.25, ease: 'power3.out' });
+    let current = '';
+    let placed = false;
+    let hide: gsap.core.Tween | null = null;
+
+    const show = (label: string) => {
+      if (label === current) return;
+      current = label;
+      hide?.kill();
+      if (label) {
+        el.classList.add('is-on');
+        typeText(txt, 'in', label, Math.min(650, 220 + label.length * 22));
+      } else {
+        const out = txt.textContent ?? '';
+        typeText(txt, 'out', out, 280);
+        hide = gsap.delayedCall(reduced ? 0 : 0.28, () => el.classList.remove('is-on'));
+      }
+    };
+
     const onMove = (e: PointerEvent) => {
+      if (e.pointerType === 'touch') return;
+      if (!placed) {
+        gsap.set(el, { x: e.clientX, y: e.clientY }); /* first contact: no fly-in from the corner */
+        placed = true;
+      }
       x(e.clientX);
       y(e.clientY);
       const target = (e.target as Element | null)?.closest<HTMLElement>('[data-cursor]');
-      setText(target?.dataset.cursor ?? '');
+      show(target?.dataset.cursor ?? '');
     };
-    const onLeave = () => setText('');
+    const onLeave = () => show('');
     window.addEventListener('pointermove', onMove, { passive: true });
     window.addEventListener('scroll', onLeave, { passive: true });
     document.documentElement.addEventListener('pointerleave', onLeave);
     return () => {
+      hide?.kill();
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('scroll', onLeave);
       document.documentElement.removeEventListener('pointerleave', onLeave);
@@ -32,8 +61,8 @@ export function CursorLabel() {
   }, []);
 
   return (
-    <div ref={ref} className={`cursor-label ${text ? 'is-on' : ''}`} aria-hidden="true">
-      <span>{text}</span>
+    <div ref={ref} className="cursor-label" aria-hidden="true">
+      <span ref={textRef} />
     </div>
   );
 }

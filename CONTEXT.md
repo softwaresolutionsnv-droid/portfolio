@@ -1,18 +1,30 @@
 # Portfolio
 
-Het portfolio van Nils Vogelaar: een bewijsstuk dat naar een warme lead wordt gestuurd om aan te tonen dat hij bouwt wat hij zegt te bouwen — apps, MCP-servers en AI-integratie.
+Het portfolio van Nils Vogelaar: een bewijsstuk dat aantoont dat hij processen tussen systemen vanzelf laat lopen — koppelingen, automatisering en AI die werken in de eigen systemen van webshops en mkb — als één persoon, van eerste gesprek tot livegang (ADR-0006).
 
 ## Language
 
 ### Publiek en doel
 
 **Warme lead**:
-Iemand die al met Nils in gesprek is en de link toegestuurd krijgt: een twijfelende opdrachtgever, een recruiter, een doorverwijzing. De primaire lezer; alle andere bezoekers liften mee.
+Iemand die al met Nils in gesprek is en de link toegestuurd krijgt: een twijfelende opdrachtgever, een bureau, een doorverwijzing. Leest door tot in de onderlaag.
 _Avoid_: Bezoeker, prospect, klant
 
+**Koude bezoeker**:
+Iemand die via LinkedIn of outreach binnenkomt en Nils nog niet kent. Moet het aanbod binnen seconden snappen en de volgende stap zien. Sinds ADR-0006 een even belangrijke lezer als de warme lead.
+_Avoid_: Traffic, lead, prospect
+
 **Bewijsstuk**:
-Wat de site is. Geen folder en geen lead-generator, maar een verzameling aantoonbare artefacten. Bepaalt dat diepgang boven pitch gaat.
+Wat de site is. Elke bewering op de pagina wijst naar iets aantoonbaars: een werkstuk, een scope-feit, een garantie die Nils kan nakomen. De site mag het aanbod uitleggen, maar claimt niets wat niet aantoonbaar is.
 _Avoid_: Etalage, showcase, visitekaartje
+
+**Kennismaking**:
+De primaire actie van de site: een eerste gesprek boeken. Een agenda-link zodra die er is (`contact.bookingUrl`), tot dan een mail met onderwerp.
+_Avoid_: Contact opnemen, offerte aanvragen, demo
+
+**Tikwerk**:
+Het werk dat Nils eruit haalt: mensen die gegevens met de hand van het ene systeem naar het andere overtikken (orders, voorraad, facturen, rapporten). Alleen een intern begrip. Op de site staat de uitkomst, niet het klusje: de kop van de oplossingen-sectie is "Het loopt vanzelf." (EN: "Runs by itself."). "Tikwerk" klinkt als een klein klusje en maakt de opdracht kleiner dan hij is.
+_Avoid_: Handwerk (leest als ambacht en klinkt oubollig), handmatig werk
 
 ### Werk
 
@@ -25,11 +37,15 @@ Wie het werkstuk liet maken. Twee waarden: _in opdracht_ (een betalende opdracht
 _Avoid_: Type, klantwerk, soort
 
 **Status**:
-Hoe ver het werkstuk is. Drie waarden: _live_ (publiek te bezoeken), _pre-launch_ (gebouwd maar nog niet gelanceerd), _besloten_ (opgeleverd maar niet publiek, bijv. door NDA). Bepaalt of er een link staat en welk label de bezoeker ziet.
+Hoe ver het werkstuk is. Drie waarden: _live_ (publiek te bezoeken), _pre-launch_ (gebouwd maar nog niet gelanceerd), _besloten_ (opgeleverd maar niet publiek, bijv. door NDA). Bepaalt of er een link staat, welk label de bezoeker ziet, en of de artefacten kunnen meebewegen: alleen bij _live_; bij de andere statussen staan ze stil.
 _Avoid_: Fase, staat, published
 
+**Kandidaat**:
+Gebouwd en publiek bereikbaar werk dat nog geen werkstuk is en ook niet bewust is uitgesloten. Wacht op één beslissing van Nils: werkstuk worden, of uitgesloten.
+_Avoid_: Suggestie, nieuw project, lead
+
 **Groep**:
-De drie benoemde clusters waarin werkstukken op de site staan, in vaste volgorde: _Apps & AI-systemen_ → _MCP & tooling_ → _Sites & merk_. Alle werkstukken krijgen dezelfde behandeling; de groepsvolgorde draagt de positionering.
+De drie benoemde clusters waarin werkstukken op de site staan, in vaste volgorde: _Automatisering & koppelingen_ → _Dashboards, portalen & apps_ → _Sites & merk_ (ADR-0006). De groep staat als kop boven zijn werkstukken; de groepsvolgorde draagt de positionering. Sites staan compacter.
 _Avoid_: Categorie, sectie, filter
 
 ### Inhoud
@@ -47,19 +63,22 @@ Een verifieerbare uitspraak over omvang of rol die een niet-onderbouwd cijfer ve
 _Avoid_: Metric, highlight, KPI
 
 **Oplossing**:
-Eén regel in de sectie die de oude stack-sectie vervangt: een probleem in de taal van de opdrachtgever, plus wat Nils ertegenover zet, plus een verwijzing naar het werkstuk dat het bewijst. Vervangt het opsommen van gereedschap.
+Eén regel in de sectie Oplossingen, die de oude stack-sectie vervangt: een probleem in de taal van de opdrachtgever ("We tikken alles over."), plus wat Nils ertegenover zet, plus een verwijzing naar het werkstuk dat het bewijst, met één scope-feit. Vervangt het opsommen van gereedschap.
+
+**Werkwijze**:
+De antwoorden op de bezwaren uit het productmarketingdocument: vaste prijs, werkend in de eigen systemen, data op naam van de klant, één persoon, white-label voor bureaus. Alleen garanties die Nils kan nakomen.
 _Avoid_: Skill, dienst, capability, stack-item
 
 ### Beeld
 
 **Artefact**:
-Beeld van zichtbare software: één betekenisvol detail op ware grootte uitgesneden, met een bijschrift dat benoemt wat je ziet. Nooit een volledige paginascreenshot, nooit een apparaat-mockup.
+Beeld van zichtbare software: één betekenisvol detail op ware grootte uitgesneden, met een bijschrift dat benoemt wat je ziet. Nooit een volledige paginascreenshot, nooit een apparaat-mockup. Is _opgenomen_ (van een uitsnede; bij een live werkstuk steeds opnieuw) of _aangeleverd_ (door Nils, waar opnemen niet kan); een aangeleverd artefact verloopt na zes maanden.
 _Avoid_: Screenshot, mockup, preview
 
-**Diagram**:
-Beeld van onzichtbare software (MCP-servers, AI-integratie): getypografeerde architectuurtekening of echte uitvoeruitvoer. De tegenhanger van het artefact.
-_Avoid_: Illustratie, schema, graphic
+**Uitsnede**:
+De vaste aanwijzing welk deel van welke pagina, op welk scherm, een artefact toont. De uitsnede blijft staan terwijl de site verandert; het artefact is steeds de verse opname ervan. Het bijschrift hoort bij de uitsnede, niet bij één opname.
+_Avoid_: Shot, crop, screenshot-instelling
 
-**Trace**:
-Een opgenomen, op de pagina afgespeelde tool-call: de vraag, de aanroep, het antwoord. Toont wat een MCP-server dóét zonder een draaiende server bloot te stellen. Een reconstructie, en wordt als zodanig benoemd.
-_Avoid_: Demo, playground, live example
+**Diagram**:
+Beeld van software die niet te fotograferen is: onzichtbaar (AI-integratie, datapijplijnen) of afgeschermd (besloten werk). Een getypografeerde architectuurtekening of echte uitvoer. De tegenhanger van het artefact.
+_Avoid_: Illustratie, schema, graphic

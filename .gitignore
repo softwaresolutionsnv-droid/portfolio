@@ -25,3 +25,10 @@ dist-ssr
 
 # CMS build artifacts (gegenereerd door scripts/fetch-content.mjs)
 public/projects/cms/
+
+# Report of the last artefact capture (scripts/capture-artefacts.mjs)
+artefacten-rapport.json
+
+# Tool output (browser snapshots, review screenshots)
+.playwright-mcp/
+.impeccable/review/

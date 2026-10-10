@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { webpSrcSet } from '../lib/responsiveImage';
-import { McpDiagram } from './McpDiagram';
+import { Diagram } from './Diagram';
+import { Mark } from './Mark';
 import { SpecTile } from './Work';
-import type { Werkstuk } from '../lib/content';
-import { useLoc, useT } from '../lib/i18n';
+import { isPortrait, kennismakingLink, SCHERM_BREEDTE, type Scherm, type Werkstuk } from '../lib/content';
+import { useLoc, useT, type Localized } from '../lib/i18n';
 
 export type CaseStudyWerkstuk = Werkstuk & { id: number };
 
@@ -25,15 +26,26 @@ const FOCUSABLE =
  * The case page — a full-screen dark spread over the site. Keyboard:
  * Esc closes, ←/→ move between werkstukken, Tab is trapped inside.
  */
+/** An artefact with its caption (CONTEXT.md). An uitsnede (scherm set) sits
+    whole on the black artefact tile and names the viewport it was shot at. */
+function ArtefactFigure({ alt, scherm, className = '', children }: { alt: Localized; scherm?: Scherm; className?: string; children: React.ReactNode }) {
+  const loc = useLoc();
+  return (
+    <figure className={`flex flex-col gap-2 ${className}`}>
+      <div className={`tile flex-1 ${scherm ? 'tile--artefact' : ''}`}>{children}</div>
+      <figcaption className="t-mono-sm flex justify-between gap-4" style={{ opacity: 0.6 }}>
+        <span className="bracket">{loc(alt)}</span>
+        {scherm && <span className="paren shrink-0">{SCHERM_BREEDTE[scherm]}</span>}
+      </figcaption>
+    </figure>
+  );
+}
+
 export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose, onPrev, onNext }: Props) {
   const t = useT();
   const loc = useLoc();
-  const cta =
-    project.status === 'live' && project.url
-      ? { href: project.url, label: t.caseStudy.visit, external: true }
-      : project.status === 'besloten'
-        ? { href: '#contact', label: t.caseStudy.requestAccess, external: false }
-        : null;
+  // The kennismaking is the primary action on every spread; a live werkstuk adds its site as the second.
+  const book = kennismakingLink(`${t.nav.subjectCall}: ${project.title}`);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
@@ -106,6 +118,7 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
       }
     };
     window.addEventListener('keydown', onKey);
+    const opener = document.activeElement as HTMLElement | null;
     const raf = requestAnimationFrame(() => closeBtnRef.current?.focus());
     return () => {
       document.body.style.overflow = prevOverflow;
@@ -116,6 +129,7 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
         el.removeAttribute('inert');
         el.removeAttribute('aria-hidden');
       });
+      opener?.focus?.(); // after inert is lifted, or the focus call is a no-op
     };
   }, []);
 
@@ -136,13 +150,8 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
     return () => el.removeEventListener('scroll', onScroll);
   }, []);
 
-  const chips = [
-    t.groep[project.groep],
-    t.herkomst[project.herkomst],
-    t.status[project.status],
-    project.year,
-    project.client,
-  ].filter(Boolean);
+  // groep · herkomst · status only — year and client live in the credits list.
+  const chips = [t.groep[project.groep], t.herkomst[project.herkomst], t.status[project.status]];
 
   const credits = [
     { label: t.plates.specRole, value: loc(project.role) },
@@ -151,18 +160,18 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
     { label: t.plates.specStack, value: project.tags.join(', ') },
   ].filter((c) => c.value);
 
-  const ctaEl =
-    cta ? (
-      cta.external ? (
-        <a href={cta.href} target="_blank" rel="noopener noreferrer" className="btn btn--solid">
-          {cta.label} <span className="arrow" aria-hidden="true">↗</span>
+  const ctaEl = (
+    <div className="flex flex-wrap gap-2">
+      <a {...book} className="btn btn--solid">
+        {t.nav.planCall} <span className="arrow" aria-hidden="true">↗</span>
+      </a>
+      {project.status === 'live' && project.url && (
+        <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn">
+          {t.caseStudy.visit} <span className="arrow" aria-hidden="true">↗</span>
         </a>
-      ) : (
-        <a href={cta.href} onClick={() => onClose()} className="btn">
-          {cta.label} <span className="arrow" aria-hidden="true">↗</span>
-        </a>
-      )
-    ) : null;
+      )}
+    </div>
+  );
 
   return createPortal(
     <div
@@ -191,13 +200,21 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
             <span aria-hidden="true">↖</span> {t.caseStudy.back}
           </button>
         </div>
-        <div className="fixed top-4 right-4 z-20">
+        <div className="fixed top-4 right-4 z-20 flex items-center gap-1">
+          {/* Contact stays one click away inside the spread; the N-mark keeps the page identifiable on a cold /work/:slug landing. */}
+          {/* Under 400px (phones at 320, 400% zoom) the label would run into "Terug naar werk": the mark alone carries it, the name stays for assistive tech. */}
+          <a {...book} className="card !p-1 !pr-4 max-[399px]:!pr-1 !gap-2 h-[50px]">
+            <span className="avatar !w-[42px] !h-[42px]">
+              <Mark size={20} />
+            </span>
+            <span className="max-[399px]:sr-only">{t.caseStudy.book}</span>
+          </a>
           <button
             ref={closeBtnRef}
             type="button"
             onClick={onClose}
             aria-label={t.caseStudy.close}
-            className="card grid place-items-center w-[50px] h-[50px] !p-0"
+            className="card justify-center w-[50px] h-[50px] !p-0"
           >
             <span aria-hidden="true" className="t-body">✕</span>
           </button>
@@ -210,8 +227,8 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
           </h1>
           <div className="hairline mt-8" />
           <div className="flex flex-wrap gap-1 mt-6">
-            {chips.map((c) => (
-              <span key={c} className="chip">
+            {chips.map((c, i) => (
+              <span key={c} className={i === 0 ? 'chip chip--groep' : 'chip'}>
                 {c}
               </span>
             ))}
@@ -241,17 +258,10 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
           </div>
 
           <div className="col-span-12 lg:col-span-7 lg:col-start-6">
-            {project.trace ? (
-              <div className="grid gap-1 sm:grid-cols-2">
-                <div className="sm:col-span-2 tile" style={{ background: 'rgb(var(--c-black))', padding: 'var(--s-lg)' }}>
-                  <McpDiagram alt={loc(project.imageAlt)} />
-                </div>
-                {project.highlights.slice(0, 2).map((h) => (
-                  <SpecTile key={h.label.nl} label={loc(h.label)} value={loc(h.value)} big />
-                ))}
-              </div>
+            {project.diagram ? (
+              <Diagram diagram={project.diagram} />
             ) : project.image && !imageFailed ? (
-              <div className="tile">
+              <ArtefactFigure alt={project.imageAlt} scherm={project.imageScherm}>
                 <picture>
                   <source type="image/webp" srcSet={webpSrcSet(project.image)} sizes="(min-width: 1024px) 58vw, 100vw" />
                   <img
@@ -265,7 +275,7 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
                     style={{ viewTransitionName: 'cs-image' } as React.CSSProperties}
                   />
                 </picture>
-              </div>
+              </ArtefactFigure>
             ) : (
               <div className="grid gap-1 grid-cols-2">
                 {project.highlights.map((h) => (
@@ -294,46 +304,6 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
             ))}
           </div>
 
-          {project.trace && (
-            <>
-              <div className="col-span-12 lg:col-span-3 mt-[var(--sec-sm)]">
-                <span className="t-mono bracket block" style={{ opacity: 0.6 }}>
-                  {t.trace.header}
-                </span>
-                <p className="t-body-sm mt-3" style={{ opacity: 0.6, maxWidth: '24ch' }}>
-                  {t.trace.disclaimer}
-                </p>
-              </div>
-              <div className="col-span-12 lg:col-span-8 lg:col-start-5 mt-[var(--sec-sm)]">
-                <div className="tile p-6 sm:p-8 grid gap-6" style={{ background: 'rgb(var(--c-black))' }}>
-                  {[
-                    [t.trace.vraag, loc(project.trace.vraag), false],
-                    [t.trace.aanroep, `→ ${project.trace.aanroep}`, true],
-                    [t.trace.antwoord, project.trace.antwoord, true],
-                  ].map(([label, value, mono]) => (
-                    <div key={label as string} className="grid gap-2 sm:grid-cols-[7rem_1fr] sm:gap-6">
-                      <span className="t-mono" style={{ opacity: 0.55 }}>
-                        {label as string}
-                      </span>
-                      {mono ? (
-                        <pre className="t-code overflow-x-auto whitespace-pre" style={{ margin: 0 }}>
-                          {value as string}
-                        </pre>
-                      ) : (
-                        <p className="t-body">{value as string}</p>
-                      )}
-                    </div>
-                  ))}
-                  {project.trace.duiding && (
-                    <p className="t-body-sm" style={{ opacity: 0.6 }}>
-                      {loc(project.trace.duiding)}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </>
-          )}
-
           {project.highlights.length > 0 && (
             <>
               <div className="col-span-12 lg:col-span-3 mt-[var(--sec-sm)]">
@@ -355,14 +325,14 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
           )}
 
           {project.gallery.length > 0 && (
-            <div className="col-span-12 mt-[var(--sec-md)] grid gap-1 sm:grid-cols-2">
+            <div className="col-span-12 mt-[var(--sec-md)] shots">
               {project.gallery.map((shot, i) => (
-                <figure key={`${shot.image}-${i}`} className={`tile ${/-m-\d+\.png$/.test(shot.image) ? 'sm:row-span-2' : ''}`}>
+                <ArtefactFigure key={`${shot.image}-${i}`} alt={shot.alt} scherm={shot.scherm} className={isPortrait(shot) ? 'is-portrait' : ''}>
                   <picture>
-                    <source type="image/webp" srcSet={webpSrcSet(shot.image)} sizes="(min-width: 640px) 50vw, 100vw" />
-                    <img src={shot.image} alt={loc(shot.alt)} loading="lazy" decoding="async" draggable={false} className="w-full h-full object-cover" />
+                    <source type="image/webp" srcSet={webpSrcSet(shot.image)} sizes={isPortrait(shot) ? '(min-width: 1024px) 12rem, 64vw' : '(min-width: 1024px) 50vw, 100vw'} />
+                    <img src={shot.image} alt={loc(shot.alt)} loading="lazy" decoding="async" draggable={false} />
                   </picture>
-                </figure>
+                </ArtefactFigure>
               ))}
             </div>
           )}
