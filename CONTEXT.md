@@ -55,8 +55,8 @@ De tekst die iedereen leest, ook zonder technische kennis. Beschrijft het proble
 _Avoid_: Samenvatting, description, intro
 
 **Onderlaag**:
-De technische tekst op de case-pagina: architectuur, keuzes, wat er misging. Geschreven voor iemand die beoordeelt of Nils het kán. De lezer kiest zelf of hij hier komt.
-_Avoid_: Detail, deep dive, body
+De ene alinea op de case-pagina, onder de lede: hoe het werkstuk in de praktijk werkt, wat het oplevert en één onderscheidend feit, in ongeveer 40 tot 60 woorden en in de taal van de opdrachtgever (ADR-0008). Namen van systemen die de klant zelf gebruikt (Shopify, Meta, Triple Whale) mogen erin; namen van Nils' bouwstenen (Liquid, Cloudflare Worker, Nuxt) niet. Die staan alleen in de Stack-regel van de credits. Dezelfde regel geldt voor de highlights.
+_Avoid_: Detail, deep dive, body, technische tekst
 
 **Scope-feit**:
 Een verifieerbare uitspraak over omvang of rol die een niet-onderbouwd cijfer vervangt — "solo frontend, white-label voor meerdere leasemaatschappijen" in plaats van een getal dat niemand kan narekenen. Elk cijfer op de site is een scope-feit of heeft een aanwijsbare bron.

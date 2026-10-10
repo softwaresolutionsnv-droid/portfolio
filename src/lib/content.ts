@@ -67,7 +67,7 @@ export type Werkstuk = {
   bovenlaag: Localized;
   /** Editorial lead inside the case page — never the bovenlaag verbatim. */
   lede: Localized;
-  /** Onderlaag — de technische tekst op de case-pagina, per alinea. */
+  /** Onderlaag — één alinea in klanttaal op de case-pagina; bouwstenen alleen in `tags` (ADR-0008). */
   onderlaag: Localized[];
   tags: string[];
   role: Localized;
