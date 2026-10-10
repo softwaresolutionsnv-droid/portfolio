@@ -116,7 +116,7 @@ Bij kleine bedrijven zit er vaak geen tussenlaag: de eigenaar beslist alleen.
 | Term | Meaning |
 |------|---------|
 | Werkstuk | Eén project op de site, met herkomst, status, groep en twee tekstlagen (CONTEXT.md) |
-| Bovenlaag / onderlaag | Probleem en uitkomst voor iedereen / technische tekst voor wie beoordeelt of Nils het kán |
+| Bovenlaag / onderlaag | Probleem en uitkomst voor iedereen / één alinea over hoe het in de praktijk werkt, in klanttaal (ADR-0008) |
 | Scope-feit | Een verifieerbare uitspraak over omvang of rol, die een niet-onderbouwd cijfer vervangt |
 | Warme lead | Iemand die al in gesprek is en de link krijgt |
 | Koppeling | Een automatische verbinding tussen twee systemen (webshop, marketplace, boekhouding) |
