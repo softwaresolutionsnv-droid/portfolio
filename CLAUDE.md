@@ -8,26 +8,24 @@ Potential freelance clients — businesses, founders, and product teams evaluati
 
 Nils is a freelance designer/developer whose portfolio is itself a demonstration of craft. The voice is direct and confident — no filler, no hedging. The tone is professional but not corporate; personal but not casual. The interface should feel like it was made by someone who knows exactly what they're doing.
 
-### Aesthetic Direction
-- **Strong typographic hierarchy** — large, intentional type choices. Headlines that command attention.
-- **Confident color** — a defined palette with a signature accent. Not timid. Not generic.
-- **Spatial clarity** — bold layouts with purposeful negative space, not cluttered or noisy.
-- **Both light and dark modes** with a toggle — the dark mode should feel premium; the light mode should feel crisp and editorial.
-- **Motion that earns its place** — Framer Motion is in the stack. Use it for transitions and reveals that feel polished, not decorative.
-- No strong external references — the aesthetic should feel original, not derivative.
+### Aesthetic Direction — "Signal" (since 6 Sep 2026)
+- **Pinned reference: lamalama.com**, translated as literally as a solo practice allows. DESIGN.md is the visual authority; the retired "Concrete Monograph" world is an anti-reference.
+- Geist display caps at line-height .82 + Sometype Mono as the UI voice in `[ brackets ]` / `( + )`; 4px radius on chrome; black chips, cards and spec tiles; hairlines.
+- **Sections own the theme** (`data-theme` on `<html>`, switched by ScrollTrigger): dark → off-white → green. There is no user theme toggle.
+- Motion stack: Lenis + GSAP (`src/lib/motion.ts`), word-mask reveals (`Reveal`), mono decode (`Mono`), OGL dither shader in the hero (`Dither.tsx`, accepts a `<video>` for a future loop). Everything degrades under `prefers-reduced-motion`.
 
 ### Design Principles
 1. **Confidence over safety** — every design decision should feel intentional and committed. No hedge-designs or timid defaults.
 2. **The work is the hero** — layout and chrome exist to frame projects, not compete with them.
 3. **First impression is a promise** — the above-the-fold experience must immediately communicate quality and capability.
 4. **Earn every motion** — animations should improve comprehension or delight, never distract or slow the user.
-5. **Both themes are first-class** — dark mode and light mode should each feel native and complete, not like one is an afterthought.
+5. **Every section is designed for the theme it owns** — dark, off-white and green each get real contrast and states, never a tinted copy of another.
 
 ## Content
 
 `src/data/content.json` is de bron (ADR-0002 — het vroegere CMS/Supabase-paneel is verwijderd); het TypeScript-schema ernaast is `src/lib/content.ts`. Content bijwerken = commit + deploy. Alle tekstvelden zijn `{nl,en}`-paren met Nederlands als brontaal (ADR-0003); chrome-copy (labels, knoppen, aria) leeft in `src/lib/i18n.tsx` — componenten bevatten geen copy. Vocabulaire (werkstuk, herkomst, status, groep, bovenlaag, onderlaag, artefact, trace): `CONTEXT.md`.
 
-Werkstukken staan in drie benoemde groepen in vaste volgorde (apps-ai → mcp-tooling → sites-merk); de array in content.json is voorgesorteerd op groep. `scripts/gen-images.mjs` genereert de 640/1280/1920-WebP-ladder uit `public/projects/*.{png,jpg}` bij elke build. Availability heeft drie states (available / limited / unavailable) plus optionele "weer ruimte in [maand]"-datum; copy in het i18n-woordenboek via `src/lib/availability.ts`.
+Werkstukken staan in drie benoemde groepen in vaste volgorde (automatisering → maatwerk → sites-merk, ADR-0006); de array in content.json is voorgesorteerd op groep. Positionering en klanttaal: `.agents/product-marketing.md`. `scripts/gen-images.mjs` genereert de 640/1280/1920-WebP-ladder uit `public/projects/*.{png,jpg}` bij elke build. Availability heeft drie states (available / limited / unavailable) plus optionele "weer ruimte in [maand]"-datum; copy in het i18n-woordenboek via `src/lib/availability.ts`. `hero.headline` is een `{nl,en}`-paar van regels; `oplossingen.items` koppelen een klantprobleem aan een bewijs-werkstuk (`bewijs.slug`); `werkwijze.items` zijn de garanties; `contact.bookingUrl` vervangt de mail-fallback van de kennismaking zodra er een agenda-link is. Beeldstroken komen uit `image` + `gallery` (mobiele opnames eindigen op `-m-NN.png` en worden staand getoond); een werkstuk met `diagram` toont een getypografeerde pijplijn in plaats van beeld.
 
 ## Agent skills
 

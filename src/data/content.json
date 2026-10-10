@@ -4,81 +4,217 @@
     "availableFrom": null
   },
   "hero": {
+    "headline": {
+      "nl": [
+        "Ik koppel je systemen",
+        "en zet AI aan het werk."
+      ],
+      "en": [
+        "I connect your systems",
+        "and put AI to work."
+      ]
+    },
     "practice": {
-      "nl": "Ik ontwerp en bouw web- en mobiele producten voor scale-ups, founders en lokale bedrijven die boven hun gewicht willen boksen. Eén persoon van eerste gesprek tot livegang: geen overdrachten, geen accountmanagers.",
-      "en": "I design and build web and mobile products for scale-ups, founders, and local businesses that need to punch above their weight. One person from first conversation to launch day: no handoffs, no account managers."
+      "nl": "Koppelingen, automatisering en dashboards op maat voor webshops en mkb. Eén persoon van eerste gesprek tot livegang, zonder overdrachten of accountmanagers.",
+      "en": "Integrations, automation and custom dashboards for online stores and SMBs. One person from first call to launch, with no handoffs or account managers."
     }
   },
-  "about": {
+  "oplossingen": {
     "intro": {
-      "nl": "Ik bouw web- en mobiele producten voor scale-ups, founders en lokale bedrijven die boven hun gewicht willen boksen. Bij Autodisk bracht ik FleetDisk van een onafgemaakt intern hulpmiddel naar een volwassen platform dat nu live wagenparken draait voor bedrijven als Van Mossel.",
-      "en": "I build web and mobile products for scale-ups, founders, and local businesses that need to punch above their weight. At Autodisk I took FleetDisk from an unfinished internal tool to a polished platform now running live fleets for companies like Van Mossel."
+      "nl": "Je weet dat AI kan helpen. Het lastige is het werkend krijgen in je eigen systemen.",
+      "en": "You know AI can help. The hard part is getting it working in your own systems."
     },
-    "body": {
-      "nl": "Mijn stack omvat Vue, Nuxt, React, Angular, Ionic, Node.js en C++. Ik werk diepgaand met AI-gereedschap en bouw het in elk project in om sneller te gaan zonder bochten af te snijden. Wat constant blijft is hoe ik werk: direct, communicatief, en alsof het product van mij is.",
-      "en": "My stack spans Vue, Nuxt, React, Angular, Ionic, Node.js, and C++. I'm deeply fluent in AI tools and build them into every project to move faster without cutting corners. What stays constant is how I work: directly, communicatively, and like the product is mine."
-    },
-    "details": [
+    "items": [
       {
-        "label": { "nl": "Gevestigd in", "en": "Based in" },
-        "value": { "nl": "Amsterdam, NL", "en": "Amsterdam, NL" }
+        "probleem": {
+          "nl": "Je tikt alles over.",
+          "en": "You retype everything."
+        },
+        "aanpak": {
+          "nl": "Ik koppel de systemen die je al hebt, zodat gegevens vanzelf doorlopen in plaats van dat iemand ze overtikt. Ook waar de standaardconnector stopt.",
+          "en": "I connect the systems you already run, so data flows through on its own instead of someone retyping it. Including where the standard connector stops."
+        },
+        "bewijs": {
+          "slug": "sc-weekly-report",
+          "feit": {
+            "nl": "Koppelt AdManage, AdUp en Triple Whale aan één rapport",
+            "en": "Connects AdManage, AdUp and Triple Whale into one report"
+          }
+        }
       },
       {
-        "label": { "nl": "Ervaring", "en": "Experience" },
-        "value": { "nl": "4+ jaar", "en": "4+ years" }
+        "probleem": {
+          "nl": "Het kost je elke week uren.",
+          "en": "It costs you hours every week."
+        },
+        "aanpak": {
+          "nl": "Ik laat rapportages zichzelf opstellen, en waar het past ook mail en offertes. De cijfers komen rechtstreeks uit de bron, AI schrijft alleen de duiding en een mens keurt goed voordat er iets naar buiten gaat.",
+          "en": "I make reports draft themselves, and where it fits, email and quotes too. Figures come straight from the source, AI only writes the commentary, and a person signs off before anything goes out."
+        },
+        "bewijs": {
+          "slug": "sc-weekly-report",
+          "feit": {
+            "nl": "Eerst een handgeschreven Google Doc, nu elke week klaar",
+            "en": "Once a hand-written Google Doc, now ready every week"
+          }
+        }
       },
       {
-        "label": { "nl": "Focus", "en": "Focus" },
-        "value": { "nl": "Web & mobiel", "en": "Web & Mobile" }
+        "probleem": {
+          "nl": "Je cijfers staan in vijf systemen.",
+          "en": "Your numbers live in five systems."
+        },
+        "aanpak": {
+          "nl": "Ik bouw één dashboard op maat dat de cijfers uit al die systemen samenbrengt: één overzicht in je eigen huisstijl, zonder exports en Excel-lijstjes.",
+          "en": "I build one custom dashboard that brings the numbers from all those systems together: one overview in your own brand, no exports or spreadsheets."
+        },
+        "systemen": [
+          "Shopify",
+          "bol.com",
+          "Exact Online",
+          "Moneybird",
+          "Google Analytics",
+          "Google Ads",
+          "Meta Ads"
+        ]
+      },
+      {
+        "probleem": {
+          "nl": "Je pakket doet maar de helft.",
+          "en": "Your software only covers half."
+        },
+        "aanpak": {
+          "nl": "Waar een plugin of no-code-tool stopt, bouw ik het ontbrekende stuk: een portaal, tool of app in je eigen huisstijl.",
+          "en": "Where a plugin or no-code tool stops, I build the missing piece: a portal, tool or app in your own brand."
+        },
+        "bewijs": {
+          "slug": "shaftlab",
+          "feit": {
+            "nl": "Maatwerk-clubs als één product, bovenop Shopify",
+            "en": "Custom-built clubs sold as one product, on top of Shopify"
+          }
+        }
       }
     ]
   },
-  "skills": {
+  "work": {
     "intro": {
-      "nl": "De stack volgt het probleem, nooit andersom. Dit is waar ik naar grijp, en wanneer.",
-      "en": "The stack follows the problem, never the other way around. Here is what I reach for, and when."
+      "nl": "Werk voor echte opdrachtgevers. Geen demo's, geen mockups.",
+      "en": "Work for real clients. No demos, no mockups."
+    }
+  },
+  "werkwijze": {
+    "items": [
+      {
+        "label": {
+          "nl": "Vaste prijs",
+          "en": "Fixed price"
+        },
+        "kop": {
+          "nl": "Afgebakend, met een vaste prijs en een deadline.",
+          "en": "Scoped, with a fixed price and a deadline."
+        },
+        "tekst": {
+          "nl": "Je weet vooraf wat het kost en wanneer het live staat. Elke week een update met wat er af is.",
+          "en": "You know up front what it costs and when it goes live, and you get a weekly update on what's done."
+        }
+      },
+      {
+        "label": {
+          "nl": "Jouw systemen",
+          "en": "Your systems"
+        },
+        "kop": {
+          "nl": "Het draait in je eigen systemen.",
+          "en": "It runs in your own systems."
+        },
+        "tekst": {
+          "nl": "Ik begin bij het proces en de pakketten die je al gebruikt. Wat ik bouw draait in productie, met logging en tests, zodat het na de livegang niet breekt.",
+          "en": "I start from the process and the software you already use. What I build runs in production, with logging and tests, so it doesn't break after launch."
+        }
+      },
+      {
+        "label": {
+          "nl": "Jouw data",
+          "en": "Your data"
+        },
+        "kop": {
+          "nl": "Code, database en sleutels op jouw naam.",
+          "en": "Code, database and keys in your name."
+        },
+        "tekst": {
+          "nl": "Hosting in de EU, geen lock-in. Cijfers komen rechtstreeks uit de bron; AI schrijft alleen de duiding en een mens keurt goed.",
+          "en": "Hosted in the EU, no lock-in. Figures come straight from the source; AI only writes the commentary and a person signs off."
+        }
+      },
+      {
+        "label": {
+          "nl": "Eén persoon",
+          "en": "One person"
+        },
+        "kop": {
+          "nl": "Je spreekt degene die het bouwt.",
+          "en": "You talk to the person who builds it."
+        },
+        "tekst": {
+          "nl": "Vaste dagen per week, een beperkt aantal klanten tegelijk. Ik werk mee met je huidige webbouwer of IT-partner en lever gedocumenteerd op.",
+          "en": "Fixed days each week, a limited number of clients at a time. I work alongside your current web builder or IT partner and hand over documented work."
+        }
+      },
+      {
+        "label": {
+          "nl": "Voor bureaus",
+          "en": "For agencies"
+        },
+        "kop": {
+          "nl": "AI- en koppelingswerk onder jouw merk.",
+          "en": "AI and integration work under your brand."
+        },
+        "tekst": {
+          "nl": "Je klanten vragen erom en je team heeft de handen vol. Ik lever discreet, binnen jouw planning en jouw afspraken met de klant.",
+          "en": "Your clients ask for it and your team has its hands full. I deliver discreetly, within your schedule and your agreements with the client."
+        }
+      }
+    ]
+  },
+  "about": {
+    "intro": {
+      "nl": "Ik ben Nils Vogelaar, developer in Amsterdam. Ik wil eerst snappen hoe jouw bedrijf werkt. Pas daarna kijk ik wat er gebouwd moet worden.",
+      "en": "I'm Nils Vogelaar, a developer in Amsterdam. First I want to understand how your business works. Only then do I look at what needs to be built."
     },
-    "picks": [
+    "body": {
+      "nl": "Ik ontwerp en bouw alles zelf, dus wat we bespreken is ook wat er komt. Elke tool krijgt de uitstraling van jouw bedrijf. En ik behandel het als mijn eigen product, ook na de livegang.",
+      "en": "I design and build everything myself, so what we discuss is what you get. Every tool takes on the look of your business. And I treat it as my own product, long after launch."
+    },
+    "details": [
       {
-        "tools": "Vue, Nuxt",
-        "when": {
-          "nl": "Mijn standaard. Interfaces die snel en stabiel blijven terwijl de data erachter groeit — tien rijen of tienduizend, het voelt hetzelfde.",
-          "en": "My default. Interfaces that stay fast and stable as the data behind them grows — ten rows or ten thousand, it feels the same."
+        "label": {
+          "nl": "Gevestigd in",
+          "en": "Based in"
+        },
+        "value": {
+          "nl": "Amsterdam, NL",
+          "en": "Amsterdam, NL"
         }
       },
       {
-        "tools": "React",
-        "when": {
-          "nl": "Wanneer het team het al kent, het ecosysteem zwaarder weegt dan ergonomie, of een library alleen in React bestaat.",
-          "en": "When the team already knows it, the ecosystem matters more than ergonomics, or a library only ships React."
+        "label": {
+          "nl": "Ervaring",
+          "en": "Experience"
+        },
+        "value": {
+          "nl": "4+ jaar",
+          "en": "4+ years"
         }
       },
       {
-        "tools": "Ionic, Capacitor",
-        "when": {
-          "nl": "Eén codebase naar iOS, Android en web. Voor wanneer twee native teams niet in het budget past.",
-          "en": "One codebase to iOS, Android, and the web. For when two native teams isn't in the budget."
-        }
-      },
-      {
-        "tools": "TypeScript",
-        "when": {
-          "nl": "Altijd. Kale JS is schuld zodra een tweede persoon het bestand opent.",
-          "en": "Always. Plain JS is debt the moment a second person opens the file."
-        }
-      },
-      {
-        "tools": "Node.js, REST, SQL",
-        "when": {
-          "nl": "Backend-lijm: API's, schedulers, integraties. Bewust saai.",
-          "en": "Backend glue: APIs, schedulers, integrations. Boring on purpose."
-        }
-      },
-      {
-        "tools": "Figma, Tailwind",
-        "when": {
-          "nl": "Waar het ontwerp gebeurt, en wat het zonder vertaalslag live krijgt.",
-          "en": "Where the design happens, and what gets it shipped without a translation step."
+        "label": {
+          "nl": "Focus",
+          "en": "Focus"
+        },
+        "value": {
+          "nl": "Koppelingen, automatisering & dashboards",
+          "en": "Integrations, automation & dashboards"
         }
       }
     ]
@@ -87,8 +223,8 @@
     "email": "softwaresolutions.nv@gmail.com",
     "location": "Amsterdam",
     "pitch": {
-      "nl": "Ben je iets aan het schalen en zoek je een developer die met je meedenkt? Vertel wat je bouwt. Ik vertel wat het werkelijk vraagt.",
-      "en": "Scaling something and need a developer who thinks alongside you? Tell me what you're building. I'll tell you what it actually takes."
+      "nl": "Vertel waar je tegenaan loopt, of wat er moet komen: een koppeling, een tool of een complete app. Ik vertel wat het werkelijk vraagt, en wat het kost.",
+      "en": "Tell me what's holding you back, or what needs to exist: an integration, a tool or a complete app. I'll tell you what it actually takes, and what it costs."
     },
     "socials": [
       {
@@ -99,77 +235,397 @@
         "label": "GitHub",
         "href": "https://github.com/softwaresolutionsnv-droid"
       }
-    ]
+    ],
+    "bookingUrl": "https://cal.com/nils-ftrihy/30min"
   },
   "werkstukken": [
     {
-      "slug": "nachtagenda",
-      "title": "Nachtagenda",
-      "groep": "apps-ai",
-      "herkomst": "eigen-product",
-      "status": "pre-launch",
+      "slug": "sc-weekly-report",
+      "title": "Weekly Report",
+      "groep": "automatisering",
+      "herkomst": "in-opdracht",
+      "status": "besloten",
       "bovenlaag": {
-        "nl": "Uitgaansagenda voor het Nederlandse nachtleven. Festivals en clubnachten uit losse bronnen komen samen in één feed die van je smaak leert — met je vriendengroep erbij, een ticketalarm voor drops en een jaaroverzicht achteraf.",
-        "en": "Nightlife agenda for the Netherlands. Festivals and club nights from scattered sources come together in one feed that learns your taste — with your crew along, a ticket alarm for drops, and a year-in-review afterwards."
+        "nl": "Weekrapportage voor de klanten van performancebureau Short Commerce. Een mediabuyer schreef elke week per klant met de hand een Google Doc. Nu staan advertentie- en winkelcijfers automatisch in één rapport, schrijft Claude de duiding en keurt de mediabuyer goed voordat het naar de klant gaat.",
+        "en": "Weekly reporting for the clients of performance agency Short Commerce. A media buyer used to write a Google Doc by hand for every client, every week. Now ad and store figures land in one report automatically, Claude drafts the commentary, and the media buyer signs off before it reaches the client."
       },
       "lede": {
-        "nl": "Het Nederlandse nachtleven in één agenda die je smaak leert — vóórdat de tickets weg zijn.",
-        "en": "Dutch nightlife in one agenda that learns your taste — before the tickets are gone."
+        "nl": "Van een handgeschreven Google Doc naar een rapport dat elke week klaarstaat. De cijfers liggen vast; alleen de duiding is tekst.",
+        "en": "From a hand-written Google Doc to a report that's ready every week. The numbers are fixed; only the commentary is prose."
       },
       "onderlaag": [
         {
-          "nl": "De agenda begint bij een eigen datapijplijn: Python-scrapers op vijf bronnen (Ticketmaster, Resident Advisor, festivalsites, venue-data), met deduplicatie en cross-source-samenvoeging tot één schone eventlijst — zo'n 660 live events op dit moment. Het datamodel staat in Supabase, opgebouwd in 41 migraties met row-level security.",
-          "en": "The agenda starts with its own data pipeline: Python scrapers over five sources (Ticketmaster, Resident Advisor, festival sites, venue data), with deduplication and cross-source merging into one clean event list — around 660 live events right now. The data model lives in Supabase, built up across 41 migrations with row-level security."
+          "nl": "Het rapport brengt Meta, TikTok, Snapchat, Google en Pinterest samen met de winkelcijfers, via AdManage, AdUp en Triple Whale. Elf secties, targets per platform, markt en campagne, en een trend over acht weken. Eén sectiecatalogus voor alle klanten; per klant verschilt alleen de configuratie.",
+          "en": "The report brings Meta, TikTok, Snapchat, Google and Pinterest together with the store figures, via AdManage, AdUp and Triple Whale. Eleven sections, targets per platform, market and campaign, and an eight-week trend. One section catalogue for every client; only the configuration differs per client."
         },
         {
-          "nl": "De personalisatie is gebouwd als afgeleide laag, met toestemming als voorwaarde. Zes soorten gedragssignalen — bekijken, ticket-taps, RSVP's, alarms, artiest-interacties — worden gewogen en met een verval van twee jaar samengevat tot een smaakprofiel per genre, stad, venue en artiest. Zonder toestemming staat de laag simpelweg uit.",
-          "en": "Personalisation is built as a derived layer, with consent as the precondition. Six kinds of behavioural signals — views, ticket taps, RSVPs, alarms, artist interactions — are weighted and decayed over two years into a taste profile per genre, city, venue, and artist. Without consent the layer is simply off."
+          "nl": "Cijfers komen deterministisch uit de bron-API's en worden nooit door het model herberekend. Claude schrijft alleen de duiding bij die vaste cijfers. Ontbreekt een databron, dan krijgt die plek één feitelijke notitie en wordt hij nooit met tekst opgevuld.",
+          "en": "Figures come deterministically from the source APIs and are never recalculated by the model. Claude only writes the commentary on those fixed figures. When a data source is missing, that spot gets one factual note and is never padded with prose."
         },
         {
-          "nl": "Daaromheen zit het sociale weefsel: een vriendengroep met wederzijdse RSVP's, een notificatie-engine die ticketdrops bewaakt, verrijkte artiestenpagina's en een Wrapped-achtig jaaroverzicht. Alles native gebouwd met Expo en React Native, in TypeScript.",
-          "en": "Around it sits the social fabric: a crew with mutual RSVPs, a notification engine watching ticket drops, enriched artist pages, and a Wrapped-style year in review. All built natively with Expo and React Native, in TypeScript."
+          "nl": "De mediabuyer reviewt en publiceert in een klantportaal met rollen, revisiegeschiedenis en comments. Live sinds 1 oktober 2026 met de eerste drie merken, gebouwd om op te schalen naar zo'n achttien klanten. Gebouwd met een tweede developer.",
+          "en": "The media buyer reviews and publishes in a client portal with roles, revision history and comments. Live since 1 October 2026 with the first three brands, built to scale to around eighteen clients. Built with a second developer."
         }
       ],
-      "tags": ["Expo", "React Native", "TypeScript", "Supabase", "Python"],
+      "tags": [
+        "Python",
+        "FastAPI",
+        "Postgres",
+        "Claude"
+      ],
       "role": {
-        "nl": "Ontwerp, app & datapijplijn",
-        "en": "Design, app & data pipeline"
+        "nl": "Ontwerp, bouw & AI-integratie, samen met één developer",
+        "en": "Design, build & AI integration, with one other developer"
       },
       "year": "2026",
-      "client": "",
+      "client": "Short Commerce",
       "url": null,
       "image": "",
       "imageAlt": {
-        "nl": "Nachtagenda-appschermen met de gepersonaliseerde eventfeed en een eventpagina",
-        "en": "Nachtagenda app screens showing the personalised event feed and an event page"
+        "nl": "De pijplijn achter elk weekrapport: vijf advertentiekanalen en winkelcijfers, vaste cijfers, duiding door Claude, review door de mediabuyer, publicatie in het klantportaal.",
+        "en": "The pipeline behind every weekly report: five ad channels and store figures, fixed numbers, commentary by Claude, review by the media buyer, publication in the client portal."
       },
       "highlights": [
         {
-          "label": { "nl": "Pijplijn", "en": "Pipeline" },
+          "label": {
+            "nl": "Bronnen",
+            "en": "Sources"
+          },
           "value": {
-            "nl": "5 bronnen → ±660 samengevoegde events",
-            "en": "5 sources → ±660 merged events"
+            "nl": "5 advertentiekanalen + winkelcijfers",
+            "en": "5 ad channels + store figures"
           }
         },
         {
-          "label": { "nl": "Datamodel", "en": "Data model" },
+          "label": {
+            "nl": "Levering",
+            "en": "Delivery"
+          },
           "value": {
-            "nl": "Supabase, 41 migraties, row-level security",
-            "en": "Supabase, 41 migrations, row-level security"
+            "nl": "Elke week",
+            "en": "Every week"
           }
         },
         {
-          "label": { "nl": "Personalisatie", "en": "Personalisation" },
+          "label": {
+            "nl": "Duiding",
+            "en": "Commentary"
+          },
           "value": {
-            "nl": "6 gedragssignalen, 2 jaar verval, alleen met toestemming",
-            "en": "6 behavioural signals, 2-year decay, consent-gated"
+            "nl": "Claude schrijft, mediabuyer keurt goed",
+            "en": "Claude drafts, media buyer signs off"
           }
         },
         {
-          "label": { "nl": "Status", "en": "Status" },
+          "label": {
+            "nl": "Live sinds",
+            "en": "Live since"
+          },
           "value": {
-            "nl": "Pre-launch, getest in Expo Go",
-            "en": "Pre-launch, tested in Expo Go"
+            "nl": "1 oktober 2026",
+            "en": "1 October 2026"
+          }
+        }
+      ],
+      "gallery": [],
+      "diagram": {
+        "kop": {
+          "nl": "Elke week, per klant",
+          "en": "Every week, per client"
+        },
+        "bijschrift": {
+          "nl": "Een diagram, geen schermafbeelding: het portaal is besloten.",
+          "en": "A diagram, not a screenshot: the portal is private."
+        },
+        "stappen": [
+          {
+            "label": {
+              "nl": "Bronnen",
+              "en": "Sources"
+            },
+            "titel": {
+              "nl": "Meta · TikTok · Snapchat · Google · Pinterest",
+              "en": "Meta · TikTok · Snapchat · Google · Pinterest"
+            },
+            "noot": {
+              "nl": "plus winkelcijfers, via AdManage, AdUp en Triple Whale",
+              "en": "plus store figures, via AdManage, AdUp and Triple Whale"
+            }
+          },
+          {
+            "label": {
+              "nl": "Cijfers",
+              "en": "Figures"
+            },
+            "titel": {
+              "nl": "Vaste cijfers uit de bron-API's",
+              "en": "Fixed figures from the source APIs"
+            },
+            "noot": {
+              "nl": "nooit herberekend · 11 secties · trend over 8 weken",
+              "en": "never recalculated · 11 sections · 8-week trend"
+            }
+          },
+          {
+            "label": {
+              "nl": "Duiding",
+              "en": "Commentary"
+            },
+            "titel": {
+              "nl": "Claude schrijft de duiding",
+              "en": "Claude writes the commentary"
+            },
+            "noot": {
+              "nl": "ontbrekende bron = één feitelijke notitie",
+              "en": "missing source = one factual note"
+            }
+          },
+          {
+            "label": {
+              "nl": "Review",
+              "en": "Review"
+            },
+            "titel": {
+              "nl": "Mediabuyer keurt goed en publiceert",
+              "en": "Media buyer signs off and publishes"
+            },
+            "noot": {
+              "nl": "rollen · revisiegeschiedenis · comments",
+              "en": "roles · revision history · comments"
+            }
+          },
+          {
+            "label": {
+              "nl": "Klant",
+              "en": "Client"
+            },
+            "titel": {
+              "nl": "Klantportaal, elke week",
+              "en": "Client portal, every week"
+            },
+            "noot": {
+              "nl": "elke week, zonder overtikken",
+              "en": "every week, no retyping"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "shaftlab",
+      "title": "Shaftlab",
+      "groep": "maatwerk",
+      "herkomst": "in-opdracht",
+      "status": "live",
+      "bovenlaag": {
+        "nl": "Shopify-webshop voor een golfwerkplaats die clubs op maat bouwt. Standaard Shopify verkoopt shaft, grip en adapter als losse producten. Met de eigen club-builder kiest de golfer alle onderdelen op de shaftpagina en bestelt hij één club, die de werkplaats in elkaar zet.",
+        "en": "Shopify store for a golf workshop that builds clubs to order. Out of the box, Shopify sells shaft, grip and adapter as separate products. With the custom club builder, the golfer picks every part on the shaft page and orders one club, which the workshop assembles."
+      },
+      "lede": {
+        "nl": "Voor de golfer die zijn spec al kent: kiezen, bestellen, en de werkplaats bouwt de club.",
+        "en": "For the golfer who already knows their spec: choose, order, and the workshop builds the club."
+      },
+      "onderlaag": [
+        {
+          "nl": "Wie hier koopt, weet welk shaftmodel, welke flex en welk gewicht het wordt. Daarom is de flow kort: shaftpagina, welke kop heb je, configureren, winkelwagen. Uitleg zit als inklapbare laag onder elke keuze, nooit ervoor.",
+          "en": "Whoever buys here knows which shaft model, flex and weight it will be. So the flow is short: shaft page, which head do you have, configure, cart. Explanation sits as a collapsible layer under each choice, never in front of it."
+        },
+        {
+          "nl": "Een eigen Shopify-thema, geen afgeleide van Dawn. De configurator is een los stuk JavaScript in één theme section, en de catalogus komt rechtstreeks uit Liquid in plaats van uit de Storefront API. Een Cloudflare Worker beheert het Admin-token en maakt per samengestelde club een fixed bundle aan. Daardoor is er geen app uit de App Store nodig, geen Shopify Plus en geen omzetfee.",
+          "en": "A custom Shopify theme, not a Dawn derivative. The configurator is a standalone piece of JavaScript in one theme section, and the catalogue comes straight from Liquid rather than the Storefront API. A Cloudflare Worker holds the Admin token and creates a fixed bundle for each configured club. So there is no App Store app, no Shopify Plus and no revenue fee."
+        },
+        {
+          "nl": "De eigenaar beheert alles zelf in de Shopify-admin: productdata, specs, foto's en CSV-imports. Voor een nieuwe shaft of een prijswijziging is geen developer nodig.",
+          "en": "The owner manages everything in the Shopify admin: product data, specs, photos and CSV imports. A new shaft or a price change needs no developer."
+        }
+      ],
+      "tags": [
+        "Shopify",
+        "Liquid",
+        "JavaScript",
+        "Cloudflare Workers"
+      ],
+      "role": {
+        "nl": "Ontwerp, bouw & integratie",
+        "en": "Design, build & integration"
+      },
+      "year": "2026",
+      "client": "Shaftlab",
+      "url": "https://shaftlab.eu/",
+      "highlights": [
+        {
+          "label": {
+            "nl": "Platform",
+            "en": "Platform"
+          },
+          "value": {
+            "nl": "Shopify, eigen thema",
+            "en": "Shopify, custom theme"
+          }
+        },
+        {
+          "label": {
+            "nl": "Builder",
+            "en": "Builder"
+          },
+          "value": {
+            "nl": "Losse JS-module, geen build step",
+            "en": "Standalone JS module, no build step"
+          }
+        },
+        {
+          "label": {
+            "nl": "Bundel",
+            "en": "Bundle"
+          },
+          "value": {
+            "nl": "Vaste bundel via Cloudflare Worker",
+            "en": "Fixed bundle via Cloudflare Worker"
+          }
+        },
+        {
+          "label": {
+            "nl": "Beheer",
+            "en": "Admin"
+          },
+          "value": {
+            "nl": "Alles in de Shopify-admin",
+            "en": "Everything in the Shopify admin"
+          }
+        }
+      ],
+      "uitsneden": [
+        {
+          "beeld": "/projects/shaftlab-builder.jpg",
+          "pad": "/nl/products/fujikura-ventus-velocore-blue",
+          "selector": "#configurator",
+          "scherm": "desktop",
+          "anker": "Stel je shaft samen",
+          "bijschrift": {
+            "nl": "Club-builder op de shaftpagina: eerste stap, met de som van de onderdelen rechtsonder",
+            "en": "Club builder on the shaft page: first step, with the sum of the parts bottom right"
+          }
+        },
+        {
+          "beeld": "/projects/shaftlab-hero.jpg",
+          "pad": "/nl",
+          "selector": "[id$=\"__home-hero\"] > section.hero",
+          "scherm": "desktop",
+          "anker": "Jouw spec, met de hand gebouwd",
+          "bijschrift": {
+            "nl": "Herosectie van shaftlab.eu met de belofte en de weg naar de shafts",
+            "en": "Hero of shaftlab.eu with the promise and the way into the shafts"
+          }
+        },
+        {
+          "beeld": "/projects/shaftlab-onderdelen.jpg",
+          "pad": "/nl",
+          "selector": "[id$=\"__home-build\"] > section.sectie",
+          "scherm": "desktop",
+          "anker": "Eén shaft op maat",
+          "bijschrift": {
+            "nl": "Shaft, grip en adapter als drie onderdelen, met de check of het op je kop past",
+            "en": "Shaft, grip and adapter as three components, with the check whether it fits your head"
+          }
+        },
+        {
+          "beeld": "/projects/shaftlab-hero-mobiel.jpg",
+          "pad": "/nl",
+          "selector": "[id$=\"__home-hero\"] > section.hero",
+          "scherm": "mobiel",
+          "anker": "Jouw spec, met de hand gebouwd",
+          "bijschrift": {
+            "nl": "Mobiele herosectie van shaftlab.eu",
+            "en": "Mobile hero of shaftlab.eu"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "fleetdisk",
+      "title": "FleetDisk",
+      "groep": "maatwerk",
+      "herkomst": "in-opdracht",
+      "status": "besloten",
+      "bovenlaag": {
+        "nl": "Vernieuwd fleetportaal voor leasemaatschappijen en hun zakelijke klanten. Het oude portaal is vervangen door een nieuw ontwerp met een dashboard, zodat een wagenparkbeheerder in één oogopslag ziet hoe zijn wagenpark ervoor staat.",
+        "en": "A renewed fleet portal for lease companies and their business clients. The old portal was replaced by a new design with a dashboard, so a fleet manager sees the state of their fleet at a glance."
+      },
+      "lede": {
+        "nl": "Dertig jaar backofficedata, in één oogopslag te lezen.",
+        "en": "Thirty years of back-office data, readable at a glance."
+      },
+      "onderlaag": [
+        {
+          "nl": "FleetDisk vervangt het oude portaal. De data komt uit dezelfde backoffice; de interface is nieuw, met een dashboard bovenop. Het portaal draait voor meerdere leasemaatschappijen, en zowel hun medewerkers als hun zakelijke klanten werken erin.",
+          "en": "FleetDisk replaces the old portal. The data comes from the same back-office; the interface is new, with a dashboard on top. The portal runs for several lease companies, and both their staff and their business clients work in it."
+        },
+        {
+          "nl": "Ontwerp en frontend in één hand, gebouwd op Nuxt 3 met strikte TypeScript bovenop de bestaande backoffice-API. Het werk zat in het vormgeven van dertig jaar data tot een dashboard dat een wagenparkbeheerder in één oogopslag leest.",
+          "en": "Design and frontend in one pair of hands, built on Nuxt 3 with strict TypeScript on top of the existing back-office API. The work was shaping thirty years of data into a dashboard a fleet manager reads at a glance."
+        },
+        {
+          "nl": "Schades, boetes, tankpassen, verzekeringen en leaseorders hebben elk een eigen overzicht, met uitgebreide filters, opgeslagen weergaven en CSV-export.",
+          "en": "Damages, fines, fuel cards, insurance and lease orders each have their own overview, with extensive filters, saved views and CSV export."
+        }
+      ],
+      "tags": [
+        "Nuxt.js",
+        "Vue.js",
+        "TypeScript",
+        "Bootstrap"
+      ],
+      "role": {
+        "nl": "Ontwerp & frontend",
+        "en": "Design & frontend"
+      },
+      "year": "2024–2025",
+      "client": "Autodisk",
+      "url": null,
+      "image": "",
+      "imageAlt": {
+        "nl": "FleetDisk-fleetmanagementportaal met voertuigoverzicht en dashboardanalyses",
+        "en": "FleetDisk fleet management portal showing vehicle overview and dashboard analytics"
+      },
+      "highlights": [
+        {
+          "label": {
+            "nl": "Gebruikers",
+            "en": "Users"
+          },
+          "value": {
+            "nl": "Leasemaatschappijen + hun klanten",
+            "en": "Lease companies + their clients"
+          }
+        },
+        {
+          "label": {
+            "nl": "Data",
+            "en": "Data"
+          },
+          "value": {
+            "nl": "30 jaar backofficedata",
+            "en": "30 years of back-office data"
+          }
+        },
+        {
+          "label": {
+            "nl": "Stack",
+            "en": "Stack"
+          },
+          "value": {
+            "nl": "Nuxt 3 · TypeScript · REST-API",
+            "en": "Nuxt 3 · TypeScript · REST API"
+          }
+        },
+        {
+          "label": {
+            "nl": "Rol",
+            "en": "Role"
+          },
+          "value": {
+            "nl": "Solo ontwerp + frontend",
+            "en": "Solo design + frontend"
           }
         }
       ],
@@ -178,270 +634,447 @@
     {
       "slug": "berijdersapp",
       "title": "BerijdersApp",
-      "groep": "apps-ai",
+      "groep": "maatwerk",
       "herkomst": "in-opdracht",
       "status": "live",
       "bovenlaag": {
-        "nl": "White-label mobiele app voor leaserijders. Eén overzicht voor contract, kilometerstand, schademeldingen, boetes en een brandstofscore afgeleid uit elke tankbeurt. Vervangt het papieren berijdershandboek door een digitale versie waarin elke actie één tik is.",
-        "en": "White-label mobile app for lease drivers. One overview for contract, mileage, damage reports, fines, and a fuel-score derived from every fill-up. Replaces the paper driver handbook with a tap-to-act digital version."
+        "nl": "White-label mobiele app voor leaserijders. Contract, kilometerstand, schademeldingen en boetes staan op één plek. Eerder had de berijder geen eigen kanaal en liep alles via het portaal of de telefoon.",
+        "en": "White-label mobile app for lease drivers. Contract, mileage, damage reports and fines sit in one place. Drivers used to have no channel of their own; everything went through the portal or the phone."
       },
       "lede": {
-        "nl": "Een berijdershandboek teruggebracht tot tikken. Boetes, kilometers, brandstof, schades: elk leed van leasen valt samen in één scherm.",
-        "en": "A driver handbook reduced to taps. Fines, mileage, fuel, damages: every annoyance of leasing collapses into one screen."
+        "nl": "Eén codebase, 54 apps in de stores: elke leasemaatschappij een eigen berijdersapp.",
+        "en": "One codebase, 54 apps in the stores: every lease company its own driver app."
       },
       "onderlaag": [
         {
-          "nl": "BerijdersApp vervangt het papieren berijdershandboek dat bij elk leasevoertuig hoort. Berijders krijgen één oppervlak waarin elke actie één tik is: contract, kilometerstand, schades, boetes en tankpas. Geen telefoontjes, geen mailketens.",
-          "en": "BerijdersApp replaces the paper driver handbook that comes with every lease vehicle. Drivers get one tap-to-act surface for their contract, mileage, damages, fines, and fuel card. No phone calls, no email chains."
+          "nl": "Een schade melden, een kilometerstand doorgeven of een boete inzien kan nu in de app, zonder te bellen of in te loggen op het portaal.",
+          "en": "Reporting damage, submitting a mileage reading or checking a fine now happens in the app, without calling or logging in to the portal."
         },
         {
-          "nl": "De app is white-label per leasemaatschappij: merk, teksten en actieve modules komen volledig uit configuratie. Eén Ionic/Capacitor-codebase levert naar iOS en Android, met gedeelde logica tussen de app en het bredere webplatform van Autodisk.",
-          "en": "The app is white-labeled per lease company: brand, copy, and enabled modules all driven by configuration. A single Ionic/Capacitor codebase ships to iOS and Android, with shared logic between the app and Autodisk's wider web platform."
+          "nl": "De app is white-label: merk, teksten en actieve modules komen uit configuratie. Zo komen er uit één Ionic/Capacitor-codebase 54 apps voor iOS en Android, met gedeelde logica tussen de app en het bredere webplatform van Autodisk.",
+          "en": "The app is white-label: brand, copy and enabled modules come from configuration. That is how one Ionic/Capacitor codebase produces 54 apps for iOS and Android, with shared logic between the app and Autodisk's wider web platform."
         },
         {
-          "nl": "De brandstofscore is het interessante deel: elke tankbeurt die de berijder registreert wordt genormaliseerd op voertuig, route en klimaat, en als lopende score getoond. Het maakt van een backoffice-KPI iets waar een berijder daadwerkelijk mee bezig is.",
-          "en": "The fuel-score is the interesting part: every fill-up the driver logs is normalised against vehicle, route, and climate, then surfaced as a running score. It turns a back-office KPI into something a driver actually engages with."
+          "nl": "Naast de frontend hoort ook de white-label-pipeline bij het werk: per merk leest die de configuratie in en levert hij een app op voor de App Store en Google Play.",
+          "en": "Besides the frontend, the work includes the white-label pipeline: for each brand it reads the configuration and delivers an app for the App Store and Google Play."
         }
       ],
-      "tags": ["Vue.js", "TypeScript", "Ionic", "Capacitor"],
-      "role": { "nl": "Frontend-developer", "en": "Frontend Developer" },
-      "year": "2025",
+      "tags": [
+        "Vue.js",
+        "TypeScript",
+        "Ionic",
+        "Capacitor"
+      ],
+      "role": {
+        "nl": "Frontend & white-label-pipeline",
+        "en": "Frontend & white-label pipeline"
+      },
+      "year": "2024–2025",
       "client": "Autodisk",
-      "url": "https://www.autodisk.nl/leasemaatschappij/berijdersapp/",
-      "image": "/projects/berijdersapp.jpg",
-      "imageAlt": {
-        "nl": "BerijdersApp-schermen met leasecontractoverzicht, kilometerstand en brandstofscore",
-        "en": "BerijdersApp mobile screens showing lease contract overview, mileage, and fuel consumption score"
-      },
-      "highlights": [
-        {
-          "label": { "nl": "Platform", "en": "Platform" },
-          "value": { "nl": "iOS · Android · Web", "en": "iOS · Android · Web" }
-        },
-        {
-          "label": { "nl": "Opgeleverd", "en": "Shipped" },
-          "value": {
-            "nl": "White-label, per leasemaatschappij configureerbaar",
-            "en": "White-label, config-driven per lease company"
-          }
-        },
-        {
-          "label": { "nl": "Scope", "en": "Scope" },
-          "value": {
-            "nl": "Contract, schade, boetes, brandstofscore",
-            "en": "Contract, damage, fines, fuel-score"
-          }
-        },
-        {
-          "label": { "nl": "Team", "en": "Team" },
-          "value": {
-            "nl": "Solo frontend, designer in-house",
-            "en": "Solo frontend, in-house designer"
-          }
-        }
-      ],
-      "gallery": []
-    },
-    {
-      "slug": "garmin-mcp",
-      "title": "garmin-mcp",
-      "groep": "mcp-tooling",
-      "herkomst": "eigen-product",
-      "status": "live",
-      "bovenlaag": {
-        "nl": "MCP-server die een AI-assistent rechtstreeks toegang geeft tot Garmin-trainingsdata. Slaap, hartslagvariabiliteit, trainingsbelasting en krachttraining komen als antwoord terug in het gesprek zelf — geen exports, geen dashboards. Draait in productie als dagelijkse hardloopcoach.",
-        "en": "MCP server that gives an AI assistant direct access to Garmin training data. Sleep, heart-rate variability, training load, and strength work come back as answers inside the conversation itself — no exports, no dashboards. Runs in production as a daily running coach."
-      },
-      "lede": {
-        "nl": "Een hardloopcoach die je data al kent: 43 gereedschappen tussen je AI-assistent en je horloge.",
-        "en": "A running coach that already knows your data: 43 tools between your AI assistant and your watch."
-      },
-      "onderlaag": [
-        {
-          "nl": "Een FastMCP-server in Python die Garmin Connect ontsluit over stdio, HTTP en SSE, met OAuth 2.1 + PKCE voor de claude.ai-connectors. Hij draait op Fly.io; de Garmin-sessietokens leven op een persistent volume en de server schrijft ze na elke rotatie terug, zodat een herstart nooit een nieuwe login vraagt.",
-          "en": "A FastMCP server in Python exposing Garmin Connect over stdio, HTTP, and SSE, with OAuth 2.1 + PKCE for the claude.ai connectors. It runs on Fly.io; the Garmin session tokens live on a persistent volume and the server writes them back after every rotation, so a restart never asks for a fresh login."
-        },
-        {
-          "nl": "De 43 tools zijn geschreven voor coaching, niet als kale API-doorgeefluiken: één health-snapshot voor het dagbeeld, loopefficiëntie met cardiac drift per interval, racevoorspellingen, wind per ronde uit het geregistreerde weer, en een Hevy-koppeling voor krachttraining. Zes tools mogen schrijven — workouts aanmaken en inplannen — en zijn met één omgevingsvariabele uit te zetten.",
-          "en": "The 43 tools are written for coaching, not as bare API pass-throughs: one health snapshot for the daily picture, running efficiency with cardiac drift per interval, race predictions, per-lap wind from the recorded weather, and a Hevy integration for strength training. Six tools may write — creating and scheduling workouts — and can be disabled with a single environment variable."
-        },
-        {
-          "nl": "Voor alles wat geen eigen tool heeft is er een rauwe escape hatch naar elk Garmin-endpoint, en een statustool die de verbinding bewaakt. De server is er daardoor ook het bewijs van hoe ik MCP's bouw: klein oppervlak, zelfherstellend, en gedragen door echte dagelijkse eindgebruik.",
-          "en": "For anything without a dedicated tool there is a raw escape hatch to any Garmin endpoint, plus a status tool watching the connection. That makes the server double as proof of how I build MCPs: small surface, self-healing, and carried by real daily use."
-        }
-      ],
-      "tags": ["Python", "FastMCP", "Fly.io", "OAuth 2.1"],
-      "role": { "nl": "Ontwerp & bouw", "en": "Design & build" },
-      "year": "2026",
-      "client": "",
       "url": null,
       "image": "",
       "imageAlt": {
-        "nl": "Architectuurdiagram: een AI-assistent praat via MCP met garmin-mcp op Fly.io, dat de Garmin Connect- en Hevy-API's ontsluit",
-        "en": "Architecture diagram: an AI assistant talks over MCP to garmin-mcp on Fly.io, which exposes the Garmin Connect and Hevy APIs"
+        "nl": "BerijdersApp-schermen met leasecontractoverzicht en kilometerstand",
+        "en": "BerijdersApp screens showing lease contract overview and mileage"
       },
       "highlights": [
         {
-          "label": { "nl": "Tools", "en": "Tools" },
+          "label": {
+            "nl": "Platform",
+            "en": "Platform"
+          },
           "value": {
-            "nl": "43, waarvan 6 met schrijfrechten",
-            "en": "43, of which 6 can write"
+            "nl": "iOS · Android",
+            "en": "iOS · Android"
           }
         },
         {
-          "label": { "nl": "Transport", "en": "Transport" },
+          "label": {
+            "nl": "Uitrol",
+            "en": "Rollout"
+          },
           "value": {
-            "nl": "stdio · HTTP · SSE, OAuth 2.1 + PKCE",
-            "en": "stdio · HTTP · SSE, OAuth 2.1 + PKCE"
+            "nl": "54 apps uit één codebase",
+            "en": "54 apps from one codebase"
           }
         },
         {
-          "label": { "nl": "Deploy", "en": "Deploy" },
+          "label": {
+            "nl": "Scope",
+            "en": "Scope"
+          },
           "value": {
-            "nl": "Fly.io, zelfherstellende tokenopslag",
-            "en": "Fly.io, self-healing token store"
+            "nl": "Contract, kilometers, schades, boetes",
+            "en": "Contract, mileage, damage, fines"
           }
         },
         {
-          "label": { "nl": "Integraties", "en": "Integrations" },
+          "label": {
+            "nl": "Rol",
+            "en": "Role"
+          },
           "value": {
-            "nl": "Garmin Connect + Hevy",
-            "en": "Garmin Connect + Hevy"
+            "nl": "Frontend + white-label-pipeline",
+            "en": "Frontend + white-label pipeline"
           }
-        }
-      ],
-      "gallery": [],
-      "trace": {
-        "vraag": {
-          "nl": "Wat zijn mijn voorspelde racetijden?",
-          "en": "What are my predicted race times?"
-        },
-        "aanroep": "get_race_predictions()",
-        "antwoord": "{\n  \"calendarDate\": \"2026-08-13\",\n  \"time5K\": 1503,\n  \"time10K\": 3228,\n  \"timeHalfMarathon\": 7308,\n  \"timeMarathon\": 16218\n}",
-        "duiding": {
-          "nl": "Tijden in seconden — 25:03 · 53:48 · 2:01:48 · 4:30:18. Opgenomen op 13 augustus 2026.",
-          "en": "Times in seconds — 25:03 · 53:48 · 2:01:48 · 4:30:18. Recorded on 13 August 2026."
-        }
-      }
-    },
-    {
-      "slug": "fleetdisk",
-      "title": "FleetDisk",
-      "groep": "sites-merk",
-      "herkomst": "in-opdracht",
-      "status": "besloten",
-      "bovenlaag": {
-        "nl": "Self-service fleetmanagementportaal voor leasemaatschappijen. 24/7 inzicht in schades, boetes, tankpassen, verzekeringen en leaseorders: één venster op wat vroeger vijf losse backoffices waren.",
-        "en": "Self-service fleet management portal for lease companies. 24/7 insight into damages, fines, fuel cards, insurance, and lease orders: one pane over what used to be five separate back-offices."
-      },
-      "lede": {
-        "nl": "Dertig jaar enterprise-fleetdata, scanbaar gemaakt in drie seconden. Het bedieningspaneel waar vroeger vijf backoffices voor nodig waren.",
-        "en": "Thirty years of enterprise fleet data, made scannable in three seconds. The control surface five back-offices used to need."
-      },
-      "onderlaag": [
-        {
-          "nl": "FleetDisk is het self-serviceportaal waarmee leasemaatschappijen een live wagenpark draaien. 24/7 inzicht in schademeldingen, boetes, tankpassen, verzekeringen en openstaande leaseorders: één venster op wat vroeger vijf legacy-backoffices waren.",
-          "en": "FleetDisk is the self-service portal lease companies use to run a live fleet. 24/7 insight into damage reports, fines, fuel cards, insurance, and open lease orders: a single pane over what used to be five legacy back-offices."
-        },
-        {
-          "nl": "Gebouwd op Nuxt 3 met strikte TypeScript, bovenop de iWise-backoffice-API. De uitdaging was niet het renderen, maar dertig jaar enterprise-data vormgeven tot iets wat een fleetmanager in drie seconden scant.",
-          "en": "Built on Nuxt 3 with strict TypeScript on top of the iWise backoffice API. The challenge was not rendering. It was shaping thirty years of enterprise data into something a fleet manager can scan in three seconds."
-        },
-        {
-          "nl": "Diepe filters, opgeslagen weergaven en CSV-export zorgen dat powerusers de helpdesk niet meer om rapporten vragen. Het helpdeskteam kreeg zijn middagen terug.",
-          "en": "Deep filtering, saved views, and CSV export mean power users stop asking the helpdesk for reports. The helpdesk team got their afternoons back."
-        }
-      ],
-      "tags": ["Nuxt.js", "Vue.js", "TypeScript", "Bootstrap"],
-      "role": { "nl": "Frontend-developer", "en": "Frontend Developer" },
-      "year": "2024",
-      "client": "Autodisk",
-      "url": null,
-      "image": "/projects/fleetdisk.png",
-      "imageAlt": {
-        "nl": "FleetDisk-fleetmanagementportaal met voertuigoverzicht en dashboardanalyses",
-        "en": "FleetDisk fleet management portal showing vehicle overview and dashboard analytics"
-      },
-      "highlights": [
-        {
-          "label": { "nl": "Gebruikers", "en": "Users" },
-          "value": { "nl": "Fleetmanagers, B2B", "en": "Fleet managers, B2B" }
-        },
-        {
-          "label": { "nl": "Dataschaal", "en": "Data scale" },
-          "value": { "nl": "100k+ voertuigen, live", "en": "100k+ vehicles, live" }
-        },
-        {
-          "label": { "nl": "Stack", "en": "Stack" },
-          "value": {
-            "nl": "Nuxt 3 · TypeScript · REST-API",
-            "en": "Nuxt 3 · TypeScript · REST API"
-          }
-        },
-        {
-          "label": { "nl": "Resultaat", "en": "Outcome" },
-          "value": { "nl": "Minder helpdesktickets", "en": "Fewer helpdesk tickets" }
         }
       ],
       "gallery": []
     },
     {
-      "slug": "nb-onderhoudsdiensten",
-      "title": "N.B. Onderhoudsdiensten",
+      "slug": "puikbouw",
+      "title": "Puik Bouw",
       "groep": "sites-merk",
       "herkomst": "in-opdracht",
       "status": "live",
       "bovenlaag": {
-        "nl": "Merkidentiteit en marketingsite voor een Nederlands renovatieduo. Warme, premium uitstraling gebouwd om lokale huiseigenaren te overtuigen. Social proof boven de vouw, offerte-CTA's op elk beslismoment.",
-        "en": "Brand identity and marketing site for a Dutch renovation duo. Warm, premium aesthetic built to convert local homeowners. Social proof above the fold, quote CTAs at every decision point."
+        "nl": "Website voor een familiebedrijf in bouwonderhoud, sinds 1989. Eén partij voor verbouwing, renovatie en onderhoud, gebouwd om VvE's, vastgoedbeheerders en huiseigenaren naar een offerte te brengen.",
+        "en": "Website for a family building-maintenance firm, trading since 1989. One partner for renovation, refurbishment and upkeep, built to move owners' associations, property managers and homeowners toward a quote."
       },
       "lede": {
-        "nl": "Een renovatieploeg van twee man, aangekleed als het bedrijf dat je daadwerkelijk je keuken toevertrouwt.",
-        "en": "A two-person renovation crew, dressed to look like the firm you would actually trust with your kitchen."
+        "nl": "Vader en zonen, ruim 35 jaar vakwerk, en eindelijk een site die dat laat zien.",
+        "en": "Father and sons, more than 35 years of craft, and finally a site that shows it."
       },
       "onderlaag": [
         {
-          "nl": "N.B. Onderhoudsdiensten is een renovatieduo dat een merk en site nodig had die boven hun gewicht boksen. De opdracht: eruitzien als een ploeg die je je keuken toevertrouwt, niet als een aannemer uit een template.",
-          "en": "N.B. Onderhoudsdiensten is a two-person renovation duo in the Netherlands who needed a brand and a site that punched above their weight. The brief: look like a crew you'd trust with your kitchen, not like a templated contractor."
+          "nl": "Puik Bouw verenigt alle vakgebieden onder één dak: gevelrenovatie, verbouwen, schilderwerk en wandafwerking, energielabel verhogen. Er was nog geen site. De opdracht: een rustige, betrouwbare site die de breedte laat zien zonder te overweldigen, met de offerteaanvraag op elk beslismoment binnen handbereik.",
+          "en": "Puik Bouw brings every trade under one roof: façade renovation, refurbishment, painting and wall finishing, energy-label upgrades. There was no site yet. The brief: a calm, trustworthy site that shows the breadth without overwhelming, with the quote request within reach at every decision point."
         },
         {
-          "nl": "Donker, warm, redactioneel. Serif-typografie voor vertrouwen, een gouden accent voor vakmanschap, veel lucht. Social proof staat boven de vouw, offerte-CTA's volgen het oog de pagina af.",
-          "en": "Dark, warm, editorial. Serif typography for confidence, a gold accent for craft, lots of air. Social proof sits above the fold, quote CTAs follow the eye down the page."
+          "nl": "De copy komt uit de klantteksten en is geherstructureerd tot vier vakgebieden. Projectfoto's zijn echte voor-en-na-opnames van eigen werk, geen stock.",
+          "en": "The copy comes from the client's own texts, restructured into four trades. Project photos are real before-and-after shots of their own work, no stock."
         },
         {
-          "nl": "Gebouwd in Next.js met internationalisatie (NL/EN) vanaf dag één, en een boekingsflow gebouwd om te converteren.",
-          "en": "Built in Next.js with internationalisation (NL/EN) from day one, and a booking flow built to convert."
+          "nl": "Gebouwd in Next.js met Tailwind, mobiel-eerst getest, met een zwevende belknop die verdwijnt waar hij in de weg zit. Een Instagram-sectie staat klaar en wacht op het Business-account van de klant.",
+          "en": "Built in Next.js with Tailwind, tested mobile-first, with a floating call button that hides where it would get in the way. An Instagram section is ready and waits for the client's business account."
         }
       ],
-      "tags": ["Next.js", "TypeScript", "Tailwind CSS"],
-      "role": { "nl": "Ontwerp & bouw", "en": "Design & build" },
-      "year": "2025",
-      "client": "Freelance",
-      "url": "https://nbonderhoud.nl/",
-      "image": "/projects/nb-onderhoudsdiensten.png",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS"
+      ],
+      "role": {
+        "nl": "Ontwerp, copy-structuur & bouw",
+        "en": "Design, copy structure & build"
+      },
+      "year": "2026",
+      "client": "Puik Bouw bv",
+      "url": "https://puikbouw.nl/",
+      "highlights": [
+        {
+          "label": {
+            "nl": "Oplevering",
+            "en": "Deliverable"
+          },
+          "value": {
+            "nl": "Site + copy-structuur",
+            "en": "Site + copy structure"
+          }
+        },
+        {
+          "label": {
+            "nl": "Vakgebieden",
+            "en": "Trades"
+          },
+          "value": {
+            "nl": "4, uit klantteksten",
+            "en": "4, from client copy"
+          }
+        },
+        {
+          "label": {
+            "nl": "Beeld",
+            "en": "Imagery"
+          },
+          "value": {
+            "nl": "Echte projectfoto's, geen stock",
+            "en": "Real project photos, no stock"
+          }
+        },
+        {
+          "label": {
+            "nl": "Stack",
+            "en": "Stack"
+          },
+          "value": {
+            "nl": "Next.js · Tailwind",
+            "en": "Next.js · Tailwind"
+          }
+        }
+      ],
+      "uitsneden": [
+        {
+          "beeld": "/projects/puikbouw-hero.jpg",
+          "pad": "/",
+          "selector": "#hoofdinhoud > div > section:nth-of-type(1)",
+          "scherm": "desktop",
+          "anker": "Eén partij voor uw verbouwing",
+          "bijschrift": {
+            "nl": "Herosectie met de kernbelofte en de offerte-actie naast een projectfoto",
+            "en": "Hero with the core promise and the quote action beside a project photo"
+          }
+        },
+        {
+          "beeld": "/projects/puikbouw-projecten.jpg",
+          "pad": "/",
+          "selector": "#hoofdinhoud > div > section:nth-of-type(6)",
+          "scherm": "desktop",
+          "anker": "Werk dat we hebben gemaakt",
+          "bijschrift": {
+            "nl": "Projectensectie met recente klussen als fotokaarten",
+            "en": "Projects section with recent jobs as photo cards"
+          }
+        },
+        {
+          "beeld": "/projects/puikbouw-hero-mobiel.jpg",
+          "pad": "/",
+          "selector": "#hoofdinhoud > div > section:nth-of-type(1)",
+          "scherm": "mobiel",
+          "anker": "Eén partij voor uw verbouwing",
+          "bijschrift": {
+            "nl": "Mobiele herosectie van puikbouw.nl",
+            "en": "Mobile hero of puikbouw.nl"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "nb-onderhoudsdiensten",
+      "title": "NB Projectbouw",
+      "groep": "sites-merk",
+      "herkomst": "in-opdracht",
+      "status": "live",
+      "bovenlaag": {
+        "nl": "Nieuwe site voor een aannemer uit Uithoorn, na de rebrand van N.B. Onderhoudsdiensten naar NB Projectbouw. Het bedrijf doet nu nieuwbouw, verbouw en renovatie, voor ontwikkelaars, VvE's, bedrijven en particulieren. Elke pagina leidt naar een offerte, een belletje of WhatsApp.",
+        "en": "New site for a contractor from Uithoorn, after N.B. Onderhoudsdiensten rebranded to NB Projectbouw. The business now does new build, remodelling and renovation, for developers, owners' associations, businesses and homeowners. Every page leads to a quote request, a call or WhatsApp."
+      },
+      "lede": {
+        "nl": "Een vaste ploeg van acht, en een site die laat zien wie er op je bouwplaats staat.",
+        "en": "A permanent crew of eight, and a site that shows who will be on your building site."
+      },
+      "onderlaag": [
+        {
+          "nl": "Het bedrijf was gegroeid voorbij zijn naam: “Onderhoudsdiensten” dekte geen nieuwbouw en geen afbouw van een complex. Dit is de tweede site voor dezelfde klant; de eerste, uit 2025, was nog voor N.B. Onderhoudsdiensten. De nieuwe site zet nieuwbouw, verbouw en renovatie naast elkaar, met een eigen route voor zakelijke opdrachtgevers: opname, offerte, uitvoering, oplevering.",
+          "en": "The business had outgrown its name: “Onderhoudsdiensten” (maintenance services) covered neither new build nor fitting out a complex. This is the second site for the same client; the first, from 2025, was still for N.B. Onderhoudsdiensten. The new site puts new build, remodelling and renovation side by side, with a separate route for business clients: survey, quote, execution, handover."
+        },
+        {
+          "nl": "Het bewijs staat boven de vouw: 4,9 uit 19 Google-reviews, 500 projecten in vier jaar, 8 vaste vakmensen en VCA. De oprichters en de vaste ploeg staan met naam op de site, zodat een opdrachtgever weet wie er komt. Reviews van onder de oude naam blijven zichtbaar, met uitleg.",
+          "en": "The proof sits above the fold: 4.9 from 19 Google reviews, 500 projects in four years, 8 permanent tradespeople and VCA certification. The founders and the permanent crew appear by name, so a client knows who will show up. Reviews from under the old name stay visible, with an explanation."
+        },
+        {
+          "nl": "Gebouwd in Next.js met Tailwind, op de kleuren en het logo van de klant. Aparte pagina's voor diensten, werkgebied, projecten, zakelijke opdrachtgevers en werken bij.",
+          "en": "Built in Next.js with Tailwind, on the client's colours and logo. Separate pages for services, service area, projects, business clients and careers."
+        }
+      ],
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS"
+      ],
+      "role": {
+        "nl": "Ontwerp & bouw",
+        "en": "Design & build"
+      },
+      "year": "2026",
+      "client": "NB Projectbouw",
+      "url": "https://nbprojectbouw.nl/",
+      "highlights": [
+        {
+          "label": {
+            "nl": "Oplevering",
+            "en": "Deliverable"
+          },
+          "value": {
+            "nl": "Site, tweede ronde",
+            "en": "Site, second round"
+          }
+        },
+        {
+          "label": {
+            "nl": "Publiek",
+            "en": "Audience"
+          },
+          "value": {
+            "nl": "Zakelijk + particulier",
+            "en": "Business + homeowners"
+          }
+        },
+        {
+          "label": {
+            "nl": "Bewijs",
+            "en": "Proof"
+          },
+          "value": {
+            "nl": "Reviews en cijfers boven de vouw",
+            "en": "Reviews and numbers above the fold"
+          }
+        },
+        {
+          "label": {
+            "nl": "Stack",
+            "en": "Stack"
+          },
+          "value": {
+            "nl": "Next.js · Tailwind",
+            "en": "Next.js · Tailwind"
+          }
+        }
+      ],
+      "uitsneden": [
+        {
+          "beeld": "/projects/nb-hero.jpg",
+          "pad": "/",
+          "selector": "#main-content > section:nth-of-type(1)",
+          "scherm": "desktop",
+          "anker": "Nieuwbouw, verbouw en renovatie",
+          "bijschrift": {
+            "nl": "Herosectie met de vaste ploeg, drie contactroutes en de kerncijfers",
+            "en": "Hero with the permanent crew, three contact routes and the key figures"
+          }
+        },
+        {
+          "beeld": "/projects/nb-diensten.jpg",
+          "pad": "/",
+          "selector": "#diensten",
+          "scherm": "desktop",
+          "anker": "Alles onder één dak",
+          "bijschrift": {
+            "nl": "Dienstenoverzicht: nieuwbouw, verbouw en renovatie, elk met hun vakken",
+            "en": "Services overview: new build, remodelling and renovation, each with its trades"
+          }
+        },
+        {
+          "beeld": "/projects/nb-hero-mobiel.jpg",
+          "pad": "/",
+          "selector": "#main-content > section:nth-of-type(1)",
+          "scherm": "mobiel",
+          "anker": "Nieuwbouw, verbouw en renovatie",
+          "bijschrift": {
+            "nl": "Mobiele herosectie van nbprojectbouw.nl",
+            "en": "Mobile hero of nbprojectbouw.nl"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "4fruit",
+      "title": "4 Fruit Company",
+      "groep": "sites-merk",
+      "herkomst": "in-opdracht",
+      "status": "pre-launch",
+      "bovenlaag": {
+        "nl": "Vijftalige B2B-site voor een AGF-importeur en -exporteur uit Ridderkerk, sinds 2000. Gebouwd om inkopers van supermarkten en grossiers over de streep te trekken: assortiment, koelketen, certificeringen en de mensen erachter.",
+        "en": "Five-language B2B site for a fresh-produce importer and exporter from Ridderkerk, trading since 2000. Built to win over supermarket buyers and wholesalers: assortment, cold chain, certifications and the people behind the trade."
+      },
+      "lede": {
+        "nl": "Een handelaar in vers fruit die zijn woord houdt, en een site die dat in vijf talen zonder omhaal zegt.",
+        "en": "A fresh-produce trader who keeps their word, and a site that says so in five languages without fuss."
+      },
+      "onderlaag": [
+        {
+          "nl": "4 Fruit Company had een gedateerde WordPress-brochure. De bezoeker is een ervaren inkoper met één vraag: kan ik hierop bouwen, het hele jaar? De site antwoordt met bewijs: certificeringen (BRC, GLOBALG.A.P., AEO), koelcellen, palletcapaciteit, landen, en de namen van de mensen die de relaties onderhouden.",
+          "en": "4 Fruit Company had a dated WordPress brochure. The visitor is an experienced buyer with one question: can I rely on this, all year round? The site answers with proof: certifications (BRC, GLOBALG.A.P., AEO), cold stores, pallet capacity, countries, and the names of the people who maintain the relationships."
+        },
+        {
+          "nl": "De visuele wereld is gebouwd rond de reefer-container: staal, zink en één crimson accent, geen afgeronde hoeken. De copy komt rechtstreeks uit het klantdocument. Geen stock, wel het echte product en de echte keten.",
+          "en": "The visual world is built around the reefer container: steel, zinc and one crimson accent, no rounded corners. The copy comes straight from the client's document. No stock, just the real product and the real chain."
+        },
+        {
+          "nl": "Next.js met een eigen, dependency-vrije i18n-laag: NL is canoniek, EN/DE/ES/FR volgen onder een taalprefix. De Instagram-strip loopt via Behold. De vertalingen liggen bij de klant ter controle vóór livegang.",
+          "en": "Next.js with a dependency-free i18n layer of its own: NL is canonical, EN/DE/ES/FR follow under a locale prefix. The Instagram strip runs through Behold. Translations are with the client for review before launch."
+        }
+      ],
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "i18n"
+      ],
+      "role": {
+        "nl": "Ontwerp & bouw",
+        "en": "Design & build"
+      },
+      "year": "2026",
+      "client": "4 Fruit Company B.V.",
+      "url": null,
+      "image": "/projects/4fruit-01.png",
       "imageAlt": {
-        "nl": "Herosectie van N.B. Onderhoudsdiensten met donkere achtergrond, serif-typografie en blauw-gouden accenten",
-        "en": "N.B. Onderhoudsdiensten hero section with dark background, serif typography, and blue/gold accent colors"
+        "nl": "Herosectie van de nieuwe 4 Fruit Company-site in de reefer-wereld: staal, zink en crimson",
+        "en": "Hero of the new 4 Fruit Company site in the reefer world: steel, zinc and crimson"
       },
       "highlights": [
         {
-          "label": { "nl": "Oplevering", "en": "Deliverable" },
-          "value": { "nl": "Merk + site + copy", "en": "Brand + site + copy" }
+          "label": {
+            "nl": "Talen",
+            "en": "Languages"
+          },
+          "value": {
+            "nl": "NL · EN · DE · ES · FR",
+            "en": "NL · EN · DE · ES · FR"
+          }
         },
         {
-          "label": { "nl": "Stack", "en": "Stack" },
-          "value": { "nl": "Next.js · NL/EN", "en": "Next.js · NL/EN" }
+          "label": {
+            "nl": "Publiek",
+            "en": "Audience"
+          },
+          "value": {
+            "nl": "B2B-inkopers, geen consumenten",
+            "en": "B2B buyers, not consumers"
+          }
         },
         {
-          "label": { "nl": "Scope", "en": "Scope" },
-          "value": { "nl": "Solo: ontwerp, copy, bouw", "en": "Solo: design, copy, build" }
+          "label": {
+            "nl": "Bewijs",
+            "en": "Proof"
+          },
+          "value": {
+            "nl": "Certificeringen + cijfers boven de vouw",
+            "en": "Certifications + numbers above the fold"
+          }
         },
         {
-          "label": { "nl": "Talen", "en": "Languages" },
-          "value": { "nl": "NL / EN", "en": "NL / EN" }
+          "label": {
+            "nl": "Stack",
+            "en": "Stack"
+          },
+          "value": {
+            "nl": "Next.js · eigen i18n",
+            "en": "Next.js · own i18n"
+          }
         }
       ],
-      "gallery": []
+      "gallery": [
+        {
+          "image": "/projects/4fruit-02.png",
+          "alt": {
+            "nl": "Ketensectie van de 4 Fruit Company-site",
+            "en": "Supply-chain section of the 4 Fruit Company site"
+          }
+        },
+        {
+          "image": "/projects/4fruit-m-01.png",
+          "alt": {
+            "nl": "Mobiele herosectie van de 4 Fruit Company-site",
+            "en": "Mobile hero of the 4 Fruit Company site"
+          }
+        },
+        {
+          "image": "/projects/4fruit-03.png",
+          "alt": {
+            "nl": "Assortimentspagina van de 4 Fruit Company-site",
+            "en": "Assortment page of the 4 Fruit Company site"
+          }
+        },
+        {
+          "image": "/projects/4fruit-m-02.png",
+          "alt": {
+            "nl": "Mobiele assortimentspagina van de 4 Fruit Company-site",
+            "en": "Mobile assortment page of the 4 Fruit Company site"
+          }
+        }
+      ]
     }
   ]
 }

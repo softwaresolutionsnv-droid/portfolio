@@ -1,5 +1,7 @@
 # Eigen, onbetaald werk telt mee — mits gelabeld
 
+> Aantekening (oktober 2026): nachtagenda en garmin-mcp, de voorbeelden hieronder, staan niet meer op de site (zie ADR-0004). Het criterium zelf — gebouwd telt, niet betaald — blijft geldig.
+
 Het criterium voor een werkstuk op deze site is **gebouwd**, niet **betaald**. nachtagenda (eigen product, pre-launch) en garmin-mcp (eigen tool) staan naast betaald opdrachtwerk, met een zichtbaar herkomst- en statuslabel erbij.
 
 De reden: de warme lead vraagt zich af of Nils het kán bouwen, niet wie ervoor betaalde. Bij een eigen product nam Nils elke beslissing — datamodel, infrastructuur, algoritme — wat het sterker bewijs van technisch vermogen maakt dan opdrachtwerk, waarbij een lezer altijd kan aannemen dat de opdrachtgever de richting bepaalde. Het alternatief (alleen betaald werk) is overwogen en verworpen omdat de positionering — apps, MCP's, AI-integratie — dan geen enkel bewijs meer heeft: daar bestaat op dit moment geen betaalde opdracht in.

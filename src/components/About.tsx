@@ -1,17 +1,13 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { Reveal } from './Reveal';
 import { siteContent } from '../lib/content';
 import { availabilityCopy } from '../lib/availability';
 import { useLang, useLoc, useT } from '../lib/i18n';
 
-const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
-
-/** The monograph's essay: serif long-form with a ruled marginalia column. */
+/** About — the culture block, solo edition: big text left, spec card right. */
 export function About() {
-  const reduced = useReducedMotion();
   const t = useT();
   const loc = useLoc();
   const { lang } = useLang();
-
   const status = availabilityCopy(siteContent.availability, lang);
   const details = [
     ...siteContent.about.details.map((d) => ({ label: loc(d.label), value: loc(d.value) })),
@@ -19,76 +15,39 @@ export function About() {
   ];
 
   return (
-    <section id="about" style={{ padding: 'clamp(5rem, 12vh, 10rem) 0' }}>
-      <div className="mx-auto w-full max-w-[1600px] px-5 sm:px-10">
-        <div
-          className="flex items-baseline justify-between pb-5 mb-12 sm:mb-16"
-          style={{ borderBottom: '1px solid var(--border)' }}
+    <section id="about" style={{ paddingTop: 'var(--sec-lg)', paddingBottom: 'var(--sec-xl)' }}>
+      <div className="container">
+        <h2 className="sr-only">{t.nav.about}</h2>
+      </div>
+      <div className="container grid-12 gap-y-12 items-end">
+        <div className="col-span-12 lg:col-span-6">
+          <Reveal as="p" className="t-h3" style={{ textIndent: '2.6em', maxWidth: '27ch' }}>
+            {loc(siteContent.about.intro)}
+          </Reveal>
+          <Reveal as="p" className="t-body-md mt-8" delay={0.15} style={{ maxWidth: '48ch' }}>
+            {loc(siteContent.about.body)}
+          </Reveal>
+          <a href={siteContent.contact.socials[0].href} target="_blank" rel="noopener noreferrer" className="btn mt-10">
+            {t.about.linkedin} <span className="arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <dl
+          className="col-span-12 lg:col-span-5 lg:col-start-8 rounded-[4px] p-6 sm:p-8 grid gap-0"
+          style={{ background: 'rgb(var(--c-black))', color: 'rgb(var(--c-off-white))' }}
         >
-          <h2 className="t-label" style={{ color: 'var(--text-muted)' }}>
-            {t.about.header}
-          </h2>
-        </div>
-
-        <div className="grid gap-12 lg:gap-24 lg:grid-cols-[1fr_minmax(240px,300px)]">
-          <motion.div
-            initial={reduced ? false : { opacity: 0, y: 24 }}
-            whileInView={reduced ? {} : { opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 1.1, ease: EASE }}
-          >
-            <p
-              className="t-serif"
-              style={{
-                fontSize: 'clamp(1.375rem, 2.2vw, 1.75rem)',
-                lineHeight: 1.55,
-                color: 'var(--text-primary)',
-                maxWidth: '46ch',
-              }}
+          {details.map((d, i) => (
+            <div
+              key={d.label}
+              className="grid grid-cols-[8rem_1fr] gap-4 py-4"
+              style={{ borderTop: i === 0 ? 'none' : '1px solid rgb(var(--c-off-white) / 0.15)' }}
             >
-              {loc(siteContent.about.intro)}
-            </p>
-            <p
-              className="t-serif mt-8"
-              style={{
-                fontSize: '1.1875rem',
-                lineHeight: 1.75,
-                color: 'var(--text-secondary)',
-                maxWidth: '58ch',
-              }}
-            >
-              {loc(siteContent.about.body)}
-            </p>
-          </motion.div>
-
-          {/* Marginalia — ruled detail rows */}
-          <motion.dl
-            initial={reduced ? false : { opacity: 0, y: 24 }}
-            whileInView={reduced ? {} : { opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 1.1, delay: 0.15, ease: EASE }}
-            className="self-stretch lg:border-l lg:pl-10"
-            style={{ borderTopWidth: 1, borderTopStyle: 'solid', borderColor: 'var(--border)' }}
-          >
-            {details.map((item) => (
-              <div
-                key={item.label}
-                className="py-4"
-                style={{ borderBottom: '1px solid var(--border-subtle)' }}
-              >
-                <dt className="t-label mb-1.5" style={{ color: 'var(--text-muted)' }}>
-                  {item.label}
-                </dt>
-                <dd
-                  className="t-serif m-0"
-                  style={{ fontSize: '1rem', color: 'var(--text-primary)' }}
-                >
-                  {item.value}
-                </dd>
-              </div>
-            ))}
-          </motion.dl>
-        </div>
+              <dt className="t-mono bracket" style={{ opacity: 0.55 }}>
+                {d.label}
+              </dt>
+              <dd className="t-body">{d.value}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

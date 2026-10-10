@@ -20,9 +20,3 @@ export function webpSrcSet(src: string): string {
   const base = baseOf(src);
   return WIDTHS.map((w) => `${base}-${w}.webp ${w}w`).join(', ');
 }
-
-/** Smallest WebP variant — used as the eager `src` so the browser has a
- *  candidate even before parsing srcset on slow connections. */
-export function webpSmallest(src: string): string {
-  return `${baseOf(src)}-${WIDTHS[0]}.webp`;
-}

@@ -1,7 +1,7 @@
 /**
  * i18n — NL is de bron, EN de vertaling (ADR-0003). Twee lagen:
  *  - chrome-copy (labels, knoppen, aria) leeft hier in het `ui`-woordenboek;
- *  - content (werkstukken, essay, colofon) leeft als {nl,en}-paren in
+ *  - content (werkstukken, diensten, teksten) leeft als {nl,en}-paren in
  *    content.json en wordt gelezen via useLoc().
  * Componenten bevatten geen copy.
  */
@@ -9,10 +9,11 @@ import { createContext, useContext } from 'react';
 
 export type Lang = 'nl' | 'en';
 export type Localized = { nl: string; en: string };
+export type LocalizedLines = { nl: string[]; en: string[] };
 
-export const LangContext = createContext<{ lang: Lang; toggleLang: () => void }>({
+export const LangContext = createContext<{ lang: Lang; setLang: (l: Lang) => void }>({
   lang: 'nl',
-  toggleLang: () => {},
+  setLang: () => {},
 });
 
 export function useLang() {
@@ -22,44 +23,82 @@ export function useLang() {
 /** Kies de juiste taalvariant uit een {nl,en}-paar. */
 export function useLoc() {
   const { lang } = useLang();
-  return (l: Localized) => l[lang];
+  return <T,>(l: { nl: T; en: T }) => l[lang];
 }
 
 const nl = {
-  baseTitle: 'Nils Vogelaar — Developer & Designer',
+  baseTitle: 'Nils Vogelaar — Automatisering & koppelingen voor webshops en mkb',
   skip: 'Naar de inhoud',
   nav: {
-    essay: 'Essay',
-    colophon: 'Colofon',
-    plateIndex: 'Platenindex',
-    plate: 'Plaat',
-    day: 'Dag',
-    night: 'Nacht',
-    toDay: 'Schakel naar het dagthema',
-    toNight: 'Schakel naar het nachtthema',
-    langButton: 'EN',
-    toOtherLang: 'Switch to English',
+    taglines: {
+      hero: 'AI aan het werk',
+      oplossingen: 'Loopt vanzelf',
+      work: 'Werk dat draait',
+      werkwijze: 'Zo werk ik',
+      about: 'Dit ben ik',
+      contact: 'Laten we praten',
+    },
+    menu: 'Menu',
+    close: 'Sluiten',
+    oplossingen: 'Oplossingen',
+    work: 'Werk',
+    werkwijze: 'Werkwijze',
+    about: 'Over mij',
+    contact: 'Contact',
+    thisIsMe: 'Dit ben ik',
+    planCall: 'Plan een kennismaking',
+    startProject: 'Start een project',
+    subjectCall: 'Kennismaking',
+    subjectProject: 'Nieuw project',
+    lang: 'Taal',
+    langNl: 'NL, Nederlands',
+    langEn: 'EN, English',
+    home: 'Naar boven',
   },
   hero: {
-    titlePage: 'Titelpagina',
-    role: 'Designer — Developer',
-    index: 'Index van gebouwd werk',
+    eyebrow: 'Nils Vogelaar',
+    role: 'Freelance developer',
+    city: 'Amsterdam',
+    follow: 'Volg mij',
+    signaal: 'Signaal',
+    pauze: 'Pauzeer beweging',
+    speel: 'Speel beweging af',
+  },
+  oplossingen: {
+    title: ['Het loopt', 'vanzelf.'],
+    bewijs: 'Bewijs',
+    systemen: 'Bijvoorbeeld',
+  },
+  work: {
+    label: 'Uitgelicht werk',
+    view: 'Bekijk',
+    openAria: 'Open werkstuk:',
+  },
+  werkwijze: {
+    title: ['Zo werk', 'ik.'],
+  },
+  about: {
+    statusLabel: 'Status',
+    linkedin: 'LinkedIn',
+  },
+  contact: {
+    title: ['Waar loop je', 'tegenaan?'],
+    label: 'Neem contact op',
+    mail: 'Mail me',
+    book: 'Plan een kennismaking',
+    linkedin: 'LinkedIn',
+    copyright: 'Nils Vogelaar',
+    setIn: 'Gezet uit Geist & Sometype Mono',
   },
   plates: {
-    header: 'De platen — gebouwd werk',
-    counterSuffix: 'werkstukken · meer onder NDA',
-    open: 'Open de plaat',
-    openAria: 'Open werkstuk:',
     specClient: 'Opdrachtgever',
     specYear: 'Jaar',
     specRole: 'Rol',
     specStack: 'Stack',
-    specHerkomst: 'Herkomst',
-    specStatus: 'Status',
   },
   groep: {
-    'apps-ai': 'Apps & AI-systemen',
-    'mcp-tooling': 'MCP & tooling',
+    automatisering: 'Automatisering & koppelingen',
+    maatwerk: 'Dashboards, portalen & apps',
     'sites-merk': 'Sites & merk',
   },
   herkomst: {
@@ -73,52 +112,20 @@ const nl = {
   },
   caseStudy: {
     ariaSuffix: 'werkstuk',
+    back: 'Terug naar werk',
     close: 'Sluit het werkstuk',
     visit: 'Bezoek de site',
-    requestAccess: 'Vraag toegang',
+    book: 'Kennismaking',
     overview: 'Overzicht',
+    credits: 'Credits',
     highlights: 'Specificaties',
-    gallery: 'Galerij',
-    backToIndex: 'Terug naar de index',
     leaf: 'Blader met ← →',
     next: 'Volgende',
-    prevPlate: 'Vorige plaat',
-    nextPlate: 'Volgende plaat',
-  },
-  trace: {
-    header: 'De trace',
-    disclaimer: 'Een opgenomen tool-call — een opname, geen live server.',
-    vraag: 'Vraag',
-    aanroep: 'Aanroep',
-    antwoord: 'Antwoord',
+    prevPlate: 'Vorig werkstuk',
+    nextPlate: 'Volgend werkstuk',
   },
   diagram: {
-    assistant: 'AI-assistent',
-    assistantNote: 'Claude, of elke MCP-client',
-    server: 'garmin-mcp',
-    serverNote: '43 tools · Python · Fly.io',
-    serverAuth: 'OAuth 2.1 + PKCE · tokens op een persistent volume',
-    garmin: 'Garmin Connect-API',
-    garminNote: 'slaap · HRV · training · races',
-    hevy: 'Hevy-API',
-    hevyNote: 'krachttraining',
-    protocol: 'MCP — stdio / HTTP / SSE',
-  },
-  about: {
-    header: 'Essay — de praktijk',
-    statusLabel: 'Status',
-  },
-  skills: {
-    header: 'Specificaties — de stack',
-  },
-  contact: {
-    header: 'Colofon',
-    eyebrow: 'Eén mail is genoeg',
-    monument: ['Laten we', 'samenwerken.'],
-    replies: 'Reactie binnen één werkdag',
-    copyright: 'Nils Vogelaar',
-    setIn: 'Gezet uit Archivo & Source Serif 4',
-    backToTop: 'Naar boven',
+    label: 'Diagram',
   },
   availability: {
     available: {
@@ -144,40 +151,78 @@ const nl = {
 };
 
 const en: typeof nl = {
-  baseTitle: 'Nils Vogelaar — Developer & Designer',
+  baseTitle: 'Nils Vogelaar — Automation & integrations for online stores and SMBs',
   skip: 'Skip to content',
   nav: {
-    essay: 'Essay',
-    colophon: 'Colophon',
-    plateIndex: 'Plate index',
-    plate: 'Plate',
-    day: 'Day',
-    night: 'Night',
-    toDay: 'Switch to the day theme',
-    toNight: 'Switch to the night theme',
-    langButton: 'NL',
-    toOtherLang: 'Schakel naar Nederlands',
+    taglines: {
+      hero: 'AI put to work',
+      oplossingen: 'Runs by itself',
+      work: 'Work that ships',
+      werkwijze: 'How I work',
+      about: 'This is me',
+      contact: "Let's talk",
+    },
+    menu: 'Menu',
+    close: 'Close',
+    oplossingen: 'Solutions',
+    work: 'Work',
+    werkwijze: 'How I work',
+    about: 'About',
+    contact: 'Contact',
+    thisIsMe: 'This is me',
+    planCall: 'Book a call',
+    startProject: 'Start a project',
+    subjectCall: 'Intro call',
+    subjectProject: 'New project',
+    lang: 'Language',
+    langNl: 'NL, Nederlands',
+    langEn: 'EN, English',
+    home: 'Back to top',
   },
   hero: {
-    titlePage: 'Title page',
-    role: 'Designer — Developer',
-    index: 'Index of built work',
+    eyebrow: 'Nils Vogelaar',
+    role: 'Freelance developer',
+    city: 'Amsterdam',
+    follow: 'Follow me',
+    signaal: 'Signal',
+    pauze: 'Pause motion',
+    speel: 'Play motion',
+  },
+  oplossingen: {
+    title: ['Runs by', 'itself.'],
+    bewijs: 'Proof',
+    systemen: 'For example',
+  },
+  work: {
+    label: 'Featured work',
+    view: 'View',
+    openAria: 'Open work:',
+  },
+  werkwijze: {
+    title: ['How I', 'work.'],
+  },
+  about: {
+    statusLabel: 'Status',
+    linkedin: 'LinkedIn',
+  },
+  contact: {
+    title: ['What\'s holding', 'you back?'],
+    label: 'Get in touch',
+    mail: 'Email me',
+    book: 'Book an intro call',
+    linkedin: 'LinkedIn',
+    copyright: 'Nils Vogelaar',
+    setIn: 'Set in Geist & Sometype Mono',
   },
   plates: {
-    header: 'The plates — built work',
-    counterSuffix: 'works · more under NDA',
-    open: 'Open the plate',
-    openAria: 'Open work:',
     specClient: 'Client',
     specYear: 'Year',
     specRole: 'Role',
     specStack: 'Stack',
-    specHerkomst: 'Origin',
-    specStatus: 'Status',
   },
   groep: {
-    'apps-ai': 'Apps & AI systems',
-    'mcp-tooling': 'MCP & tooling',
+    automatisering: 'Automation & integrations',
+    maatwerk: 'Dashboards, portals & apps',
     'sites-merk': 'Sites & brand',
   },
   herkomst: {
@@ -191,52 +236,20 @@ const en: typeof nl = {
   },
   caseStudy: {
     ariaSuffix: 'case study',
+    back: 'Back to work',
     close: 'Close case study',
     visit: 'Visit live site',
-    requestAccess: 'Request access',
+    book: 'Intro call',
     overview: 'Overview',
+    credits: 'Credits',
     highlights: 'Specifications',
-    gallery: 'Gallery',
-    backToIndex: 'Back to the index',
-    leaf: 'Leaf with ← →',
+    leaf: 'Browse with ← →',
     next: 'Next',
-    prevPlate: 'Previous plate',
-    nextPlate: 'Next plate',
-  },
-  trace: {
-    header: 'The trace',
-    disclaimer: 'A recorded tool call — a recording, not a live server.',
-    vraag: 'Question',
-    aanroep: 'Call',
-    antwoord: 'Response',
+    prevPlate: 'Previous case',
+    nextPlate: 'Next case',
   },
   diagram: {
-    assistant: 'AI assistant',
-    assistantNote: 'Claude, or any MCP client',
-    server: 'garmin-mcp',
-    serverNote: '43 tools · Python · Fly.io',
-    serverAuth: 'OAuth 2.1 + PKCE · tokens on a persistent volume',
-    garmin: 'Garmin Connect API',
-    garminNote: 'sleep · HRV · training · races',
-    hevy: 'Hevy API',
-    hevyNote: 'strength training',
-    protocol: 'MCP — stdio / HTTP / SSE',
-  },
-  about: {
-    header: 'Essay — the practice',
-    statusLabel: 'Status',
-  },
-  skills: {
-    header: 'Specifications — the stack',
-  },
-  contact: {
-    header: 'Colophon',
-    eyebrow: 'One email is enough',
-    monument: ["Let's work", 'together.'],
-    replies: 'Replies within one business day',
-    copyright: 'Nils Vogelaar',
-    setIn: 'Set in Archivo & Source Serif 4',
-    backToTop: 'Back to top',
+    label: 'Diagram',
   },
   availability: {
     available: {

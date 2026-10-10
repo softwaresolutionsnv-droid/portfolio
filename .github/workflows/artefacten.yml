@@ -1,0 +1,46 @@
+# Weekly artefact capture (ADR-0005): re-shoot every uitsnede of every live
+# werkstuk, commit what changed straight to main (Vercel deploys it), and turn
+# whatever the guardrails stopped into issues.
+name: Artefacten
+
+on:
+  schedule:
+    - cron: '0 5 * * 1' # Monday 05:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency: artefacten
+
+jobs:
+  opnemen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright-core install --with-deps chromium
+      - run: node scripts/capture-artefacts.mjs
+
+      - name: Commit changed artefacts
+        run: |
+          git add public/projects
+          if git diff --cached --quiet; then
+            echo "Geen veranderde artefacten."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(artefacten): wekelijkse opname"
+          git push
+
+      - name: Update issues
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/artefact-issues.mjs
