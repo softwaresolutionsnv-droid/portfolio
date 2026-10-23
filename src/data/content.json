@@ -916,8 +916,8 @@
       "herkomst": "in-opdracht",
       "status": "pre-launch",
       "bovenlaag": {
-        "nl": "Vijftalige B2B-site voor een AGF-importeur en -exporteur uit Ridderkerk, sinds 2000. Gebouwd om inkopers van supermarkten en grossiers over de streep te trekken: assortiment, koelketen, certificeringen en de mensen erachter.",
-        "en": "Five-language B2B site for a fresh-produce importer and exporter from Ridderkerk, trading since 2000. Built to win over supermarket buyers and wholesalers: assortment, cold chain, certifications and the people behind the trade."
+        "nl": "Vijftalige B2B-site voor een AGF-importeur en -exporteur uit Ridderkerk, sinds 2000. Gebouwd om inkopers van retail, groothandel en foodservice over de streep te trekken: het assortiment per seizoen, certificaten om te downloaden en elke dag de prijslijst in de mail.",
+        "en": "Five-language B2B site for a fresh-produce importer and exporter from Ridderkerk, trading since 2000. Built to win over buyers in retail, wholesale and foodservice: the assortment by season, certificates to download and the price list in their inbox every day."
       },
       "lede": {
         "nl": "Een handelaar in vers fruit die zijn woord houdt, en een site die dat in vijf talen zonder omhaal zegt.",
@@ -925,8 +925,8 @@
       },
       "onderlaag": [
         {
-          "nl": "De bezoeker is een ervaren inkoper met één vraag: kan ik hier het hele jaar op bouwen? De site antwoordt met bewijs: certificeringen, koelcellen, palletcapaciteit en de mensen die de relaties onderhouden. Het beeld draait om de koelcontainer, met staal, zink en één rood accent. Geen stockfoto's, wel het echte product en de echte keten.",
-          "en": "The visitor is an experienced buyer with one question: can I rely on this, all year round? The site answers with proof: certifications, cold stores, pallet capacity and the people who maintain the relationships. The look is built around the reefer container, with steel, zinc and one crimson accent. No stock photos, just the real product and the real chain."
+          "nl": "De bezoeker is een ervaren inkoper met één vraag: kan ik hier het hele jaar op bouwen? De site antwoordt met bewijs: beeld uit de eigen hal in Ridderkerk, per productgroep het sterkste seizoen en de BRC-, GLOBALG.A.P.- en AEO-certificaten als pdf om te downloaden. Wie wil handelen, schrijft zich in voor de dagelijkse prijslijst of belt meteen.",
+          "en": "The visitor is an experienced buyer with one question: can I rely on this, all year round? The site answers with proof: images from the company's own hall in Ridderkerk, the strongest season for each product group, and the BRC, GLOBALG.A.P. and AEO certificates as PDFs to download. Anyone ready to trade signs up for the daily price list or calls straight away."
         }
       ],
       "tags": [
@@ -942,11 +942,6 @@
       "year": "2026",
       "client": "4 Fruit Company B.V.",
       "url": null,
-      "image": "/projects/4fruit-01.png",
-      "imageAlt": {
-        "nl": "Herosectie van de nieuwe 4 Fruit Company-site in de reefer-wereld: staal, zink en crimson",
-        "en": "Hero of the new 4 Fruit Company site in the reefer world: steel, zinc and crimson"
-      },
       "highlights": [
         {
           "label": {
@@ -989,33 +984,49 @@
           }
         }
       ],
-      "gallery": [
+      "uitsneden": [
         {
-          "image": "/projects/4fruit-02.png",
-          "alt": {
-            "nl": "Ketensectie van de 4 Fruit Company-site",
-            "en": "Supply-chain section of the 4 Fruit Company site"
+          "beeld": "/projects/4fruit-hero.jpg",
+          "pad": "/nl",
+          "selector": "#top",
+          "scherm": "desktop",
+          "anker": "The Fresh Connection",
+          "bijschrift": {
+            "nl": "Herosectie met de eigen hal in Ridderkerk en drie routes: assortiment, contact of direct bellen",
+            "en": "Hero with the company's own hall in Ridderkerk and three routes: assortment, contact or a direct call"
           }
         },
         {
-          "image": "/projects/4fruit-m-01.png",
-          "alt": {
-            "nl": "Mobiele herosectie van de 4 Fruit Company-site",
-            "en": "Mobile hero of the 4 Fruit Company site"
+          "beeld": "/projects/4fruit-assortiment.jpg",
+          "pad": "/nl",
+          "selector": "#assortiment",
+          "scherm": "desktop",
+          "anker": "Totaal assortiment onder één dak",
+          "bijschrift": {
+            "nl": "Assortiment per productgroep, met bij elke groep het sterkste seizoen",
+            "en": "Assortment by product group, each with its strongest season"
           }
         },
         {
-          "image": "/projects/4fruit-03.png",
-          "alt": {
-            "nl": "Assortimentspagina van de 4 Fruit Company-site",
-            "en": "Assortment page of the 4 Fruit Company site"
+          "beeld": "/projects/4fruit-certificaten.jpg",
+          "pad": "/nl",
+          "selector": "#kwaliteit",
+          "scherm": "desktop",
+          "anker": "Gecertificeerd, in de totale organisatie",
+          "bijschrift": {
+            "nl": "BRC, RIK, GLOBALG.A.P. en AEO op de homepage, elk met wat het voor de inkoper betekent",
+            "en": "BRC, RIK, GLOBALG.A.P. and AEO on the home page, each with what it means for the buyer"
           }
         },
         {
-          "image": "/projects/4fruit-m-02.png",
-          "alt": {
-            "nl": "Mobiele assortimentspagina van de 4 Fruit Company-site",
-            "en": "Mobile assortment page of the 4 Fruit Company site"
+          "beeld": "/projects/4fruit-hero-mobiel.jpg",
+          "pad": "/nl",
+          "selector": "#top",
+          "scherm": "mobiel",
+          "anker": "The Fresh Connection",
+          "bijschrift": {
+            "nl": "Mobiele herosectie van de nieuwe 4 Fruit Company-site",
+            "en": "Mobile hero of the new 4 Fruit Company site"
           }
         }
       ]
