@@ -3,8 +3,9 @@ import { siteContent } from '../lib/content';
 import { useLoc, useT } from '../lib/i18n';
 
 /**
- * Werkwijze — the answers to "what does it cost", "is my data safe" and
- * "are you available", as a ruled list beside a sticky title. Light section.
+ * Werkwijze — the answers to "can't I build this myself", "what does it cost",
+ * "is my data safe" and "are you available", as a ruled list beside a sticky
+ * title. Light section.
  */
 export function Werkwijze() {
   const t = useT();

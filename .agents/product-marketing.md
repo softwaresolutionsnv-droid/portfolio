@@ -1,7 +1,7 @@
 # Product Marketing Context
 
-**Document version:** v1.7
-**Last updated:** 2026-10-10
+**Document version:** v1.8
+**Last updated:** 2026-10-29
 
 > Scope: this document records the **target positioning** from the market research of October 2026. Where the current site (nilsvogelaar.com) says something else, a "Huidige site" note marks the gap. Content is in Dutch because the market and the site's source language are Dutch (ADR-0003). Every claim here has a source; nothing is invented.
 
@@ -58,7 +58,7 @@ Bij kleine bedrijven zit er vaak geen tussenlaag: de eigenaar beslist alleen.
 ## Problems & Pain Points
 **Core problem:** bedrijven draaien op tikwerk tussen systemen (webshop, marketplace, boekhouding, mail). Ze weten dat AI kan helpen, maar krijgen het niet werkend in hun eigen processen.
 **Why alternatives fall short:**
-- Zelf bouwen met Zapier, Lovable of ChatGPT werkt in de demo, maar breekt in productie of is onveilig met bedrijfsdata.
+- Met AI kan iedereen nu zelf iets bouwen, en dat werkt vaak ook. De vraag is of het goed in elkaar zit en er goed uitziet. Zelfgebouwd met Zapier, Lovable of ChatGPT werkt in de demo, maar breekt in productie, is onveilig met bedrijfsdata of ziet eruit als elk ander template.
 - Standaard-plugins en connectors dekken het proces maar half. De rest blijft tikwerk.
 
 **What it costs them:** elke week uren tikwerk. Groei loopt vast, want meer orders betekent meer mensen. Concurrenten die wél automatiseren lopen uit.
@@ -70,22 +70,28 @@ Bij kleine bedrijven zit er vaak geen tussenlaag: de eigenaar beslist alleen.
 **Direct:** e-commerce- en webbureaus. Ze kennen de klant al, maar missen AI- en integratiecapaciteit. Daarom zijn ze ook een kanaal.
 **Secondary:** connector-SaaS (ChannelEngine, Channable, BaseLinker, Exact/Moneybird App Center). Die dekt de standaardflow, niet het proces van deze klant.
 **Indirect:** zelf doen met Zapier of Make. Dat breekt, en niemand onderhoudt het.
-**Indirect:** AI-tools zelf gebruiken (Lovable, ChatGPT). Dat werkt tot het in productie moet, en is onveilig met data.
+**Belangrijkste alternatief:** zelf bouwen met AI (Lovable, ChatGPT, Claude, Cursor). Iedereen kan nu zelf een tool, site of koppeling maken. Dat werkt tot het in productie moet: randgevallen, data, beveiliging en onderhoud ontbreken, en het ziet eruit als elk ander AI-template. Dit is het alternatief waar de meeste klanten eerst aan denken, dus de site beantwoordt het (zie Objections).
 
 ## Differentiation
 **Key differentiators:**
+- **Kwaliteit, niet alleen iets dat werkt.** Met AI kun je zelf veel bouwen. Het verschil zit in hoe het in elkaar zit en hoe het eruitziet. In Nils' woorden: "Ja, je kan het zelf. Maar zit het goed in elkaar en ziet het er mooi uit?" Nils brengt een idee tot realisatie omdat hij weet hoe hij het moet aanpakken:
+  1. **Eerst het proces snappen.** Hij begint bij hoe het bedrijf werkt en wat het echte probleem is, niet bij een tool of een prompt.
+  2. **Goede technische keuzes.** Structuur, data, beveiliging en koppelingen zo opgezet dat het blijft werken en uit te breiden is.
+  3. **Afmaken tot het live draait.** Randgevallen, foutafhandeling, testen en onderhoud: het stuk waar zelfgebouwde AI-projecten blijven hangen.
+  4. **Ontwerp en bouw in één hand.** Hij ontwerpt de interface zelf, dus het ziet er goed uit en past bij het bedrijf.
 - **Productiecode, geen no-code lijm.** (Intern verschil, niet als sitecopy: "prompt-knutselaar" zet Nils af tegen anderen en klinkt te stoer.) Echte code met auth, logging en tests, geen no-code lijm die breekt. Voorbeeld: bij het Short Commerce Weekly Report komen de cijfers deterministisch uit de bron-API's.
 - **Koppelen én bouwen.** Waar een plugin of no-code-tool stopt, bouwt Nils het ontbrekende stuk: een portaal, tool of app.
 - **Een eigen tool, geen generieke UI.** In Nils' woorden: "Ik maak onderscheid tussen generieke UI en designs en maak er echt een unieke tool van." Elke tool krijgt een interface in de huisstijl van de klant, geen dashboard-template.
 
 **How we do it differently:** Nils begint bij het proces en de systemen die de klant al heeft, niet bij een tool. AI schrijft alleen waar dat waarde toevoegt. Cijfers en data blijven deterministisch, en een mens reviewt voordat er iets naar buiten gaat.
-**Why that's better:** het werkt in productie en niet alleen in de demo. Het dekt het hele proces in plaats van de helft. En het is veilig met data.
+**Why that's better:** het werkt in productie en niet alleen in de demo. Het dekt het hele proces in plaats van de helft. Het is veilig met data. En het ziet eruit als iets van het bedrijf zelf, niet als een template.
 **Why customers choose us:** één persoon die zowel het proces als de techniek begrijpt ("eindelijk iemand die het snapt") en het product behandelt alsof het van hem is ("denkt mee als eigenaar").
 
 ## Objections
 | Objection | Response |
 |-----------|----------|
 | "Ben je wel beschikbaar?" (Nils heeft een baan naast zijn freelance werk) | Noem de capaciteit, niet de baan: 12–20 uur per week, vaste dagen, een beperkt aantal klanten tegelijk. Afgebakende projecten met een vaste prijs, een deadline en een wekelijkse update. Benoem de baan pas als de klant ernaar vraagt. |
+| "Kan ik dit niet zelf met AI?" | Erken het eerst: ja, met AI kun je veel zelf bouwen. Daarna het verschil: zit het goed in elkaar en ziet het er goed uit? Nils snapt eerst het proces, kiest de techniek zo dat het blijft werken, maakt het af tot het live draait en ontwerpt de interface zelf. Laat het zien met werkstukken (SC Weekly Report, Shaftlab, de klantsites) in plaats van het te beweren. Nooit neerkijken op wie het zelf probeert; veel klanten hebben dat al gedaan en lopen nu vast. |
 | "Heb je dit eerder gedaan?" | Het Short Commerce Weekly Report: vijf advertentiekanalen plus winkelcijfers in één automatisch rapport, Claude schrijft de duiding, live sinds 1 okt 2026. Shaftlab op Shopify. Voor schaal: FleetDisk (portaal voor meerdere leasemaatschappijen op dertig jaar backofficedata) en BerijdersApp (54 white-label-apps uit één codebase). |
 | "Is mijn data veilig als er AI aan zit?" | EU-hosting. Code, database en API-sleutels staan op naam van de klant, dus geen lock-in. Cijfers komen rechtstreeks uit de bron; AI schrijft alleen de duiding, en een mens reviewt. (Alleen deze garanties noemen. Een verwerkersovereenkomst en no-training-API's zijn niet bevestigd.) |
 
@@ -97,7 +103,7 @@ Bij kleine bedrijven zit er vaak geen tussenlaag: de eigenaar beslist alleen.
 ## Switching Dynamics
 **Push:** het tikwerk groeit mee met elke order. Zelfgebouwde Zapier- of AI-experimenten breken. Plugins dekken het proces maar half.
 **Pull:** AI die werkt in hún systemen, niet in een demo. Eén developer die koppelt én bouwt. Een vaste prijs per project.
-**Habit:** "Het werkt toch": Excel, Google Docs en tikwerk zijn bekend. Er is al een webbouwer of IT-partner. Het connector-abonnement is al betaald.
+**Habit:** "Dat kan ik toch zelf met AI." "Het werkt toch": Excel, Google Docs en tikwerk zijn bekend. Er is al een webbouwer of IT-partner. Het connector-abonnement is al betaald.
 **Anxiety:** bedrijfsdata in AI. De beschikbaarheid van één persoon. Heeft hij dit eerder gedaan? Breekt het na de livegang?
 
 ## Customer Language
@@ -105,13 +111,18 @@ Bij kleine bedrijven zit er vaak geen tussenlaag: de eigenaar beslist alleen.
 - "We tikken alles over."
 - "Het kost ons elke week uren."
 - "We willen iets met AI, maar wat?"
+- "Dat kan ik toch zelf met ChatGPT?" (het bezwaar, niet het probleem)
+
+**How Nils describes the difference:**
+- "Ja, je kan het zelf. Maar zit het goed in elkaar en ziet het er mooi uit?"
+- "Ik kan van ideeën realisatie brengen omdat ik weet hoe ik het moet aanpakken."
 
 **How they describe us:**
 - "Denkt mee als eigenaar."
 - "Eindelijk iemand die het snapt."
 
 **Words to use:** vanzelf, (niet meer) overtikken, uren, orders, voorraad, facturen, koppeling, werkend in je eigen systemen, vaste prijs. Gebruik ook de toolnamen die klanten zelf zoeken: n8n, Claude, Shopify, Base.com, bol.com, Exact, Moneybird, Supabase.
-**Words to avoid:** "prompt-knutselaar" en andere zinnen die Nils afzetten tegen anderen, "tikwerk" in sitecopy (klinkt als een klein klusje en maakt de opdracht kleiner dan hij is; prima als intern begrip), "handwerk" (leest als ambacht), "AI-oplossingen", "AI-powered", "passie", "gedreven". Volg ook de anti-references uit PRODUCT.md: geen SaaS-landingstaal, geen verzonnen cijfers.
+**Words to avoid:** "prompt-knutselaar" en andere zinnen die Nils afzetten tegen anderen (zelf bouwen met AI erkennen mag wel, zolang het respectvol blijft), "vibe coding" en "AI-slop" in sitecopy (vakjargon en neerbuigend), "tikwerk" in sitecopy (klinkt als een klein klusje en maakt de opdracht kleiner dan hij is; prima als intern begrip), "handwerk" (leest als ambacht), "AI-oplossingen", "AI-powered", "passie", "gedreven". Volg ook de anti-references uit PRODUCT.md: geen SaaS-landingstaal, geen verzonnen cijfers.
 **Glossary:**
 | Term | Meaning |
 |------|---------|
@@ -151,6 +162,7 @@ Noem merknamen alleen als bureau-context. Upfront gebruikt de tool nog niet (nie
 | Het loopt vanzelf, AI werkend in het proces | Short Commerce Weekly Report: van een handgeschreven Google Doc naar een automatisch rapport met AI-duiding |
 | Koppelen tussen systemen | SC Weekly Report: advertentieplatforms en winkelcijfers in één rapport |
 | Bouwen wat niet kant-en-klaar bestaat | FleetDisk (dashboard op legacy-data), Shaftlab-club-builder, BerijdersApp (54 apps) |
+| Goed in elkaar, en het ziet er goed uit | SC Weekly Report (eigen huisstijl, vaste cijfers uit de bron, review voor publicatie), Shaftlab (live club-builder), klantsites (Puik Bouw, 4 Fruit Company, NB Projectbouw: eigen ontwerp per klant), FleetDisk en BerijdersApp (alleen als tekst: schaal, 54 apps uit één codebase) |
 | Productierijp, geen demo | Review-voor-publicatie, deterministische cijfers (SC Weekly Report) |
 | Een eigen tool, geen template | Een eigen designtaal per klant (SC Weekly Report in de Short Commerce-huisstijl) |
 
@@ -168,6 +180,7 @@ _Huidige site:_ de conversie is nu een mailadres (Gmail) met de pitch "Vertel wa
 
 ## Changelog
 *Newest first. One line per revision: what changed and why.*
+- v1.8 (2026-10-29) — Zelf bouwen met AI is nu het belangrijkste alternatief (Competitive Landscape). Nieuw differentiator: kwaliteit en aanpak (proces snappen, goede technische keuzes, afmaken tot live, ontwerp en bouw in één hand). Bezwaar "Kan ik dit niet zelf met AI?" toegevoegd met erkennen-dan-verschil als toon. Nils' eigen woorden vastgelegd. Reden: iedereen kan nu zelf iets maken met AI, en Nils wil zich onderscheiden op de kwaliteit die hij levert.
 - v1.7 (2026-10-10) — Contact-afsluiter verbreed: "Wat doe je nog met de hand?" wordt "Waar loop je tegenaan?", met een pitch die koppelingen, tools en complete apps noemt. Automatisering blijft de focus, maar de laatste vraag van de site mag andere software niet uitsluiten (wens van Nils).
 - v1.6 (2026-10-10) — Over-mij herschreven op verzoek van Nils: de oude tekst las als een cv (Autodisk, FleetDisk, 54 apps), was te glad en "prompt-knutselaar" was te stoer. Nieuw: eerst het bedrijf snappen, dan bouwen, alles zelf ontwerpen en bouwen, en het als eigen product behandelen. Werkgeverswerk blijft bewijs bij de werkstukken.
 - v1.5 (2026-10-10) — Sitecopy zegt geen "tikwerk" meer: het woord klinkt als een klein klusje en maakt de opdracht kleiner. Oplossingen-kop wordt "Het loopt vanzelf." en de contact-pitch "Vertel welk proces vanzelf moet lopen." Zo staat de uitkomst centraal en niet het klusje. Tikwerk blijft een intern begrip voor het probleem.

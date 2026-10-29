@@ -346,15 +346,6 @@ figure .tile--artefact img { width: auto; max-width: 100%; height: auto; max-hei
   .shots figure img, .shots figure.is-portrait img { width: auto; height: auto; max-height: clamp(14rem, 40vh, 24rem); max-width: none; }
 }
 
-/* Hero scrim — measured from the copy, not a share of the viewport: dark under the
-   text, fading out above it, full-bleed past the container gutter. */
-.hero-text { position: relative; }
-.hero-text::before {
-  content: ""; position: absolute; z-index: -1; pointer-events: none;
-  left: calc(-1 * var(--margin)); right: calc(-1 * var(--margin)); top: -9rem; bottom: -7rem;
-  background: linear-gradient(to top, rgb(var(--c-dark) / 0.94) 0%, rgb(var(--c-dark) / 0.82) 45%, rgb(var(--c-dark) / 0.6) calc(100% - 9rem), rgb(var(--c-dark) / 0) 100%);
-}
-
 /* Hero signal readout + pause — a typeset mono control, no chrome of its own. */
 .hero-pause { min-height: 24px; padding: 0 0.25rem; opacity: 0.72; transition: opacity 250ms var(--ease-out); }
 .hero-pause:hover, .hero-pause[aria-pressed="true"] { opacity: 1; }

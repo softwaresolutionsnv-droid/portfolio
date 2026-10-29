@@ -99,12 +99,26 @@
   },
   "work": {
     "intro": {
-      "nl": "Werk voor echte opdrachtgevers. Geen demo's, geen mockups.",
-      "en": "Work for real clients. No demos, no mockups."
+      "nl": "Gebouwd voor opdrachtgevers en elke dag in gebruik.",
+      "en": "Built for clients and in use every day."
     }
   },
   "werkwijze": {
     "items": [
+      {
+        "label": {
+          "nl": "Kwaliteit",
+          "en": "Quality"
+        },
+        "kop": {
+          "nl": "Met AI kun je veel zelf. Ik zorg dat het goed in elkaar zit en er goed uitziet.",
+          "en": "You can build a lot yourself with AI. I make sure it's well built and looks the part."
+        },
+        "tekst": {
+          "nl": "Een eerste versie maak je tegenwoordig snel. Daarna begint het werk: randgevallen, je data, beveiliging, en een ontwerp dat bij je bedrijf past in plaats van bij een template. Ik weet hoe ik dat aanpak, van idee tot het live draait.",
+          "en": "A first version is quick to make these days. Then the real work starts: edge cases, your data, security, and a design that fits your business instead of a template. I know how to take it from idea to running live."
+        }
+      },
       {
         "label": {
           "nl": "Vaste prijs",
