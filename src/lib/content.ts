@@ -21,8 +21,6 @@ export const GROEP_VOLGORDE: Groep[] = ['automatisering', 'maatwerk', 'sites-mer
 
 export type Scherm = 'desktop' | 'mobiel';
 
-/** Viewportbreedte per scherm — gelijk aan SCHERMEN in scripts/capture-artefacts.mjs. */
-export const SCHERM_BREEDTE: Record<Scherm, number> = { desktop: 1440, mobiel: 390 };
 
 export type GalleryImage = {
   image: string;
@@ -37,7 +35,7 @@ export const isPortrait = (g: GalleryImage) => (g.scherm ? g.scherm === 'mobiel'
     toont (CONTEXT.md). Bij een live werkstuk wekelijks opnieuw opgenomen door
     scripts/capture-artefacts.mjs (ADR-0005). */
 export type Uitsnede = {
-  /** Waar de opname staat, bijv. `/projects/puikbouw-hero.jpg`. */
+  /** Waar de opname staat, bijv. `/projects/puikbouw-werkwijze.jpg`. */
   beeld: string;
   /** Pagina op de site van het werkstuk, relatief aan `url`. */
   pad: string;
@@ -47,6 +45,30 @@ export type Uitsnede = {
   /** Tekst die in de uitsnede hoort te staan. Verandert die, dan het bijschrift controleren. */
   anker: string;
   bijschrift: Localized;
+  /** Lucht rond het element in CSS-pixels, voor elementen zonder eigen padding. */
+  marge?: number;
+};
+
+/** Merkplaat — het merk van de klant in één vast raster: vlak, logo, kop en
+    een mobiel scherm (CONTEXT.md, ADR-0009). Gerenderd naar `beeld` door
+    scripts/capture-artefacts.mjs, na de opnames, zodat `bron` vers is. */
+export type Merkplaat = {
+  beeld: string;
+  /** Het mobiele scherm in de plaat; een uitsnede met dit beeld telt niet als detail. */
+  bron: string;
+  vlak: string;
+  inkt: string;
+  /** Bestand in scripts/merkplaten/. */
+  logo: string;
+  /** Zoals de klant het zelf doet op een gekleurd vlak: het logo als witte of zwarte silhouet. */
+  logoFilter?: 'wit' | 'zwart';
+  /** `css`: stylesheet-URL van het klantfont; `stijl`: CSS-declaraties voor de kop. */
+  font: { css: string; stijl: string };
+  /** In de taal van de klant, nooit vertaald — het is merkbeeld. */
+  kop: string;
+  /** Domein of productnaam onder de kop. */
+  regel?: string;
+  alt: Localized;
 };
 
 /** Diagram — beeld van software die niet te fotograferen is (CONTEXT.md):
@@ -85,6 +107,8 @@ export type Werkstuk = {
   diagram?: Diagram;
   /** Gezet = de beelden komen hieruit; `image`, `imageAlt` en `gallery` worden afgeleid. */
   uitsneden?: Uitsnede[];
+  /** Opener van strip en case-pagina; `image` en `gallery` zijn dan de details. */
+  merkplaat?: Merkplaat;
 };
 
 /** Zoals in content.json: wie uitsneden heeft, laat de afgeleide beeldvelden weg. */
@@ -130,8 +154,10 @@ export type SiteContent = {
 };
 
 function metBeelden(w: RuwWerkstuk): Werkstuk {
-  if (!w.uitsneden?.length) return w as Werkstuk;
-  const [eerste, ...rest] = w.uitsneden;
+  // The plate's own source screen is material for the plate, not a detail.
+  const details = w.uitsneden?.filter((u) => u.beeld !== w.merkplaat?.bron);
+  if (!details?.length) return w as Werkstuk;
+  const [eerste, ...rest] = details;
   return {
     ...w,
     image: eerste.beeld,

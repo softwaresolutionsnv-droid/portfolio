@@ -5,7 +5,8 @@
  * write it to the uitsnede's `beeld` path — only when the capture passes the
  * guardrails and differs noticeably from the previous one. Everything that
  * needs a human ends up in a report that the weekly Action turns into issues
- * (scripts/artefact-issues.mjs).
+ * (scripts/artefact-issues.mjs). Afterwards every merkplaat is rendered
+ * (scripts/merkplaat.mjs, ADR-0009), so the screen inside it is this week's.
  *
  *   node scripts/capture-artefacts.mjs
  *   node scripts/capture-artefacts.mjs --slug 4fruit --base http://localhost:3000
@@ -21,14 +22,16 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { chromium } from 'playwright-core';
 import sharp from 'sharp';
+import { PLAAT, plaatHtml } from './merkplaat.mjs';
+import { veranderd } from './verschil.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SCHERMEN = {
   desktop: { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 },
-  mobiel: { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
+  // 3×, like the phones it stands for: inside a merkplaat the screen is drawn at 3× too.
+  mobiel: { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true },
 };
 const MAX_WIDTH = 1920; // top of the WebP ladder (gen-images.mjs)
-const DIFF_DREMPEL = 0.01; // mean per-pixel difference that counts as a change
 const LEEG_DREMPEL = 4; // channel stdev below this means a blank capture
 
 // Freeze motion so two captures of an unchanged page come out identical, and
@@ -53,7 +56,9 @@ const content = JSON.parse(await readFile(path.join(ROOT, 'src', 'data', 'conten
 const werkstukken = content.werkstukken.filter(
   (w) => w.uitsneden?.length && (args.slug ? w.slug === args.slug : w.status === 'live'),
 );
-if (args.slug && !werkstukken.length) throw new Error(`geen werkstuk "${args.slug}" met uitsneden`);
+// Merkplaten render for every status: their material is local, nothing is fetched from the client.
+const platen = content.werkstukken.filter((w) => w.merkplaat && (!args.slug || w.slug === args.slug));
+if (args.slug && !werkstukken.length && !platen.length) throw new Error(`geen werkstuk "${args.slug}" met uitsneden of merkplaat`);
 
 const rapport = { opgenomen: [], ongewijzigd: [], mislukt: [], ankerGewijzigd: [] };
 const browser = await chromium.launch({ channel: process.env.ARTEFACT_BROWSER_CHANNEL || undefined });
@@ -84,13 +89,33 @@ for (const w of werkstukken) {
     }
 
     const doel = path.join(ROOT, 'public', u.beeld);
-    if (!args.force && existsSync(doel) && (await verschil(doel, jpg)) < DIFF_DREMPEL) {
+    if (!args.force && existsSync(doel) && !(await veranderd(doel, jpg))) {
       rapport.ongewijzigd.push(ref);
       continue;
     }
     await writeFile(doel, jpg);
     rapport.opgenomen.push(ref);
   }
+}
+
+// Merkplaten (ADR-0009) — after the captures, so the screen in each plate is this week's.
+for (const w of platen) {
+  const m = w.merkplaat;
+  const ref = { slug: w.slug, beeld: m.beeld, selector: 'merkplaat', scherm: 'plaat' };
+  const plaat = await renderPlaat(m).catch((e) => ({ fout: 'plaat', detail: e.message.split('\n')[0] }));
+  if (plaat.fout) {
+    rapport.mislukt.push({ ...ref, reden: plaat.fout, detail: plaat.detail });
+    continue;
+  }
+  // Large flat fields band and speckle at the usual quality; a plate gets more.
+  const jpg = await sharp(plaat.png).jpeg({ quality: 94, mozjpeg: true, chromaSubsampling: '4:4:4' }).toBuffer();
+  const doel = path.join(ROOT, 'public', m.beeld);
+  if (!args.force && existsSync(doel) && !(await veranderd(doel, jpg))) {
+    rapport.ongewijzigd.push(ref);
+    continue;
+  }
+  await writeFile(doel, jpg);
+  rapport.opgenomen.push(ref);
 }
 
 await browser.close();
@@ -118,7 +143,31 @@ async function neemOp(url, u) {
     await el.evaluate(verbergZwevendeLagen);
     await el.evaluate(wachtOpBeelden);
     await page.evaluate(() => document.fonts.ready);
-    return { tekst: await el.innerText(), png: await el.screenshot({ animations: 'disabled', caret: 'hide' }) };
+    const opties = { animations: 'disabled', caret: 'hide' };
+    if (!u.marge) return { tekst: await el.innerText(), png: await el.screenshot(opties) };
+    // An element without padding of its own leaves its text flush with the crop: take some page around it.
+    const box = await el.boundingBox();
+    const { scrollY, breedte } = await page.evaluate(() => ({ scrollY, breedte: document.documentElement.scrollWidth }));
+    const x = Math.max(0, box.x - u.marge);
+    const clip = { x, y: box.y + scrollY - u.marge, width: Math.min(breedte - x, box.width + 2 * u.marge), height: box.height + 2 * u.marge };
+    return { tekst: await el.innerText(), png: await page.screenshot({ ...opties, fullPage: true, clip }) };
+  } finally {
+    await context.close();
+  }
+}
+
+async function renderPlaat(m) {
+  const context = await browser.newContext({ viewport: { width: PLAAT.width, height: PLAAT.height }, deviceScaleFactor: PLAAT.deviceScaleFactor });
+  try {
+    const page = await context.newPage();
+    await page.setContent(await plaatHtml(m, ROOT), { waitUntil: 'networkidle', timeout: 60_000 });
+    // A plate in a fallback face is a plate in someone else's brand: fail rather than write it.
+    const geladen = await page.evaluate(async () => {
+      await document.fonts.ready;
+      return [...document.fonts].some((f) => f.status === 'loaded');
+    });
+    if (!geladen) return { fout: 'plaat', detail: `font laadde niet: ${m.font.css}` };
+    return { png: await page.screenshot({ animations: 'disabled' }) };
   } finally {
     await context.close();
   }
@@ -151,18 +200,6 @@ function verbergZwevendeLagen(doel) {
 
 async function wachtOpBeelden(doel) {
   await Promise.all([...doel.querySelectorAll('img')].map((img) => img.decode().catch(() => {})));
-}
-
-// Mean absolute difference of two images on a small greyscale grid, 0–1.
-// A changed aspect ratio always counts as a change.
-async function verschil(oudPad, nieuw) {
-  const [a, b] = await Promise.all([sharp(oudPad).metadata(), sharp(nieuw).metadata()]);
-  if (Math.abs(a.width / a.height - b.width / b.height) > 0.02) return 1;
-  const raster = (bron) => sharp(bron).resize(96, 96, { fit: 'fill' }).greyscale().raw().toBuffer();
-  const [x, y] = await Promise.all([raster(oudPad), raster(nieuw)]);
-  let som = 0;
-  for (let i = 0; i < x.length; i++) som += Math.abs(x[i] - y[i]);
-  return som / x.length / 255;
 }
 
 function normaal(tekst) {

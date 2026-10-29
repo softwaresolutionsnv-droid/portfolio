@@ -79,6 +79,10 @@ _Avoid_: Screenshot, mockup, preview
 De vaste aanwijzing welk deel van welke pagina, op welk scherm, een artefact toont. De uitsnede blijft staan terwijl de site verandert; het artefact is steeds de verse opname ervan. Het bijschrift hoort bij de uitsnede, niet bij één opname.
 _Avoid_: Shot, crop, screenshot-instelling
 
+**Merkplaat**:
+Het opener-beeld van een werkstuk in het merk van de opdrachtgever: hun kleur als vlak, hun logo, hun eigen kop in hun eigen font, en het mobiele scherm dat onderaan van de plaat loopt. Eén vast raster voor elk werkstuk; alleen het merk wisselt. Gerenderd door de wekelijkse opname, dus het scherm erin is vers (ADR-0009). Staat vóór de artefacten, in de strook en op de case-pagina. De kop is van de klant en wordt niet vertaald.
+_Avoid_: Moodboard, brand board, styleguide, cover
+
 **Diagram**:
 Beeld van software die niet te fotograferen is: onzichtbaar (AI-integratie, datapijplijnen) of afgeschermd (besloten werk). Een getypografeerde architectuurtekening of echte uitvoer. De tegenhanger van het artefact.
 _Avoid_: Illustratie, schema, graphic

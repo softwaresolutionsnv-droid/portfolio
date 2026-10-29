@@ -12,3 +12,5 @@ De reden: het probleem was niet hoe de beelden gemaakt werden, maar dat ze niet 
 ## Consequences
 
 Een klantsite die er een week slecht uitziet zonder dat een vangrail dat merkt, staat ook een week slecht op het portfolio. Het tekstanker per uitsnede vangt het grootste risico op: een bijschrift dat niet meer klopt bij wat je ziet. Alleen werkstukken met status _live_ worden opgenomen. Pre-launch staat stil tot de launch, en die wordt door dezelfde Action gemeld.
+
+Aangevuld door ADR-0009: na de opnames rendert dezelfde Action per werkstuk een merkplaat.

@@ -32,6 +32,7 @@ const REDEN = {
   pagina: 'De pagina gaf geen 200 of laadde niet.',
   selector: 'De selector vond niet precies één element — waarschijnlijk is de site verbouwd.',
   leeg: 'De opname was leeg of te klein.',
+  plaat: 'De merkplaat kon niet worden gerenderd: het mobiele scherm ontbreekt of het klantfont laadde niet.',
 };
 
 for (const r of rapport.mislukt) {

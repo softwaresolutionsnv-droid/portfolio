@@ -295,6 +295,9 @@ Radius reads as one family at three related steps, not a flat single value: 4px 
 ### Werkwijze (signature)
 `Werkwijze.tsx`, light section: a sticky (`lg:top-28`) Headline-size title in cols 1–5 beside a ruled `<dl>` in cols 6–12. Each guarantee is a hairline-topped row: a bracketed mono label (0.6 opacity, 10rem column), the kop at `.t-body-lg` (30ch, balanced) and the text at `.t-body` (52ch, 0.75 opacity).
 
+### Merkplaat (signature, ADR-0009)
+The one place the client's world enters the portfolio, and the only image here not set in Geist or Sometype. `scripts/merkplaat.mjs` renders a fixed 16:10 grid (1280×800 at 1.5×): the client's field colour edge to edge, their logo top-left at 60px (knocked out white or black the way the client does it on colour), their own hero line bottom-left in their own typeface (600px column, balanced), their domain or eyebrow under it at 20px, and the mobile hero capture at 340px on the right, top-rounded 26px, bleeding off the bottom edge on a soft offset shadow. Only colour, logo, type and screen change per werkstuk; the geometry never does. It is a pre-rendered image, so the portfolio never loads client fonts. It opens the work strip as a 16:10 cover tile and the case spread full width under the chips (4px radius tile, carries the `cs-image` morph); the artefacts after it are the details. A near-black client ground (NB ink, 4 Fruit brand-deep, Short Commerce ink) would vanish on the dark work section, so those plates take the client's next brand colour instead.
+
 ### Diagram (signature)
 `Diagram.tsx`, content-driven (replaces the retired McpDiagram/trace): a black tile with a header rule holding the kop and a bracketed `[ DIAGRAM ]` label, then an ordered list of steps, each a ruled row of mono label, `.t-h6` title and `.t-mono-md` note, joined by a typeset `↓` (the first row carries `·`); a mono-sm caption under the tile. Real text, read as an ordered list.
 

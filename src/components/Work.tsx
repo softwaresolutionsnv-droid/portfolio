@@ -92,6 +92,8 @@ function Strip({ w }: { w: Werkstuk }) {
   }
   return (
     <>
+      {/* The merkplaat opens the strip (ADR-0009); the tiles after it are details. */}
+      {w.merkplaat && <ImgTile src={w.merkplaat.beeld} alt={loc(w.merkplaat.alt)} />}
       {tiles.map((g) => (
         <ImgTile key={g.image} src={g.image} alt={loc(g.alt)} portrait={isPortrait(g)} artefact={Boolean(g.scherm)} />
       ))}

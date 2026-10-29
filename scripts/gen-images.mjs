@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIR = path.join(ROOT, 'public', 'projects');
-const WIDTHS = [640, 1280, 1920];
+const WIDTHS = [640, 1280, 1920, 2880];
 
 const sources = (await readdir(DIR)).filter((f) => /\.(png|jpe?g)$/i.test(f));
 let generated = 0;
@@ -25,6 +25,11 @@ for (const file of sources) {
   const srcMtime = (await stat(src)).mtimeMs;
 
   for (const w of WIDTHS) {
+    // 2880 only for sources that have it (the merkplaten); a copy of a 1920 source would be dead weight.
+    if (w > 1920) {
+      if (!sharp) sharp = (await import('sharp')).default;
+      if ((await sharp(src).metadata()).width <= 1920) continue;
+    }
     const out = path.join(DIR, `${base}-${w}.webp`);
     const fresh = await stat(out).then((s) => s.mtimeMs > srcMtime).catch(() => false);
     if (fresh) continue;
@@ -32,7 +37,8 @@ for (const file of sources) {
     await sharp(src)
       .rotate()
       .resize({ width: w, withoutEnlargement: true })
-      .webp({ quality: 80 })
+      // Merkplaten are mostly flat colour, where q80 speckles; the rest is photo-like and fine at 80.
+      .webp({ quality: /-plaat\.\w+$/.test(file) ? 90 : 80 })
       .toFile(out);
     generated++;
   }

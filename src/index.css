@@ -334,15 +334,16 @@ figure .tile--artefact img { width: auto; max-width: 100%; height: auto; max-hei
 /* Case-page gallery: a contact sheet — every shot at one height and its own ratio,
    like the work strip, so a 390px mobile capture never swells to half the screen. */
 .shots { display: flex; flex-direction: column; gap: 2rem; }
-.shots figure .tile { width: 100%; }
-.shots figure img { display: block; width: 100%; height: auto; max-height: none; }
+.shots figure .tile { width: fit-content; max-width: 100%; }
+/* Never wider than captured: the density srcset makes the intrinsic size the true CSS size (op ware grootte). */
+.shots figure img { display: block; width: auto; max-width: 100%; height: auto; max-height: none; }
 .shots figure.is-portrait .tile { width: fit-content; }
 .shots figure.is-portrait img { width: auto; max-width: 100%; max-height: 64vh; }
 @media (min-width: 1024px) {
   .shots { flex-direction: row; flex-wrap: wrap; align-items: flex-start; gap: 2rem 0.5rem; }
   .shots figure { width: min-content; min-width: 11rem; }
   .shots figure .tile { width: fit-content; }
-  .shots figure img, .shots figure.is-portrait img { width: auto; height: clamp(14rem, 40vh, 24rem); max-width: none; max-height: none; }
+  .shots figure img, .shots figure.is-portrait img { width: auto; height: auto; max-height: clamp(14rem, 40vh, 24rem); max-width: none; }
 }
 
 /* Hero scrim — measured from the copy, not a share of the viewport: dark under the

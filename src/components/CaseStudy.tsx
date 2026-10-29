@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { webpSrcSet } from '../lib/responsiveImage';
+import { artefactSrcSet, webpSrcSet } from '../lib/responsiveImage';
 import { Diagram } from './Diagram';
 import { Mark } from './Mark';
 import { SpecTile } from './Work';
-import { isPortrait, kennismakingLink, SCHERM_BREEDTE, type Scherm, type Werkstuk } from '../lib/content';
+import { isPortrait, kennismakingLink, type Scherm, type Werkstuk } from '../lib/content';
 import { useLoc, useT, type Localized } from '../lib/i18n';
 
 export type CaseStudyWerkstuk = Werkstuk & { id: number };
@@ -30,12 +30,13 @@ const FOCUSABLE =
     whole on the black artefact tile and names the viewport it was shot at. */
 function ArtefactFigure({ alt, scherm, className = '', children }: { alt: Localized; scherm?: Scherm; className?: string; children: React.ReactNode }) {
   const loc = useLoc();
+  const t = useT();
   return (
     <figure className={`flex flex-col gap-2 ${className}`}>
       <div className={`tile flex-1 ${scherm ? 'tile--artefact' : ''}`}>{children}</div>
       <figcaption className="t-mono-sm flex justify-between gap-4" style={{ opacity: 0.6 }}>
         <span className="bracket">{loc(alt)}</span>
-        {scherm && <span className="paren shrink-0">{SCHERM_BREEDTE[scherm]}</span>}
+        {scherm && <span className="paren shrink-0">{t.scherm[scherm]}</span>}
       </figcaption>
     </figure>
   );
@@ -235,6 +236,26 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
           </div>
         </header>
 
+        {/* The merkplaat opens the spread full width: the client's brand before anything of ours (ADR-0009). */}
+        {project.merkplaat && (
+          <figure className="container mt-[var(--sec-md)]">
+            <div className="tile">
+              <picture>
+                <source type="image/webp" srcSet={webpSrcSet(project.merkplaat.beeld, true)} sizes="100vw" />
+                <img
+                  src={project.merkplaat.beeld}
+                  alt={loc(project.merkplaat.alt)}
+                  draggable={false}
+                  decoding="async"
+                  fetchPriority="high"
+                  className="block w-full h-auto"
+                  style={{ viewTransitionName: 'cs-image', aspectRatio: '16 / 10' } as React.CSSProperties}
+                />
+              </picture>
+            </div>
+          </figure>
+        )}
+
         {/* intro + credits + media */}
         <div className="container grid-12 gap-y-10 mt-[var(--sec-md)]">
           <div className="col-span-12 lg:col-span-4 flex flex-col gap-10">
@@ -263,16 +284,21 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
             ) : project.image && !imageFailed ? (
               <ArtefactFigure alt={project.imageAlt} scherm={project.imageScherm}>
                 <picture>
-                  <source type="image/webp" srcSet={webpSrcSet(project.image)} sizes="(min-width: 1024px) 58vw, 100vw" />
+                  {project.imageScherm ? (
+                    <source type="image/webp" srcSet={artefactSrcSet(project.image, project.imageScherm)} />
+                  ) : (
+                    <source type="image/webp" srcSet={webpSrcSet(project.image)} sizes="(min-width: 1024px) 58vw, 100vw" />
+                  )}
                   <img
                     src={project.image}
                     alt={loc(project.imageAlt)}
                     draggable={false}
                     decoding="async"
-                    fetchPriority="high"
+                    // With a merkplaat above it, this is a detail: the plate owns the priority and the morph.
+                    fetchPriority={project.merkplaat ? 'auto' : 'high'}
                     onError={() => setFailedSlug(project.slug)}
                     className="w-full h-auto"
-                    style={{ viewTransitionName: 'cs-image' } as React.CSSProperties}
+                    style={project.merkplaat ? undefined : ({ viewTransitionName: 'cs-image' } as React.CSSProperties)}
                   />
                 </picture>
               </ArtefactFigure>
@@ -329,7 +355,11 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
               {project.gallery.map((shot, i) => (
                 <ArtefactFigure key={`${shot.image}-${i}`} alt={shot.alt} scherm={shot.scherm} className={isPortrait(shot) ? 'is-portrait' : ''}>
                   <picture>
-                    <source type="image/webp" srcSet={webpSrcSet(shot.image)} sizes={isPortrait(shot) ? '(min-width: 1024px) 12rem, 64vw' : '(min-width: 1024px) 50vw, 100vw'} />
+                    {shot.scherm ? (
+                      <source type="image/webp" srcSet={artefactSrcSet(shot.image, shot.scherm)} />
+                    ) : (
+                      <source type="image/webp" srcSet={webpSrcSet(shot.image)} sizes={isPortrait(shot) ? '(min-width: 1024px) 12rem, 64vw' : '(min-width: 1024px) 50vw, 100vw'} />
+                    )}
                     <img src={shot.image} alt={loc(shot.alt)} loading="lazy" decoding="async" draggable={false} />
                   </picture>
                 </ArtefactFigure>

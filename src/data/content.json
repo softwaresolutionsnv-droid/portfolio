@@ -272,11 +272,11 @@
       "year": "2026",
       "client": "Short Commerce",
       "url": null,
-      "image": "/projects/sc-weekly-report-01.png",
+      "image": "/projects/sc-weekly-report-roas.png",
       "imageScherm": "desktop",
       "imageAlt": {
-        "nl": "Weekrapport in het klantportaal: blended ROAS tegen de target, met het verloop over acht weken. Verzonnen klant en cijfers.",
-        "en": "Weekly report in the client portal: blended ROAS against target, with the trend over eight weeks. Invented client and figures."
+        "nl": "Blended ROAS van de week tegen de target, met het verloop over acht weken en de kopzin van de duiding. Verzonnen klant en cijfers.",
+        "en": "The week's blended ROAS against target, with the eight-week trend and the commentary's headline. Invented client and figures."
       },
       "highlights": [
         {
@@ -315,34 +315,26 @@
             "en": "Live since"
           },
           "value": {
-            "nl": "1 oktober 2026",
-            "en": "1 October 2026"
+            "nl": "1 oktober 2026, bij 3 merken",
+            "en": "1 October 2026, across 3 brands"
           }
         }
       ],
       "gallery": [
         {
-          "image": "/projects/sc-weekly-report-01.png",
+          "image": "/projects/sc-weekly-report-roas.png",
           "scherm": "desktop",
           "alt": {
-            "nl": "Weekrapport in het klantportaal: blended ROAS tegen de target, met het verloop over acht weken. Verzonnen klant en cijfers.",
-            "en": "Weekly report in the client portal: blended ROAS against target, with the trend over eight weeks. Invented client and figures."
+            "nl": "Blended ROAS van de week tegen de target, met het verloop over acht weken en de kopzin van de duiding. Verzonnen klant en cijfers.",
+            "en": "The week's blended ROAS against target, with the eight-week trend and the commentary's headline. Invented client and figures."
           }
         },
         {
-          "image": "/projects/sc-weekly-report-02.png",
+          "image": "/projects/sc-weekly-report-ads.png",
           "scherm": "desktop",
           "alt": {
             "nl": "Sterkste ads van de week per platform, met ROAS, spend en aankopen per creative. Verzonnen klant, cijfers en beelden.",
             "en": "The week's strongest ads per platform, with ROAS, spend and purchases per creative. Invented client, figures and imagery."
-          }
-        },
-        {
-          "image": "/projects/sc-weekly-report-03.png",
-          "scherm": "desktop",
-          "alt": {
-            "nl": "De mediabuyer past de duiding van Claude aan vóór publicatie; de reden van de wijziging wordt bewaard. Verzonnen klant en cijfers.",
-            "en": "The media buyer edits Claude's commentary before publishing; the reason for the change is kept. Invented client and figures."
           }
         }
       ],
@@ -427,6 +419,24 @@
             }
           }
         ]
+      },
+      "merkplaat": {
+        "beeld": "/projects/sc-weekly-report-plaat.jpg",
+        "bron": "/projects/sc-weekly-report-mobiel.jpg",
+        "vlak": "#00df82",
+        "inkt": "#0a0a0a",
+        "logo": "sc-weekly-report.svg",
+        "logoFilter": "zwart",
+        "font": {
+          "css": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;800&display=block",
+          "stijl": "font-family: 'Plus Jakarta Sans'; font-weight: 800; letter-spacing: -0.03em; font-size: 70px; line-height: 1"
+        },
+        "kop": "Van vijf advertentieplatforms naar één weekrapport.",
+        "regel": "Short Commerce · Weekly Report",
+        "alt": {
+          "nl": "Merkplaat van de Weekly Report: emerald vlak met het Short Commerce-logo, de kop in Plus Jakarta Sans en het weekrapport op mobiel. Verzonnen klant en cijfers.",
+          "en": "Weekly Report brand plate: emerald field with the Short Commerce logo, the headline in Plus Jakarta Sans and the weekly report on mobile. Invented client and figures."
+        }
       }
     },
     {
@@ -506,37 +516,16 @@
       ],
       "uitsneden": [
         {
-          "beeld": "/projects/shaftlab-builder.jpg",
+          "beeld": "/projects/shaftlab-stap.jpg",
           "pad": "/nl/products/fujikura-ventus-velocore-blue",
-          "selector": "#configurator",
+          "selector": "#configurator .stapraster",
           "scherm": "desktop",
-          "anker": "Stel je shaft samen",
+          "anker": "Waar speel je hem in?",
           "bijschrift": {
-            "nl": "Club-builder op de shaftpagina: eerste stap, met de som van de onderdelen rechtsonder",
-            "en": "Club builder on the shaft page: first step, with the sum of the parts bottom right"
-          }
-        },
-        {
-          "beeld": "/projects/shaftlab-hero.jpg",
-          "pad": "/nl",
-          "selector": "[id$=\"__home-hero\"] > section.hero",
-          "scherm": "desktop",
-          "anker": "Jouw spec, met de hand gebouwd",
-          "bijschrift": {
-            "nl": "Herosectie van shaftlab.eu met de belofte en de weg naar de shafts",
-            "en": "Hero of shaftlab.eu with the promise and the way into the shafts"
-          }
-        },
-        {
-          "beeld": "/projects/shaftlab-onderdelen.jpg",
-          "pad": "/nl",
-          "selector": "[id$=\"__home-build\"] > section.sectie",
-          "scherm": "desktop",
-          "anker": "Eén shaft op maat",
-          "bijschrift": {
-            "nl": "Shaft, grip en adapter als drie onderdelen, met de check of het op je kop past",
-            "en": "Shaft, grip and adapter as three components, with the check whether it fits your head"
-          }
+            "nl": "Eerste stap van de club-builder: hand en club kiezen, met de standaardlengte per keuze",
+            "en": "First step of the club builder: pick hand and club, with the standard length per choice"
+          },
+          "marge": 32
         },
         {
           "beeld": "/projects/shaftlab-hero-mobiel.jpg",
@@ -549,7 +538,24 @@
             "en": "Mobile hero of shaftlab.eu"
           }
         }
-      ]
+      ],
+      "merkplaat": {
+        "beeld": "/projects/shaftlab-plaat.jpg",
+        "bron": "/projects/shaftlab-hero-mobiel.jpg",
+        "vlak": "#0f2593",
+        "inkt": "#ffffff",
+        "logo": "shaftlab.svg",
+        "font": {
+          "css": "https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;700&display=block",
+          "stijl": "font-family: 'Inter Tight'; font-weight: 700; letter-spacing: -0.02em; font-size: 76px; line-height: 1"
+        },
+        "kop": "Jouw spec, met de hand gebouwd",
+        "regel": "shaftlab.eu",
+        "alt": {
+          "nl": "Merkplaat van Shaftlab: diepblauw vlak met het S-monogram, de belofte in Inter Tight en de mobiele homepage",
+          "en": "Shaftlab brand plate: deep blue field with the S monogram, the promise in Inter Tight and the mobile homepage"
+        }
+      }
     },
     {
       "slug": "fleetdisk",
@@ -791,26 +797,27 @@
       ],
       "uitsneden": [
         {
-          "beeld": "/projects/puikbouw-hero.jpg",
-          "pad": "/",
-          "selector": "#hoofdinhoud > div > section:nth-of-type(1)",
+          "beeld": "/projects/puikbouw-projectkaart.jpg",
+          "pad": "/projecten",
+          "selector": "article:has-text(\"Toiletrenovatie na waterschade\")",
           "scherm": "desktop",
-          "anker": "Eén partij voor uw verbouwing",
+          "anker": "Toiletrenovatie na waterschade",
           "bijschrift": {
-            "nl": "Herosectie met de kernbelofte en de offerte-actie naast een projectfoto",
-            "en": "Hero with the core promise and the quote action beside a project photo"
+            "nl": "Projectkaart met voor/na-schakelaar en het resultaat in één regel",
+            "en": "Project card with a before/after switch and the result in one line"
           }
         },
         {
-          "beeld": "/projects/puikbouw-projecten.jpg",
+          "beeld": "/projects/puikbouw-werkwijze.jpg",
           "pad": "/",
-          "selector": "#hoofdinhoud > div > section:nth-of-type(6)",
+          "selector": "#werkwijze .wz",
           "scherm": "desktop",
-          "anker": "Werk dat we hebben gemaakt",
+          "anker": "Heldere offerte",
           "bijschrift": {
-            "nl": "Projectensectie met recente klussen als fotokaarten",
-            "en": "Projects section with recent jobs as photo cards"
-          }
+            "nl": "De werkwijze als uitzetlijn: vier stappen, één verantwoordelijke partij",
+            "en": "The process as a setting-out line: four steps, one accountable party"
+          },
+          "marge": 32
         },
         {
           "beeld": "/projects/puikbouw-hero-mobiel.jpg",
@@ -823,7 +830,24 @@
             "en": "Mobile hero of puikbouw.nl"
           }
         }
-      ]
+      ],
+      "merkplaat": {
+        "beeld": "/projects/puikbouw-plaat.jpg",
+        "bron": "/projects/puikbouw-hero-mobiel.jpg",
+        "vlak": "#6f8000",
+        "inkt": "#ffffff",
+        "logo": "puikbouw.svg",
+        "font": {
+          "css": "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,500;125,800&display=block",
+          "stijl": "font-family: 'Archivo'; font-weight: 800; font-stretch: 125%; letter-spacing: -0.02em; font-size: 60px"
+        },
+        "kop": "Eén partij voor uw verbouwing, renovatie en onderhoud",
+        "regel": "puikbouw.nl",
+        "alt": {
+          "nl": "Merkplaat van Puik Bouw: olijfgroen vlak met het logo, de kernbelofte in Archivo Expanded en de mobiele homepage",
+          "en": "Puik Bouw brand plate: olive field with the logo, the core promise in Archivo Expanded and the mobile homepage"
+        }
+      }
     },
     {
       "slug": "nb-onderhoudsdiensten",
@@ -901,26 +925,27 @@
       ],
       "uitsneden": [
         {
-          "beeld": "/projects/nb-hero.jpg",
+          "beeld": "/projects/nb-kernfeiten.jpg",
           "pad": "/",
-          "selector": "#main-content > section:nth-of-type(1)",
+          "selector": "#zakelijk dl",
           "scherm": "desktop",
-          "anker": "Nieuwbouw, verbouw en renovatie",
+          "anker": "WKA-proof",
           "bijschrift": {
-            "nl": "Herosectie met de vaste ploeg, drie contactroutes en de kerncijfers",
-            "en": "Hero with the permanent crew, three contact routes and the key figures"
+            "nl": "Wat ze zelf doen, wat vaste partners doen, en de papieren die op orde zijn",
+            "en": "What they do themselves, what fixed partners do, and the paperwork in order"
           }
         },
         {
-          "beeld": "/projects/nb-diensten.jpg",
+          "beeld": "/projects/nb-verbouw-mobiel.jpg",
           "pad": "/",
-          "selector": "#diensten",
-          "scherm": "desktop",
-          "anker": "Alles onder één dak",
+          "selector": "#verbouw",
+          "scherm": "mobiel",
+          "anker": "Totaalverbouwing",
           "bijschrift": {
-            "nl": "Dienstenoverzicht: nieuwbouw, verbouw en renovatie, elk met hun vakken",
-            "en": "Services overview: new build, remodelling and renovation, each with its trades"
-          }
+            "nl": "Dienstkaart Verbouw op mobiel: projectfoto, kop en de drie vakken",
+            "en": "The Verbouw service card on mobile: project photo, heading and the three trades"
+          },
+          "marge": 16
         },
         {
           "beeld": "/projects/nb-hero-mobiel.jpg",
@@ -933,7 +958,25 @@
             "en": "Mobile hero of nbprojectbouw.nl"
           }
         }
-      ]
+      ],
+      "merkplaat": {
+        "beeld": "/projects/nb-onderhoudsdiensten-plaat.jpg",
+        "bron": "/projects/nb-hero-mobiel.jpg",
+        "vlak": "#0857f0",
+        "inkt": "#ffffff",
+        "logo": "nb-onderhoudsdiensten.png",
+        "logoFilter": "wit",
+        "font": {
+          "css": "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;800&display=block",
+          "stijl": "font-family: 'Barlow Condensed'; font-weight: 800; text-transform: uppercase; letter-spacing: 0; line-height: 0.9; font-size: 92px"
+        },
+        "kop": "Nieuwbouw, verbouw en renovatie",
+        "regel": "nbprojectbouw.nl",
+        "alt": {
+          "nl": "Merkplaat van NB Projectbouw: cobaltblauw vlak met het logo, de kop in Barlow Condensed kapitalen en de mobiele homepage",
+          "en": "NB Projectbouw brand plate: cobalt field with the logo, the headline in Barlow Condensed caps and the mobile homepage"
+        }
+      }
     },
     {
       "slug": "4fruit",
@@ -968,11 +1011,6 @@
       "year": "2026",
       "client": "4 Fruit Company B.V.",
       "url": null,
-      "image": "/projects/4fruit-01.png",
-      "imageAlt": {
-        "nl": "Herosectie van de nieuwe 4 Fruit Company-site in de reefer-wereld: staal, zink en crimson",
-        "en": "Hero of the new 4 Fruit Company site in the reefer world: steel, zinc and crimson"
-      },
       "highlights": [
         {
           "label": {
@@ -1015,36 +1053,48 @@
           }
         }
       ],
-      "gallery": [
+      "uitsneden": [
         {
-          "image": "/projects/4fruit-02.png",
-          "alt": {
-            "nl": "Ketensectie van de 4 Fruit Company-site",
-            "en": "Supply-chain section of the 4 Fruit Company site"
+          "beeld": "/projects/4fruit-assortiment.jpg",
+          "pad": "/nl/assortiment",
+          "selector": "#overzicht",
+          "scherm": "desktop",
+          "anker": "Citrus",
+          "bijschrift": {
+            "nl": "Het assortiment in zes categorieën, elk met een eigen productfoto",
+            "en": "The range in six categories, each with its own product photo"
           }
         },
         {
-          "image": "/projects/4fruit-m-01.png",
-          "alt": {
-            "nl": "Mobiele herosectie van de 4 Fruit Company-site",
-            "en": "Mobile hero of the 4 Fruit Company site"
-          }
-        },
-        {
-          "image": "/projects/4fruit-03.png",
-          "alt": {
-            "nl": "Assortimentspagina van de 4 Fruit Company-site",
-            "en": "Assortment page of the 4 Fruit Company site"
-          }
-        },
-        {
-          "image": "/projects/4fruit-m-02.png",
-          "alt": {
-            "nl": "Mobiele assortimentspagina van de 4 Fruit Company-site",
-            "en": "Mobile assortment page of the 4 Fruit Company site"
+          "beeld": "/projects/4fruit-hero-mobiel.jpg",
+          "pad": "/nl",
+          "selector": "section#top",
+          "scherm": "mobiel",
+          "anker": "The Fresh",
+          "bijschrift": {
+            "nl": "Mobiele herosectie met de kernbelofte en het assortiment als eerste actie",
+            "en": "Mobile hero with the core promise and the range as the first action"
           }
         }
-      ]
+      ],
+      "merkplaat": {
+        "beeld": "/projects/4fruit-plaat.jpg",
+        "bron": "/projects/4fruit-hero-mobiel.jpg",
+        "vlak": "#008d99",
+        "inkt": "#ffffff",
+        "logo": "4fruit.png",
+        "logoFilter": "wit",
+        "font": {
+          "css": "https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;700&display=block",
+          "stijl": "font-family: 'Hanken Grotesk'; font-weight: 700; letter-spacing: -0.03em; font-size: 104px; line-height: 0.96"
+        },
+        "kop": "The Fresh Connection",
+        "regel": "Versimport & export sinds 2000 · Ridderkerk",
+        "alt": {
+          "nl": "Merkplaat van 4 Fruit Company: tealvlak met het logo, de kop in Hanken Grotesk en de mobiele homepage",
+          "en": "4 Fruit Company brand plate: teal field with the logo, the headline in Hanken Grotesk and the mobile homepage"
+        }
+      }
     }
   ]
 }

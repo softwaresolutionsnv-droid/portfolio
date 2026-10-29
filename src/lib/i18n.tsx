@@ -101,6 +101,7 @@ const nl = {
     maatwerk: 'Dashboards, portalen & apps',
     'sites-merk': 'Sites & merk',
   },
+  scherm: { desktop: 'desktop', mobiel: 'mobiel' },
   herkomst: {
     'in-opdracht': 'In opdracht',
     'eigen-product': 'Eigen product',
@@ -225,6 +226,7 @@ const en: typeof nl = {
     maatwerk: 'Dashboards, portals & apps',
     'sites-merk': 'Sites & brand',
   },
+  scherm: { desktop: 'desktop', mobiel: 'mobile' },
   herkomst: {
     'in-opdracht': 'Commissioned',
     'eigen-product': 'Own product',

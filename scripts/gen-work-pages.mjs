@@ -30,8 +30,8 @@ for (const p of content.werkstukken) {
   const url = `${ORIGIN}/work/${p.slug}`;
   // A project may reference an image that isn't shipped yet (the site
   // renders a typographic fallback plate); the share card then keeps og.png.
-  // With uitsneden, the first one is the lead image (src/lib/content.ts).
-  const src = p.uitsneden?.[0]?.beeld ?? p.image;
+  // The merkplaat is the share card (ADR-0009); otherwise the lead image.
+  const src = p.merkplaat?.beeld ?? p.uitsneden?.[0]?.beeld ?? p.image;
   const hasImage = src && existsSync(path.join(ROOT, 'dist', src));
   const image = hasImage ? `${ORIGIN}${src}` : `${ORIGIN}/og.png`;
 
