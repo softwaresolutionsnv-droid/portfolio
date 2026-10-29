@@ -4,7 +4,7 @@ De strook en de case-pagina openen nu met een merkplaat: een vast raster gevuld 
 
 De reden: de opnames van hele secties lieten zien dát er een site was, maar niet van wie, en niet hoe die voelt. Een rij screenshots van hero's leest als goedkoop en uitwisselbaar, terwijl het verschil juist in het merk en de details zit. Een plaat in het merk van de klant laat dat in één beeld zien. De details laten zien dat het merk tot in de onderdelen is doorgevoerd.
 
-De plaat is een HTML-sjabloon (`scripts/merkplaat.mjs`). `scripts/capture-artefacts.mjs` rendert het na de opnames naar `public/projects/<slug>-plaat.jpg`. Zo blijft ADR-0005 staan: het merk verandert zelden, het scherm erin is elke week vers, en er is niets met de hand bij te houden. Gegevens per werkstuk staan onder `merkplaat` in `content.json`. Logo's staan in `scripts/merkplaten/`.
+De plaat is een HTML-sjabloon (`scripts/merkplaat.mjs`). `scripts/capture-artefacts.mjs` rendert het na de opnames naar `public/projects/<slug>-plaat.jpg`. Zo blijft ADR-0005 staan: het merk verandert zelden, het scherm erin is elke week vers, en er is niets met de hand bij te houden. Gegevens per werkstuk staan onder `merkplaat` in `content.json`. Logo's staan in `scripts/merkplaten/`, net als het telefoonframe (`telefoon.png`, gegenereerd, scherm uitgeknipt) waarin het mobiele scherm valt.
 
 ## Considered Options
 
