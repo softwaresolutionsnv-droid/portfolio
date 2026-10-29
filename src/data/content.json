@@ -272,10 +272,11 @@
       "year": "2026",
       "client": "Short Commerce",
       "url": null,
-      "image": "",
+      "image": "/projects/sc-weekly-report-01.png",
+      "imageScherm": "desktop",
       "imageAlt": {
-        "nl": "De pijplijn achter elk weekrapport: vijf advertentiekanalen en winkelcijfers, vaste cijfers, duiding door Claude, review door de mediabuyer, publicatie in het klantportaal.",
-        "en": "The pipeline behind every weekly report: five ad channels and store figures, fixed numbers, commentary by Claude, review by the media buyer, publication in the client portal."
+        "nl": "Weekrapport in het klantportaal: blended ROAS tegen de target, met het verloop over acht weken. Verzonnen klant en cijfers.",
+        "en": "Weekly report in the client portal: blended ROAS against target, with the trend over eight weeks. Invented client and figures."
       },
       "highlights": [
         {
@@ -319,15 +320,40 @@
           }
         }
       ],
-      "gallery": [],
+      "gallery": [
+        {
+          "image": "/projects/sc-weekly-report-01.png",
+          "scherm": "desktop",
+          "alt": {
+            "nl": "Weekrapport in het klantportaal: blended ROAS tegen de target, met het verloop over acht weken. Verzonnen klant en cijfers.",
+            "en": "Weekly report in the client portal: blended ROAS against target, with the trend over eight weeks. Invented client and figures."
+          }
+        },
+        {
+          "image": "/projects/sc-weekly-report-02.png",
+          "scherm": "desktop",
+          "alt": {
+            "nl": "Sterkste ads van de week per platform, met ROAS, spend en aankopen per creative. Verzonnen klant, cijfers en beelden.",
+            "en": "The week's strongest ads per platform, with ROAS, spend and purchases per creative. Invented client, figures and imagery."
+          }
+        },
+        {
+          "image": "/projects/sc-weekly-report-03.png",
+          "scherm": "desktop",
+          "alt": {
+            "nl": "De mediabuyer past de duiding van Claude aan vóór publicatie; de reden van de wijziging wordt bewaard. Verzonnen klant en cijfers.",
+            "en": "The media buyer edits Claude's commentary before publishing; the reason for the change is kept. Invented client and figures."
+          }
+        }
+      ],
       "diagram": {
         "kop": {
           "nl": "Elke week, per klant",
           "en": "Every week, per client"
         },
         "bijschrift": {
-          "nl": "Een diagram, geen schermafbeelding: het portaal is besloten.",
-          "en": "A diagram, not a screenshot: the portal is private."
+          "nl": "Zo ontstaat elk rapport. De schermen hieronder tonen een verzonnen klant: het echte portaal is besloten.",
+          "en": "How every report comes about. The screens below show an invented client: the real portal is private."
         },
         "stappen": [
           {

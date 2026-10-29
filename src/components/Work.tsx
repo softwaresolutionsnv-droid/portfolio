@@ -28,7 +28,7 @@ function initialCaseStudyId(): number | null {
 
 /* ------------------------------------------------------------------
    Strip tiles. Imagery where it exists; where software has no visual
-   surface (a diagram-werkstuk) or the capture is still owed
+   surface to show (a diagram-werkstuk without screens) or the capture is still owed
    (BerijdersApp), a black spec tile carries a real scope-fact instead.
    An uitsnede (scherm set) is shown whole at its own ratio, no mat; older
    full-bleed captures keep the cover crop.
@@ -67,9 +67,12 @@ export function SpecTile({ label, value, wide = false, big = false, names = fals
 
 function Strip({ w }: { w: Werkstuk }) {
   const loc = useLoc();
-  const tiles = [{ image: w.image, alt: w.imageAlt, scherm: w.imageScherm }, ...w.gallery].filter((g) => g.image);
+  // The lead image may also open the gallery (a diagram-werkstuk shows it there); one tile per image.
+  const tiles = [{ image: w.image, alt: w.imageAlt, scherm: w.imageScherm }, ...w.gallery].filter(
+    (g, i, all) => g.image && all.findIndex((x) => x.image === g.image) === i,
+  );
 
-  if (w.diagram) {
+  if (w.diagram && tiles.length === 0) {
     return (
       <>
         {w.diagram.stappen.map((st, i) => (
