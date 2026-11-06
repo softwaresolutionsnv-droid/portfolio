@@ -22,3 +22,4 @@ De plaat is een HTML-sjabloon (`scripts/merkplaat.mjs`). `scripts/capture-artefa
 - De verschilcontrole (`scripts/verschil.mjs`) telt een wijziging zodra één cel van het raster merkbaar verschuift, niet op het gemiddelde. Zo komen ook een paar gewijzigde woorden op een klantsite door, net als een kleine aanpassing aan het sjabloon.
 - Werk voor de werkgever krijgt geen plaat (ADR-0007).
 - De plaat is ook de deelkaart van `/work/:slug` (og:image).
+- Een werkstuk met `kop` en `context` opent met de kop, de klanten en het probleem; de plaat volgt daarna als antwoord. Een koude bezoeker snapt een besloten tool niet zonder aanleiding (feedback Short Commerce, nov 2026).

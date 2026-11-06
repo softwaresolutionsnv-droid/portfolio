@@ -27,7 +27,7 @@ export function useLoc() {
 }
 
 const nl = {
-  baseTitle: 'Nils Vogelaar — Automatisering & koppelingen voor webshops en mkb',
+  baseTitle: 'Nils Vogelaar — Automatisering, AI & software op maat',
   skip: 'Naar de inhoud',
   nav: {
     taglines: {
@@ -117,6 +117,8 @@ const nl = {
     close: 'Sluit het werkstuk',
     visit: 'Bezoek de site',
     book: 'Kennismaking',
+    klanten: 'De klanten',
+    probleem: 'Het probleem',
     overview: 'Overzicht',
     credits: 'Credits',
     highlights: 'Specificaties',
@@ -152,7 +154,7 @@ const nl = {
 };
 
 const en: typeof nl = {
-  baseTitle: 'Nils Vogelaar — Automation & integrations for online stores and SMBs',
+  baseTitle: 'Nils Vogelaar — Automation, AI & custom software',
   skip: 'Skip to content',
   nav: {
     taglines: {
@@ -242,6 +244,8 @@ const en: typeof nl = {
     close: 'Close case study',
     visit: 'Visit live site',
     book: 'Intro call',
+    klanten: 'The clients',
+    probleem: 'The problem',
     overview: 'Overview',
     credits: 'Credits',
     highlights: 'Specifications',

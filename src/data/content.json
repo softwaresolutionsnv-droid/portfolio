@@ -15,8 +15,8 @@
       ]
     },
     "practice": {
-      "nl": "Koppelingen, automatisering en dashboards op maat voor webshops en mkb. Eén persoon van eerste gesprek tot livegang, zonder overdrachten of accountmanagers.",
-      "en": "Integrations, automation and custom dashboards for online stores and SMBs. One person from first call to launch, with no handoffs or account managers."
+      "nl": "Automatisering, AI en software op maat voor het mkb. Eén persoon van eerste gesprek tot livegang, zonder overdrachten of accountmanagers.",
+      "en": "Automation, AI and custom software for SMBs. One person from first call to launch, with no handoffs or account managers."
     }
   },
   "oplossingen": {
@@ -259,9 +259,23 @@
       "groep": "automatisering",
       "herkomst": "in-opdracht",
       "status": "besloten",
+      "kop": {
+        "nl": "Het weekrapport dat niemand meer met de hand schrijft.",
+        "en": "The weekly report nobody writes by hand anymore."
+      },
+      "context": {
+        "klanten": {
+          "nl": "Short Commerce is het Amsterdamse performancebureau achter merken als Upfront en Saint Blanc. Zo'n achttien online merken laten er hun advertenties draaien, en elke klant krijgt elke week een rapport als basis voor de klantmeeting.",
+          "en": "Short Commerce is the Amsterdam performance agency behind brands like Upfront and Saint Blanc. Around eighteen online brands run their ads there, and every client gets a report each week as the basis for their client meeting."
+        },
+        "probleem": {
+          "nl": "Dat rapport schreef een mediabuyer met de hand in een Google Doc, per klant, elke week. Cijfers uit vijf advertentiekanalen en de winkel bij elkaar zoeken, overtikken, duiden. Dat kostte uren, en met elke nieuwe klant kwam er een rapport bij.",
+          "en": "A media buyer wrote that report by hand in a Google Doc, per client, every week. Pulling figures from five ad channels and the store, retyping them, explaining them. It took hours, and every new client added another report."
+        }
+      },
       "bovenlaag": {
-        "nl": "Weekrapportage voor de klanten van performancebureau Short Commerce. Een mediabuyer schreef elke week per klant met de hand een Google Doc. Nu staan advertentie- en winkelcijfers automatisch in één rapport, schrijft Claude de duiding en keurt de mediabuyer goed voordat het naar de klant gaat.",
-        "en": "Weekly reporting for the clients of performance agency Short Commerce. A media buyer used to write a Google Doc by hand for every client, every week. Now ad and store figures land in one report automatically, Claude drafts the commentary, and the media buyer signs off before it reaches the client."
+        "nl": "Nu staan advertentie- en winkelcijfers automatisch in één rapport, schrijft AI de duiding en keurt de mediabuyer goed voordat het naar de klant gaat.",
+        "en": "Now ad and store figures land in one report automatically, AI drafts the commentary, and the media buyer signs off before it reaches the client."
       },
       "lede": {
         "nl": "Van een handgeschreven Google Doc naar een rapport dat elke week klaarstaat. De cijfers liggen vast; alleen de duiding is tekst.",
@@ -269,15 +283,15 @@
       },
       "onderlaag": [
         {
-          "nl": "Elke week staan de cijfers van Meta, TikTok, Snapchat, Google en Pinterest naast de winkelcijfers uit Triple Whale, in één rapport per klant. Claude schrijft wat die cijfers betekenen, maar rekent ze nooit zelf uit. De mediabuyer leest mee, past aan en publiceert in het klantportaal. Live sinds oktober 2026 met de eerste drie merken.",
-          "en": "Every week the figures from Meta, TikTok, Snapchat, Google and Pinterest sit next to the store figures from Triple Whale, in one report per client. Claude writes what those figures mean, but never calculates them. The media buyer reads along, edits and publishes in the client portal. Live since October 2026 with the first three brands."
+          "nl": "Elke week staan de cijfers van Meta, TikTok, Snapchat, Google en Pinterest naast de winkelcijfers uit Triple Whale, in één rapport per klant. AI schrijft wat die cijfers betekenen, maar rekent ze nooit zelf uit. De mediabuyer leest mee, past aan en publiceert in het klantportaal. Live sinds oktober 2026 met de eerste drie merken.",
+          "en": "Every week the figures from Meta, TikTok, Snapchat, Google and Pinterest sit next to the store figures from Triple Whale, in one report per client. AI writes what those figures mean, but never calculates them. The media buyer reads along, edits and publishes in the client portal. Live since October 2026 with the first three brands."
         }
       ],
       "tags": [
         "Python",
         "FastAPI",
         "Postgres",
-        "Claude"
+        "AI"
       ],
       "role": {
         "nl": "Ontwerp, bouw & AI-integratie, samen met één developer",
@@ -319,8 +333,8 @@
             "en": "Commentary"
           },
           "value": {
-            "nl": "Claude schrijft, mediabuyer keurt goed",
-            "en": "Claude drafts, media buyer signs off"
+            "nl": "AI schrijft, mediabuyer keurt goed",
+            "en": "AI drafts, media buyer signs off"
           }
         },
         {
@@ -396,8 +410,8 @@
               "en": "Commentary"
             },
             "titel": {
-              "nl": "Claude schrijft de duiding",
-              "en": "Claude writes the commentary"
+              "nl": "AI schrijft de duiding",
+              "en": "AI writes the commentary"
             },
             "noot": {
               "nl": "wat de cijfers betekenen",

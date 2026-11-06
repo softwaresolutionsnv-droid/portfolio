@@ -149,6 +149,7 @@ section[tabindex="-1"]:focus { outline: none; }
   line-height: 0.82;
   font-size: clamp(3rem, 1.125rem + 3.75vw, 6.75rem);
 }
+.t-display-sm--zin { font-size: min(11vw, clamp(3rem, 1.125rem + 3.75vw, 6.75rem)); } /* a sentence, not a name: its longest word has to fit a 320px phone */
 .t-h2 {
   font-weight: 400;
   letter-spacing: -0.025em;

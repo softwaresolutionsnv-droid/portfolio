@@ -85,6 +85,10 @@ export type Werkstuk = {
   groep: Groep;
   herkomst: Herkomst;
   status: Status;
+  /** Harde kop bovenaan de case-pagina; de titel zakt dan naar de regel eronder. */
+  kop?: Localized;
+  /** Voor wie en waartegen: staat tussen kop en merkplaat. De bovenlaag vertelt dan alleen de uitkomst. */
+  context?: { klanten: Localized; probleem: Localized };
   /** Bovenlaag — probleem en uitkomst, nooit techniek. Op de overzichtspagina. */
   bovenlaag: Localized;
   /** Editorial lead inside the case page — never the bovenlaag verbatim. */

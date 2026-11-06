@@ -223,18 +223,43 @@ export function CaseStudy({ werkstuk: project, index, total, nextTitle, onClose,
 
         {/* header */}
         <header className="container pt-32 sm:pt-44">
-          <h1 className="t-display-sm" style={{ viewTransitionName: 'cs-title' } as React.CSSProperties}>
-            {project.title}
+          <h1 className={`t-display-sm ${project.kop ? 't-display-sm--zin' : ''}`} style={{ viewTransitionName: 'cs-title', textWrap: 'balance' } as React.CSSProperties}>
+            {project.kop ? loc(project.kop) : project.title}
           </h1>
           <div className="hairline mt-8" />
-          <div className="flex flex-wrap gap-1 mt-6">
-            {chips.map((c, i) => (
-              <span key={c} className={i === 0 ? 'chip chip--groep' : 'chip'}>
-                {c}
-              </span>
-            ))}
+          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 mt-6">
+            {project.kop && (
+              <p className="t-h6">
+                {project.title} · {project.client}
+              </p>
+            )}
+            <div className="flex flex-wrap gap-1">
+              {chips.map((c, i) => (
+                <span key={c} className={i === 0 ? 'chip chip--groep' : 'chip'}>
+                  {c}
+                </span>
+              ))}
+            </div>
           </div>
         </header>
+
+        {/* Who it was for and what went wrong, so the plate below lands as the answer. */}
+        {project.context && (
+          <div className="container grid-12 gap-y-10 mt-[var(--sec-md)]">
+            <div className="col-span-12 lg:col-span-5">
+              <span className="t-mono bracket block mb-4" style={{ opacity: 0.6 }}>
+                {t.caseStudy.klanten}
+              </span>
+              <p className="t-body-lg">{loc(project.context.klanten)}</p>
+            </div>
+            <div className="col-span-12 lg:col-span-5 lg:col-start-7">
+              <span className="t-mono bracket block mb-4" style={{ opacity: 0.6 }}>
+                {t.caseStudy.probleem}
+              </span>
+              <p className="t-body-lg">{loc(project.context.probleem)}</p>
+            </div>
+          </div>
+        )}
 
         {/* The merkplaat opens the spread full width: the client's brand before anything of ours (ADR-0009). */}
         {project.merkplaat && (

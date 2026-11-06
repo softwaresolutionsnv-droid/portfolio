@@ -1,14 +1,15 @@
 # Product Marketing Context
 
-**Document version:** v1.8
-**Last updated:** 2026-10-29
+**Document version:** v1.11
+**Last updated:** 2026-11-06
 
 > Scope: this document records the **target positioning** from the market research of October 2026. Where the current site (nilsvogelaar.com) says something else, a "Huidige site" note marks the gap. Content is in Dutch because the market and the site's source language are Dutch (ADR-0003). Every claim here has a source; nothing is invented.
 
 ## Product Overview
 **One-liner:** Ik koppel je systemen en zet AI aan het werk. Eén persoon, van eerste gesprek tot livegang.
-**What it does:** Nils Vogelaar bouwt automatisering, koppelingen en software voor webshops en mkb. Dat zijn AI-workflows (n8n, LLM's, agents, MCP), koppelingen tussen webshop, marketplace en boekhouding, dashboards op maat die de cijfers uit meerdere systemen in één overzicht zetten, en waar nodig complete portalen, interne tools en apps. Ontwerp, code en AI-integratie komen van één persoon, zonder overdrachten en zonder accountmanagers.
-**Product category:** AI-automatisering & koppelingen voor webshops en mkb. Tweede schap: product-developer voor web en mobiel.
+**What it does:** Nils Vogelaar bouwt automatisering, koppelingen en software voor het mkb. Dat zijn AI-workflows (n8n, LLM's, agents, MCP), koppelingen tussen webshop, marketplace en boekhouding, dashboards op maat die de cijfers uit meerdere systemen in één overzicht zetten, en waar nodig complete portalen, interne tools en apps. Ontwerp, code en AI-integratie komen van één persoon, zonder overdrachten en zonder accountmanagers.
+**Product category:** Automatisering, AI & software op maat voor het mkb (systemen en processen). Tweede schap: software bouwen — portalen, interne tools en apps. Websites en webshops bouwen is bewust géén aanbod: Nils doet het nog, maar wil het andere werk aantrekken.
+**Tagline (handtekening, titel):** "Automatisering, AI & software op maat".
 **Product type:** Dienstverlening. Solo freelance, 12–20 uur per week naast een baan.
 **Business model:** Nu werkt Nils op uurtarief en met vaste prijzen per project. De richting is een instap-pakket (scan of audit), daarna bouw tegen een vaste prijs, daarna een onderhoud-retainer. Bedragen staan bewust niet in dit doc.
 
@@ -23,10 +24,10 @@ _Huidige site:_ de hero zegt "Eén persoon van eerste gesprek tot livegang." De 
 
 ## Target Audience
 **Target companies:**
-- Webshops met €0,5–20 mln omzet. Dit is het sterkste bewijs (Short Commerce, Shaftlab).
 - Mkb-dienstverleners van 10–100 fte met administratieve processen.
-- E-commerce- en marketingbureaus die white-label AI- en integratiecapaciteit inhuren.
 - Scale-ups en founders, voor productbouw (portalen, tools, apps).
+- E-commerce- en marketingbureaus die white-label AI- en integratiecapaciteit inhuren.
+- Webshops met €0,5–20 mln omzet, voor automatisering en koppelingen (niet voor het bouwen van de webshop zelf). Hier zit het sterkste bewijs (Short Commerce, Shaftlab), maar het is geen label: webshops staan niet in tagline, titel of praktijkzin.
 
 **Decision-makers:** eigenaar/DGA, e-commerce- of operationsmanager, founder/CTO/productowner, bureau-eigenaar of projectlead.
 **Primary use case:** tikwerk tussen systemen. Mensen zijn de lijm tussen webshop, marketplace, boekhouding, mail en rapportage.
@@ -92,7 +93,7 @@ Bij kleine bedrijven zit er vaak geen tussenlaag: de eigenaar beslist alleen.
 |-----------|----------|
 | "Ben je wel beschikbaar?" (Nils heeft een baan naast zijn freelance werk) | Noem de capaciteit, niet de baan: 12–20 uur per week, vaste dagen, een beperkt aantal klanten tegelijk. Afgebakende projecten met een vaste prijs, een deadline en een wekelijkse update. Benoem de baan pas als de klant ernaar vraagt. |
 | "Kan ik dit niet zelf met AI?" | Erken het eerst: ja, met AI kun je veel zelf bouwen. Daarna het verschil: zit het goed in elkaar en ziet het er goed uit? Nils snapt eerst het proces, kiest de techniek zo dat het blijft werken, maakt het af tot het live draait en ontwerpt de interface zelf. Laat het zien met werkstukken (SC Weekly Report, Shaftlab, de klantsites) in plaats van het te beweren. Nooit neerkijken op wie het zelf probeert; veel klanten hebben dat al gedaan en lopen nu vast. |
-| "Heb je dit eerder gedaan?" | Het Short Commerce Weekly Report: vijf advertentiekanalen plus winkelcijfers in één automatisch rapport, Claude schrijft de duiding, live sinds 1 okt 2026. Shaftlab op Shopify. Voor schaal: FleetDisk (portaal voor meerdere leasemaatschappijen op dertig jaar backofficedata) en BerijdersApp (54 white-label-apps uit één codebase). |
+| "Heb je dit eerder gedaan?" | Het Short Commerce Weekly Report: vijf advertentiekanalen plus winkelcijfers in één automatisch rapport, AI schrijft de duiding, live sinds 1 okt 2026. Shaftlab op Shopify. Voor schaal: FleetDisk (portaal voor meerdere leasemaatschappijen op dertig jaar backofficedata) en BerijdersApp (54 white-label-apps uit één codebase). |
 | "Is mijn data veilig als er AI aan zit?" | EU-hosting. Code, database en API-sleutels staan op naam van de klant, dus geen lock-in. Cijfers komen rechtstreeks uit de bron; AI schrijft alleen de duiding, en een mens reviewt. (Alleen deze garanties noemen. Een verwerkersovereenkomst en no-training-API's zijn niet bevestigd.) |
 
 **Anti-persona:**
@@ -149,7 +150,7 @@ Bij kleine bedrijven zit er vaak geen tussenlaag: de eigenaar beslist alleen.
 Noem merknamen alleen als bureau-context. Upfront gebruikt de tool nog niet (niet in de eerste wave), en de first-wave-merken worden niet genoemd.
 
 **Werkstukken (bewijs voor de nieuwe positionering):**
-- **Short Commerce Weekly Report** (freelance). Eerst schreef een mediabuyer elke week per klant met de hand een Google Doc. Nu brengt de tool Meta, TikTok, Snapchat, Google en Pinterest plus de winkelcijfers samen in één rapport (via AdManage, AdUp en Triple Whale). Claude schrijft de duiding bij vaste cijfers. De mediabuyer reviewt en publiceert in een klantportaal met rollen, revisiegeschiedenis en comments. Het rapport heeft 11 secties, targets per platform, markt en campagne, en een trend over 8 weken. Elke week staat het rapport klaar voor review (geen vast tijdstip noemen). Een ontbrekende databron krijgt één feitelijke notitie en wordt nooit opgevuld.
+- **Short Commerce Weekly Report** (freelance). Klanten: zo'n 18 online merken (DTC) die via Short Commerce adverteren; elke klant krijgt wekelijks een rapport als basis voor de klantmeeting. Eerst schreef een mediabuyer elke week per klant met de hand een Google Doc. Nu brengt de tool Meta, TikTok, Snapchat, Google en Pinterest plus de winkelcijfers samen in één rapport (via AdManage, AdUp en Triple Whale). AI schrijft de duiding bij vaste cijfers. De mediabuyer reviewt en publiceert in een klantportaal met rollen, revisiegeschiedenis en comments. Het rapport heeft 11 secties, targets per platform, markt en campagne, en een trend over 8 weken. Elke week staat het rapport klaar voor review (geen vast tijdstip noemen). Een ontbrekende databron krijgt één feitelijke notitie en wordt nooit opgevuld.
 - **Shaftlab:** een Shopify-club-builder die een maatwerk-club als één product verkoopt (live).
 - **FleetDisk / BerijdersApp:** bewijs voor productbouw op schaal. Alleen als tekst: geen beeld van werk voor de werkgever (ADR-0007).
 
@@ -180,6 +181,9 @@ _Huidige site:_ de conversie is nu een mailadres (Gmail) met de pitch "Vertel wa
 
 ## Changelog
 *Newest first. One line per revision: what changed and why.*
+- v1.11 (2026-11-06) — Weekly Report zegt AI in plaats van Claude: het model staat niet vast (wens van Nils). Claude blijft als zoekterm in de algemene toollijst.
+- v1.10 (2026-11-06) — Proof Points: klantcontext bij het Weekly Report (zo'n 18 online merken, wekelijkse klantmeeting), bron `sc-reporting/PRODUCT.md`. Reden: Lars van Short Commerce vroeg om een harde kop en eerst klanten en probleem, dan het rapport. Een urencijfer ontbreekt nog; niet noemen tot het bevestigd is.
+- v1.9 (2026-11-02) — Webshops niet langer als primaire doelgroep of label: Nils wil systemen/processen (1) en software bouwen (2) aantrekken, niet websites en webshops. Doelgroepen herordend (mkb-dienstverleners en founders eerst, webshops als bewijs). Nieuwe tagline "Automatisering, AI & software op maat" voor e-mailhandtekening en paginatitel; "koppelingen" en "developer" vallen af als label (jargon, trekt de lezing naar websites). Site: praktijkzin wordt "Automatisering, AI en software op maat voor het mkb", title en og:description lopen gelijk. Hero-kop "Ik koppel je systemen en zet AI aan het werk" blijft: als werkwoord is koppelen concreet, als label niet.
 - v1.8 (2026-10-29) — Zelf bouwen met AI is nu het belangrijkste alternatief (Competitive Landscape). Nieuw differentiator: kwaliteit en aanpak (proces snappen, goede technische keuzes, afmaken tot live, ontwerp en bouw in één hand). Bezwaar "Kan ik dit niet zelf met AI?" toegevoegd met erkennen-dan-verschil als toon. Nils' eigen woorden vastgelegd. Reden: iedereen kan nu zelf iets maken met AI, en Nils wil zich onderscheiden op de kwaliteit die hij levert.
 - v1.7 (2026-10-10) — Contact-afsluiter verbreed: "Wat doe je nog met de hand?" wordt "Waar loop je tegenaan?", met een pitch die koppelingen, tools en complete apps noemt. Automatisering blijft de focus, maar de laatste vraag van de site mag andere software niet uitsluiten (wens van Nils).
 - v1.6 (2026-10-10) — Over-mij herschreven op verzoek van Nils: de oude tekst las als een cv (Autodisk, FleetDisk, 54 apps), was te glad en "prompt-knutselaar" was te stoer. Nieuw: eerst het bedrijf snappen, dan bouwen, alles zelf ontwerpen en bouwen, en het als eigen product behandelen. Werkgeverswerk blijft bewijs bij de werkstukken.
